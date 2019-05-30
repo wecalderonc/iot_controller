@@ -38,13 +38,14 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'vcr'
   gem 'timecop'
   gem 'faker'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
+  gem 'sqlite3'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

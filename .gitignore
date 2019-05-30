@@ -49,3 +49,6 @@ yarn-debug.log*
 .yarn-integrity
 fast_console.txt
 coverage
+
+#database
+db/iot_controller_test.sqlite3
