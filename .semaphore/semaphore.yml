@@ -12,8 +12,12 @@ blocks:
       jobs:
         - name: RSpec Tests
           commands:
+            - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
+            - cd iot_controller
             - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
-            - ls -lart
             - docker-compose run web bin/rspec_to_manifest spec/ && bin/check_rspec
+        - name: test
+          commands:
+            - ls -lart
       secrets:
         - name: dockerhub-access
