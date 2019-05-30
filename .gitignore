@@ -36,7 +36,6 @@ yarn-debug.log*
 
 # Ignore application configuration
 /config/application.yml
-/config/database.yml
 /certs
 
 .ssh/id_rsa
