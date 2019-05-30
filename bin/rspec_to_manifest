@@ -1,0 +1,5 @@
+#!/bin/bash
+
+RAILS_ENV=test
+
+bundle exec rspec "$1" 2>&1 | tee tmp/rspec_manifest

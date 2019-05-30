@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TOTAL=$(sed "$( echo $(( $(grep -n Randomized tmp/rspec_manifest | cut -d":" -f1 | head -n1) + 1 )) )q;d" tmp/rspec_manifest | fold -w1 | sort | uniq | wc -l)
+
+if [ $TOTAL -gt 1 ]; then
+  echo "****************************************************************************************************************"
+  echo -e "\033[0;31The specs are either broken or the output is poluted with messages, check out the 'tmp/rspec_manifest' for details\033[0m"
+  echo "****************************************************************************************************************"
+  exit 1
+else
+  echo -e "\033[0;32mRSpec Test Suite is OK and has no warnings\033[0m"
+fi
