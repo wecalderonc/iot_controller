@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "Running Rails Best Practices..."
+MESSAGES=$(bundle exec rails_best_practices . -e "gems,db,bin,log,node_modules,tmp")
+echo "$MESSAGES"
+WARNINGS=$(echo "$MESSAGES" | grep "Found.*warnings")
+
+if [ -z "$WARNINGS" ]
+then
+  echo "0" > tmp/rails_best_practices_manifest
+else
+  echo "$WARNINGS" | awk '{ print $2 }' > tmp/rails_best_practices_manifest
+fi
+
+SCORE_FROM_MASTER=$(cat rails_best_practices_manifest)
+SCORE_FROM_BRANCH=$(cat tmp/rails_best_practices_manifest)
+
+if [ $( echo "$SCORE_FROM_BRANCH > $SCORE_FROM_MASTER" | bc -l ) -eq 1 ]; then
+  echo "****************************************************************************************************************"
+  echo -e "\033[0;31 The number of bad practices has increased\033[0m"
+  echo "****************************************************************************************************************"
+  exit 1
+else 
+   echo -e "\033[0;32mBest Practices OK\033[0m\n"
+  cp tmp/rails_best_practices_manifest rails_best_practices_manifest
+fi
