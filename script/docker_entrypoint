@@ -1,0 +1,11 @@
+#!/bin/bash --login
+
+export BUNDLE_PATH=./gems
+bundle check || bundle install
+yarn install
+
+eval `ssh-agent -s` >/dev/null
+ssh-add /root/.ssh/id_rsa > /dev/null 2>&1
+
+#entrypoint for docker
+bundle exec "$@"
