@@ -1,0 +1,18 @@
+version: v1.0
+name: IOT Controller
+
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Javascript Tests
+    task:
+      jobs:
+        - name: RSpec Tests
+          commands:
+            - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+            - docker-compose run web bin/rspec_to_manifest spec/ && bin/check_rspec
+      secrets:
+        - name: dockerhub-access
