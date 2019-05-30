@@ -122,11 +122,6 @@ GEM
     equalizer (0.0.11)
     erubi (1.8.0)
     erubis (2.7.0)
-    factory_bot (5.0.2)
-      activesupport (>= 4.2.0)
-    factory_bot_rails (5.0.2)
-      factory_bot (~> 5.0.2)
-      railties (>= 4.2.0)
     faker (1.9.3)
       i18n (>= 0.7)
     ffi (1.11.1)
@@ -233,6 +228,10 @@ GEM
       psych (~> 3.1.0)
       rainbow (>= 2.0, < 4.0)
     require_all (2.0.0)
+    rspec (3.8.0)
+      rspec-core (~> 3.8.0)
+      rspec-expectations (~> 3.8.0)
+      rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.3)
@@ -240,14 +239,6 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-rails (3.8.2)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     ruby-progressbar (1.10.1)
@@ -265,8 +256,6 @@ GEM
       tty-which (~> 0.4.0)
       virtus (~> 1.0)
     sexp_processor (4.12.0)
-    shoulda-matchers (3.1.3)
-      activesupport (>= 4.0.0)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -316,7 +305,6 @@ DEPENDENCIES
   dry-auto_inject
   dry-transaction
   dry-validation
-  factory_bot_rails
   faker
   figaro
   jbuilder (~> 2.5)
@@ -326,9 +314,8 @@ DEPENDENCIES
   rails-controller-testing
   rails_best_practices
   redis (~> 4.0)
-  rspec-rails (~> 3.7)
+  rspec
   rubycritic
-  shoulda-matchers (~> 3.1)
   simplecov
   simplecov-console
   timecop
