@@ -7,19 +7,33 @@ agent:
     os_image: ubuntu1804
 
 blocks:
-  - name: Javascript Tests
+  - name: Code Quality
     task:
       jobs:
-        - name: RSpec Tests
+        - name: Rails best practices
+          commands:
+            - docker-compose run web bin/check_rails_best_practices
+        - name: brakeman
+          commands:
+            - echo "Pending....."
+            #- docker-compose run web bundle exec brakeman -c config/brakeman.yml
+        - name: Ruby Critic
+          commands:
+            - echo "Pending....."
+            #- docker-compose run web bundle exec rubycritic app/ lib/ --minimum-score 99 --no-browser·
+      prologue:
+        commands:
+          - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
+          - cd iot_controller
+          - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+      secrets:
+        - name: dockerhub-access
+  - name: Tests
+    task:
+      jobs:
+        - name: Rspec
           commands:
             - docker-compose run web rspec
-        - name: Code Quality
-          commands:
-            - docker-compose run web bin/shot
-
-        - name: breakman
-          commands:
-            - docker-compose run web bundle exec brakeman -c config/brakeman.yml
       prologue:
         commands:
           - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
