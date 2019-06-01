@@ -15,6 +15,9 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
      apt-get update && apt-get install yarn && \
      rm -rf /var/lib/apt/lists/*
 
+ADD ./.ssh /root/.ssh
+RUN chown -R `whoami` /root/.ssh
+
 RUN mkdir /iot_controller
 WORKDIR /iot_controller
 ENTRYPOINT ["./script/docker_entrypoint"]

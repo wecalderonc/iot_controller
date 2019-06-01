@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function awakenings {
+  while [ $(curl -I ec2-34-239-60-25.compute-1.amazonaws.com:80/stage/ --silent | head -n1 | awk '{print $2}') != "404" ]
+  do
+    echo "Preparing green version....................................."
+    sleep 1s
+  done
+}
+ACTUAL_PROCESS=$(ls /etc/nginx/sites-enabled | grep iot_controller)
+
+if [ $ACTUAL_PROCESS = "iot_controller-a" ]; then
+  NEW_PROCESS="iot_controller-b"
+  NEW_SOCKET="unix:///tmp/iot_controller.iot_controller-b.socket"
+  NEW_PID="/tmp/puma.iot_controller.iot_controller-b.pid"
+  OLD_PID="/tmp/puma.iot_controller.iot_controller-a.pid"
+else
+  NEW_PROCESS="iot_controller-a"
+  NEW_SOCKET="unix:///tmp/iot_controller.iot_controller-a.socket"
+  NEW_PID="/tmp/puma.iot_controller.iot_controller-a.pid"
+  OLD_PID="/tmp/puma.iot_controller.iot_controller-b.pid"
+fi
+
+echo "Running Puma................................................."
+RAILS_ENV=production SOCKET=$NEW_SOCKET PID_FILE=$NEW_PID bundle exec puma -C config/puma/production.rb -d
+echo "Puma Up......................................................"
+
+awakenings
+
+sudo ln -s /etc/nginx/sites-available/$NEW_PROCESS /etc/nginx/sites-enabled/$NEW_PROCESS
+sudo rm /etc/nginx/sites-enabled/$ACTUAL_PROCESS
+echo "Doing reload...................................................."
+sudo service nginx reload
+echo "Killing old puma process....................................."
+sudo kill -QUIT $(cat $OLD_PID)
+echo "Finished!"
+
+#echo "Reloading sidekiq...."
+#kill -9 $(ps a | grep sidekiq | grep -v grep | awk '{ print $1 }')
+#echo "...Sidekiq reloaded"
