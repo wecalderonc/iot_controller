@@ -1,0 +1,9 @@
+#!/bin/bash --login
+
+git checkout .;
+git checkout master;
+git pull;
+
+sudo docker-compose run web bundle exec cap production deploy
+
+sudo docker-compose run web bash -c "ssh -o StrictHostKeyChecking=no deploy@34.239.60.25 'source ~/.profile; cd /var/www/iot_controller/current; script/reload'"

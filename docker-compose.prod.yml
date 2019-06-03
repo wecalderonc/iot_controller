@@ -1,0 +1,49 @@
+version: '3'
+services:
+  proxy:
+    image: jwilder/nginx-proxy:latest
+    container_name: admin_proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./certs:/etc/nginx/certs
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  web:
+    image: zonawiki/iot_controller:prod
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    environment:
+      - VIRTUAL_HOST=ec2-34-239-60-25.compute-1.amazonaws.com
+      - RAILS_ENV=production
+    volumes:
+      - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
+
+ # redis:
+ #   image: redis
+ #   command: redis-server
+ #   ports:
+ #     - "6379:6379"
+ #   volumes:
+ #     - redis_data:/data
+
+ # sidekiq:
+ #   tty: true
+ #   stdin_open: true
+ #   build:
+ #     context: .
+ #     dockerfile: ./docker/prod/Dockerfile
+ #   environment:
+ #     - RAILS_ENV=production
+ #   command: bundle exec sidekiq -C config/sidekiq.yml
+ #   volumes:
+ #     - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
+ #   depends_on:
+ #     - postgres
+ #     - redis
+
+#volumes:
+#  redis_data:
+#    driver: local
