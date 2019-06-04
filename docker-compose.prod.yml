@@ -2,7 +2,7 @@ version: '3'
 services:
   proxy:
     image: jwilder/nginx-proxy:latest
-    container_name: admin_proxy
+    container_name: iot_proxy
     ports:
       - 80:80
       - 443:443
@@ -20,6 +20,7 @@ services:
       - RAILS_ENV=production
     volumes:
       - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
+      - /var/www/iot_controller/shared/config/database.yml:/iot_controller/config/database.yml
 
  # redis:
  #   image: redis

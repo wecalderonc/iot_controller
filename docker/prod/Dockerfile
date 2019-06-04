@@ -20,11 +20,7 @@ WORKDIR /iot_controller
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-COPY package.json yarn.lock ./
-RUN yarn install
-
 COPY . /iot_controller
-#RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
 CMD bundle exec puma -C config/puma.rb
