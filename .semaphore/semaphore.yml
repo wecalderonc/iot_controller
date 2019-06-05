@@ -1,0 +1,43 @@
+version: v1.0
+name: IOT Controller
+
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Code Quality
+    task:
+      jobs:
+        - name: Brakeman + RBP + Ruby Critics
+          commands:
+            - docker-compose run web bin/shot
+      prologue:
+        commands:
+          - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
+          - cd iot_controller
+          - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+      secrets:
+        - name: dockerhub-access
+  - name: Tests
+    task:
+      jobs:
+        - name: Rspec
+          commands:
+            - docker-compose run web rspec
+      prologue:
+        commands:
+          - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
+          - cd iot_controller
+          - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+      secrets:
+        - name: dockerhub-access
+
+promotions:
+  - name: Production Deploy
+    pipeline_file: deploy_production.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - master
