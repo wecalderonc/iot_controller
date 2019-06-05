@@ -23,7 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 A step by step series of examples that tell you how to get a development env running
 
-  1. Set the environment variables with Figaro gem. Complete the variables preloaded in `config/.application.yml`
+  1. Set the environment variables with Figaro gem. Complete the variables preloaded in `config/application.yml`
   2. Run `sudo docker-compose run web rails db:create db:migrate` to create the database.
   3. Run `sudo docker-compose run web rails db:seed` to initialize the database.
 

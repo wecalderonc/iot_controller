@@ -10,6 +10,8 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
+require 'neo4j/railtie'
+
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
@@ -35,5 +37,7 @@ module IotController
     config.autoload_paths << Rails.root.join('app')
     config.eager_load_paths << Rails.root.join('app')
     config.eager_load_paths << Rails.root.join('lib')
+
+    config.generators { |g| g.orm :neo4j }
   end
 end

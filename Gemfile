@@ -11,6 +11,8 @@ gem 'puma', '~> 3.11'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
+# Use Neo4j as Database system
+gem 'neo4j'
 
 # Dry-Gems
 gem 'dry-auto_inject'
@@ -51,6 +53,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
   gem 'sqlite3'
+  gem 'neo4j-rspec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
