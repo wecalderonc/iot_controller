@@ -1,0 +1,6 @@
+---
+:summary_only: :summary_only
+:exit_on_error: true
+:exit_on_warn: true
+:output_files:
+- brakeman_manifest.json
