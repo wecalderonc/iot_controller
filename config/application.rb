@@ -39,5 +39,6 @@ module IotController
     config.eager_load_paths << Rails.root.join('lib')
 
     config.generators { |g| g.orm :neo4j }
+    config.neo4j.record_timestamps = true
   end
 end
