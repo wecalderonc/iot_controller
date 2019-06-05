@@ -8,3 +8,7 @@ default: &default
 test:
   <<: *default
   database: db/iot_controller_test.sqlite3
+
+development:
+  <<: *default
+  database: db/iot_controller_dev.sqlite3

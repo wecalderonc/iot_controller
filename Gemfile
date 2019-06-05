@@ -23,6 +23,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Handle secrets per environment
 gem "figaro"
 
+#workers
+gem 'sidekiq'
+gem 'rufus-scheduler', '~> 3.4.0'
+gem 'sidekiq-cron'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

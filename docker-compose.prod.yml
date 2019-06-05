@@ -22,29 +22,28 @@ services:
       - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
       - /var/www/iot_controller/shared/config/database.yml:/iot_controller/config/database.yml
 
- # redis:
- #   image: redis
- #   command: redis-server
- #   ports:
- #     - "6379:6379"
- #   volumes:
- #     - redis_data:/data
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
 
- # sidekiq:
- #   tty: true
- #   stdin_open: true
- #   build:
- #     context: .
- #     dockerfile: ./docker/prod/Dockerfile
- #   environment:
- #     - RAILS_ENV=production
- #   command: bundle exec sidekiq -C config/sidekiq.yml
- #   volumes:
- #     - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
- #   depends_on:
- #     - postgres
- #     - redis
+  sidekiq:
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    environment:
+      - RAILS_ENV=production
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
+    depends_on:
+      - redis
 
-#volumes:
-#  redis_data:
-#    driver: local
+volumes:
+  redis_data:
+    driver: local
