@@ -51,3 +51,5 @@ coverage
 
 #database
 db/iot_controller_test.sqlite3
+db/iot_controller_dev.sqlite3
+db/schema.rb

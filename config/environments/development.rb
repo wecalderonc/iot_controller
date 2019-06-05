@@ -42,7 +42,14 @@ Rails.application.configure do
   #config.active_record.migration_error = :page_load
 
   # Highlight code that triggered database queries in logs.
-  #config.active_record.verbose_query_logs = true
+   config.active_record.verbose_query_logs = true
+
+   config.log_tags = [:remote_ip, lambda { |req| Time.zone.now }, -> (req) {
+     session_key = (Rails.application.config.session_options || {})[:key]
+     session_data = req.cookie_jar.encrypted[session_key] || {}
+     user_id = session_data["user_name"] || "guest"
+     "user: #{user_id.to_s}"
+   }]
 
 
   # Raises error for missing translations
