@@ -2,13 +2,32 @@ version: '3'
 services:
   web:
     image: zonawik1/iot_controller:1
-    command: bash -c 'bin/webpack --watch --progress --color & bundle exec rails s -p 3000 -b "0.0.0.0"'
+    command: bash -c
+            ' rm ./tmp/pids/server.pid
+            && bin/webpack --watch --progress --color
+            & bundle exec rails s -p 3000 -b "0.0.0.0"'
     volumes:
       - .:/iot_controller
     ports:
-      - "3000:3000"
+      - 3000:3000
+    networks:
+      test:
+    depends_on:
+      - neo4j
     tty: true
     stdin_open: true
+
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH=neo4j/test
+    networks:
+      test:
+    volumes:
+      - neo4j_data:/data
 
   redis:
     image: redis
@@ -31,3 +50,8 @@ services:
 volumes:
   redis_data:
     driver: local
+  neo4j_data:
+    driver: local
+networks:
+  test:
+    driver: bridge
