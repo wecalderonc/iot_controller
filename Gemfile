@@ -26,6 +26,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Handle secrets per environment
 gem "figaro"
 
+# API Authenticaton
+gem 'jwt'
+gem 'dotenv-rails'
+
 #workers
 gem 'sidekiq'
 gem 'rufus-scheduler', '~> 3.4.0'
