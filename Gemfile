@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 # Use Neo4j as Database system
 gem 'neo4j'
+gem 'neo4j-rake_tasks'
 
 # Dry-Gems
 gem 'dry-auto_inject'

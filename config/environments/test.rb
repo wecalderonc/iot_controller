@@ -43,6 +43,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
   config.log_tags = [:request_id, :remote_ip, lambda { |req| Time.zone.now }]
+
+  config.neo4j.session.type = ENV['NEO4J_TYPE']
+  config.neo4j.session.url = ENV['NEO4J_URL']
 end
