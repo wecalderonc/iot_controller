@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Uplink.create(name: "uplink1")
+Uplink.create(name: "uplink2")
+Uplink.create(name: "uplink3")
+Uplink.create(name: "uplink4")
+
+Thing.create(name: "device1")
+Thing.create(name: "device2")
+Thing.create(name: "device3")
+Thing.create(name: "device4")
+
+

@@ -6,7 +6,9 @@ module API
       resource :things do
         desc "Return list of things"
         get do
-          {version2: "que estás buscando aquí, todavía no hay nada"}
+          {version2: "ヽ(ಠ_ಠ)ノ(ಠ¿ಠ)",
+           wtf: "what are you looking for?"
+          }
         end
       end
     end
