@@ -36,7 +36,7 @@ RSpec.describe AuthenticationController, :type => :controller do
 
           post :authenticate_user, params: { email: "invalid@mail.co", password: user.password }
 
-          expected_response = { errors: 'Invalid Username/Password' }
+          expected_response = { errors: 'User not found' }
 
           expect(response.content_type).to eq "application/json"
           expect(response.status).to eq 401
@@ -64,7 +64,7 @@ RSpec.describe AuthenticationController, :type => :controller do
 
           post :authenticate_user, params: { }
 
-          expected_response = { errors: 'Invalid Username/Password' }
+          expected_response = { errors: 'User not found' }
 
           expect(response.content_type).to eq "application/json"
           expect(response.status).to eq 401
