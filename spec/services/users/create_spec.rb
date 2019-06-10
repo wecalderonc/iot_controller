@@ -21,6 +21,9 @@ RSpec.describe Users::Create do
 
         expect(response).to be_success
 
+        pp ENV['RAILS_ENV']
+        expect(User.count).to eq(0)
+
         user = response.success
 
         expect(User.count).to eq(1)
