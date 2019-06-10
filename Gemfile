@@ -62,7 +62,7 @@ group :test do
   gem 'simplecov-console', require: false
   gem 'sqlite3'
   gem 'neo4j-rspec'
-  gem 'shoulda-matchers'
+  gem 'factory_bot'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
