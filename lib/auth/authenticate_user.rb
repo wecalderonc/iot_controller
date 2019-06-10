@@ -12,7 +12,7 @@ module Auth
       if user.present?
         Success({ user: user, input_password: input[:password] })
       else
-        Failure(Errors.model_error("User not found", User))
+        Failure(Errors.model_error("User not found", self.class))
       end
     end
 
@@ -24,10 +24,10 @@ module Auth
       end
     end
 
-    def build_payload(input)
+    def build_payload(user)
       {
-        auth_token: JsonWebToken.encode( { user_id: input.id } ),
-        email:      input.email
+        auth_token: JsonWebToken.encode( { user_id: user.id } ),
+        email:      user.email
       }
     end
   end

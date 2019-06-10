@@ -2,13 +2,18 @@ require 'rails_helper'
 
 RSpec.describe User, :type => :model do
 
+  describe "Validations" do
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:password) }
+  end
+
   describe "#valid_password?" do
     context "the input password is valid" do
       it "should return true" do
         user = create(:user, email: "danielapatino@gmail.com", password: "dani123")
         response = user.valid_password?("dani123")
 
-        expect(response).to be_truthy 
+        expect(response).to be_truthy
       end
     end
     context "the input password is invalid" do
