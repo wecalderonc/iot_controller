@@ -28,7 +28,6 @@ gem "figaro"
 
 # API Authenticaton
 gem 'jwt'
-gem 'dotenv-rails'
 
 #workers
 gem 'sidekiq'

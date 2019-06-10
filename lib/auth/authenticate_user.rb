@@ -9,7 +9,11 @@ module Auth
 
     def find_user(input)
       user = User.find_by(email: input[:email])
-      user.present? ? Success({ user: user, input_password: input[:password] }) : Failure(Errors.model_error("User not found", User))
+      if user.present?
+        Success({ user: user, input_password: input[:password] })
+      else
+        Failure(Errors.model_error("User not found", User))
+      end
     end
 
     def validate_password(input)
