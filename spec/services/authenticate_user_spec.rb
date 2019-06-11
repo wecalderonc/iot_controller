@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Auth::AuthenticateUser do
+RSpec.describe AuthenticateUser do
   describe "#call" do
     subject { described_class.new }
     let (:user) { create(:user) }

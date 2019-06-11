@@ -1,7 +1,7 @@
 class AuthenticationController < ApplicationController
 
   def authenticate_user
-    request = Auth::AuthenticateUser.new.(params)
+    request = AuthenticateUser.new.(params)
     if request.success?
       render json: request.success
     else
