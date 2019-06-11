@@ -11,8 +11,11 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web, at: '/sidekiq'
 
+<<<<<<< HEAD
   mount API::Base => '/api'
 
+=======
+>>>>>>> erase grape gem
   root to: 'home#index'
 
   post '/authentication', to: 'authentication#authenticate_user'
