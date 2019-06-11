@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
 
   mount Sidekiq::Web, at: '/sidekiq'
+  # namespace the controllers without affecting the URI
+  scope module: :v1, constraints: ApiVersion.new('v1', true) do
+    resources :things
+  end
 
 <<<<<<< HEAD
   mount API::Base => '/api'
