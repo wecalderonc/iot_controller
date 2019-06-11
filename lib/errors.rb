@@ -12,12 +12,12 @@ module Errors
   end
 
   def self.general_error(message, location, extra: {})
-    format = { error: message, location: location, extra: extra }
+    format = { message: message, location: location, extra: extra }
     MergeErrorType.(format, :general)
   end
 
   def self.model_error(error, model, extra: {})
-    format = { error: error, model: model, extra: extra }
+    format = { message: error, model: model, extra: extra }
     MergeErrorType.(format, :model)
   end
 end

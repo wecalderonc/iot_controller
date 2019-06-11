@@ -18,7 +18,7 @@ RSpec.describe Errors do
   describe "#general_error" do
     it "Should return a hash" do
       response = subject.general_error(status, self.location)
-      expected_response = { error: status, location: location, extra: {} }
+      expected_response = { message: status, location: location, extra: {} }
 
       expect(response).to eq(expected_response)
     end
@@ -28,7 +28,7 @@ RSpec.describe Errors do
     context "without extra" do
       it "Should return a hash" do
         response = subject.model_error(status, message)
-        expected_response = { error: status, model: message, extra: {}}
+        expected_response = { message: status, model: message, extra: {}}
 
         expect(response).to eq(expected_response)
       end
@@ -37,7 +37,7 @@ RSpec.describe Errors do
     context "with extra" do
       it "Should return a hash" do
         response = subject.model_error(status, message, extra: "amm aja un extra")
-        expected_response = { error: status, model: message, extra: "amm aja un extra" }
+        expected_response = { message: status, model: message, extra: "amm aja un extra" }
 
         expect(response).to eq(expected_response)
       end

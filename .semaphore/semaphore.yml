@@ -20,19 +20,23 @@ blocks:
           - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
       secrets:
         - name: dockerhub-access
+        - name: iot_controller
   - name: Tests
     task:
       jobs:
         - name: Rspec
           commands:
-            - docker-compose run web rspec
+            - docker-compose run web 'rake neo4j:migrate && rspec'
       prologue:
         commands:
           - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
+          - mv application.yml iot_controller/config/
+          - mv secrets.yml iot_controller/config/
           - cd iot_controller
           - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
       secrets:
         - name: dockerhub-access
+        - name: iot_controller
 
 promotions:
   - name: Production Deploy
