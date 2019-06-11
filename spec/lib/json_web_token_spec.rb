@@ -26,7 +26,7 @@ RSpec.describe JsonWebToken do
     end
     context "token is bad" do
       it "should decode an id" do
-        token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMjMsImV4cCI6MTU2MDIwMjc4NH0._oI8ERlkWpKBvu75U7i4E5rnyUQ_tHKrc3v68ZAiWKo"
+        token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMjMsImV4cCI6MTU2MDI4MDE2OH0.BtGhTTZcSvZPlIY10iAUp_2grOHfTHAfX_JYR3iKvPI"
 
         response = subject.decode(token)
 

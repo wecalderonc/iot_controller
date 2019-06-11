@@ -26,7 +26,7 @@ blocks:
       jobs:
         - name: Rspec
           commands:
-            - docker-compose run web rspec
+            - docker-compose run web 'rake neo4j:migrate && rspec'
       prologue:
         commands:
           - git clone -b $SEMAPHORE_GIT_BRANCH git@github.com:ZonaWiki/iot_controller.git
