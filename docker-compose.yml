@@ -4,31 +4,43 @@ services:
     image: zonawik1/iot_controller:1
     command: bash -c
             ' rm ./tmp/pids/server.pid
-            && bin/webpack --watch --progress --color
             & bundle exec rails s -p 3000 -b "0.0.0.0"'
     volumes:
       - .:/iot_controller
     ports:
       - 3000:3000
     networks:
-      test:
+      - test
+      - dev
     depends_on:
-      - neo4j
+      - neo4j_dev
+      - neo4j_test
     tty: true
     stdin_open: true
 
-  neo4j:
+  neo4j_dev:
     image: neo4j:latest
     ports:
       - 7474:7474
-      - 7475:7475
-      - 7687:7687
     environment:
       - NEO4J_AUTH=neo4j/test
+      - NEO4J_dbms_connector_http_listen__address=:7474
     networks:
-      test:
+      - dev
     volumes:
-      - neo4j_data:/data
+      - neo4j_dev_data:/data
+
+  neo4j_test:
+    image: neo4j:latest
+    ports:
+      - 3001:7474
+    environment:
+      - NEO4J_AUTH=neo4j/test
+      - NEO4J_dbms_connector_http_listen__address=:7474
+    networks:
+      - test
+    volumes:
+      - neo4j_test_data:/data
 
   redis:
     image: redis
@@ -51,8 +63,13 @@ services:
 volumes:
   redis_data:
     driver: local
-  neo4j_data:
+  neo4j_dev_data:
     driver: local
+  neo4j_test_data:
+    driver: local
+
 networks:
   test:
+    driver: bridge
+  dev:
     driver: bridge

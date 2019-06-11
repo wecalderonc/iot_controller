@@ -11,7 +11,6 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require 'neo4j/railtie'
-
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 

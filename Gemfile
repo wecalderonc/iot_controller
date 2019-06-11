@@ -13,7 +13,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 # Use Neo4j as Database system
 gem 'neo4j'
-gem 'neo4j-rake_tasks'
 
 # Dry-Gems
 gem 'dry-auto_inject'
@@ -40,7 +39,7 @@ gem 'grape-swagger'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'factory_bot'
+  gem 'neo4j-rake_tasks'
 end
 
 group :development do
@@ -61,7 +60,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
   gem 'sqlite3'
-  gem 'neo4j-rspec'
+  #gem 'neo4j-rspec'
   gem 'factory_bot'
   gem 'database_cleaner'
 end
