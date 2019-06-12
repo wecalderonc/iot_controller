@@ -48,29 +48,27 @@ RSpec.describe Users::Create do
       describe "When user data is nil" do
         it "Should return a failure response" do
           input[:user] = {
-            city: nil,
-            phone: nil,
             email: nil,
             name: nil,
-            number_id: nil,
+            password: nil,
           }
 
           expected_response = {
-            :error => {
-              :seller=>{
-                :number_id => ["is missing"],
-                :name => ["is mising"],
-                :phone => ["is mising"],
-                :email => ["is mising"],
-                :address => ["is mising"],
-                :city => ["is mising"]
+            :message=> {
+              :user=>{
+                :name => ["must be filled"],
+                :email => ["must be filled"],
+                :password=> ["must be String"],
               }
             },
             :location => Common::Operations::Validate,
-            :extra=>{ code: 400 }
+            :extra=>{ code: 400, :params=>{:user=>{:email=>nil, :name=>nil, :password=>nil}}}
           }
+
           response = subject.(input)
+
           expect(response).to be_failure
+          expect(response.failure).to eq(expected_response)
         end
       end
     end
