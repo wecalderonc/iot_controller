@@ -21,7 +21,7 @@ RSpec.describe AuthenticationController, :type => :controller do
 
           expected_response = {
             "auth_token": valid_token,
-            "email":      "valid@mail.co"
+            "email": user.email
           }.to_json
 
           expect(response.content_type).to eq "application/json"

@@ -13,14 +13,13 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  config.include Neo4j::RSpec::Matchers
   config.include FactoryBot::Syntax::Methods
-  config.include Shoulda::Matchers::ActiveModel,  type: :model
-  config.include Shoulda::Matchers::ActiveRecord, type: :model
+  #config.include Shoulda::Matchers::ActiveModel,  type: :model
+  #config.include Shoulda::Matchers::ActiveRecord, type: :model
 
-  config.before(:suite) do
-    FactoryBot.find_definitions
-  end
+  #config.before(:suite) do
+  #  FactoryBot.find_definitions
+  #end
 
   # For the `neo4j` gem
   config.around do |example|

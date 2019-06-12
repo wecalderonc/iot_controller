@@ -3,8 +3,13 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
 
   describe "Validations" do
-    it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to validate_presence_of(:password) }
+    it "email and password are required" do
+      expect(subject).to_not be_valid
+
+      expected_errors = {:email=>["can't be blank"], :password=>["can't be blank"]}
+
+      expect(subject.errors.messages).to eq(expected_errors)
+    end
   end
 
   describe "#valid_password?" do

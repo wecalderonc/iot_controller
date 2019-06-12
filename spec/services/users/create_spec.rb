@@ -5,10 +5,10 @@ RSpec.describe Users::Create do
     let(:input) {
       {
         user: {
-          uniq_param: :email,
           phone: Faker::PhoneNumber.phone_number,
           email: Faker::Internet.email,
           name: Faker::TvShows::Simpsons.character,
+          password: "pass",
           number_id_type: "CC",
           number_id: Faker::Number.number(10)
         }
@@ -35,12 +35,13 @@ RSpec.describe Users::Create do
       describe "When input is incomplete" do
         it "Should return a failure response" do
           input.delete(:user)
+
           response = subject.(input)
 
           expected_failure = {:user=>["is missing"]}
 
           expect(response).to be_failure
-          expect(response.failure[:error]).to eq(expected_failure)
+          expect(response.failure[:message]).to eq(expected_failure)
         end
       end
 
