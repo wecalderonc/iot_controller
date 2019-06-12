@@ -17,6 +17,17 @@
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 :indexes: []
 :versions:
+<<<<<<< HEAD
+=======
+- '20190605225357'
+- '20190607203749'
+- '20190607203837'
+- '20190607204133'
+- '20190607204149'
+- '20190611161641'
+- '20190611165749'
+- '20190611170105'
+>>>>>>> added test for example THING API with manual versioning
 - '20190611193016'
 - '20190613202636'
 - '20190613202800'

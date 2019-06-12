@@ -35,7 +35,7 @@ module V1
 
     def thing_params
       # whitelist params
-      params.permit(:title, :created_by)
+      params.permit(:name)
     end
 
     def set_thing
