@@ -8,7 +8,7 @@ RSpec.describe Users::Create do
           uniq_param: :email,
           phone: Faker::PhoneNumber.phone_number,
           email: Faker::Internet.email,
-          name: Faker::Simpsons.character,
+          name: Faker::TvShows::Simpsons.character,
           number_id_type: "CC",
           number_id: Faker::Number.number(10)
         }
@@ -17,7 +17,6 @@ RSpec.describe Users::Create do
 
     context "When input is valid" do
       it "should return a Success response" do
-      byebug
         expect(User.count).to eq(0)
 
         response = subject.(input)

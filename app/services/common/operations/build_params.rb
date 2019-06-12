@@ -13,7 +13,7 @@ class Common::Operations::BuildParams
   end
 
   private
-  
+
   def uniq_param(uniq_param, params)
     { uniq_param => params[uniq_param] }
   end
