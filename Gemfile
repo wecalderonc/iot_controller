@@ -63,6 +63,7 @@ group :test do
   #gem 'neo4j-rspec'
   gem 'factory_bot'
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

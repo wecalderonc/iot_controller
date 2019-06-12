@@ -9,9 +9,6 @@ services:
       - .:/iot_controller
     ports:
       - 3000:3000
-    networks:
-      - test
-      - dev
     depends_on:
       - neo4j_dev
       - neo4j_test
@@ -22,11 +19,9 @@ services:
     image: neo4j:latest
     ports:
       - 7474:7474
+      - 7687:7687
     environment:
       - NEO4J_AUTH=neo4j/test
-      - NEO4J_dbms_connector_http_listen__address=:7474
-    networks:
-      - dev
     volumes:
       - neo4j_dev_data:/data
 
@@ -34,11 +29,10 @@ services:
     image: neo4j:latest
     ports:
       - 3001:7474
+      - 3002:3002
     environment:
       - NEO4J_AUTH=neo4j/test
-      - NEO4J_dbms_connector_http_listen__address=:7474
-    networks:
-      - test
+      - NEO4J_dbms_connector_bolt_listen__address=:3002
     volumes:
       - neo4j_test_data:/data
 
@@ -67,9 +61,3 @@ volumes:
     driver: local
   neo4j_test_data:
     driver: local
-
-networks:
-  test:
-    driver: bridge
-  dev:
-    driver: bridge

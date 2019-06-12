@@ -17,24 +17,18 @@ RSpec.describe Users::Create do
 
     context "When input is valid" do
       it "should return a Success response" do
+      byebug
+        expect(User.count).to eq(0)
+
         response = subject.(input)
 
         expect(response).to be_success
-
-        pp ENV['RAILS_ENV']
-        expect(User.count).to eq(0)
 
         user = response.success
 
         expect(User.count).to eq(1)
         expect(user.name).to eq(input[:user][:name])
-        expect(user.number_id).to eq(input[:user][:number_id])
-        expect(user.store_id.to_i).to eq(input[:user][:store_id])
-        expect(user.store_name).to eq(input[:user][:store_name])
-        expect(user.phone).to eq(input[:user][:phone])
         expect(user.email).to eq(input[:user][:email])
-        expect(user.address).to eq(input[:user][:street_1])
-        expect(user.city.name).to eq("Bogotá D.C.")
       end
     end
 
