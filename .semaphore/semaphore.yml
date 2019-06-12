@@ -37,6 +37,7 @@ blocks:
       secrets:
         - name: dockerhub-access
         - name: iot_controller
+        - name: neo4j
 
 promotions:
   - name: Production Deploy
