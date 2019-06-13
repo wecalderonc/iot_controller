@@ -21,7 +21,7 @@ RSpec.describe AuthenticateUser do
 
         expected_response = {
           "auth_token": valid_token,
-          "email":      "valid@mail.co"
+          "email": user.email
         }
 
         expect(response).to be_success

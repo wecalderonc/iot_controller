@@ -11,7 +11,6 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require 'neo4j/railtie'
-
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
@@ -38,7 +37,9 @@ module IotController
     config.eager_load_paths << Rails.root.join('app')
     config.eager_load_paths << Rails.root.join('lib')
 
+    #Neo4J Config
     config.generators { |g| g.orm :neo4j }
     config.neo4j.record_timestamps = true
+    config.neo4j.pretty_logged_cypher_queries = true
   end
 end
