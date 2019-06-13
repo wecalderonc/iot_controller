@@ -37,6 +37,9 @@ gem 'sidekiq-cron'
 gem 'grape'
 gem 'grape-swagger'
 
+#Api documentation
+gem 'rswag'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'
@@ -62,6 +65,7 @@ group :test do
   gem 'sqlite3'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'rswag-specs'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

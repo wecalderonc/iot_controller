@@ -175,6 +175,8 @@ GEM
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
     json (2.2.0)
+    json-schema (2.8.1)
+      addressable (>= 2.4)
     jwt (2.2.1)
     kwalify (0.7.2)
     launchy (2.4.3)
@@ -313,6 +315,19 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    rswag (2.0.5)
+      rswag-api (= 2.0.5)
+      rswag-specs (= 2.0.5)
+      rswag-ui (= 2.0.5)
+    rswag-api (2.0.5)
+      railties (>= 3.1, < 6.0)
+    rswag-specs (2.0.5)
+      activesupport (>= 3.1, < 6.0)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 6.0)
+    rswag-ui (2.0.5)
+      actionpack (>= 3.1, < 6.0)
+      railties (>= 3.1, < 6.0)
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     ruby_parser (3.13.1)
@@ -408,6 +423,8 @@ DEPENDENCIES
   rails_best_practices
   redis (~> 4.0)
   rspec-rails
+  rswag
+  rswag-specs
   rubycritic
   rufus-scheduler (~> 3.4.0)
   sidekiq
