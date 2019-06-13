@@ -1,4 +1,3 @@
-require 'rails_helper'
 require 'swagger_helper'
 
 RSpec.describe "Users API", :type => :request do
@@ -10,10 +9,10 @@ RSpec.describe "Users API", :type => :request do
 
  
       response '200', 'user found' do
-        let(:email) { create(:user, email: 'daniela@gmail.com', name: 'Daniela').email }
+        let(:email) { create(:user).email }
         schema type: :object,
           properties: {
-            id: { type: :string, },
+            id: { type: :string },
             email: { type: :string },
             name: { type: :string },
           },
