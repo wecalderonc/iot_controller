@@ -26,7 +26,7 @@ class AuthorizeApiRequest
   def find_user(input)
     user = User.find_by(email: input)
     if user.present?
-      Success({ user: user})
+      Success user
     else
       Failure(Errors.model_error("User not found", self.class))
     end

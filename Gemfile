@@ -37,16 +37,9 @@ gem 'sidekiq'
 gem 'rufus-scheduler', '~> 3.4.0'
 gem 'sidekiq-cron'
 
-<<<<<<< HEAD
-#Api versioning
-gem 'grape'
-gem 'grape-swagger'
-
 #Api documentation
 gem 'rswag'
 
-=======
->>>>>>> erase grape gem
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'

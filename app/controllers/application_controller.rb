@@ -9,8 +9,9 @@ class ApplicationController < ActionController::API
 
   def authorize_request
     @current_user = AuthorizeApiRequest.new.call(request.headers)
+
     if  @current_user.success?
-      @current_user
+      @current_user.success
     else
        raise(ExceptionHandler::MissingToken, Message.missing_token)
     end
