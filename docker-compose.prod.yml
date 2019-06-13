@@ -21,6 +21,8 @@ services:
     volumes:
       - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
       - /var/www/iot_controller/shared/config/database.yml:/iot_controller/config/database.yml
+      - /var/www/iot_controller/shared/config/neo4j.yml:/iot_controller/config/neo4j.yml
+      - /var/www/iot_controller/shared/config/secrets.yml:/iot_controller/config/secrets.yml
 
   redis:
     image: redis
