@@ -7,10 +7,14 @@ RSpec.describe Users::Create do
         user: {
           phone: Faker::PhoneNumber.phone_number,
           email: Faker::Internet.email,
-          name: Faker::TvShows::Simpsons.character,
+          first_name: Faker::TvShows::Simpsons.character,
+          last_name: Faker::TvShows::Simpsons.character,
           password: "pass",
-          number_id_type: "CC",
-          number_id: Faker::Number.number(10)
+          id_type: :cc,
+          id_number: Faker::Number.number(10),
+          user_type: :administrator,
+          gender: :female,
+          admin: true
         }
       }
     }
@@ -26,7 +30,7 @@ RSpec.describe Users::Create do
         user = response.success
 
         expect(User.count).to eq(1)
-        expect(user.name).to eq(input[:user][:name])
+        expect(user.first_name).to eq(input[:user][:first_name])
         expect(user.email).to eq(input[:user][:email])
       end
     end
@@ -45,30 +49,43 @@ RSpec.describe Users::Create do
         end
       end
 
+      describe "When input has a code number wrong" do
+        it "Should return a failure response" do
+          input[:user][:code_number] = 325434
+
+          response = subject.(input)
+
+          expected_failure = {:user=>{:code_number=>["must be String"]}}
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_failure)
+        end
+      end
+
       describe "When user data is nil" do
         it "Should return a failure response" do
-          input[:user] = {
-            email: nil,
-            name: nil,
-            password: nil,
-          }
+          input[:user][:first_name] = nil
+          input[:user][:email] = nil
+          input[:user][:password] = nil
+          input[:user][:admin] = nil
+          input[:user][:phone] = nil
+          input[:user][:gender] = nil
 
           expected_response = {
-            :message=> {
-              :user=>{
-                :name => ["must be filled"],
-                :email => ["must be filled"],
-                :password=> ["must be String"],
-              }
-            },
-            :location => Common::Operations::Validate,
-            :extra=>{ code: 400, :params=>{:user=>{:email=>nil, :name=>nil, :password=>nil}}}
+            :user=>{
+              :first_name => ["must be filled"],
+              :email => ["must be filled"],
+              :password=> ["must be String"],
+              :admin=> ["must be TrueClass"],
+              :phone=> ["must be String"],
+              :gender=> ["must be Symbol"],
+            }
           }
 
           response = subject.(input)
 
           expect(response).to be_failure
-          expect(response.failure).to eq(expected_response)
+          expect(response.failure[:message]).to eq(expected_response)
         end
       end
     end

@@ -1,18 +1,28 @@
 class User
   include Neo4j::ActiveNode
-  property :name, type: String
+
+  property :first_name, type: String
+  property :last_name, type: String
+  property :email, type: String, constraint: :unique
   property :password, type: String
   property :password_confirmation, type: String
-  property :email, type: String
   property :admin, type: Boolean
+  property :phone, type: String
+  property :gender, type: String
+  property :id_number, type: String
+  property :id_type, type: String
+  property :code_number, type: String, constraint: :unique
+  property :user_type, type: String
 
-  validates :password, presence: true
-  validates :email, presence: true
+  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type, :user_type]
+  validates *MANDATORY_FIELDS, presence: true
 
   has_one :in, :support_workers, type: :SUPPORT_WORKERS, model_class: :Aqueduct
 
-
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  GENDERS = [:male, :female]
+  ID_TYPES = [:cc, :ce, :natural_nit, :bussines_nit, :foreign_nit, :passport, :civil_register]
+  USER_TYPE = [:aqueduct, :administrator, :aqueduct_client]
 
   UniqParam = :email
 
