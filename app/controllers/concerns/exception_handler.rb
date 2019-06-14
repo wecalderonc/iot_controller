@@ -16,5 +16,13 @@ module ExceptionHandler
         message: "Access denied!. Token has expired."
       }, status: :unauthorized
     end
+
+    rescue_from Neo4j::ActiveNode::Labels::RecordNotFound do |e|
+      json_response({ message: e.message }, :not_found)
+    end
+
+    rescue_from Neo4j::ActiveNode::Persistence::RecordInvalidError do |e|
+      json_response({ message: e.message }, :unprocessable_entity)
+    end
   end
 end

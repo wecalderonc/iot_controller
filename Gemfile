@@ -28,14 +28,14 @@ gem "figaro"
 # API Authenticaton
 gem 'jwt'
 
+# Authorization Gems
+
+gem 'cancancan-neo4j'
+
 #workers
 gem 'sidekiq'
 gem 'rufus-scheduler', '~> 3.4.0'
 gem 'sidekiq-cron'
-
-#Api versioning
-gem 'grape'
-gem 'grape-swagger'
 
 #Api documentation
 gem 'rswag'

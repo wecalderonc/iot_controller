@@ -14,11 +14,13 @@
 :constraints:
 - CONSTRAINT ON ( `neo4j::migrations::schemamigration`:`Neo4j::Migrations::SchemaMigration`
   ) ASSERT `neo4j::migrations::schemamigration`.migration_id IS UNIQUE
+
+- CONSTRAINT ON ( aqueduct:Aqueduct ) ASSERT aqueduct.uuid IS UNIQUE
+- CONSTRAINT ON ( thing:Thing ) ASSERT thing.uuid IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 :indexes: []
 :versions:
 - '20190611193016'
-- '20190613202636'
-- '20190613202800'
-- '20190613203744'
-- '20190613204544'
+- '20190613182036'
+- '20190613182045'
+- '20190613202311'
