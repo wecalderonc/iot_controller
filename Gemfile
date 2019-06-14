@@ -16,7 +16,7 @@ gem 'neo4j'
 
 # Dry-Gems
 gem 'dry-auto_inject'
-gem 'dry-validation'
+gem 'dry-validation',  '~> 0.13.3'
 gem 'dry-transaction'
 
 # Reduces boot times through caching; required in config/boot.rb
