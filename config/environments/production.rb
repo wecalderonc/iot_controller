@@ -80,4 +80,10 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
+
+  NEO4J_CONFIG = YAML.load_file(Rails.root.join('config/neo4j.yml'))[Rails.env]
+
+  config.neo4j.session_type = NEO4J_CONFIG['NEO4J_TYPE']
+  config.neo4j.session_path = NEO4J_CONFIG['NEO4J_URL']
+
 end
