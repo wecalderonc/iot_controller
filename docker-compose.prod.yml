@@ -18,8 +18,6 @@ services:
     environment:
       - VIRTUAL_HOST=ec2-34-239-60-25.compute-1.amazonaws.com
       - RAILS_ENV=production
-      - NEO4J_TYPE=https
-      #- NEO4J_URL=https://neo4j:neoproci@18.214.125.46:7473
     volumes:
       - /var/www/iot_controller/shared/config/application.yml:/iot_controller/config/application.yml
       - /var/www/iot_controller/shared/config/database.yml:/iot_controller/config/database.yml
