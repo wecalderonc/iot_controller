@@ -4,9 +4,6 @@ require 'sidekiq/cron/web'
 Rails.application.routes.draw do
 
   mount Rswag::Ui::Engine => '/api-docs'
-
-  post "/graphql", to: "graphql#execute"
-
   mount Rswag::Api::Engine => '/api-docs'
 
   mount Sidekiq::Web, at: '/sidekiq'
@@ -15,11 +12,6 @@ Rails.application.routes.draw do
     resources :things
   end
 
-<<<<<<< HEAD
-  mount API::Base => '/api'
-
-=======
->>>>>>> erase grape gem
   root to: 'home#index'
 
   post '/authentication', to: 'authentication#authenticate_user'

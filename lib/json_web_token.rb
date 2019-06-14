@@ -2,7 +2,7 @@ require 'dry/monads/try'
 class JsonWebToken
   extend Dry::Monads::Try::Mixin
 
-  ERRORS = [JWT::ExpiredSignature, JWT::VerificationError]
+  ERRORS = [JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError]
   JWT_SECRET = Rails.application.secrets.secret_key_base
   EXP = ENV["EXPIRATION_TIME"].to_i.hours.from_now
 
