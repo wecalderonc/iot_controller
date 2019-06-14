@@ -1,13 +1,9 @@
 module Common
   BasicTxBuilder = -> action_type, object_type do
-    Class.new do
-      container = Common::BasicTxContainer.(action_type, object_type)
-
-      include Dry::Transaction(container: container)
-
-      step :validate,     with: "ops.validate_input"
-      map  :build_params, with: "ops.build_params"
-      step :persist,      with: "ops.persist"
-    end
+    Common::TxMasterBuilder.new do
+      step :validation,         with: Common::Operations::Validator.(action_type, object_type)
+      map  :build_params,       with: Common::Operations::BuildParams.new(object_type: object_type)
+      step :persist,            with: Common::Operations::Persist.new(object_type: object_type)
+    end.Do
   end
 end
