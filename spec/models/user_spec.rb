@@ -6,7 +6,17 @@ RSpec.describe User, :type => :model do
     it "email and password are required" do
       expect(subject).to_not be_valid
 
-      expected_errors = {:email=>["can't be blank"], :password=>["can't be blank"]}
+      expected_errors = {
+        :email=>["can't be blank"],
+        :password=>["can't be blank"],
+        :phone=>["can't be blank"],
+        :first_name=>["can't be blank"],
+        :last_name=>["can't be blank"],
+        :gender=>["can't be blank"],
+        :id_type=>["can't be blank"],
+        :id_number=>["can't be blank"],
+        :user_type=>["can't be blank"],
+      }
 
       expect(subject.errors.messages).to eq(expected_errors)
     end
