@@ -7,7 +7,7 @@ RSpec.describe Users::Create do
         user: {
           phone: Faker::PhoneNumber.phone_number,
           email: Faker::Internet.email,
-          name: Faker::TvShows::Simpsons.character,
+          first_name: Faker::TvShows::Simpsons.character,
           password: "pass",
           number_id_type: "CC",
           number_id: Faker::Number.number(10)
@@ -26,7 +26,7 @@ RSpec.describe Users::Create do
         user = response.success
 
         expect(User.count).to eq(1)
-        expect(user.name).to eq(input[:user][:name])
+        expect(user.first_name).to eq(input[:user][:first_name])
         expect(user.email).to eq(input[:user][:email])
       end
     end
@@ -49,20 +49,20 @@ RSpec.describe Users::Create do
         it "Should return a failure response" do
           input[:user] = {
             email: nil,
-            name: nil,
+            first_name: nil,
             password: nil,
           }
 
           expected_response = {
             :message=> {
               :user=>{
-                :name => ["must be filled"],
+                :first_name => ["must be filled"],
                 :email => ["must be filled"],
                 :password=> ["must be String"],
               }
             },
             :location => Common::Operations::Validate,
-            :extra=>{ code: 400, :params=>{:user=>{:email=>nil, :name=>nil, :password=>nil}}}
+            :extra=>{ code: 400, :params=>{:user=>{:email=>nil, :first_name=>nil, :password=>nil}}}
           }
 
           response = subject.(input)
