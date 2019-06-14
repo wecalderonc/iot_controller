@@ -10,7 +10,7 @@ class AuthorizeApiRequest
     if input['Authorization'].present?
       Success input['Authorization']
     else
-      Failure "Authorization not found in headers"
+      Failure(Errors.general_error("Authorization not found in headers", self.class)
     end
   end
 
@@ -19,7 +19,7 @@ class AuthorizeApiRequest
     if result.success?
       Success result.success["user_id"]
     else
-      Failure "NotFound"
+      Failure(Errors.general_error(result.errors, self.class))
     end
   end
 
