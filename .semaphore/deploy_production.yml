@@ -30,9 +30,6 @@ blocks:
         - name: IOT Controller Production
           commands:
             - git clone -b master git@github.com:ZonaWiki/iot_controller.git
-            - mv application.yml iot_controller/config/
-            - mv secrets.yml iot_controller/config/
-            - mv neo4j.yml iot_controller/config/
             - cd iot_controller/
             - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
             - script/up
