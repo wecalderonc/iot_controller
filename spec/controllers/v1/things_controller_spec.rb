@@ -10,10 +10,6 @@ RSpec.describe 'things API', type: :request do
 
   let(:thing_id) { Thing.all.first.id }
 
-  after(:all) do
-    Thing.all.each(&:destroy)
-  end
-
   # Test suite for GET /things
   describe 'GET /things' do
     # make HTTP get request before each example
