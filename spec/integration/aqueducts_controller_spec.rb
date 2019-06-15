@@ -24,14 +24,10 @@ RSpec.describe "Aqueducts API", :type => :request do
               id: { type: :string },
               email: { type: :string },
               name: { type: :string },
+              phone: { type: :string },
             },
             required: [ 'id', 'email', 'name' ]
           }
-        run_test!
-      end
-
-      response '404', 'user not found' do
-        let(:email) { "invalid_email" }
         run_test!
       end
     end

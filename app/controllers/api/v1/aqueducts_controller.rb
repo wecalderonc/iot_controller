@@ -3,8 +3,8 @@ module Api
     class AqueductsController < ApplicationController
 
       def index
-        users = User.all
-        render json: users, status: :ok
+        aqueducts = Aqueduct.all
+        render json: aqueducts, status: :ok
       end
     end
   end
