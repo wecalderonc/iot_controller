@@ -69,6 +69,11 @@
             "name": "email",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {

@@ -7,7 +7,9 @@ RSpec.describe "Aqueducts API", :type => :request do
       produces 'application/json'
  
       response '200', 'all aqueducts' do
-        let(:Authorization) { 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiN2FkYTRlM2MtYTgxNS00ZDkzLWJlMzUtNjFjOTk3Njk0YWRhIiwiZXhwIjoxNTYwNjQ3Mjk0fQ.F3wyqG1JGGvzBdjJFL5X_SubB9TbJBn4IyEpZZ6nDog' }
+        let(:user) { create(:user) }
+
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({
           :in => :header,
           :type => :string,
