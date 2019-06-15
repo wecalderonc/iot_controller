@@ -17,3 +17,4 @@ Thing.create(name: "device3")
 Thing.create(name: "device4")
 
 
+User.create(first_name:"javier", last_name: "varon", phone: "31261258231", gender: "male", id_number: "1645634", user_type: "amigo", id_type: "1", email: "jvaron@procibernetica.com" )

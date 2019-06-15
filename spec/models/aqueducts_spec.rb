@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Aqueducts, :type => :model do
+RSpec.describe Aqueduct, :type => :model do
 
   describe "Validations" do
     it "email and password are required" do
