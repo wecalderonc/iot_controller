@@ -14,7 +14,6 @@
 :constraints:
 - CONSTRAINT ON ( `neo4j::migrations::schemamigration`:`Neo4j::Migrations::SchemaMigration`
   ) ASSERT `neo4j::migrations::schemamigration`.migration_id IS UNIQUE
-- CONSTRAINT ON ( aqueduct:Aqueduct ) ASSERT aqueduct.uuid IS UNIQUE
 - CONSTRAINT ON ( thing:Thing ) ASSERT thing.uuid IS UNIQUE
 - CONSTRAINT ON ( uplink:Uplink ) ASSERT uplink.uuid IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.code_number IS UNIQUE
@@ -22,6 +21,7 @@
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 :indexes: []
 :versions:
+<<<<<<< HEAD
 - '20190611193016'
 - '20190613182036'
 - '20190613182045'
@@ -34,3 +34,14 @@
 - '20190614221758'
 - '20190614231954'
 - '20190614233307'
+=======
+- '20190616195555'
+- '20190616195556'
+- '20190616195557'
+- '20190616195656'
+- '20190616195818'
+- '20190616195850'
+- '20190616195904'
+- '20190616195926'
+- '20190616204831'
+>>>>>>> fix user:controllers rswag spec
