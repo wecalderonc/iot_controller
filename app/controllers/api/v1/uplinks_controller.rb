@@ -4,7 +4,6 @@ module Api
       def index
         last_uplink = Uplink.order(:created_at).last
         if last_uplink
-          p "hola"
           render json: {  id: last_uplink.id,
                           data: last_uplink.data,
                           avgsnr: last_uplink.avgsnr,
