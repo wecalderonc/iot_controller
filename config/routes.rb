@@ -14,10 +14,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:index]
+      resources :users,     only: [:index]
       resources :aqueducts, only: [:index]
-      resources :things
-      resources :uplinks, only: [:index]
+      resources :things,    only: [:index]
+      resources :uplinks,   only: [:index]
     end
   end
 end

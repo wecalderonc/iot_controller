@@ -55,6 +55,59 @@
         }
       }
     },
+    "/api/v1/things": {
+      "get": {
+        "summary": "Retrieves all things",
+        "tags": [
+          "Things"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all things",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "pac": {
+                    "type": "string"
+                  },
+                  "company_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "status",
+                  "pac",
+                  "company_id"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/uplinks": {
       "get": {
         "summary": "Retrieves all Uplinks",
