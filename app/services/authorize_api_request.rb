@@ -1,4 +1,5 @@
 require 'dry/transaction'
+
 class AuthorizeApiRequest
   include Dry::Transaction
 

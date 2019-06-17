@@ -55,6 +55,99 @@
         }
       }
     },
+    "/api/v1/uplinks": {
+      "get": {
+        "summary": "Retrieves all Uplinks",
+        "tags": [
+          "Uplinks"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true,
+            "description": "Client token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "last uplink found",
+            "schema": {
+              "type": "object",
+              "required": [
+                "uplink"
+              ],
+              "properties": {
+                "uplink": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "data",
+                    "avgsnr",
+                    "rssi",
+                    "long",
+                    "lat",
+                    "snr",
+                    "station",
+                    "seqnumber",
+                    "time",
+                    "sec_uplinks",
+                    "sec_downlinks"
+                  ],
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "string"
+                      },
+                      "avgsnr": {
+                        "type": "string"
+                      },
+                      "rssi": {
+                        "type": "string"
+                      },
+                      "long": {
+                        "type": "string"
+                      },
+                      "lat": {
+                        "type": "string"
+                      },
+                      "snr": {
+                        "type": "string"
+                      },
+                      "station": {
+                        "type": "string"
+                      },
+                      "seqnumber": {
+                        "type": "string"
+                      },
+                      "time": {
+                        "type": "string"
+                      },
+                      "sec_uplinks": {
+                        "type": "string"
+                      },
+                      "sec_downlinks": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no uplinks found"
+          }
+        }
+      }
+    },
     "/api/v1/users": {
       "get": {
         "summary": "Retrieves a User",

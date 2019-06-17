@@ -7,7 +7,7 @@ RSpec.describe "Users API", :type => :request do
       produces 'application/json'
       parameter name: :email, :in => :query, :type => :string
       parameter name: 'Authorization', :in => :header, :type => :string
- 
+
       response '200', 'user found' do
         let(:user) { create(:user) }
         let(:email) { create(:user).email }

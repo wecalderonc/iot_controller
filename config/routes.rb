@@ -7,10 +7,6 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
 
   mount Sidekiq::Web, at: '/sidekiq'
-  # namespace the controllers without affecting the URI
-  scope module: :v1, constraints: ApiVersion.new('v1', true) do
-    resources :things
-  end
 
   root to: 'home#index'
 
@@ -20,6 +16,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:index]
       resources :aqueducts, only: [:index]
+      resources :things
+      resources :uplinks, only: [:index]
     end
   end
 end

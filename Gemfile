@@ -56,6 +56,7 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'neo4j-rspec'
   gem 'rails-controller-testing'
   gem 'vcr'
   gem 'timecop'
