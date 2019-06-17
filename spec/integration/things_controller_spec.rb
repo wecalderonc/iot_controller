@@ -11,7 +11,7 @@ RSpec.describe "Things API", :type => :request do
         let(:user) { create(:user) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
-        let(:thing) { create(:thing) }
+        let(:thing) { create(:thing, :activated) }
 
         schema type: :array,
           required: [ 'thing' ],
