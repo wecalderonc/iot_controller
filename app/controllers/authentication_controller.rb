@@ -1,5 +1,7 @@
 class AuthenticationController < ApplicationController
 
+  skip_before_action :authorize_request
+
   def authenticate_user
     request = AuthenticateUser.new.(params)
     if request.success?

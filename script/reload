@@ -1,7 +1,7 @@
 #!/bin/bash --login
 
 sudo docker-compose -f docker-compose.prod.yml -p iot_controller build
-#sudo docker-compose -f docker-compose.prod.yml -p iot_controller run web rails db:migrate
+sudo docker-compose -f docker-compose.prod.yml -p iot_controller run web rake neo4j:migrate
 sudo docker-compose -f docker-compose.prod.yml -p iot_controller up --scale web=2 -d
 
 #TODO: Temporal solution for sidekiq bug

@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     if @current_user.success?
       @current_user.success
     else
-      @current_user.failure
+      raise MissingToken
     end
   end
 end

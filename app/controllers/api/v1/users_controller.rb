@@ -10,6 +10,7 @@ module Api
           render json: { errors: "user not found" }, status: :not_found
         end
       end
+
     end
   end
 end
