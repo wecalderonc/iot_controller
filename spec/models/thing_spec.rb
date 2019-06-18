@@ -22,4 +22,5 @@ RSpec.describe Thing, :type => :model do
   it { is_expected.to define_property :pac, :String }
   it { is_expected.to define_property :company_id, :String }
 
+  it { is_expected.to have_one(:uplinks).with_direction(:out) }
 end

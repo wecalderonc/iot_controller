@@ -24,5 +24,5 @@ RSpec.describe Uplink, type: :model do
   it { is_expected.to have_one(:uplinkBDownlink).with_direction(:in) }
   it { is_expected.to have_one(:valvePosition).with_direction(:in) }
 
-  it { is_expected.to have_one(:uplinks_created).with_direction(:in) }
+  it { is_expected.to have_one(:thing).with_direction(:in) }
 end
