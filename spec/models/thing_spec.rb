@@ -17,4 +17,9 @@ RSpec.describe Thing, :type => :model do
     end
   end
 
+  it { is_expected.to define_property :name, :String }
+  it { is_expected.to define_property :status, :String }
+  it { is_expected.to define_property :pac, :String }
+  it { is_expected.to define_property :company_id, :String }
+
 end

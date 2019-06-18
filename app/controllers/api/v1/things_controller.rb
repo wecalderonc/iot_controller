@@ -2,9 +2,9 @@ module Api
   module V1
     class ThingsController < ApplicationController
 
-      def index
-        things = Thing.all
-        render json: things, status: :ok
+      def show
+        thing = Thing.find(params[:id])
+        render json: thing, status: :ok
       end
     end
   end

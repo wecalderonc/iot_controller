@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users,     only: [:index]
       resources :aqueducts, only: [:index]
-      resources :things,    only: [:index]
+      resources :things,    only: [:show]
       resources :uplinks,   only: [:index]
     end
   end
