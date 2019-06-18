@@ -19,6 +19,7 @@ class User
 
   has_one :in, :support_workers, type: :SUPPORT_WORKERS, model_class: :Aqueduct
 
+
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   GENDERS = [:male, :female]
   ID_TYPES = [:cc, :ce, :natural_nit, :bussines_nit, :foreign_nit, :passport, :civil_register]
