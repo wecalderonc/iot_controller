@@ -14,14 +14,33 @@
 :constraints:
 - CONSTRAINT ON ( `neo4j::migrations::schemamigration`:`Neo4j::Migrations::SchemaMigration`
   ) ASSERT `neo4j::migrations::schemamigration`.migration_id IS UNIQUE
+- CONSTRAINT ON ( accumulator:Accumulator ) ASSERT accumulator.uuid IS UNIQUE
+- CONSTRAINT ON ( alarm:Alarm ) ASSERT alarm.uuid IS UNIQUE
 - CONSTRAINT ON ( aqueduct:Aqueduct ) ASSERT aqueduct.uuid IS UNIQUE
+- CONSTRAINT ON ( batterylevel:BatteryLevel ) ASSERT batterylevel.uuid IS UNIQUE
+- CONSTRAINT ON ( sensor1:Sensor1 ) ASSERT sensor1.uuid IS UNIQUE
+- CONSTRAINT ON ( sensor2:Sensor2 ) ASSERT sensor2.uuid IS UNIQUE
+- CONSTRAINT ON ( sensor3:Sensor3 ) ASSERT sensor3.uuid IS UNIQUE
+- CONSTRAINT ON ( sensor4:Sensor4 ) ASSERT sensor4.uuid IS UNIQUE
 - CONSTRAINT ON ( thing:Thing ) ASSERT thing.uuid IS UNIQUE
+- CONSTRAINT ON ( timeuplink:TimeUplink ) ASSERT timeuplink.uuid IS UNIQUE
 - CONSTRAINT ON ( uplink:Uplink ) ASSERT uplink.uuid IS UNIQUE
+- CONSTRAINT ON ( uplinkbdownlink:UplinkBDownlink ) ASSERT uplinkbdownlink.uuid IS
+  UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.code_number IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.email IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
+- CONSTRAINT ON ( valveposition:ValvePosition ) ASSERT valveposition.uuid IS UNIQUE
 :indexes: []
 :versions:
+- '20190611193016'
+- '20190613182036'
+- '20190613182045'
+- '20190613202311'
+- '20190614220208'
+- '20190614221758'
+- '20190614231954'
+- '20190614233307'
 - '20190616195656'
 - '20190616195818'
 - '20190616195850'
@@ -29,3 +48,13 @@
 - '20190616195926'
 - '20190616204831'
 - '20190617034431'
+- '20190617225522'
+- '20190617225523'
+- '20190617225524'
+- '20190617225525'
+- '20190617225526'
+- '20190617225527'
+- '20190617225528'
+- '20190617225529'
+- '20190617225530'
+- '20190617225531'
