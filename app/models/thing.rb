@@ -10,5 +10,8 @@ class Thing
   validates_presence_of :pac
   validates_presence_of :company_id
 
-  has_many :out, :uplinks_created, type: :UPLINK_CREATED, model_class: :Uplink
+  has_many :out, :uplinks, type: :UPLINK_CREATED
+
+  has_many :in, :owner, type: :OWN, model_class: :User
+  has_many :in, :renter, type: :RENT, model_class: :User
 end

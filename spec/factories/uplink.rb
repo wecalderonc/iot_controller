@@ -11,5 +11,7 @@ FactoryBot.define do
     time          {"1548277798"}
     sec_uplinks   {"006"}
     sec_downlinks {"0"}
+
+    association :thing, factory: :thing
   end
 end
