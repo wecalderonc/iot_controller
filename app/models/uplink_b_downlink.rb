@@ -1,6 +1,5 @@
 class UplinkBDownlink
   include Neo4j::ActiveNode
-
   property :value, type: String
 
   validates :value, presence: true
