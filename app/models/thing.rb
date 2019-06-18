@@ -9,4 +9,6 @@ class Thing
   validates_presence_of :status
   validates_presence_of :pac
   validates_presence_of :company_id
+
+  has_many :out, :uplinks_created, type: :UPLINK_CREATED, model_class: :Uplink
 end
