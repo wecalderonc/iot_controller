@@ -24,6 +24,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_model_serializers (0.10.9)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (5.2.3)
       activesupport (= 5.2.3)
       globalid (>= 0.3.6)
@@ -68,6 +73,8 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    case_transform (0.2)
+      activesupport
     code_analyzer (0.4.8)
       sexp_processor
     codeclimate-engine-rb (0.4.1)
@@ -173,6 +180,7 @@ GEM
     json (2.2.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
+    jsonapi-renderer (0.2.2)
     jwt (2.2.1)
     kwalify (0.7.2)
     launchy (2.4.3)
@@ -397,6 +405,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (~> 0.10.0)
   bootsnap (>= 1.1.0)
   brakeman
   byebug

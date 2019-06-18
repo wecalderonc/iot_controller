@@ -29,8 +29,10 @@ gem "figaro"
 gem 'jwt'
 
 # Authorization Gems
-
 gem 'cancancan-neo4j'
+
+#serializers
+gem 'active_model_serializers', '~> 0.10.0'
 
 #workers
 gem 'sidekiq'
