@@ -7,7 +7,7 @@ RSpec.describe "Sensor1s API", :type => :request do
       produces 'application/json'
       parameter name: :id, :in => :path, :type => :string
 
-      response '200', 'all accumulators ' do
+      response '200', 'all sensor2s ' do
         let(:user)        { create(:user) }
         let(:sensor2)     { create(:sensor2) }
         let(:thing)       { sensor2.uplink.thing }

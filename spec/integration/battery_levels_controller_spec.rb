@@ -9,9 +9,9 @@ RSpec.describe "Battery levels API", :type => :request do
 
       response '200', 'all battery levels ' do
         let(:user)          { create(:user) }
-        let(:battery_level) { create(:battery_level) }
-        let(:thing)         { battery_level.uplink.thing }
-        let(:id)            { battery_level.uplink.thing.id }
+        let(:batteryLevel) { create(:battery_level) }
+        let(:thing)         { batteryLevel.uplink.thing }
+        let(:id)            { batteryLevel.uplink.thing.id }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({

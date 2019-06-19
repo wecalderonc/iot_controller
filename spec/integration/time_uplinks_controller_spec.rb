@@ -9,9 +9,9 @@ RSpec.describe "Time Uplinks API", :type => :request do
 
       response '200', 'all accumulators ' do
         let(:user)        { create(:user) }
-        let(:time_uplink) { create(:time_uplink) }
-        let(:thing)       { time_uplink.uplink.thing }
-        let(:id)          { time_uplink.uplink.thing.id }
+        let(:timeUplink) { create(:time_uplink) }
+        let(:thing)       { timeUplink.uplink.thing }
+        let(:id)          { timeUplink.uplink.thing.id }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({

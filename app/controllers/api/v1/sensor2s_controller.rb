@@ -3,13 +3,8 @@ module Api
     class Sensor2sController < ApplicationController
 
       def index
-        thing = Thing.find_by(id: params[:thing_id])
-
-        if thing.present?
-          render json: thing.uplinks.sensor2, status: :ok
-        else
-          render json: { errors: "Thing doesn't exist" }, status: :not_found
-        end
+       guardo = MientrasTanto.aja(params[:thing_id], "sensor2")
+        render json: guardo[:result], status: guardo[:status]
       end
     end
   end

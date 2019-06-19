@@ -10,8 +10,8 @@ RSpec.describe "Sensor1s API", :type => :request do
       response '200', 'all accumulators ' do
         let(:user)        { create(:user) }
         let(:sensor3)     { create(:sensor3) }
-        let(:thing)       { sensor1.uplink.thing }
-        let(:id)          { sensor1.uplink.thing.id }
+        let(:thing)       { sensor3.uplink.thing }
+        let(:id)          { sensor3.uplink.thing.id }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({

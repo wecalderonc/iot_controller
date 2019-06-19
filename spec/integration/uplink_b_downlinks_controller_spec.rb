@@ -9,9 +9,9 @@ RSpec.describe "Uplink between Downlinks API", :type => :request do
 
       response '200', 'all accumulators ' do
         let(:user)              { create(:user) }
-        let(:uplink_b_downlink) { create(:uplink_b_downlink) }
-        let(:thing)             { uplink_b_downlink.uplink.thing }
-        let(:id)                { uplink_b_downlink.uplink.thing.id }
+        let(:uplinkBDownlink) { create(:uplink_b_downlink) }
+        let(:thing)             { uplinkBDownlink.uplink.thing }
+        let(:id)                { uplinkBDownlink.uplink.thing.id }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({

@@ -9,9 +9,9 @@ RSpec.describe "Valve Positions API", :type => :request do
 
       response '200', 'all alarms ' do
         let(:user)            { create(:user) }
-        let(:valve_position)  { create(:valve_position) }
-        let(:thing)           { valve_position.uplink.thing }
-        let(:id)              { valve_position.uplink.thing.id }
+        let(:valvePosition)  { create(:valve_position) }
+        let(:thing)           { valvePosition.uplink.thing }
+        let(:id)              { valvePosition.uplink.thing.id }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({

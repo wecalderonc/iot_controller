@@ -25,6 +25,7 @@ class Uplink
   has_one :in, :timeUplink, type: :BELONGS_TO
   has_one :in, :uplinkBDownlink, type: :BELONGS_TO
   has_one :in, :valvePosition, type: :BELONGS_TO
+  has_one :in, :batteryLevel, type: :BELONGS_TO
 
   has_one :in, :thing, type: :UPLINK_CREATED
 end
