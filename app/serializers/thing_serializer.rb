@@ -21,13 +21,16 @@
     def last_messages
       customized_last_messages = {}
       custom_message = {}
-      #Hash.new(accumulator: {}, alarm: {}, batteryLevel: {}, valvePosition: {}, sensor1: {}, sensor2: {},
-       #         sensor3: {}, sensor4: {}, uplinkBDownlink: {}, timeUplink: {})
-      MESSAGES.each do |message_name|
-        custom_message[message_name] = object.uplinks.send(message_name.to_s).order(:created_at).last
-        customized_last_messages[message_name] = custom_message[message_name]
-      end
 
+      MESSAGES.each do |message_name|
+        last_message = object.uplinks.send(message_name.to_s).order(:created_at).last
+        if last_message
+          message_serialized = MessagesInsideUplinkSerializer.new(last_message)
+        else
+          message_serialized = {}
+        end
+        customized_last_messages[message_name] = message_serialized
+      end
       customized_last_messages
     end
 end
