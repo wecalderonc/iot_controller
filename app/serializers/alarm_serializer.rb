@@ -1,2 +1,0 @@
-class AlarmSerializer < UplinkMessageSerializer
-end

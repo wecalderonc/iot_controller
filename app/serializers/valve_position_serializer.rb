@@ -1,2 +1,0 @@
-class ValvePositionSerializer < UplinkMessageSerializer
-end

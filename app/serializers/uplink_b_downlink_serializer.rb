@@ -1,2 +1,0 @@
-class UplinkBDownlinkSerializer < UplinkMessageSerializer
-end

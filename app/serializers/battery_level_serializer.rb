@@ -1,2 +1,0 @@
-class BatteryLevelSerializer < UplinkMessageSerializer
-end
