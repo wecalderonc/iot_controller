@@ -10,27 +10,61 @@ RSpec.describe "Things API", :type => :request do
 
       response '200', 'thing found' do
         let(:user) { create(:user) }
-        let(:id) { create(:thing, :activated).id }
+        let(:accumulator) { create(:accumulator) }
+        let(:id) { accumulator.uplink.thing.id }
+
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-          required: [ 'thing' ],
-          properties: {
-            thing: {
-              type: :object,
-              required: [ 'id', 'name', 'status', 'pac', 'company_id' ],
-              items:
-                {
+          required: [ 'id', 'name', 'status', 'pac', 'company_id', 'created_at', 'updated_at', 'last_uplink', 'last_messages'],
+            properties: {
+              id: { type: :string },
+              name: { type: :string },
+              status: { type: :string },
+              pac: { type: :string },
+              company_id: { type: :string },
+              created_at: { type: :string },
+              updated_at: { type: :string },
+              last_uplink: {
+               required: [ 'id', 'data', 'avgsnr', 'rssi', 'long', 'lat', 'snr', 'station', 'seqnumber', 'time', 'sec_uplinks', 'sec_downlinks', 'created_at', 'updated_at'],
+
+                properties:{
+                  id: { type: :string},
+                  data: { type: :string},
+                  avgsnr: { type: :string},
+                  rssi: { type: :string},
+                  long: { type: :string},
+                  lat: { type: :string},
+                  snr: { type: :string},
+                  station: { type: :string},
+                  seqnumber: { type: :string},
+                  time: { type: :string},
+                  sec_uplinks: { type: :string},
+                  sec_downlinks: { type: :string},
+                  created_at: { type: :string },
+                  updated_at: { type: :string }
+                }
+
+              },
+              last_messages: {
+                required: ['accumulator', 'alarm', 'batteryLevel', 'valvePosition', 'sensor1',
+                          'sensor2', 'sensor3', 'sensor4', 'uplinkBDownlink', 'timeUplink'],
+                items: {
                   properties: {
-                    id: { type: :string },
-                    name: { type: :string },
-                    status: { type: :string },
-                    pac: { type: :string },
-                    company_id: { type: :string },
+                    accumulator: { type: :object },
+                    alarm: { type: :object },
+                    batteryLevel: { type: :object },
+                    valvePosition: { type: :object },
+                    sensor1: { type: :object },
+                    sensor2: { type: :object },
+                    sensor3: { type: :object },
+                    sensor4: { type: :object },
+                    uplinkBDownlink: { type: :object },
+                    timeUplink: { type: :object }
                   }
+                }
               }
             }
-          }
         run_test!
       end
 

@@ -14,22 +14,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users,               only: [:index]
-      resources :aqueducts,           only: [:index]
-      resources :things,              only: [:index, :show] do
-        # resources :accumulators,      only: [:index]
-        # resources :alarms,            only: [:index]
-        # resources :battery_levels,    only: [:index]
-        # resources :valve_positions,   only: [:index]
-        # resources :uplink_b_downlinks, only: [:index]
-        # resources :time_uplinks,      only: [:index]
-        # resources :sensor1s,          only: [:index]
-        # resources :sensor2s,          only: [:index]
-        # resources :sensor3s,          only: [:index]
-        # resources :sensor4s,          only: [:index]
+      resources :users,                         only: [:index]
+      resources :aqueducts,                     only: [:index]
+      resources :things,                        only: [:show] do
         get ':message_name', to: 'things#index'
       end
-      resources :uplinks,        only: [:index]
+      resources :uplinks,                       only: [:index]
     end
   end
 end
