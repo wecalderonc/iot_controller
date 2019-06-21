@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :aqueducts,                     only: [:index]
       resources :things,                        only: [:show]
       resources :uplinks,                       only: [:index]
+      resources :accumulators_report,           only: [:index]
     end
   end
 end

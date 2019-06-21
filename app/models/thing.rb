@@ -14,4 +14,9 @@ class Thing
 
   has_many :in, :owner, type: :OWN, model_class: :User
   has_many :in, :renter, type: :RENT, model_class: :User
+
+  def self.to_csv
+    accumulators = ThingsQuery.with_accumulators
+    p Things::AccumulatorsReport.(accumulators)
+  end
 end
