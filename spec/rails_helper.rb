@@ -18,6 +18,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include RequestSpecHelper, type: :request
   config.include Neo4j::RSpec::Matchers
+  config.extend Helpers::RequiredFieldsSpecHelper
 
   # For the `neo4j` gem
   config.around do |example|
