@@ -17,54 +17,8 @@ RSpec.describe "Things API", :type => :request do
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-        required: thing_fields,
-          properties: {
-            id: { type: :string },
-            name: { type: :string },
-            status: { type: :string },
-            pac: { type: :string },
-            company_id: { type: :string },
-            created_at: { type: :string },
-            updated_at: { type: :string },
-            last_uplink: {
-             required: uplink_fields,
-
-              properties:{
-                id: { type: :string},
-                data: { type: :string},
-                avgsnr: { type: :string},
-                rssi: { type: :string},
-                long: { type: :string},
-                lat: { type: :string},
-                snr: { type: :string},
-                station: { type: :string},
-                seqnumber: { type: :string},
-                time: { type: :string},
-                sec_uplinks: { type: :string},
-                sec_downlinks: { type: :string},
-                created_at: { type: :string },
-                updated_at: { type: :string }
-              }
-
-            },
-            last_messages: {
-              required: messages_fields,
-              items: {
-                properties: {
-                  accumulator: { type: :object },
-                  alarm: { type: :object },
-                  batteryLevel: { type: :object },
-                  valvePosition: { type: :object },
-                  sensor1: { type: :object },
-                  sensor2: { type: :object },
-                  sensor3: { type: :object },
-                  sensor4: { type: :object },
-                  uplinkBDownlink: { type: :object },
-                  timeUplink: { type: :object }
-                }
-              }
-            }
-          }
+        required: thing_fields_required,
+          properties: thing_properties
         run_test!
       end
 

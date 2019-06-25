@@ -19,24 +19,8 @@ RSpec.describe "Uplinks API", :type => :request do
         })
 
         schema type: :object,
-          required: [ 'id', 'data', 'avgsnr', 'rssi', 'long', 'lat', 'snr', 'station', 'seqnumber', 'time', 'sec_uplinks', 'sec_downlinks' ],
-          items:
-            {
-              properties: {
-                id: { type: :string },
-                data: { type: :string },
-                avgsnr: { type: :string },
-                rssi: { type: :string },
-                long: { type: :string },
-                lat: { type: :string },
-                snr: { type: :string },
-                station: { type: :string },
-                seqnumber: { type: :string },
-                time: { type: :string },
-                sec_uplinks: { type: :string },
-                sec_downlinks: { type: :string }
-              }
-          }
+          required: last_uplink_fields,
+          properties: last_uplink_properties
 
         run_test!
       end

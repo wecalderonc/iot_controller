@@ -55,9 +55,9 @@
         }
       }
     },
-    "/api/v1/things": {
+    "/api/v1/things/{id}": {
       "get": {
-        "summary": "Retrieves all things",
+        "summary": "Retrieves a thing",
         "tags": [
           "Things"
         ],
@@ -66,6 +66,12 @@
         ],
         "parameters": [
           {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
             "name": "Authorization",
             "in": "header",
             "type": "string"
@@ -73,37 +79,155 @@
         ],
         "responses": {
           "200": {
-            "description": "all things",
+            "description": "thing found",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string"
-                  },
-                  "pac": {
-                    "type": "string"
-                  },
-                  "company_id": {
-                    "type": "string"
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "status",
+                "pac",
+                "company_id",
+                "created_at",
+                "updated_at",
+                "last_uplink",
+                "last_messages"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "pac": {
+                  "type": "string"
+                },
+                "company_id": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                },
+                "last_uplink": {
+                  "required": [
+                    "id",
+                    "data",
+                    "avgsnr",
+                    "rssi",
+                    "long",
+                    "lat",
+                    "snr",
+                    "station",
+                    "seqnumber",
+                    "time",
+                    "sec_uplinks",
+                    "sec_downlinks",
+                    "created_at",
+                    "updated_at"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "avgsnr": {
+                      "type": "string"
+                    },
+                    "rssi": {
+                      "type": "string"
+                    },
+                    "long": {
+                      "type": "string"
+                    },
+                    "lat": {
+                      "type": "string"
+                    },
+                    "snr": {
+                      "type": "string"
+                    },
+                    "station": {
+                      "type": "string"
+                    },
+                    "seqnumber": {
+                      "type": "string"
+                    },
+                    "time": {
+                      "type": "string"
+                    },
+                    "sec_uplinks": {
+                      "type": "string"
+                    },
+                    "sec_downlinks": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
                   }
                 },
-                "required": [
-                  "id",
-                  "name",
-                  "status",
-                  "pac",
-                  "company_id"
-                ]
+                "last_messages": {
+                  "required": [
+                    "accumulator",
+                    "alarm",
+                    "batteryLevel",
+                    "valvePosition",
+                    "sensor1",
+                    "sensor2",
+                    "sensor3",
+                    "sensor4",
+                    "uplinkBDownlink",
+                    "timeUplink"
+                  ],
+                  "properties": {
+                    "accumulator": {
+                      "type": "object"
+                    },
+                    "alarm": {
+                      "type": "object"
+                    },
+                    "batteryLevel": {
+                      "type": "object"
+                    },
+                    "valvePosition": {
+                      "type": "object"
+                    },
+                    "sensor1": {
+                      "type": "object"
+                    },
+                    "sensor2": {
+                      "type": "object"
+                    },
+                    "sensor3": {
+                      "type": "object"
+                    },
+                    "sensor4": {
+                      "type": "object"
+                    },
+                    "uplinkBDownlink": {
+                      "type": "object"
+                    },
+                    "timeUplink": {
+                      "type": "object"
+                    }
+                  }
+                }
               }
             }
+          },
+          "404": {
+            "description": "thing not found"
           }
         }
       }
@@ -132,64 +256,56 @@
             "schema": {
               "type": "object",
               "required": [
-                "uplink"
+                "id",
+                "data",
+                "avgsnr",
+                "rssi",
+                "long",
+                "lat",
+                "snr",
+                "station",
+                "seqnumber",
+                "time",
+                "sec_uplinks",
+                "sec_downlinks"
               ],
-              "properties": {
-                "uplink": {
-                  "type": "object",
-                  "required": [
-                    "id",
-                    "data",
-                    "avgsnr",
-                    "rssi",
-                    "long",
-                    "lat",
-                    "snr",
-                    "station",
-                    "seqnumber",
-                    "time",
-                    "sec_uplinks",
-                    "sec_downlinks"
-                  ],
-                  "items": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "data": {
-                        "type": "string"
-                      },
-                      "avgsnr": {
-                        "type": "string"
-                      },
-                      "rssi": {
-                        "type": "string"
-                      },
-                      "long": {
-                        "type": "string"
-                      },
-                      "lat": {
-                        "type": "string"
-                      },
-                      "snr": {
-                        "type": "string"
-                      },
-                      "station": {
-                        "type": "string"
-                      },
-                      "seqnumber": {
-                        "type": "string"
-                      },
-                      "time": {
-                        "type": "string"
-                      },
-                      "sec_uplinks": {
-                        "type": "string"
-                      },
-                      "sec_downlinks": {
-                        "type": "string"
-                      }
-                    }
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "string"
+                  },
+                  "avgsnr": {
+                    "type": "string"
+                  },
+                  "rssi": {
+                    "type": "string"
+                  },
+                  "long": {
+                    "type": "string"
+                  },
+                  "lat": {
+                    "type": "string"
+                  },
+                  "snr": {
+                    "type": "string"
+                  },
+                  "station": {
+                    "type": "string"
+                  },
+                  "seqnumber": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "type": "string"
+                  },
+                  "sec_uplinks": {
+                    "type": "string"
+                  },
+                  "sec_downlinks": {
+                    "type": "string"
                   }
                 }
               }
