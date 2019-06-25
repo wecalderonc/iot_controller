@@ -1,4 +1,4 @@
-class AccumulatorSerializer < ActiveModel::Serializer
+class MessagesInsideUplinkSerializer < ActiveModel::Serializer
   attributes  :id,
               :value,
               :created_at,

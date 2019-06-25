@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :accumulator do
-    value { rand(1000) }
+    value { Faker::Number.hexadecimal(digits=8) }
 
     association :uplink, factory: :uplink
   end

@@ -1,4 +1,5 @@
 require 'swagger_helper'
+require 'rails_helper'
 
 RSpec.describe "Things API", :type => :request do
   path "/api/v1/things/{id}" do
@@ -10,27 +11,14 @@ RSpec.describe "Things API", :type => :request do
 
       response '200', 'thing found' do
         let(:user) { create(:user) }
-        let(:id) { create(:thing, :activated).id }
+        let(:accumulator) { create(:accumulator) }
+        let(:id) { accumulator.uplink.thing.id }
+
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-          required: [ 'thing' ],
-          properties: {
-            thing: {
-              type: :object,
-              required: [ 'id', 'name', 'status', 'pac', 'company_id' ],
-              items:
-                {
-                  properties: {
-                    id: { type: :string },
-                    name: { type: :string },
-                    status: { type: :string },
-                    pac: { type: :string },
-                    company_id: { type: :string },
-                  }
-              }
-            }
-          }
+        required: thing_fields_required,
+          properties: thing_properties
         run_test!
       end
 
