@@ -1,21 +1,21 @@
 class AccumulatorDeltaBuilder
 
-  LIMIT = 0xffffffff
+  CONSUMPTION_LIMIT = 0xffffffff # Limit value before accumulator's cycle is restarted
 
-  ToInt = -> accumulator { accumulator.value.to_i(16) }
+  GetConsumption = -> accumulator { accumulator.value.to_i(16) }
 
-  def call(input)
-    accumulated = 0
-    input.map.with_index do |accumulator, index|
+  def call(accumulators)
+    delta_accumulated = 0
+    accumulators.map.with_index do |accumulator, index|
       if index == 0
         delta = 0
-      elsif ToInt.(accumulator) < ToInt.(input[index-1])
-        delta = LIMIT - ToInt.(input[index-1]) + ToInt.(accumulator)
+      elsif GetConsumption.(accumulator) < GetConsumption.(accumulators[index-1])
+        delta = CONSUMPTION_LIMIT - GetConsumption.(accumulators[index-1]) + GetConsumption.(accumulator)
       else
-        delta = ToInt.(accumulator) - ToInt.(input[index-1])
+        delta = GetConsumption.(accumulator) - GetConsumption.(accumulators[index-1])
       end
-      accumulated += delta
-      { delta: delta, accumulated: accumulated }
+      delta_accumulated += delta
+      { delta: delta, accumulated: delta_accumulated }
     end
   end
 end

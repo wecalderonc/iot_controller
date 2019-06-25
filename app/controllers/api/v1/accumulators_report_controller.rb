@@ -5,6 +5,7 @@ module Api
 
       def index
         accumulators = ThingsQuery.new.sort_accumulators
+
         build_response(accumulators)
       end
 
