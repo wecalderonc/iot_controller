@@ -23,8 +23,13 @@ User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
 thing = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12")
 thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20")
 
-Uplink.create(data: "006774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+uplink2 = Uplink.create(data: "006774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
+
+uplink3 = Uplink.create(data: "046774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
 
 Accumulator.create(value: rand(1000), uplink: uplink2)
+Accumulator.create(value: rand(1000), uplink: uplink3)
