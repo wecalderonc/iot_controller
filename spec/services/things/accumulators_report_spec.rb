@@ -9,8 +9,8 @@ RSpec.describe Things::AccumulatorsReport do
       accumulator = create :accumulator
 
       uplink = accumulator.uplink
-      thing =  uplink.thing
-      date =   uplink.created_at.strftime('%a %d %b %Y')
+      thing = uplink.thing
+      date = uplink.created_at.strftime('%a %d %b %Y')
 
       expect(result).to include("BD ID,ID Dispositivo,Fecha/Hora,Valor Acumulador,Delta Consumo,Delta Acumulado")
       expect(result).to include("#{thing.name}")

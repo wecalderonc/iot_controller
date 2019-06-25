@@ -5,6 +5,7 @@ describe ThingsQuery do
 
     context "all things" do
       let(:response) { subject.sort_accumulators }
+
       context "things found" do
         it "return all things with accumulators sorted by thing" do
           create :accumulator
@@ -12,13 +13,12 @@ describe ThingsQuery do
           expect(response.count).to eq(1)
           expect(response.values.count).to eq(1)
         end
+      end
       context "things not found" do
         it "return empty hash response" do
-
-          expect(response.count).to eq(0)
+          expect(response.count).to be_zero
           expect(response).to eq({})
         end
-      end
       end
     end
 
@@ -38,7 +38,7 @@ describe ThingsQuery do
         let(:thing)       { create(:thing) }
 
         it "return speficif thing with accumulators sorted by thing" do
-          expect(response.count).to eq(0)
+          expect(response.count).to be_zero
           expect(response).to eq({})
         end
       end

@@ -1,6 +1,7 @@
 class AccumulatorDeltaBuilder
 
-  CONSUMPTION_LIMIT = 0xffffffff # Limit value before accumulator's cycle is restarted
+  # Limit value before accumulator's cycle is restarted
+  CONSUMPTION_LIMIT = 0xffffffff
 
   GetConsumption = -> accumulator { accumulator.value.to_i(16) }
 

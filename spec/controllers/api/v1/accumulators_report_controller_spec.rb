@@ -31,6 +31,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
   describe "GET/show generate CSV" do
     let(:accumulator) { create(:accumulator) }
     let(:thing_id) { accumulator.uplink.thing.id }
+
     context "result found" do
       it "generate return a JSON" do
         get "/api/v1/accumulators_report/#{thing_id}", headers: header
