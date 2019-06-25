@@ -17,7 +17,7 @@ module Things
           csv << ["Device name: #{device.name}"]
           delta = AccumulatorDeltaBuilder.new.(accumulators)
 
-          accumulators.map.with_index do |accumulator, index|
+          accumulators.each_with_index do |accumulator, index|
             date = GetAccumulatorDate.(accumulator)
             csv << [device.id, device.name, date, accumulator.value, delta[index][:delta], delta[index][:accumulated]]
           end

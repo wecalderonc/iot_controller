@@ -22,7 +22,11 @@ RSpec.describe AccumulatorDeltaBuilder do
         accumulator3 = create :accumulator, value: "00008fff"
 
         expect(result.count).to eq(3)
-        expect(result).to match_array([{:delta=>0, :accumulated=>0}, {:delta=>4096, :accumulated=>4096}, {:delta=>4096, :accumulated=>8192}])
+        expect(result).to match_array([
+          {:delta=>0, :accumulated=>0},
+          {:delta=>4096, :accumulated=>4096},
+          {:delta=>4096, :accumulated=>8192}
+        ])
       end
     end
   end

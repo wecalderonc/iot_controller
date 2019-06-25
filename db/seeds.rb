@@ -12,7 +12,6 @@
 #Thing.create(name: "device4")
 
 
-=begin
 User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
             gender: "male", id_number: "1645634", user_type: "amigo", id_type: "1",
             email: "jvaron@procibernetica.com", password: "javier123" )
@@ -20,7 +19,6 @@ User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
 User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
             gender: "male", id_number: "123456", user_type: "amigo", id_type: "1",
             email: "wcalderon@procibernetica.com", password: "123456" )
-=end
 
 thing = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12")
 thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20")

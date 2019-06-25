@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Things::AccumulatorsReport do
   describe "#call" do
-    let(:data)   { ThingsQuery.sort_accumulators }
+    let(:data)   { ThingsQuery.new.sort_accumulators }
     let(:result) { described_class.(data) }
 
     it "should return a csv file with thing's accumulators data"do

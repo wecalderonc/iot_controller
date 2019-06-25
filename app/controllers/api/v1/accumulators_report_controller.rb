@@ -4,14 +4,15 @@ module Api
     include ActionController::MimeResponds
 
       def index
-        accumulators = ThingsQuery.sort_accumulators
+        accumulators = ThingsQuery.new.sort_accumulators
         build_response(accumulators)
       end
 
       def show
         thing = Thing.find_by(id: params[:id])
+
         if thing.present?
-          accumulators = ThingsQuery.sort_accumulators(thing)
+          accumulators = ThingsQuery.new.sort_accumulators(thing)
           build_response(accumulators)
         else
           render json: { errors: "Device not found" }, status: :not_found
@@ -23,6 +24,7 @@ module Api
       def build_response(accumulators)
         if accumulators.present?
           data =  Things::AccumulatorsReport.(accumulators)
+
           respond_to do |format|
             format.all { send_data data, filename: "device-accumulators-#{Date.today}.csv" }
           end

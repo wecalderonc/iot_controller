@@ -8,8 +8,11 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     context "results found" do
       it "generate return a JSON" do
         get '/api/v1/accumulators_report', headers: header
+
         body = JSON.parse(response.body)
+
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
         expect(body["errors"]).to eq("No results found")
       end
     end
@@ -20,6 +23,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         get '/api/v1/accumulators_report', headers: header
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
+        expect(response.status).to eq(200)
       end
     end
   end
@@ -32,6 +36,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         get "/api/v1/accumulators_report/#{thing_id}", headers: header
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
+        expect(response.status).to eq(200)
       end
     end
 
@@ -42,6 +47,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
         expect(body["errors"]).to eq("Device not found")
       end
     end
