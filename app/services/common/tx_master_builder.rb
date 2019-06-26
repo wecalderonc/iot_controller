@@ -5,7 +5,11 @@ module Common
       include Dry::Transaction(container: container)
 
       steps.each do |step|
-        send step[:adapter], step[:name], with: "ops.#{step[:name]}"
+        if step[:adapter].eql?(:try)
+          send step[:adapter], step[:name], catch: step[:catch], with: "ops.#{step[:name]}"
+        else
+          send step[:adapter], step[:name], with: "ops.#{step[:name]}"
+        end
       end
     end
   end
@@ -34,11 +38,17 @@ module Common
         @steps << {
           adapter: method,
           name: args.first,
+          catch: options[:catch],
           with: options[:with]
         }
       else
         super
       end
+    end
+
+    def try(name, args)
+      new_args = [name, args]
+      method_missing(:try, *new_args)
     end
   end
 end

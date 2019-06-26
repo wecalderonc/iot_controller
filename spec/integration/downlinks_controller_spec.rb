@@ -20,7 +20,7 @@ RSpec.describe "Downlinks API", :type => :request do
         })
 
         schema type: :object,
-          required: [ 'uplink' ],
+          required: [ 'downlink' ],
           properties: {
             uplink: {
               type: :object,

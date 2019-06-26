@@ -42,6 +42,9 @@ gem 'sidekiq-cron'
 #Api documentation
 gem 'rswag'
 
+#AWS
+gem 'aws-sdk-iotdataplane'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'

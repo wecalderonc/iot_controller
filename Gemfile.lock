@@ -54,6 +54,18 @@ GEM
     ansi (1.5.0)
     arel (9.0.0)
     ast (2.4.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.178.0)
+    aws-sdk-core (3.56.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-iotdataplane (1.13.0)
+      aws-sdk-core (~> 3, >= 3.56.0)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -177,6 +189,7 @@ GEM
     ice_nine (0.11.2)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
+    jmespath (1.4.0)
     json (2.2.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
@@ -406,6 +419,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  aws-sdk-iotdataplane
   bootsnap (>= 1.1.0)
   brakeman
   byebug

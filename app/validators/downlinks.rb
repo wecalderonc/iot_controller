@@ -14,4 +14,18 @@ module Validators::Downlinks
       required(:user_type).value(type?: Symbol, included_in?: User::USER_TYPE)
     end
   end
+
+  InstantSchema = Dry::Validation.Schema {
+    required(:thing_name).filled
+  }
+
+  ScheduledSchema = Dry::Validation.Schema {
+    required(:value).filled
+    required(:input_method).filled
+  }
+
+  ReportedSchema = Dry::Validation.Schema {
+    required(:thing_name) {filled? && str?}
+    required(:type).filled
+  }
 end
