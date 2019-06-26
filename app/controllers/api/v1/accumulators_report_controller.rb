@@ -13,7 +13,7 @@ module Api
         thing = Thing.find_by(id: params[:id])
 
         if thing.present?
-          accumulators = ThingsQuery.new.sort_accumulators(thing)
+          accumulators = ThingsQuery.new(thing).sort_accumulators
           build_response(accumulators)
         else
           render json: { errors: "Device not found" }, status: :not_found
