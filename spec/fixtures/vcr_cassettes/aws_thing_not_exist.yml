@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://iot-core-test/things/XXxx/shadow
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.56.0 ruby/2.6.3 x86_64-linux aws-sdk-iotdataplane/1.13.0
+      Host:
+      - a3nxjph9lc5l6.iot.us-east-1.amazonaws.com
+      X-Amz-Date:
+      - 20190626T224421Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAJZKOANUZW3ORBMNA/20190626/us-east-1/iotdata/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=fc28b642ad89a45dc2057c45c8c3e65727a29e38efc0835e151a7a8dc9c7255e
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '97'
+      Date:
+      - Wed, 26 Jun 2019 22:44:22 GMT
+      X-Amzn-Requestid:
+      - d7e6a624-c399-7d6b-4694-accb2acbcc32
+      Connection:
+      - keep-alive
+      X-Amzn-Errortype:
+      - 'ResourceNotFoundException:'
+    body:
+      encoding: UTF-8
+      string: '{"message":"No shadow exists with name: ''XXxx''","traceId":"d7e6a624-c399-7d6b-4694-accb2acbcc32"}'
+    http_version: 
+  recorded_at: Wed, 26 Jun 2019 22:44:22 GMT
+recorded_with: VCR 5.0.0

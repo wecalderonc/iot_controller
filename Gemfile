@@ -64,6 +64,7 @@ group :test do
   gem 'neo4j-rspec'
   gem 'rails-controller-testing'
   gem 'vcr'
+  gem 'webmock'
   gem 'timecop'
   gem 'faker'
   gem 'simplecov', require: false

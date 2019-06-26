@@ -8,7 +8,7 @@ RSpec.describe Amazon::Iot::Api::Execute do
 
     context "When all the operations are successful" do
       it "Should return a Success response" do
-        VCR.use_cassette("aws_missing_credential_error") do
+        VCR.use_cassette("aws_request_api_success") do
           response = subject.(input)
 
           expect(response).to be_success
@@ -30,14 +30,16 @@ RSpec.describe Amazon::Iot::Api::Execute do
       end
     end
 
-    context "When the 'request_data' operation fails" do
+    context "When the 'request data' operation fails" do
       it "Should return a Failure response" do
-        input[:thing_name] = "XXxx"
+        VCR.use_cassette("aws_thing_not_exist") do
+          input[:thing_name] = "XXxx"
 
-        response = subject.(input)
+          response = subject.(input)
 
-        expect(response).to be_failure
-        expect(response.failure.message).to eq("No shadow exists with name: 'XXxx'")
+          expect(response).to be_failure
+          expect(response.failure.message).to eq("No shadow exists with name: 'XXxx'")
+        end
       end
     end
   end

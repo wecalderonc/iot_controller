@@ -32,9 +32,11 @@ RSpec.configure do |config|
   end
 end
 
+require 'webmock'
 VCR.configure do |config|
+  WebMock.enable!
   config.allow_http_connections_when_no_cassette = true
   config.cassette_library_dir = Rails.root.join('spec', 'fixtures','vcr_cassettes')
-  config.hook_into :faraday
+  config.hook_into :webmock
   config.ignore_hosts 'neo4j_test'
 end

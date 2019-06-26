@@ -6,9 +6,9 @@ class Amazon::Iot::Api::InitializeClient
   def call(input)
     client = Aws::IoTDataPlane::Client.new(
       region: 'us-east-1',
-      access_key_id: ENV['access_key'],
-      secret_access_key: ENV['secret_key'],
-      endpoint: ENV['endpoint']
+      access_key_id: ENV['ACCESS_KEY'],
+      secret_access_key: ENV['SECRET_KEY'],
+      endpoint: ENV['AWS_IOT_ENDPOINT']
       )
     input.merge(client: client)
   end
