@@ -16,7 +16,7 @@ module Api
           alarms = ThingsQuery.new(thing).sort_alarms
           build_response(alarms)
         else
-          render json: { errors: "Device not found" }, status: :not_found
+          json_response({ errors: "Device not found" }, :not_found)
         end
       end
 
@@ -26,11 +26,9 @@ module Api
         if alarms.present?
           data =  Things::AlarmsReport.(alarms)
 
-          respond_to do |format|
-            format.all { send_data data, filename: "device-alarms-#{Date.today}.csv" }
-          end
+          csv_response(data, "device-alarms")
         else
-          render json: { errors: "No results found" }, status: :not_found
+          json_response({ errors: "No results found" }, :not_found)
         end
       end
     end

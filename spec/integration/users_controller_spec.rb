@@ -1,16 +1,16 @@
 require 'swagger_helper'
 
 RSpec.describe "Users API", :type => :request do
-  path "/api/v1/users" do
+  path "/api/v1/users/{email}" do
     get 'Retrieves a User' do
       tags 'Users'
       produces 'application/json'
-      parameter name: :email, :in => :query, :type => :string
+      parameter name: :email, :in => :path, :type => :string
       parameter name: 'Authorization', :in => :header, :type => :string
 
       response '200', 'user found' do
         let(:user) { create(:user) }
-        let(:email) { create(:user).email }
+        let(:email) { create(:user, email: 'valid@mail.com').email }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,

@@ -1,7 +1,6 @@
 module Api
   module V1
     class AccumulatorsReportController < ApplicationController
-    include ActionController::MimeResponds
 
       def index
         accumulators = ThingsQuery.new.sort_accumulators
@@ -16,7 +15,7 @@ module Api
           accumulators = ThingsQuery.new(thing).sort_accumulators
           build_response(accumulators)
         else
-          render json: { errors: "Device not found" }, status: :not_found
+          json_response({ errors: "Device not found" }, :not_found)
         end
       end
 
@@ -26,11 +25,9 @@ module Api
         if accumulators.present?
           data =  Things::AccumulatorsReport.(accumulators)
 
-          respond_to do |format|
-            format.all { send_data data, filename: "device-accumulators-#{Date.today}.csv" }
-          end
+          csv_response(data, "device-accumulators")
         else
-          render json: { errors: "No results found" }, status: :not_found
+          json_response({ errors: "No results found" }, :not_found)
         end
       end
     end
