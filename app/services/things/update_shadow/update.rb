@@ -12,7 +12,7 @@ class Things::UpdateShadow::Update
   private
 
   ChooseAction = -> do
-    if [:scheduled_cut, :scheduled_restore_supply].include?(input[:type])
+    input[:type].include?('scheduled')
       true
     else
       nil
@@ -20,10 +20,10 @@ class Things::UpdateShadow::Update
   end
 
   def check_accumulator(input)
-    Amazon::Iotdata::CheckAccumulator.new.execute(input)
+    Accumulators::CheckState::Execute.new.(input)
   end
 
   def update_shadow_state(input)
-    Amazon::Iotdata::UpdateShadowDesiredState.new.execute(input)
+    Amazon::Iot::Shadows::Update::Execute.new.(input)
   end
 end
