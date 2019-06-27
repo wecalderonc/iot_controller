@@ -6,10 +6,12 @@ module Api
       def index
         alarms = ThingsQuery.new.sort_alarms
 
-        build_response(alarms)
+        build_response(alarms, "Alarms")
       end
 
       def show
+        show_handler({ params: params, model: "Alarms" })
+=begin
         thing = Thing.find_by(id: params[:id])
 
         if thing.present?
@@ -18,19 +20,9 @@ module Api
         else
           json_response({ errors: "Device not found" }, :not_found)
         end
+=end
       end
 
-      private
-
-      def build_response(alarms)
-        if alarms.present?
-          data =  Things::AlarmsReport.(alarms)
-
-          csv_response(data, "device-alarms")
-        else
-          json_response({ errors: "No results found" }, :not_found)
-        end
-      end
     end
   end
 end
