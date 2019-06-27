@@ -38,10 +38,7 @@ A step by step series of examples that tell you how to get a development env run
   - Run `sudo docker-compose run web rspec spec` for Ruby tests.
   - Run `sudo docker-compose run web yarn test` for Javascript tests.
   - Run `sudo docker-compose run web yarn test-watch` for run a watcher in Javascript tests.
-
-## Checkers
-
-  - Run `bin/bash` for QA script.
+  - Run `sudo docker-compose run web rake rswag:specs:swaggerize` for RSwag generators
 
 ### Break down into end to end tests
 
