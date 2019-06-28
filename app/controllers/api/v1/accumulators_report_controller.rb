@@ -5,30 +5,11 @@ module Api
       def index
         accumulators = ThingsQuery.new.sort_accumulators
 
-        build_response(accumulators)
+        build_response(accumulators, "Accumulators")
       end
 
       def show
-        thing = Thing.find_by(id: params[:id])
-
-        if thing.present?
-          accumulators = ThingsQuery.new(thing).sort_accumulators
-          build_response(accumulators)
-        else
-          json_response({ errors: "Device not found" }, :not_found)
-        end
-      end
-
-      private
-
-      def build_response(accumulators)
-        if accumulators.present?
-          data =  Things::AccumulatorsReport.(accumulators)
-
-          csv_response(data, "device-accumulators")
-        else
-          json_response({ errors: "No results found" }, :not_found)
-        end
+        show_handler({ params: params, model: "Accumulators" })
       end
     end
   end

@@ -1,13 +1,19 @@
 # this concern build manage report response
 module ReportsManager
 
+  ReportClass = -> model do
+    "Things::#{model}Report".constantize
+  end
+
+  QueryMethod = -> model do
+    "sort_#{model.downcase}".to_sym
+  end
+
   def show_handler(input)
     thing = Thing.find_by(id: input[:params][:id])
-    puts "thing -> #{thing.inspect}"
 
     if thing.present?
-      a = ThingsQuery.new(thing)
-      alarms = a.send("sort_#{input[:model].downcase}".to_sym)
+      alarms = ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
       build_response(alarms, input[:model])
     else
       json_response({ errors: "Device not found" }, :not_found)
@@ -18,7 +24,7 @@ module ReportsManager
 
   def build_response(collection, model)
     if collection.present?
-      data =  Things::AlarmsReport.(collection)
+      data =  ReportClass.(model).(collection)
 
       csv_response(data, "Device-#{model}")
     else

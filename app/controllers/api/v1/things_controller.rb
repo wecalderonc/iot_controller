@@ -3,7 +3,11 @@ module Api
     class ThingsController < ApplicationController
       def show
         thing = Thing.find_by(id: params[:id])
-        render json: thing, status: :ok
+        if thing.present?
+          json_response(thing)
+        else
+          json_response({ errors: "thing not found" }, :not_found)
+        end
       end
     end
   end
