@@ -2,7 +2,7 @@
 module ReportsManager
 
   ReportClass = -> model do
-    "Things::#{model}Report".constantize
+    "Things::#{model.to_s.camelize}Report".constantize
   end
 
   QueryMethod = -> model do

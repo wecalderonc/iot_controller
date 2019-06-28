@@ -5,11 +5,11 @@ module Api
       def index
         accumulators = ThingsQuery.new.sort_accumulators
 
-        build_response(accumulators, :Accumulators)
+        build_response(accumulators, :accumulators)
       end
 
       def show
-        show_handler({ params: params, model: :Accumulators })
+        show_handler({ params: params, model: :accumulators })
       end
     end
   end
