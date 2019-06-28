@@ -2,8 +2,8 @@ module Api
   module V1
     class UsersController < ApplicationController
 
-      def index
-        user = User.find_by(email: params["email"])
+      def show
+        user = User.find_by(email: "#{params["email"]}.#{params[:format]}")
         if user
           render json: { id: user.id, email: user.email, name: user.first_name }, status: :ok
         else
