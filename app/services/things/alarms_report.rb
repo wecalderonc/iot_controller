@@ -5,10 +5,6 @@ module Things
 
     HEADERS = ["BD ID", "ID Dispositivo", "Fecha/Hora", "Valor Alarma"]
 
-    GetAlarmDate = -> alaram do
-      alaram.uplink.created_at.strftime('%a %d %b %Y')
-    end
-
     def self.call(input)
       CSV.generate(headers: true) do |csv|
 
@@ -17,7 +13,7 @@ module Things
           csv << ["Device name: #{device.name}"]
 
           alarams.each do |alaram|
-            date = GetAlarmDate.(alaram)
+            date = Utils::GetUplinkDate.(alaram)
             csv << [device.id, device.name, date, alaram.value]
           end
         end

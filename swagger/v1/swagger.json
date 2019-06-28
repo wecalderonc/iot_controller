@@ -267,46 +267,52 @@
                 "seqnumber",
                 "time",
                 "sec_uplinks",
-                "sec_downlinks"
+                "sec_downlinks",
+                "created_at",
+                "updated_at"
               ],
-              "items": {
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "data": {
-                    "type": "string"
-                  },
-                  "avgsnr": {
-                    "type": "string"
-                  },
-                  "rssi": {
-                    "type": "string"
-                  },
-                  "long": {
-                    "type": "string"
-                  },
-                  "lat": {
-                    "type": "string"
-                  },
-                  "snr": {
-                    "type": "string"
-                  },
-                  "station": {
-                    "type": "string"
-                  },
-                  "seqnumber": {
-                    "type": "string"
-                  },
-                  "time": {
-                    "type": "string"
-                  },
-                  "sec_uplinks": {
-                    "type": "string"
-                  },
-                  "sec_downlinks": {
-                    "type": "string"
-                  }
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "avgsnr": {
+                  "type": "string"
+                },
+                "rssi": {
+                  "type": "string"
+                },
+                "long": {
+                  "type": "string"
+                },
+                "lat": {
+                  "type": "string"
+                },
+                "snr": {
+                  "type": "string"
+                },
+                "station": {
+                  "type": "string"
+                },
+                "seqnumber": {
+                  "type": "string"
+                },
+                "time": {
+                  "type": "string"
+                },
+                "sec_uplinks": {
+                  "type": "string"
+                },
+                "sec_downlinks": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
                 }
               }
             }
@@ -317,7 +323,7 @@
         }
       }
     },
-    "/api/v1/users": {
+    "/api/v1/users/{email}": {
       "get": {
         "summary": "Retrieves a User",
         "tags": [
@@ -329,8 +335,9 @@
         "parameters": [
           {
             "name": "email",
-            "in": "query",
-            "type": "string"
+            "in": "path",
+            "type": "string",
+            "required": true
           },
           {
             "name": "Authorization",
