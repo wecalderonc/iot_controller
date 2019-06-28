@@ -9,12 +9,12 @@ module Things
       CSV.generate(headers: true) do |csv|
 
         csv << HEADERS
-        input.each do |device, alarams|
+        input.each do |device, alarms|
           csv << ["Device name: #{device.name}"]
 
-          alarams.each do |alaram|
-            date = Utils::GetUplinkDate.(alaram)
-            csv << [device.id, device.name, date, alaram.value]
+          alarms.each do |alarm|
+            date = ThingsUtils::GetUplinkDate.(alarm)
+            csv << [device.id, device.name, date, alarm.value]
           end
         end
       end
