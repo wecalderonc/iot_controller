@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://iot-core-test/things/2BEE81/shadow
+    body:
+      encoding: UTF-8
+      string: '{"state":{"desired":{"data":"0100003ffff20000"}}}'
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.56.0 ruby/2.6.3 x86_64-linux aws-sdk-iotdataplane/1.13.0
+      Host:
+      - a3nxjph9lc5l6.iot.us-east-1.amazonaws.com
+      X-Amz-Date:
+      - 20190702T194044Z
+      X-Amz-Content-Sha256:
+      - 64d70510ec80d65d0409dd935cea226d9a17ebcae9362095b844251fd0b87790
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAJZKOANUZW3ORBMNA/20190702/us-east-1/iotdata/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=dbc7ca35b55d895b90bb874e97aa1f084f96c17185b4312b42c7a2b35d7c03d9
+      Content-Length:
+      - '49'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '144'
+      Date:
+      - Tue, 02 Jul 2019 19:40:44 GMT
+      X-Amzn-Requestid:
+      - 90b5de4e-d90f-8fe2-5371-0cdbadec261e
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"state":{"desired":{"data":"0100003ffff20000"}},"metadata":{"desired":{"data":{"timestamp":1562096444}}},"version":8520,"timestamp":1562096444}'
+    http_version: 
+  recorded_at: Tue, 02 Jul 2019 19:40:44 GMT
+recorded_with: VCR 5.0.0
