@@ -35,6 +35,7 @@ RSpec.describe Amazon::Iot::Api::RequestData do
         end
       end
     end
+
     context "The type is desired" do
       it "Should call Request update" do
         VCR.use_cassette("aws_update_thing_shadow_success") do
@@ -52,7 +53,7 @@ RSpec.describe Amazon::Iot::Api::RequestData do
     context "When the client is wrong" do
       it "Should return a Failure response" do
         damaged_client = Aws::IoTDataPlane::Client.new(
-          region: 'us-east-1',
+          region: 'us-east-4',
           access_key_id: ENV['ACCESS_KEY'],
           secret_access_key: ENV['SECRET_KEY'],
           endpoint: ENV['AWS_IOT_ENDPOINT']
@@ -60,7 +61,23 @@ RSpec.describe Amazon::Iot::Api::RequestData do
 
         input[:client] = damaged_client
 
-        expect { subject.(input) }.to raise_error(Seahorse::Client::NetworkingError)
+        expect { subject.(input) }.to raise_error(Aws::IoTDataPlane::Errors::ForbiddenException)
+      end
+    end
+
+    context "When the thing_name is deleted" do
+      it "Should return a Failure response" do
+        input.delete(:thing_name)
+
+        expect { subject.(input) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "When the type is deleted" do
+      it "Should return a Failure response" do
+        input.delete(:type)
+
+        expect { subject.(input) }.to raise_error(NoMethodError)
       end
     end
   end
