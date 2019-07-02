@@ -14,4 +14,15 @@ class Thing
 
   has_many :in, :owner, type: :OWN, model_class: :User
   has_many :in, :renter, type: :RENT, model_class: :User
+
+  VALID_ACTIONS = [:scheduled_cut, :restore_supply, :instant_cut, :scheduled_restore_supply]
+  VALID_UPDATE_TYPES = [:desired, :reported]
+
+  def last_accumulator
+    last_uplink.present? ? last_uplink.accumulator : nil
+  end
+
+  def last_uplink
+    self.uplinks.order(created_at: :asc).last
+  end
 end

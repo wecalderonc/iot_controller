@@ -23,4 +23,68 @@ RSpec.describe Thing, :type => :model do
   it { is_expected.to define_property :company_id, :String }
 
   it { is_expected.to have_one(:uplinks).with_direction(:out) }
+
+  describe "#last_accumulator" do
+    let(:thing) { create(:thing) }
+
+    context "When there are uplinks and accumulators" do
+      it "Should return the last accumulator" do
+        create(:uplink, thing: thing, created_at: Time.zone.now)
+        create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes)
+        uplink = create(:uplink, thing: thing, created_at: Time.zone.now + 2.minutes)
+
+        acc = create(:accumulator, uplink: uplink)
+
+        last_acc = thing.last_accumulator
+
+        expect(last_acc.id).to eq(acc.id)
+      end
+    end
+
+    context "When there are uplinks and no accumulators" do
+      it "Should return the last accumulator" do
+        create(:uplink, thing: thing, created_at: Time.zone.now)
+        uplink = create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes)
+        create(:uplink, thing: thing, created_at: Time.zone.now + 2.minutes)
+
+        acc = create(:accumulator, uplink: uplink)
+
+        last_acc = thing.last_accumulator
+
+        expect(last_acc).to be_nil
+      end
+    end
+
+    context "When there are not uplinks and no accumulators" do
+      it "Should return the last accumulator" do
+        last_acc = thing.last_accumulator
+
+        expect(last_acc).to be_nil
+      end
+    end
+  end
+
+  describe "#last_uplink" do
+    let(:thing) { create(:thing) }
+
+    context "When there are uplinks" do
+      it "Should return the last accumulator" do
+        create(:uplink, thing: thing, created_at: Time.zone.now)
+        create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes)
+        uplink = create(:uplink, thing: thing, created_at: Time.zone.now + 2.minutes)
+
+        last_uplink = thing.last_uplink
+
+        expect(last_uplink.id).to eq(uplink.id)
+      end
+    end
+
+    context "When there are not uplinks" do
+      it "Should return the last accumulator" do
+        last_uplink = thing.last_uplink
+
+        expect(last_uplink).to be_nil
+      end
+    end
+  end
 end
