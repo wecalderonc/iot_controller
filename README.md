@@ -18,14 +18,17 @@ These instructions will get you a copy of the project up and running on your loc
   * Using Docker for Development
   - Docker version 17.03.0-ce or higher
   - Docker Compose version 1.21.2 or higher
+  - Neo4J 3.5.3
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
   1. Set the environment variables with Figaro gem. Complete the variables preloaded in `config/application.yml`
-  2. Run `sudo docker-compose run web rails db:create db:migrate` to create the database.
+  2. Run `sudo docker-compose run web rake neo4j:migrate` to add migrations to the database.
   3. Run `sudo docker-compose run web rails db:seed` to initialize the database.
+
+If you want to migrate test database, you should add `RAILS_ENV=test` before each command
 
 ### Running the app
 
@@ -36,22 +39,13 @@ A step by step series of examples that tell you how to get a development env run
 ## Test Suite
 
   - Run `sudo docker-compose run web rspec spec` for Ruby tests.
-  - Run `sudo docker-compose run web yarn test` for Javascript tests.
-  - Run `sudo docker-compose run web yarn test-watch` for run a watcher in Javascript tests.
-
-## Checkers
-
-  - Run `bin/bash` for QA script.
+  - Run `sudo docker-compose run web rake rswag:specs:swaggerize` for RSwag generators
 
 ### Break down into end to end tests
 
 Follow this good practices:
   * [Better Specs](http://www.betterspecs.org/)
   * [Basics](https://medium.com/devnetwork/step-by-step-guide-to-write-rspec-that-is-understandable-and-readable-30279b04dd43)
-
-### CSS Style guides
-
-This repository use [Materialize](https://materializecss.com) as style guide
 
 ## Build an image and push it to DockerHub
   - `sudo docker build -t zonawik1/iot_controller:version .`

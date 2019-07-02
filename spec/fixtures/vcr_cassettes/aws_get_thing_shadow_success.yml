@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://a3nxjph9lc5l6.iot.us-east-1.amazonaws.com/things/2BEE81/shadow
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.56.0 ruby/2.6.3 x86_64-linux aws-sdk-iotdataplane/1.13.0
+      Host:
+      - a3nxjph9lc5l6.iot.us-east-1.amazonaws.com
+      X-Amz-Date:
+      - 20190702T014054Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAJZKOANUZW3ORBMNA/20190702/us-east-1/iotdata/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=195293cb2bbf2ca266a811ab0a6db9847dec6ae8653b136da7c15add50195835
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '931'
+      Date:
+      - Tue, 02 Jul 2019 01:40:57 GMT
+      X-Amzn-Requestid:
+      - 5a25699f-21d6-6c6e-cc12-4467fb0cf4be
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"state":{"desired":{"redLed":1,"greenLed":10000,"data":"0000000000010000"},"reported":{"redLed":1,"greenLed":104000,"device":"2BEE81","data":"00df30054400035000060017","time":"1551476309","snr":"25.99","station":"116D","avgSnr":"27.08","lat":"5.0","lng":"-74.0","rssi":"-103.00","seqNumber":"3621"},"delta":{"greenLed":10000,"data":"0000000000010000"}},"metadata":{"desired":{"redLed":{"timestamp":1547233739},"greenLed":{"timestamp":1547233739},"data":{"timestamp":1561672248}},"reported":{"redLed":{"timestamp":1546448718},"greenLed":{"timestamp":1546448718},"device":{"timestamp":1551476311},"data":{"timestamp":1551476311},"time":{"timestamp":1551476311},"snr":{"timestamp":1551476311},"station":{"timestamp":1551476311},"avgSnr":{"timestamp":1551476311},"lat":{"timestamp":1551476311},"lng":{"timestamp":1551476311},"rssi":{"timestamp":1551476311},"seqNumber":{"timestamp":1551476311}}},"version":8512,"timestamp":1562031657}'
+    http_version: 
+  recorded_at: Tue, 02 Jul 2019 01:40:58 GMT
+recorded_with: VCR 5.0.0

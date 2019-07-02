@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :uplinks,                       only: [:index]
       resources :accumulators_report,           only: [:show, :index]
       resources :alarms_report,                 only: [:show, :index]
+      resources :downlinks,                     only: [:create]
     end
   end
 end
