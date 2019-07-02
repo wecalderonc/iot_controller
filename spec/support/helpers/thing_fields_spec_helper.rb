@@ -33,5 +33,29 @@ module Helpers
         }
       }
     end
+
+    def things_properties
+      {
+        id: { type: :string },
+        name: { type: :string },
+        status: { type: :string },
+        pac: { type: :string },
+        company_id: { type: :string },
+        created_at: { type: :string },
+        updated_at: { type: :string }
+      }
+    end
+
+    def things_fields_required
+      [
+        'id',
+        'name',
+        'status',
+        'pac',
+        'company_id',
+        'created_at',
+        'updated_at'
+      ]
+    end
   end
 end

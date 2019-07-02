@@ -1,6 +1,11 @@
 module Api
   module V1
     class ThingsController < ApplicationController
+      def index
+        things = Thing.all
+        render json: things, status: :ok, each_serializer: ThingsSerializer
+      end
+
       def show
         thing = Thing.find_by(id: params[:id])
         if thing.present?

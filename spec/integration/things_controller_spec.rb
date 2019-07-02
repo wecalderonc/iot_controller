@@ -2,6 +2,37 @@ require 'swagger_helper'
 require 'rails_helper'
 
 RSpec.describe "Things API", :type => :request do
+  path "/api/v1/things" do
+     get 'Retrieves all Things' do
+      tags 'Things'
+      produces 'application/json'
+
+      response '200', 'things founded' do
+        let(:user) { create(:user) }
+        let!(:thing) { create(:thing) }
+        let!(:thing2) { create(:thing) }
+        let!(:thing3) { create(:thing) }
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+        parameter({
+         :in => :header,
+         :type => :string,
+         :name => :Authorization,
+         :required => true,
+         :description => 'Client token'
+        })
+
+        schema type: :array,
+        items: {
+          type: :object,
+          properties: things_properties,
+          required: things_fields_required
+        }
+
+        run_test!
+      end
+    end
+  end
+
   path "/api/v1/things/{id}" do
     get 'Retrieves a thing' do
       tags 'Things'
