@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.extend Helpers::ThingFieldsSpecHelper
   config.extend Helpers::LastMessagesSpecHelper
   config.extend Helpers::LastUplinkSpecHelper
+  config.extend Helpers::AccumulatorSpecHelper
 
   # For the `neo4j` gem
   config.around do |example|
