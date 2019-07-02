@@ -11,7 +11,7 @@ RSpec.describe "Things API", :type => :request do
         let(:user) { create(:user) }
         let!(:thing) { create(:thing) }
         let!(:thing2) { create(:thing) }
-        let!(:thing2) { create(:thing) }
+        let!(:thing3) { create(:thing) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
         parameter({
          :in => :header,
@@ -21,16 +21,13 @@ RSpec.describe "Things API", :type => :request do
          :description => 'Client token'
         })
 
-        schema type: :object,
-          required: thing_fields_required,
-          properties: thing_properties
+        schema type: :array,
+        items: {
+          type: :object,
+          properties: things_properties,
+          required: things_fields_required
+        }
 
-        run_test!
-      end
-
-      response '404', 'no things found' do
-        let(:user) { create(:user) }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
         run_test!
       end
     end

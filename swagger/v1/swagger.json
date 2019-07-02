@@ -55,6 +55,69 @@
         }
       }
     },
+    "/api/v1/things": {
+      "get": {
+        "summary": "Retrieves all Things",
+        "tags": [
+          "Things"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true,
+            "description": "Client token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "things founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "pac": {
+                    "type": "string"
+                  },
+                  "company_id": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "status",
+                  "pac",
+                  "company_id",
+                  "created_at",
+                  "updated_at"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/things/{id}": {
       "get": {
         "summary": "Retrieves a thing",
