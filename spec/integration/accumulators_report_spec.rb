@@ -26,17 +26,6 @@ RSpec.describe "Aqueducts API", :type => :request do
         }
         run_test!
       end
-
-      response '404', 'thing not found' do
-        let(:user) { create(:user) }
-        let(:thing) { create(:thing) }
-        let(:query) { 'last_accumulators' }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
-
-        let(:id) { thing.id }
-
-        run_test!
-      end
     end
   end
 end

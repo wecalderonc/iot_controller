@@ -5,6 +5,66 @@
     "version": "v1"
   },
   "paths": {
+    "/api/v1/accumulators_report/{id}": {
+      "get": {
+        "summary": "Retrieves a last accumulators of a thing",
+        "tags": [
+          "Things"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "last accumulators for thing found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "value",
+                  "created_at",
+                  "updated_at"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/aqueducts": {
       "get": {
         "summary": "Retrieves all Aqueducts",
