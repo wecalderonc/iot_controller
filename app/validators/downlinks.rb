@@ -1,4 +1,7 @@
 module Validators::Downlinks
+  CreateSchema = Dry::Validation.Schema do
+  end
+
   InstantSchema = Dry::Validation.Schema {
     required(:thing_name).filled
   }

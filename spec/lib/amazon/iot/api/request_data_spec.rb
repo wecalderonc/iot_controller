@@ -52,16 +52,18 @@ RSpec.describe Amazon::Iot::Api::RequestData do
 
     context "When the client is wrong" do
       it "Should return a Failure response" do
-        damaged_client = Aws::IoTDataPlane::Client.new(
-          region: 'us-east-4',
-          access_key_id: ENV['ACCESS_KEY'],
-          secret_access_key: ENV['SECRET_KEY'],
-          endpoint: ENV['AWS_IOT_ENDPOINT']
-        )
-
-        input[:client] = damaged_client
-
-        expect { subject.(input) }.to raise_error(Aws::IoTDataPlane::Errors::ForbiddenException)
+        VCR.use_cassette("aws_damaged_client") do
+          damaged_client = Aws::IoTDataPlane::Client.new(
+            region: 'us-east-4',
+            access_key_id: ENV['ACCESS_KEY'],
+            secret_access_key: ENV['SECRET_KEY'],
+            endpoint: ENV['AWS_IOT_ENDPOINT']
+          )
+         
+          input[:client] = damaged_client
+         
+          expect { subject.(input) }.to raise_error(Aws::IoTDataPlane::Errors::ForbiddenException)
+        end
       end
     end
 

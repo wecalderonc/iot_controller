@@ -1,0 +1,2 @@
+module Downlinks::Create
+end

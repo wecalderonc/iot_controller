@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://a3nxjph9lc5l6.iot.us-east-1.amazonaws.com/things/2BEE81/shadow
+    uri: http://iot-core-test/things/2BEE81/shadow
     body:
       encoding: UTF-8
       string: ''

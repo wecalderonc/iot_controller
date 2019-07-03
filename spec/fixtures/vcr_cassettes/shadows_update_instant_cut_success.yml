@@ -5,7 +5,7 @@ http_interactions:
     uri: http://iot-core-test/things/2BEE81/shadow
     body:
       encoding: UTF-8
-      string: '{"state":{"desired":{"data":"4000002000f30017"}}}'
+      string: '{"state":{"desired":{"data":"0000003000021234"}}}'
     headers:
       Content-Type:
       - ''
@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - a3nxjph9lc5l6.iot.us-east-1.amazonaws.com
       X-Amz-Date:
-      - 20190702T014103Z
+      - 20190702T192847Z
       X-Amz-Content-Sha256:
-      - 1d8fec80c898bffb7cca57a5591f856eda1bd8f4441e4557d4aea0d1539a34bc
+      - ea3cd2bfb2dd730c5cc2c1de7a04354376849e5b45a522af3ab87ab7aa705dee
       Authorization:
       - AWS4-HMAC-SHA256 Credential=AKIAJZKOANUZW3ORBMNA/20190702/us-east-1/iotdata/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=0e2a9f2c7f4c3aa076c2bf8a49566006a1f36908786f3c837388aad35930d367
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a1026c069500cdc6a88e1941971c034851e78708b9b1dc1dce5c7a4cde02f868
       Content-Length:
       - '49'
       Accept:
@@ -36,14 +36,14 @@ http_interactions:
       Content-Length:
       - '144'
       Date:
-      - Tue, 02 Jul 2019 01:41:04 GMT
+      - Tue, 02 Jul 2019 19:28:47 GMT
       X-Amzn-Requestid:
-      - 17d8396b-a3ba-5f36-deef-7f3633f8d3b9
+      - 66360c78-6929-9603-49cf-05aaed085d7a
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"state":{"desired":{"data":"4000002000f30017"}},"metadata":{"desired":{"data":{"timestamp":1562031664}}},"version":8513,"timestamp":1562031664}'
+      string: '{"state":{"desired":{"data":"0000003000021234"}},"metadata":{"desired":{"data":{"timestamp":1562095727}}},"version":8518,"timestamp":1562095727}'
     http_version: 
-  recorded_at: Tue, 02 Jul 2019 01:41:04 GMT
+  recorded_at: Tue, 02 Jul 2019 19:28:47 GMT
 recorded_with: VCR 5.0.0
