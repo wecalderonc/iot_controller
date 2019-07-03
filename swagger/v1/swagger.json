@@ -55,6 +55,95 @@
         }
       }
     },
+    "/api/v1/downlinks": {
+      "post": {
+        "summary": "Generates a downlink",
+        "tags": [
+          "Downlinks"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "thing_name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "action_type",
+                "type",
+                "thing_name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The action is not in the list",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
+            }
+          },
+          "200": {
+            "description": "Downlink generated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "thing_name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "payload": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "payload",
+                "thing_name",
+                "action",
+                "type"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/api/v1/things": {
       "get": {
         "summary": "Retrieves all Things",

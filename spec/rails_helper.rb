@@ -39,4 +39,5 @@ VCR.configure do |config|
   config.cassette_library_dir = Rails.root.join('spec', 'fixtures','vcr_cassettes')
   config.hook_into :webmock
   config.ignore_hosts 'neo4j_test'
+  config.configure_rspec_metadata!
 end

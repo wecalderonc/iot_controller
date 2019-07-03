@@ -4,8 +4,9 @@ module Shadows::Update
     step :get_thing,             with: Things::Get.new
     step :get_accumulator,       with: GetAccumulator.new
     step :ready_for_cut,         with: ReadyForCut.new
-    map  :build_payload,         with: Shadows::Update::BuildPayload.new
+    map  :build_payload,         with: BuildPayload.new
     step :update,                with: Amazon::Iot::Api::Execute.new
+    map  :build_response,        with: BuildResponse.new
   end.Do
 
   Proxy = {

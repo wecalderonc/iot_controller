@@ -9,9 +9,9 @@ module Amazon::Iot::Api
       Seahorse::Client::NetworkingError
     ] }
 
-    step :validate_input,                    with: Amazon::Iot::Api::ValidateInput.new
-    map  :initialize_client,                 with: Amazon::Iot::Api::InitializeClient.new
-    try  :request_data, catch: Errors.(),    with: Amazon::Iot::Api::RequestData.new
-    map  :parse_data,                        with: Amazon::Iot::Api::ParseData.new
+    step :validate_input,                          with: Amazon::Iot::Api::ValidateInput.new
+    map  :initialize_client, catch: Errors.(),     with: Amazon::Iot::Api::InitializeClient.new
+    try  :request_data, catch: Errors.(),          with: Amazon::Iot::Api::RequestData.new
+    map  :parse_data,                              with: Amazon::Iot::Api::ParseData.new
   end.Do
 end
