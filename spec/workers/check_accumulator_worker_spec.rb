@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'sidekiq/testing'
 
 RSpec.describe CheckAccumulatorWorker do
+  let(:accumulator) { create(:accumulator) }
   let(:thing)   { create(:thing) }
   let(:input)   { { thing: thing, action: :scheduled_cut } }
   let(:subject) { described_class }
@@ -19,8 +20,6 @@ RSpec.describe CheckAccumulatorWorker do
 
   describe "#perform" do
     it "Should enqueue the worker" do
-      uplink = create(:uplink, thing: thing)
-      accumulator = create(:accumulator, uplink: uplink)
 
       allow(Shadows::Update::Execute).to receive(:call)
 
