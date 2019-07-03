@@ -119,7 +119,7 @@ RSpec.describe Shadows::Update::Execute do
           input_method: input_method
         } }
 
-        context "When last_accumulator < value and Accumulated Value selected" do
+        context "When last_accumulators < value and Accumulated Value selected" do
           it "Should return a Success response" do
             VCR.use_cassette("shadows_update_scheduled_success_with_accumulated_value") do
               uplink = create(:uplink, thing: thing)
@@ -133,7 +133,7 @@ RSpec.describe Shadows::Update::Execute do
           end
         end
 
-        context "When last_accumulator > value and Accumulated Value selected" do
+        context "When last_accumulators > value and Accumulated Value selected" do
           it "Should return a Success response" do
             uplink = create(:uplink, thing: thing)
 
@@ -239,7 +239,7 @@ RSpec.describe Shadows::Update::Execute do
           input_method: input_method
         } }
 
-        context "When last_accumulator < value and Accumulated Value selected" do
+        context "When last_accumulators < value and Accumulated Value selected" do
           it "Should return a Success response" do
             VCR.use_cassette("shadows_update_scheduled_restore_supply_consumption_accumulated_success") do
               uplink = create(:uplink, thing: thing)
@@ -253,7 +253,7 @@ RSpec.describe Shadows::Update::Execute do
           end
         end
 
-        context "When last_accumulator > value and Accumulated Value selected" do
+        context "When last_accumulators > value and Accumulated Value selected" do
           it "Should return a Success response" do
             uplink = create(:uplink, thing: thing)
 

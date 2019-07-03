@@ -15,7 +15,7 @@ class Shadows::Update::ReadyForCut
   private
 
   def ready_for_cut?(input)
-    last_acc = Base::Maths.hexa_to_int(input[:last_accumulator])
+    last_acc = Base::Maths.hexa_to_int(input[:last_accumulators])
     cut_in = Base::Maths.hexa_to_int(input[:value])
 
     {

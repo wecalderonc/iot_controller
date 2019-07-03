@@ -24,7 +24,7 @@ RSpec.describe Thing, :type => :model do
 
   it { is_expected.to have_one(:uplinks).with_direction(:out) }
 
-  describe "#last_accumulator" do
+  describe "#last_accumulators" do
     let(:thing) { create(:thing) }
 
     context "When there are uplinks and accumulators" do
@@ -35,7 +35,7 @@ RSpec.describe Thing, :type => :model do
 
         acc = create(:accumulator, uplink: uplink)
 
-        last_acc = thing.last_accumulator
+        last_acc = thing.last_accumulators
 
         expect(last_acc.id).to eq(acc.id)
       end
@@ -49,7 +49,7 @@ RSpec.describe Thing, :type => :model do
 
         acc = create(:accumulator, uplink: uplink)
 
-        last_acc = thing.last_accumulator
+        last_acc = thing.last_accumulators
 
         expect(last_acc).to be_nil
       end
@@ -57,9 +57,22 @@ RSpec.describe Thing, :type => :model do
 
     context "When there are not uplinks and no accumulators" do
       it "Should return the last accumulator" do
-        last_acc = thing.last_accumulator
+        last_acc = thing.last_accumulators
 
         expect(last_acc).to be_nil
+      end
+    end
+
+
+    context "when there are accumulators" do
+      let!(:accumulator) { create(:accumulator, created_at: Time.zone.now) }
+      let!(:accumulator2) { create(:accumulator, uplink: accumulator.uplink, created_at: Time.zone.now) }
+      let!(:accumulator3) { create(:accumulator, uplink: accumulator.uplink, created_at: Time.zone.now) }
+      it "should return the latest accumulators" do
+        thing = accumulator.uplink.thing
+        last_accumulators = thing.last_accumulators(3)
+
+        expect(last_accumulators.length).to eq(3)
       end
     end
   end
@@ -88,19 +101,4 @@ RSpec.describe Thing, :type => :model do
     end
   end
 
-  describe "#last_accumulators" do
-    let!(:accumulator) { create(:accumulator, created_at: Time.zone.now) }
-    let!(:accumulator2) { create(:accumulator, uplink: accumulator.uplink, created_at: Time.zone.now) }
-    let!(:accumulator3) { create(:accumulator, uplink: accumulator.uplink, created_at: Time.zone.now) }
-
-    context "when there are accumulators" do
-      it "should return the latest accumulators" do
-        thing = accumulator.uplink.thing
-        last_accumulators = thing.last_accumulators(3)
-
-        expect(last_accumulators.length).to eq(3)
-      end
-    end
-
-  end
 end
