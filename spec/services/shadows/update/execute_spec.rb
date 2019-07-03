@@ -226,7 +226,7 @@ RSpec.describe Shadows::Update::Execute do
       context "When the input method is accumulated_value" do
         let(:thing)         { create(:thing, name: '2BEE81') }
         let(:type)          { :desired }
-        let(:action)        { :scheduled_restore_supply }
+        let(:action)        { :restore_supply_with_scheduled_cut }
         let(:input_method)  { :accumulated_value }
         let(:value)         { "ffff0000" }
 
@@ -283,7 +283,7 @@ RSpec.describe Shadows::Update::Execute do
       context "When the input method is consumption" do
         let(:thing)         { create(:thing, name: '2BEE81') }
         let(:type)          { :desired }
-        let(:action)        { :scheduled_restore_supply }
+        let(:action)        { :restore_supply_with_scheduled_cut }
         let(:input_method)  { :consumption }
         let(:value)         { "00000001" }
 

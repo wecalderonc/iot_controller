@@ -10,13 +10,13 @@ module Shadows::Update
 
   Proxy = {
     scheduled_cut:            BaseTx.new,
-    scheduled_restore_supply: BaseTx.new,
+    restore_supply_with_scheduled_cut: BaseTx.new,
     restore_supply:           BaseTx.new(
       get_accumulator: -> input { Dry::Monads::Result::Success.new(input) },
-      ready_for_cut: -> input { Dry::Monads::Result::Success.new(input) }
+      ready_for_cut:   -> input { Dry::Monads::Result::Success.new(input) }
     ),
     instant_cut:              BaseTx.new(
-      ready_for_cut: -> input { Dry::Monads::Result::Success.new(input) }
+      ready_for_cut:   -> input { Dry::Monads::Result::Success.new(input) }
     )
   }
 

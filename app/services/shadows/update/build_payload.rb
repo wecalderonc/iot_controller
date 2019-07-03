@@ -10,7 +10,7 @@ class Shadows::Update::BuildPayload
       scheduled_cut: -> { scheduled_restore_or_cut_supply(input) },
       restore_supply: -> { restore_supply(input) },
       instant_cut: -> { instant_cut(input) },
-      scheduled_restore_supply: -> { scheduled_restore_or_cut_supply(input) },
+      restore_supply_with_scheduled_cut: -> { scheduled_restore_or_cut_supply(input) },
     }[input[:action]].()
   end
 
