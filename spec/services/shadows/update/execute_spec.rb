@@ -142,9 +142,10 @@ RSpec.describe Shadows::Update::Execute do
 
             response = subject.(input)
 
+            expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+
             expect(response).to be_failure
-            expect(response.failure).to eq("not ready for cut")
-            #expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+            expect(response.failure[:message]).to eq("Not ready for cut, calling worker")
           end
         end
 
@@ -200,9 +201,10 @@ RSpec.describe Shadows::Update::Execute do
 
             response = subject.(input)
 
+            expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+
             expect(response).to be_failure
-            expect(response.failure).to eq("not ready for cut")
-            #expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+            expect(response.failure[:message]).to eq("Not ready for cut, calling worker")
           end
         end
 
@@ -260,9 +262,10 @@ RSpec.describe Shadows::Update::Execute do
 
             response = subject.(input)
 
+            expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+
             expect(response).to be_failure
-            expect(response.failure).to eq("not ready for cut")
-            #expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+            expect(response.failure[:message]).to eq("Not ready for cut, calling worker")
           end
         end
 
@@ -317,9 +320,10 @@ RSpec.describe Shadows::Update::Execute do
 
             response = subject.(input)
 
+            expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+
             expect(response).to be_failure
-            expect(response.failure).to eq("not ready for cut")
-            #expect { CheckAccumulatorWorker.perform_async }.to change(CheckAccumulatorWorker.jobs, :size).by(1)
+            expect(response.failure[:message]).to eq("Not ready for cut, calling worker")
           end
         end
 
