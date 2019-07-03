@@ -25,4 +25,8 @@ class Thing
   def last_uplink
     self.uplinks.order(created_at: :asc).last
   end
+
+  def last_accumulators(quantity)
+    self.uplinks.accumulator.limit(quantity)
+  end
 end

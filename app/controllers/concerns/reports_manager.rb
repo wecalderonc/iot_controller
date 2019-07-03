@@ -15,10 +15,10 @@ module ReportsManager
     if thing.present?
 
       options = {
-        last_accumulators: -> { last_accumulators(thing) }
+        last_accumulators: -> { json_response(thing.last_accumulators(10)) }
       }
       options.default = -> {
-        query_result = ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
+        query_result = build_query(thing, input)
         build_response(query_result, input[:model])
       }
 
@@ -41,7 +41,7 @@ module ReportsManager
     end
   end
 
-  def last_accumulators(thing)
-    json_response(thing.uplinks.accumulator.limit(10))
+  def build_query(thing, input)
+    ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
   end
 end

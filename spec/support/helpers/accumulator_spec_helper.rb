@@ -1,12 +1,7 @@
 module Helpers
   module AccumulatorSpecHelper
     def accumulator_fields
-      [
-        'id',
-        'value',
-        'created_at',
-        'updated_at'
-      ]
+      Accumulator.attributes.keys
     end
 
     def accumulator_properties

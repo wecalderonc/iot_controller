@@ -87,4 +87,20 @@ RSpec.describe Thing, :type => :model do
       end
     end
   end
+
+  describe "#last_accumulators" do
+    let!(:accumulator) { create(:accumulator, created_at: Time.zone.now) }
+    let!(:accumulator2) { create(:accumulator, uplink: accumulator.uplink, created_at: Time.zone.now) }
+    let!(:accumulator3) { create(:accumulator, uplink: accumulator.uplink, created_at: Time.zone.now) }
+
+    context "when there are accumulators" do
+      it "should return the latest accumulators" do
+        thing = accumulator.uplink.thing
+        last_accumulators = thing.last_accumulators(3)
+
+        expect(last_accumulators.length).to eq(3)
+      end
+    end
+
+  end
 end
