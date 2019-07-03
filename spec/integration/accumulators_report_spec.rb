@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-RSpec.describe "Aqueducts API", :type => :request do
+RSpec.describe "Accumulators API", :type => :request do
 
   path "/api/v1/accumulators_report/{id}" do
     get 'Retrieves a last accumulators of a thing' do
