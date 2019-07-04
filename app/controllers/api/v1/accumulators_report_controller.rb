@@ -3,13 +3,11 @@ module Api
     class AccumulatorsReportController < ApplicationController
 
       def index
-        accumulators = ThingsQuery.new.sort_accumulators
-
-        build_response(accumulators, :accumulators)
+        index_handler({ params: params, model: :accumulator })
       end
 
       def show
-        show_handler({ params: params, model: :accumulators })
+        show_handler({ params: params, model: :accumulator })
       end
     end
   end
