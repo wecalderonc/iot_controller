@@ -8,7 +8,7 @@ module Api
         if downlink.success?
           json_response(downlink.success)
         else
-          json_response({ errors: downlink.failure[:message] }, :ok)
+          json_response({ errors: downlink.failure[:message] })
         end
       end
 
