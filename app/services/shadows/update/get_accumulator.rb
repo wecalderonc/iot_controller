@@ -4,7 +4,7 @@ class Shadows::Update::GetAccumulator
   include Dry::Transaction::Operation
 
   def call(input)
-    last_acc = input[:thing].last_accumulators
+    last_acc = input[:thing].last_accumulators.last
 
     if last_acc.present?
       Success input.merge(last_accumulators: last_acc.value)
