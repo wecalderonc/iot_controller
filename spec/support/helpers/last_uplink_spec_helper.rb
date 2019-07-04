@@ -1,22 +1,7 @@
 module Helpers
   module LastUplinkSpecHelper
     def last_uplink_fields
-      [
-        'id',
-        'data',
-        'avgsnr',
-        'rssi',
-        'long',
-        'lat',
-        'snr',
-        'station',
-        'seqnumber',
-        'time',
-        'sec_uplinks',
-        'sec_downlinks',
-        'created_at',
-        'updated_at'
-      ]
+      Uplink.attributes.keys
     end
 
     def last_uplink_properties

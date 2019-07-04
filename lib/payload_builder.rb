@@ -1,6 +1,6 @@
 module PayloadBuilder
-  def self.consume(value, last_accumulator)
-    sum =  Base::Maths.hexa_to_int(value) + last_accumulator
+  def self.consume(value, last_accumulators)
+    sum =  Base::Maths.hexa_to_int(value) + last_accumulators
     sum_string = sum.to_s(16)
 
     self.accumulate_value(sum_string.rjust(8,'0'))

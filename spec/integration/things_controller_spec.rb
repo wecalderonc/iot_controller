@@ -48,7 +48,7 @@ RSpec.describe "Things API", :type => :request do
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-        required: thing_fields_required,
+          required: thing_fields_required,
           properties: thing_properties
         run_test!
       end

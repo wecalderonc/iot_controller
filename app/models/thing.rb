@@ -18,11 +18,11 @@ class Thing
   VALID_ACTIONS = [:scheduled_cut, :restore_supply, :instant_cut, :restore_supply_with_scheduled_cut]
   VALID_UPDATE_TYPES = [:desired, :reported]
 
-  def last_accumulator
-    last_uplink.present? ? last_uplink.accumulator : nil
+  def last_uplinks(quantity = 1)
+    self.uplinks.order(created_at: :desc).limit(quantity)
   end
 
-  def last_uplink
-    self.uplinks.order(created_at: :asc).last
+  def last_accumulators(quantity = 1)
+    self.last_uplinks(quantity).map(&:accumulator)
   end
 end

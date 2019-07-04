@@ -13,8 +13,17 @@ module ReportsManager
     thing = Thing.find_by(id: input[:params][:id])
 
     if thing.present?
-      alarms = ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
-      build_response(alarms, input[:model])
+
+      options = {
+        last_accumulators: -> { render_last_accumulators(thing) }
+      }
+      options.default = -> {
+        query_result = build_query(thing, input)
+        build_response(query_result, input[:model])
+      }
+
+      options[input[:params][:query]&.to_sym].()
+
     else
       json_response({ errors: "Device not found" }, :not_found)
     end
@@ -30,5 +39,13 @@ module ReportsManager
     else
       json_response({ errors: "No results found" }, :not_found)
     end
+  end
+
+  def build_query(thing, input)
+    ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
+  end
+
+  def render_last_accumulators(thing)
+    render json: thing.last_accumulators(10).compact, each_serializer: AccumulatorSerializer
   end
 end
