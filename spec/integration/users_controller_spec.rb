@@ -20,6 +20,7 @@ RSpec.describe "Users API", :type => :request do
             name: { type: :string },
           },
           required: [ 'id', 'email', 'name' ]
+
         run_test!
       end
 

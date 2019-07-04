@@ -1,21 +1,25 @@
 module Api
   module V1
     class DownlinksController < ApplicationController
+
       def create
-        downlink = Downlinks::Create::Execute.new.(create_params)
+        downlink = Shadows::Update::Execute.(create_params)
 
         if downlink.success?
-          render json: downlink, status: :ok
+          json_response(downlink.success)
         else
-          errors = downlink.failure
-          render json: { errors: errors[:errors] }, status: errors[:status]
+          json_response({ errors: downlink.failure[:message] })
         end
       end
 
       private
 
       def create_params
-        params.permit(*Downlink::PERMITED_PARAMS)
+        _params = params.permit(:action_type, :input_method, :value, :thing_name, :type).to_h.symbolize_keys
+        _params.tap do |param|
+          param[:action] = _params[:action_type].to_sym
+          param[:type] = _params[:type].to_sym
+        end
       end
     end
   end

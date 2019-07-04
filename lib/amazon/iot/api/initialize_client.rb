@@ -9,7 +9,8 @@ class Amazon::Iot::Api::InitializeClient
       access_key_id: ENV['ACCESS_KEY'],
       secret_access_key: ENV['SECRET_KEY'],
       endpoint: ENV['AWS_IOT_ENDPOINT']
-      )
+    )
+
     input.merge(client: client)
   end
 end
