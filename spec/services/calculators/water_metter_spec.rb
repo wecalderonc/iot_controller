@@ -32,6 +32,16 @@ RSpec.describe Calculators::WaterMetter do
         expect(result).to be_truthy
       end
     end
+
+    context "last acc is equal to cut in" do
+      it "should return false" do
+        last_acc = Base::Maths.hexa_to_int('0xffffffff')
+
+        result = subject::ReadyForConsumption.(last_acc, cut_in)
+
+        expect(result).to be_falsey
+      end
+    end
   end
 
   describe "#ReadyForAccValue" do
