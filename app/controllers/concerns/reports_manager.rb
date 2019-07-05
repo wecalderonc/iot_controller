@@ -2,28 +2,31 @@
 module ReportsManager
 
   ReportClass = -> model do
-    "Things::#{model.to_s.camelize}Report".constantize
+    "Things::#{model.to_s.camelize}sReport".constantize
   end
 
   QueryMethod = -> model do
-    "sort_#{model.downcase}".to_sym
+    "sort_#{model.downcase}s".to_sym
+  end
+
+  def index_handler(input)
+    query_result = build_query(input)
+    build_response(query_result, input[:model])
   end
 
   def show_handler(input)
-    thing = Thing.find_by(id: input[:params][:id])
+    thing = Thing.find_by(id: params[:id])
 
     if thing.present?
-
       options = {
         last_accumulators: -> { render_last_accumulators(thing) }
       }
       options.default = -> {
-        query_result = build_query(thing, input)
+        query_result = build_query(input, thing)
         build_response(query_result, input[:model])
       }
 
       options[input[:params][:query]&.to_sym].()
-
     else
       json_response({ errors: "Device not found" }, :not_found)
     end
@@ -41,8 +44,15 @@ module ReportsManager
     end
   end
 
-  def build_query(thing, input)
-    ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
+  def build_query(input, thing = Thing)
+    params, model = input.values_at(:params, :model)
+
+    if params[:date].present?
+      ThingsQuery.new(thing)
+      .date_uplinks_filter(params[:date], model)
+    else
+      ThingsQuery.new(thing).send(QueryMethod.(model))
+    end
   end
 
   def render_last_accumulators(thing)

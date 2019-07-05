@@ -4,13 +4,11 @@ module Api
     include ActionController::MimeResponds
 
       def index
-        alarms = ThingsQuery.new.sort_alarms
-
-        build_response(alarms, :alarms)
+        index_handler({ params: params, model: :alarm })
       end
 
       def show
-        show_handler({ params: params, model: :alarms })
+        show_handler({ params: params, model: :alarm })
       end
     end
   end
