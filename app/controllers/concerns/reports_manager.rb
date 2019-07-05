@@ -10,29 +10,19 @@ module ReportsManager
   end
 
   def index_handler(input)
-    params = input[:params]
-    puts "*" * 100
-    puts "params -> #{params}"
-
-    if params[:date].present?
-      data = ThingsQuery.new
-      .date_uplinks_filter(params[:date], input[:model])
-    else
-      data = ThingsQuery.new.send(QueryMethod.(input[:model]))
-    end
-    build_response(data, input[:model])
+    query_result = build_query(input)
+    build_response(query_result, input[:model])
   end
 
   def show_handler(input)
     thing = Thing.find_by(id: params[:id])
-    puts "*" * 100
-    puts "params -> #{params}"
+
     if thing.present?
       options = {
         last_accumulators: -> { render_last_accumulators(thing) }
       }
       options.default = -> {
-        query_result = build_query(thing, input)
+        query_result = build_query(input, thing)
         build_response(query_result, input[:model])
       }
 
@@ -54,13 +44,14 @@ module ReportsManager
     end
   end
 
-  def build_query(thing, input)
-    params = input[:params]
+  def build_query(input, thing = Thing)
+    params, model = input.values_at(:params, :model)
+
     if params[:date].present?
       ThingsQuery.new(thing)
-      .date_uplinks_filter(params[:date], input[:model])
+      .date_uplinks_filter(params[:date], model)
     else
-      ThingsQuery.new(thing).send(QueryMethod.(input[:model]))
+      ThingsQuery.new(thing).send(QueryMethod.(model))
     end
   end
 
