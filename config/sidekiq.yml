@@ -7,4 +7,4 @@ production:
   - critical
   - default
   - low
-  - tests
+  - downlinks
