@@ -37,22 +37,6 @@ RSpec.describe Shadows::Update::Execute do
           expect(response.failure[:message]).to eq(expected_response)
         end
       end
-
-      context "When the 'validation' operation fails" do
-        it "Should return a Failure response" do
-          input[:type] = :aja
-
-          response = subject.(input)
-
-          expect(response).to be_failure
-
-          expected_response = {
-            :type=>["must be one of: desired, reported"]
-          }
-
-          expect(response.failure[:message]).to eq(expected_response)
-        end
-      end
     end
 
     context "When the action is restore supply" do
@@ -82,22 +66,6 @@ RSpec.describe Shadows::Update::Execute do
           expect(response).to be_failure
 
           expected_response = "The action is not in the list"
-
-          expect(response.failure[:message]).to eq(expected_response)
-        end
-      end
-
-      context "When the 'validation' operation fails" do
-        it "Should return a Failure response" do
-          input[:type] = :aja
-
-          response = subject.(input)
-
-          expect(response).to be_failure
-
-          expected_response = {
-            :type=>["must be one of: desired, reported"]
-          }
 
           expect(response.failure[:message]).to eq(expected_response)
         end
@@ -162,6 +130,69 @@ RSpec.describe Shadows::Update::Execute do
             expect(response.failure[:message]).to eq(expected_response)
           end
         end
+        context "When the 'validation' operation fails" do
+          it "Should return a Failure response" do
+            input[:input_method] = "aja"
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = {
+              :input_method => ["must be Symbol"]
+            }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the 'validation' operation fails" do
+          it "Should return a Failure response" do
+            input[:input_method] = :aja
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = {
+              :input_method => ["must be one of: consumption, accumulated_value"]
+            }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the 'validation' operation fails" do
+          it "Should return a Failure response" do
+            input.delete(:input_method)
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = {
+              :input_method => ["must be filled"]
+            }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the 'validation' operation fails" do
+          it "Should return a Failure response" do
+            input.delete(:value)
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = {
+              :value=> ["must be filled"]
+            }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
       end
 
       context "When the input method is consumption" do
@@ -208,7 +239,7 @@ RSpec.describe Shadows::Update::Execute do
           end
         end
 
-        context "When the 'usds' operation fails" do
+        context "When the action is not in the list" do
           it "Should return a Failure response" do
             input[:action] = :lol
 
@@ -327,7 +358,35 @@ RSpec.describe Shadows::Update::Execute do
           end
         end
 
-        context "When the 'usds' operation fails" do
+        context "When the input has not have value" do
+          it "Should return a Failure response" do
+            input.delete(:value)
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = { :value => ["must be filled"] }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the input has not have a valid value" do
+          it "Should return a Failure response" do
+            input[:value] = 345354
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = { :value => ["must be a string"] }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the action is not in the list" do
           it "Should return a Failure response" do
             input[:action] = :lol
 
@@ -336,6 +395,38 @@ RSpec.describe Shadows::Update::Execute do
             expect(response).to be_failure
 
             expected_response = "The action is not in the list"
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the 'validation' operation fails" do
+          it "Should return a Failure response" do
+            input[:input_method] = "aja"
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = {
+              :input_method => ["must be Symbol"]
+            }
+
+            expect(response.failure[:message]).to eq(expected_response)
+          end
+        end
+
+        context "When the 'validation' operation fails" do
+          it "Should return a Failure response" do
+            input[:input_method] = :aja
+
+            response = subject.(input)
+
+            expect(response).to be_failure
+
+            expected_response = {
+              :input_method => ["must be one of: consumption, accumulated_value"]
+            }
 
             expect(response.failure[:message]).to eq(expected_response)
           end
