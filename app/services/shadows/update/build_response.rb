@@ -6,8 +6,9 @@ class Shadows::Update::BuildResponse
   def call(input)
     {
       payload: input[:payload],
+      input_method: input[:input_method],
+      value: input[:value],
       action: input[:action],
-      type: input[:type],
       thing_name: input[:thing_name]
     }
   end
