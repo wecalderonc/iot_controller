@@ -5,7 +5,7 @@ module Validators
     },
 
     update_state: {
-      shadow:                             Validators::Things::UpdateShadowSchema,
+      shadow:                             Validators::Shadows::UpdateShadowSchema,
       scheduled_cut:                      Validators::Downlinks::ScheduledSchema,
       restore_supply:                     Validators::Downlinks::InstantSchema,
       instant_cut:                        Validators::Downlinks::InstantSchema,
