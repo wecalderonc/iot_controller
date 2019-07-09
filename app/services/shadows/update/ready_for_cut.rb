@@ -19,8 +19,8 @@ class Shadows::Update::ReadyForCut
     cut_in = Base::Maths.hexa_to_int(input[:value])
 
     {
-      consumption: Calculators::WaterMetter::ReadyForConsumption.(last_acc, cut_in),
-      accumulated_value: Calculators::WaterMetter::ReadyForAccValue.(last_acc, cut_in)
-    }[input[:input_method]]
+      consumption: -> { Calculators::WaterMetter::ReadyForConsumption.(last_acc, cut_in) },
+      accumulated_value: -> { Calculators::WaterMetter::ReadyForAccValue.(last_acc, cut_in) }
+    }[input[:input_method]].()
   end
 end

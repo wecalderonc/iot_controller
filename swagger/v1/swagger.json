@@ -54,10 +54,9 @@
                   }
                 },
                 "required": [
-                  "id",
-                  "value",
                   "created_at",
-                  "updated_at"
+                  "updated_at",
+                  "value"
                 ]
               }
             }
@@ -142,7 +141,7 @@
                 "action_type": {
                   "type": "string"
                 },
-                "type": {
+                "payload": {
                   "type": "string"
                 },
                 "thing_name": {
@@ -158,29 +157,18 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "The action is not in the list",
+          "200": {
+            "description": "Downlink generated without payload",
             "schema": {
               "type": "object",
               "properties": {
                 "errors": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "errors"
-              ]
-            }
-          },
-          "200": {
-            "description": "Downlink generated",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "thing_name": {
-                  "type": "string"
+                  "type": "object"
                 },
-                "type": {
+                "message": {
+                  "type": "object"
+                },
+                "thing_name": {
                   "type": "string"
                 },
                 "action": {
@@ -188,13 +176,15 @@
                 },
                 "payload": {
                   "type": "string"
+                },
+                "value": {
+                  "type": "string"
                 }
               },
               "required": [
                 "payload",
                 "thing_name",
-                "action",
-                "type"
+                "action"
               ]
             }
           },
@@ -329,7 +319,8 @@
                 },
                 "last_uplink": {
                   "required": [
-                    "id",
+                    "created_at",
+                    "updated_at",
                     "data",
                     "avgsnr",
                     "rssi",
@@ -340,9 +331,7 @@
                     "seqnumber",
                     "time",
                     "sec_uplinks",
-                    "sec_downlinks",
-                    "created_at",
-                    "updated_at"
+                    "sec_downlinks"
                   ],
                   "properties": {
                     "id": {
@@ -468,7 +457,8 @@
             "schema": {
               "type": "object",
               "required": [
-                "id",
+                "created_at",
+                "updated_at",
                 "data",
                 "avgsnr",
                 "rssi",
@@ -479,9 +469,7 @@
                 "seqnumber",
                 "time",
                 "sec_uplinks",
-                "sec_downlinks",
-                "created_at",
-                "updated_at"
+                "sec_downlinks"
               ],
               "properties": {
                 "id": {

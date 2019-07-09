@@ -6,12 +6,14 @@ class Shadows::Update::BuildPayload
   PAYLOAD = "0000000000010000"
 
   def call(input)
-    {
+    params = {
       scheduled_cut: -> { scheduled_restore_or_cut_supply(input) },
       restore_supply: -> { restore_supply(input) },
       instant_cut: -> { instant_cut(input) },
       restore_supply_with_scheduled_cut: -> { scheduled_restore_or_cut_supply(input) },
-    }[input[:action]].()
+    }[input[:action_type]].()
+
+    params.merge(type: :desired)
   end
 
   def instant_cut(input)

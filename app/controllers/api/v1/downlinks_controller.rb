@@ -15,11 +15,8 @@ module Api
       private
 
       def create_params
-        _params = params.permit(:action_type, :input_method, :value, :thing_name, :type).to_h.symbolize_keys
-        _params.tap do |param|
-          param[:action] = _params[:action_type].to_sym
-          param[:type] = _params[:type].to_sym
-        end
+        _params = params.permit(:action_type, :input_method, :value, :thing_name).to_h.symbolize_keys
+        Utils.symbolize_values(_params, [:action_type, :input_method])
       end
     end
   end

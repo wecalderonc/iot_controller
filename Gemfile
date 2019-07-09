@@ -38,9 +38,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'sidekiq'
 gem 'rufus-scheduler', '~> 3.4.0'
 gem 'sidekiq-cron'
-
-#Api documentation
-gem 'rswag'
+gem 'sqlite3'
 
 #AWS
 gem 'aws-sdk-iotdataplane'
@@ -48,6 +46,11 @@ gem 'aws-sdk-iotdataplane'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'
+
+  #Api documentation
+  gem 'rswag'
+  gem 'rspec-rails'
+  gem 'rswag-specs'
 end
 
 group :development do
@@ -60,7 +63,6 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'neo4j-rspec'
   gem 'rails-controller-testing'
   gem 'vcr'
@@ -69,10 +71,8 @@ group :test do
   gem 'faker'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
-  gem 'sqlite3'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
-  gem 'rswag-specs'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
