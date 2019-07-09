@@ -18,7 +18,7 @@ class Common::Operations::Persist
   private
 
   def find_or_create_object(object_name, uniq_param)
-    object = Utils.to_constant(object_name)
+    object = Utils.to_constant!(object_name)
     object.find_or_create_by(**uniq_param)
   end
 end

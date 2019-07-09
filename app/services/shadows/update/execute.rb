@@ -10,18 +10,18 @@ module Shadows::Update
   end.Do
 
   Proxy = {
-    scheduled_cut:            BaseTx.new,
     restore_supply_with_scheduled_cut: BaseTx.new,
-    restore_supply:           BaseTx.new(
-      get_accumulator: -> input { Dry::Monads::Result::Success.new(input) },
+    scheduled_cut:                     BaseTx.new,
+    instant_cut:                       BaseTx.new(
       ready_for_cut:   -> input { Dry::Monads::Result::Success.new(input) }
     ),
-    instant_cut:              BaseTx.new(
+    restore_supply:                    BaseTx.new(
+      get_accumulator: -> input { Dry::Monads::Result::Success.new(input) },
       ready_for_cut:   -> input { Dry::Monads::Result::Success.new(input) }
     )
   }
 
   Proxy.default = -> input { Dry::Monads::Result::Failure.new(Errors.general_error("The action is not in the list", self.class)) }
 
-  Execute = -> input { Proxy[input[:action]].(input) }
+  Execute = -> input { Proxy[input[:action_type]].(input) }
 end

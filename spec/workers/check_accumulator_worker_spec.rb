@@ -4,7 +4,7 @@ require 'sidekiq/testing'
 RSpec.describe CheckAccumulatorWorker do
   let(:accumulator) { create(:accumulator) }
   let(:thing)   { create(:thing) }
-  let(:input)   { { thing: thing, action: :scheduled_cut } }
+  let(:input)   { { thing: thing, action_type: :scheduled_cut } }
   let(:subject) { described_class }
 
   before do
@@ -20,7 +20,6 @@ RSpec.describe CheckAccumulatorWorker do
 
   describe "#perform" do
     it "Should enqueue the worker" do
-
       allow(Shadows::Update::Execute).to receive(:call)
 
       expect { subject.perform_async(input) }.to change(subject.jobs, :size).by(1)

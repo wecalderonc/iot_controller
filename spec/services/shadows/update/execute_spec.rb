@@ -4,10 +4,10 @@ require 'sidekiq/testing'
 RSpec.describe Shadows::Update::Execute do
   describe "#call" do
     context "When the action is instant cut" do
-      let(:thing) { create(:thing, name: '2BEE81') }
-      let(:type)  { :desired }
-      let(:action){ :instant_cut }
-      let(:input) { { thing_name: thing.name, type: type, action: action } }
+      let(:thing)       { create(:thing, name: '2BEE81') }
+      let(:type)        { :desired }
+      let(:action_type) { :instant_cut }
+      let(:input)       { { thing_name: thing.name, type: type, action_type: action_type } }
 
       context "When all the operations are successful" do
         it "Should return a Success response" do
@@ -26,7 +26,7 @@ RSpec.describe Shadows::Update::Execute do
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
           input.delete(:thing_name)
-          input.delete(:action)
+          input.delete(:action_type)
 
           response = subject.(input)
 
@@ -40,10 +40,10 @@ RSpec.describe Shadows::Update::Execute do
     end
 
     context "When the action is restore supply" do
-      let(:thing) { create(:thing, name: '2BEE81') }
-      let(:type)  { :desired }
-      let(:action){ :restore_supply }
-      let(:input) { { thing_name: thing.name, type: type, action: action } }
+      let(:thing)       { create(:thing, name: '2BEE81') }
+      let(:type)        { :desired }
+      let(:action_type) { :restore_supply }
+      let(:input)       { { thing_name: thing.name, type: type, action_type: action_type } }
 
       context "When all the operations are successful" do
         it "Should return a Success response" do
@@ -59,7 +59,7 @@ RSpec.describe Shadows::Update::Execute do
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
           input.delete(:thing_name)
-          input.delete(:action)
+          input.delete(:action_type)
 
           response = subject.(input)
 
@@ -76,13 +76,13 @@ RSpec.describe Shadows::Update::Execute do
       context "When the input method is accumulated_value" do
         let(:thing)         { create(:thing, name: '2BEE81') }
         let(:type)          { :desired }
-        let(:action)        { :scheduled_cut }
+        let(:action_type)   { :scheduled_cut }
         let(:input_method)  { :accumulated_value }
         let(:value)         { "ffff0000" }
 
         let(:input)         { {
           thing_name: thing.name,
-          type: type, action: action,
+          type: type, action_type: action_type,
           value: value,
           input_method: input_method
         } }
@@ -119,7 +119,7 @@ RSpec.describe Shadows::Update::Execute do
 
         context "When the 'validation' operation fails" do
           it "Should return a Failure response" do
-            input[:action] = :lol
+            input[:action_type] = :lol
 
             response = subject.(input)
 
@@ -198,13 +198,13 @@ RSpec.describe Shadows::Update::Execute do
       context "When the input method is consumption" do
         let(:thing)         { create(:thing, name: '2BEE81') }
         let(:type)          { :desired }
-        let(:action)        { :scheduled_cut }
+        let(:action_type)   { :scheduled_cut }
         let(:input_method)  { :consumption }
         let(:value)         { "00000001" }
 
         let(:input)         { {
           thing_name: thing.name,
-          type: type, action: action,
+          type: type, action_type: action_type,
           value: value,
           input_method: input_method
         } }
@@ -241,7 +241,7 @@ RSpec.describe Shadows::Update::Execute do
 
         context "When the action is not in the list" do
           it "Should return a Failure response" do
-            input[:action] = :lol
+            input[:action_type] = :lol
 
             response = subject.(input)
 
@@ -259,13 +259,13 @@ RSpec.describe Shadows::Update::Execute do
       context "When the input method is accumulated_value" do
         let(:thing)         { create(:thing, name: '2BEE81') }
         let(:type)          { :desired }
-        let(:action)        { :restore_supply_with_scheduled_cut }
+        let(:action_type)   { :restore_supply_with_scheduled_cut }
         let(:input_method)  { :accumulated_value }
         let(:value)         { "ffff0000" }
 
         let(:input)         { {
           thing_name: thing.name,
-          type: type, action: action,
+          type: type, action_type: action_type,
           value: value,
           input_method: input_method
         } }
@@ -302,7 +302,7 @@ RSpec.describe Shadows::Update::Execute do
 
         context "When the 'validation' operation fails" do
           it "Should return a Failure response" do
-            input[:action] = :lol
+            input[:action_type] = :lol
 
             response = subject.(input)
 
@@ -317,13 +317,13 @@ RSpec.describe Shadows::Update::Execute do
       context "When the input method is consumption" do
         let(:thing)         { create(:thing, name: '2BEE81') }
         let(:type)          { :desired }
-        let(:action)        { :restore_supply_with_scheduled_cut }
+        let(:action_type)   { :restore_supply_with_scheduled_cut }
         let(:input_method)  { :consumption }
         let(:value)         { "00000001" }
 
         let(:input)         { {
           thing_name: thing.name,
-          type: type, action: action,
+          type: type, action_type: action_type,
           value: value,
           input_method: input_method
         } }
@@ -388,7 +388,7 @@ RSpec.describe Shadows::Update::Execute do
 
         context "When the action is not in the list" do
           it "Should return a Failure response" do
-            input[:action] = :lol
+            input[:action_type] = :lol
 
             response = subject.(input)
 

@@ -5,7 +5,7 @@ class Amazon::Iot::Api::ValidateInput
 
   def call(input)
     {
-      desired:  Common::Operations::Validator.(:update_state, input[:action]),
+      desired:  Common::Operations::Validator.(:update_state, input[:action_type]),
       reported: Common::Operations::Validator.(:update_state, input[:type])
     }[input[:type].to_sym].(input)
   end

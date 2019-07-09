@@ -121,11 +121,11 @@ RSpec.describe "Downlinks API", :type => :request do
         schema type: :object,
           properties: {
             thing_name: { type: :string },
-            action: { type: :string },
+            action_type: { type: :string },
             payload: { type: :string },
             value: { type: :string },
           },
-          required: [ 'payload', 'thing_name', 'action', 'value' ]
+          required: [ 'payload', 'thing_name', 'action_type', 'value' ]
 
         let(:user)          { create(:user) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
@@ -152,10 +152,10 @@ RSpec.describe "Downlinks API", :type => :request do
         schema type: :object,
           properties: {
             thing_name: { type: :string },
-            action: { type: :string },
+            action_type: { type: :string },
             payload: { type: :string },
           },
-          required: [ 'payload', 'thing_name', 'action' ]
+          required: [ 'payload', 'thing_name', 'action_type' ]
 
         let(:user)          { create(:user) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
