@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Utils do
   describe "#to_constant" do
     it "Should return a constant" do
-      response = subject.to_constant!(:thing)
+      response = subject.to_constant(:thing)
       expected_response = Thing
 
       expect(response).to eq(expected_response)
@@ -15,7 +15,7 @@ RSpec.describe Utils do
       it "Should return a hash with keys values converted to sym" do
         hash = { a: "perrito", b: 234, c: [1,2], d: "holi" }
         keys = [:a, :d]
-        response = subject.symbolize_values!(hash, keys)
+        response = subject.symbolize_values(hash, keys)
         expected_response = { a: :perrito, b: 234, c: [1,2], d: :holi }
 
         expect(response).to eq(expected_response)
@@ -26,7 +26,7 @@ RSpec.describe Utils do
       it "Should return a hash with keys values converted to sym" do
         hash = { a: "perrito", b: 234, c: [1,2], d: "holi" }
         keys = [:a, :d, :e]
-        response = subject.symbolize_values!(hash, keys)
+        response = subject.symbolize_values(hash, keys)
         expected_response = { a: :perrito, b: 234, c: [1,2], d: :holi }
 
         expect(response).to eq(expected_response)

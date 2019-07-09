@@ -3,9 +3,9 @@ require 'sidekiq/testing'
 
 RSpec.describe CheckAccumulatorWorker do
   let(:accumulator) { create(:accumulator) }
-  let(:thing)   { create(:thing) }
-  let(:input)   { { thing: thing, action_type: :scheduled_cut } }
-  let(:subject) { described_class }
+  let(:thing)       { create(:thing) }
+  let(:input)       { { thing: thing, action_type: :scheduled_cut } }
+  let(:subject)     { described_class }
 
   before do
     Sidekiq::Worker.clear_all

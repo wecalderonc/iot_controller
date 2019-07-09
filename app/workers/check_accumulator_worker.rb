@@ -4,8 +4,9 @@ class CheckAccumulatorWorker
   sidekiq_options queue: 'downlinks', retry: false, backtrace: true
 
   def perform(input)
-    Utils.symbolize_values!(input, [:action_type, :input_method])
+    input.symbolize_keys!
+    parsed_input = Utils.symbolize_values(input, [:action_type, :input_method])
 
-    Shadows::Update::Execute.(input)
+    Shadows::Update::Execute.(parsed_input)
   end
 end
