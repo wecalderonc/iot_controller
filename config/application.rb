@@ -41,5 +41,16 @@ module IotController
     config.generators { |g| g.orm :neo4j }
     config.neo4j.record_timestamps = true
     config.neo4j.pretty_logged_cypher_queries = true
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource(
+          '*',
+          headers: :any,
+          methods: [:get, :post, :put, :patch, :delete, :options]
+        )
+      end
+    end
   end
 end
