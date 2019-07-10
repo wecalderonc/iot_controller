@@ -43,6 +43,9 @@ gem 'sqlite3'
 #AWS
 gem 'aws-sdk-iotdataplane'
 
+#cors
+gem 'rack-cors'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'
