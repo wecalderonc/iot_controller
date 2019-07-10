@@ -3,8 +3,10 @@ require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
 
-  mount Rswag::Ui::Engine => '/api-docs'
-  mount Rswag::Api::Engine => '/api-docs'
+  if not ENV['RAILS_ENV'].eql?('production')
+    mount Rswag::Ui::Engine => '/api-docs'
+    mount Rswag::Api::Engine => '/api-docs'
+  end
 
   mount Sidekiq::Web, at: '/sidekiq'
 
