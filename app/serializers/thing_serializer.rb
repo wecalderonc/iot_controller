@@ -4,6 +4,7 @@
                 :status,
                 :pac,
                 :company_id,
+                :coordinates,
                 :created_at,
                 :updated_at,
 

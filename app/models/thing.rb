@@ -4,6 +4,9 @@ class Thing
   property :status, type: String
   property :pac, type: String
   property :company_id, type: String
+  property :coordinates
+
+  serialize :coordinates, type: Array
 
   validates_presence_of :name
   validates_presence_of :status

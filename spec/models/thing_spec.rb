@@ -21,6 +21,7 @@ RSpec.describe Thing, :type => :model do
   it { is_expected.to define_property :status, :String }
   it { is_expected.to define_property :pac, :String }
   it { is_expected.to define_property :company_id, :String }
+  it { expect(Thing.serialized_properties).to include({:coordinates=>{:type=>Array}}) }
 
   it { is_expected.to have_one(:uplinks).with_direction(:out) }
 
