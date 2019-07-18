@@ -7,6 +7,7 @@ module Helpers
         'status',
         'pac',
         'company_id',
+        'coordinates',
         'created_at',
         'updated_at',
         'last_uplink',
@@ -21,6 +22,7 @@ module Helpers
         status: { type: :string },
         pac: { type: :string },
         company_id: { type: :string },
+        coordinates: { type: :array },
         created_at: { type: :string },
         updated_at: { type: :string },
         last_uplink: {
@@ -41,6 +43,7 @@ module Helpers
         status: { type: :string },
         pac: { type: :string },
         company_id: { type: :string },
+        coordinates: { type: :array },
         created_at: { type: :string },
         updated_at: { type: :string }
       }
@@ -53,6 +56,7 @@ module Helpers
         'status',
         'pac',
         'company_id',
+        'coordinates',
         'created_at',
         'updated_at'
       ]

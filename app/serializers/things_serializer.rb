@@ -4,6 +4,7 @@ class ThingsSerializer < ActiveModel::Serializer
                 :status,
                 :pac,
                 :company_id,
+                :coordinates,
                 :created_at,
                 :updated_at
 end
