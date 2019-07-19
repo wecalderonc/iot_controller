@@ -46,6 +46,9 @@ gem 'aws-sdk-iotdataplane'
 #cors
 gem 'rack-cors'
 
+#queries
+gem "graphql"
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'
@@ -76,6 +79,7 @@ group :test do
   gem 'simplecov-console', require: false
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'rspec-graphql_matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
