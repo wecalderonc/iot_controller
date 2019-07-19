@@ -5,8 +5,10 @@ class Thing
   property :pac, type: String
   property :company_id, type: String
   property :coordinates
+  property :units
 
   serialize :coordinates, type: Array
+  serialize :units
 
   validates_presence_of :name
   validates_presence_of :status

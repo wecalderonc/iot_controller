@@ -156,4 +156,29 @@ RSpec.describe Thing, :type => :model do
     end
   end
 
+  context "Validate units" do
+    context "The units is empty" do
+      it "Should be valid" do
+        thing = create(:thing)
+
+        expect(thing).to be_valid
+      end
+    end
+
+    context "The unit has one value" do
+      it "Should be valid" do
+        thing = create(:thing, units: { liter: 200 })
+
+        expect(thing).to be_valid
+      end
+    end
+
+    context "The unit has n empty hash" do
+      it "Should be valid" do
+        thing = create(:thing, units: {})
+
+        expect(thing).to be_valid
+      end
+    end
+  end
 end
