@@ -14,9 +14,8 @@ class Thing
   validates_presence_of :company_id
 
   has_many :out, :uplinks, type: :UPLINK_CREATED
-
-  has_many :in, :owner, type: :OWN, model_class: :User
-  has_many :in, :renter, type: :RENT, model_class: :User
+  has_one :in, :owner, rel_class: :Owner, model_class: :User
+  has_one :in, :operator, rel_class: :Operator, model_class: :User
 
   VALID_ACTIONS = [:scheduled_cut, :restore_supply, :instant_cut, :restore_supply_with_scheduled_cut]
   VALID_UPDATE_TYPES = [:desired, :reported]
