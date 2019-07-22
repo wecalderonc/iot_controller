@@ -11,4 +11,8 @@ class Price
   validates :value,    presence: true
   validates :date,     presence: true
   validates :currency, presence: true
+
+  def self.by_unit(unit)
+    self.where(unit: unit).order(:desc).last
+  end
 end
