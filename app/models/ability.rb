@@ -1,11 +1,13 @@
 class Ability
   include CanCan::Ability
 
+
   def initialize(user)
     user = user.success
     #send("#{user.role}_abilities", user)
     citizen = "citizen"
-    send("#{citizen}_abilities", user)
+    #send("#{citizen}_abilities", user)
+    can :manage, :all
   end
 
   def admin_abilities(user)
