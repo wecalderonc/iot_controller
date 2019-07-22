@@ -11,6 +11,10 @@ module Api
         end
       end
 
+      def index
+        users = User.all
+        render json: users, status: :ok, each_serializer: UsersSerializer
+      end
     end
   end
 end
