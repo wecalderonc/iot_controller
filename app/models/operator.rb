@@ -4,5 +4,4 @@ class Operator
   from_class :User
   to_class   :Thing
   type :OPERATE
-
 end
