@@ -13,6 +13,7 @@ RSpec.describe "Things API", :type => :request do
         let!(:thing2) { create(:thing) }
         let!(:thing3) { create(:thing) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
         parameter({
          :in => :header,
          :type => :string,
