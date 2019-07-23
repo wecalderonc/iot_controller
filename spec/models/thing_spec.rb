@@ -29,7 +29,6 @@ RSpec.describe Thing, :type => :model do
   it { is_expected.to have_many(:operator).with_direction(:in) }
   it { is_expected.to have_many(:viewer).with_direction(:in) }
 
-
   describe "#last_accumulators" do
     let(:thing) { create(:thing) }
 
