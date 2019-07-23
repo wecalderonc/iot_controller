@@ -2,10 +2,21 @@ module Api
   module V1
     class ThingsController < ApplicationController
       load_and_authorize_resource class: "Thing"
+      relations = [:owns, :operates, :sees]
 
       def index
-        @things = Thing.all
-        render json: @things, status: :ok, each_serializer: ThingsSerializer
+        user =  current_user.success
+        #@things = Thing.all
+
+        @things = []
+        @things << Thing.find_by(owner: user)
+        @things << Thing.find_by(viewer: user)
+        @things << Thing.find_by(operator: user)
+        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        p @things.compact
+        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
+        render json: @things.compact, status: :ok, each_serializer: ThingsSerializer
       end
 
       def show

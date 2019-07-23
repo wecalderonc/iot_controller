@@ -24,7 +24,7 @@ class User
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   GENDERS = [:male, :female]
   ID_TYPES = [:cc, :ce, :natural_nit, :bussines_nit, :foreign_nit, :passport, :civil_register]
-  USER_TYPE = [:aqueduct, :administrator, :aqueduct_client]
+  USER_TYPE = [:aqueduct_administrator, :administrator, :aqueduct_client, :aqueduct_operator, :citizen_admin, :citizen_viewer]
 
   UniqParam = :email
 
