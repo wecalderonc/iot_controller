@@ -17,8 +17,9 @@ class User
   MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type, :user_type]
   validates *MANDATORY_FIELDS, presence: true
 
-  has_one :in, :support_workers, type: :SUPPORT_WORKERS, model_class: :Aqueduct
-
+  has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
+  has_many :out, :operates,  rel_class: :Operator, model_class: :Thing
+  has_many :out, :sees,      rel_class: :Viewer,   model_class: :Thing
 
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   GENDERS = [:male, :female]
