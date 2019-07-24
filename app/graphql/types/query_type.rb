@@ -2,15 +2,24 @@ module Types
   class QueryType < GraphQL::Schema::Object
     description "The query root of this schema"
 
-    field :thing, ThingType, null: true do
-      description "Find a thing by user name"
+    field :things, [ThingType], null: true do
+      description "Find things by multiple params"
       argument :name, String, required: false
-      argument :id, String, required: false
+      argument :status, String, required: false
+      argument :companyId, String, required: false
+      argument :pac, String, required: false
+      argument :coordinates, [Float], required: false
     end
 
-    def thing(args)
-      puts "*" * 100
-      pp Thing.find_by(args)
+    def things(args)
+      if args.has_key?(:coordinates)
+        #TODO querying multiple args + coordinates
+        Thing.as(:cosita)
+          .where("cosita.coordinates = {coordinates}")
+          .params(coordinates: args[:coordinates])
+      else
+        Thing.where(args)
+      end
     end
   end
 end
