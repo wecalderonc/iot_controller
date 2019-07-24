@@ -1,22 +1,19 @@
 class Ability
   include CanCan::Ability
 
-  ARRAY = [:owns, :operates, :sees]
+  RELATIONS = [:owns, :operates, :sees]
 
   def initialize(user)
     user = user.success
 
-    guardar = ARRAY.select do |x|
-      user.send(x).present?
-      #
+    available_relations = RELATIONS.select do |relation|
+      user.send(relation).present?
     end
-    p "!!!!!!!!!!!!!!!!!!!1"
-    p guardar
-    p "!!!!!!!!!!!!!!!!!!!1"
-    guardar.each {|x| send("#{x}_abilities", user) }
+
+    available_relations.each {|relation| send("#{relation}_abilities", user) }
   end
 
-  def administrator_abilities(user)
+  def administrates_abilities(user)
     can :manage, :all
   end
 

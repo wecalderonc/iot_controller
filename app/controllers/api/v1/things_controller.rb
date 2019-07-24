@@ -5,22 +5,14 @@ module Api
       relations = [:owns, :operates, :sees]
 
       def index
-        user =  current_user.success
-        #@things = Thing.all
+        @things =  Thing.accessible_by(current_ability)
 
-        @things = []
-        @things << Thing.find_by(owner: user)
-        @things << Thing.find_by(viewer: user)
-        @things << Thing.find_by(operator: user)
-        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        p @things.compact
-        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
-        render json: @things.compact, status: :ok, each_serializer: ThingsSerializer
+        render json: @things, status: :ok, each_serializer: ThingsSerializer
       end
 
       def show
         @thing = Thing.find_by(id: params[:id])
+
         if @thing.present?
           json_response(@thing)
         else
