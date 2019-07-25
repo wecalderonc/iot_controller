@@ -7,7 +7,7 @@ class Calculators::Prices::Get
     price = Price.by_unit(input[:unit])
 
     if price.present?
-      counters_per_unit = input[:thing].units[input[:unit]]
+      counters_per_unit = input[:thing].units[input[:unit].to_s]
       final_price = price.value * (input[:last_acc].int_value / counters_per_unit)
 
       Success.new(input.merge(price: final_price))

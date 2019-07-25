@@ -8,8 +8,7 @@ module Calculators::Prices
     end
   end
 
-  #repensar este nombre
-  _, ByThingUnit = Common::TxMasterBuilder.new do
+  _, Execute = Common::TxMasterBuilder.new do
     step :validation,            with: Common::Operations::Validator.(:get_price, :thing)
     step :get_last_acc,          with: Calculators::Prices::GetLastAccumulator.new
     step :get_price,             with: Calculators::Prices::Get.new

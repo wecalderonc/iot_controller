@@ -20,4 +20,25 @@ RSpec.describe Price, type: :model do
       expect(subject.errors.messages).to eq(expected_errors)
     end
   end
+
+  describe "#by_unit" do
+    context "The unit exists in the db" do
+      it "Should return a price instance" do
+        create(:price, unit: :metter)
+        price = create(:price, unit: :liter)
+
+        response = Price.by_unit :liter
+
+        expect(response.id).to eq(price.id)
+      end
+    end
+
+    context "The unit exists in the db" do
+      it "Should return nil" do
+        response = Price.by_unit :liter
+
+        expect(response).to be_nil
+      end
+    end
+  end
 end

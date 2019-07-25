@@ -12,7 +12,7 @@ module Validators::Things
 
   GetPricesSchema = Dry::Validation.Schema do
     required(:thing).filled(type?: Thing)
-    required(:unit).filled(type?: String)
+    required(:unit).filled(type?: Symbol)
     required(:currency).value(type?: String)
   end
 end
