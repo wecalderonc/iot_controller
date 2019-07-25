@@ -4,6 +4,8 @@ class Thing
   property :status, type: String
   property :pac, type: String
   property :company_id, type: String
+  property :latitude, type: Float
+  property :longitude, type: Float
   property :units
 
   serialize :units

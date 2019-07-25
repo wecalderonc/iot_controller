@@ -5,8 +5,8 @@ module Validators::Things
       required(:status).filled(type?: String)
       required(:pac).value(type?: String)
       required(:company_id).value(type?: Integer)
-      required(:coordinates).value(:array?, size?: 2)
-      required(:coordinates).each(:float?)
+      required(:longitude).value(type?: Float)
+      required(:latitude).value(type?: Float)
     end
   end
 

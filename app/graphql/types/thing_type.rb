@@ -8,6 +8,7 @@ module Types
     field :status, String, null: false
     field :pac, String, null: false
     field :companyId, String, null: false
-    field :coordinates, [Float], null: false
+    field :latitude, Float, null: false
+    field :longitude, Float, null: false
   end
 end

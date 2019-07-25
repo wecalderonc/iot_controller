@@ -1,5 +1,4 @@
 class GraphqlController < ApplicationController
-
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]

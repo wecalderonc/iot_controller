@@ -12,5 +12,10 @@ module Types
     field :id_number, String, null: false
     field :code_number, String, null: false
     field :user_type, String, null: false
+    field :things, [Types::ThingType], null: false
+
+    def things
+      object.owns + object.operates + object.sees
+    end
   end
 end

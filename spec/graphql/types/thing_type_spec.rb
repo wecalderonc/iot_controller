@@ -8,6 +8,6 @@ RSpec.describe Types::ThingType do
   it { is_expected.to have_field(:status).of_type(!types.String) }
   it { is_expected.to have_field(:pac).of_type(!types.String) }
   it { is_expected.to have_a_field(:companyId).of_type(!types.String) }
-  it { is_expected.to have_field(:coordinates).of_type(!types[!types.Float]) }
-  it { is_expected.to have_field(:user).of_type('User!') }
+  it { is_expected.to have_a_field(:latitude).of_type(!types.Float) }
+  it { is_expected.to have_a_field(:longitude).of_type(!types.Float) }
 end

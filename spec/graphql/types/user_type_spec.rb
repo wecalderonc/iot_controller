@@ -12,4 +12,5 @@ RSpec.describe Types::UserType do
   it { is_expected.to have_a_field(:idNumber).of_type(!types.String) }
   it { is_expected.to have_a_field(:codeNumber).of_type(!types.String) }
   it { is_expected.to have_a_field(:userType).of_type(!types.String) }
+  it { is_expected.to have_a_field(:things).of_type("[Thing!]!") }
 end
