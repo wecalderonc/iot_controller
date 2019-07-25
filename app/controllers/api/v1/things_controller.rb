@@ -2,7 +2,6 @@ module Api
   module V1
     class ThingsController < ApplicationController
       load_and_authorize_resource class: "Thing"
-      relations = [:owns, :operates, :sees]
 
       def index
         @things =  Thing.accessible_by(current_ability)
