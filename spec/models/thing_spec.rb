@@ -2,6 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Thing, :type => :model do
 
+  it { is_expected.to define_property :name, :String }
+  it { is_expected.to define_property :status, :String }
+  it { is_expected.to define_property :pac, :String }
+  it { is_expected.to define_property :company_id, :String }
+
+  it { expect(Thing.serialized_properties).to include({:coordinates=>{:type=>Array}}) }
+
+  it { is_expected.to have_one(:uplinks).with_direction(:out) }
+
+  it { is_expected.to have_many(:owner).with_direction(:in) }
+  it { is_expected.to have_many(:operator).with_direction(:in) }
+  it { is_expected.to have_many(:viewer).with_direction(:in) }
+
   describe "Validations" do
     it "email and password are required" do
       expect(subject).to_not be_valid
@@ -17,18 +30,6 @@ RSpec.describe Thing, :type => :model do
     end
   end
 
-  it { is_expected.to define_property :name, :String }
-  it { is_expected.to define_property :status, :String }
-  it { is_expected.to define_property :pac, :String }
-  it { is_expected.to define_property :company_id, :String }
-  it { expect(Thing.serialized_properties).to include({:coordinates=>{:type=>Array}}) }
-
-  it { is_expected.to have_one(:uplinks).with_direction(:out) }
-
-  it { is_expected.to have_many(:owner).with_direction(:in) }
-  it { is_expected.to have_many(:operator).with_direction(:in) }
-  it { is_expected.to have_many(:viewer).with_direction(:in) }
-
   describe "#last_accumulators" do
     let(:thing) { create(:thing) }
 
@@ -36,6 +37,7 @@ RSpec.describe Thing, :type => :model do
       it "Should return the last accumulator" do
         create(:uplink, thing: thing, created_at: Time.zone.now)
         create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes)
+
         uplink = create(:uplink, thing: thing, created_at: Time.zone.now + 2.minutes)
 
         acc = create(:accumulator, uplink: uplink)
@@ -46,10 +48,12 @@ RSpec.describe Thing, :type => :model do
       end
     end
 
-    context "When there are uplinks and no accumulators" do
+    context "When there are uplinks and no accumulators for the las uplink" do
       it "Should return the last accumulator" do
         create(:uplink, thing: thing, created_at: Time.zone.now)
+
         uplink = create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes)
+
         create(:uplink, thing: thing, created_at: Time.zone.now + 2.minutes)
 
         acc = create(:accumulator, uplink: uplink)
@@ -68,19 +72,20 @@ RSpec.describe Thing, :type => :model do
       end
     end
 
+    context "when there are many accumulators in many uplinks" do
+      let(:uplink1) { create(:uplink, thing: thing, created_at: Time.zone.now - 30.seconds) }
+      let(:uplink2) { create(:uplink, thing: thing) }
+      let(:uplink3) { create(:uplink, thing: thing) }
 
-    context "when there are accumulators" do
-      let(:accumulator) { create(:accumulator, created_at: Time.zone.now) }
-      let!(:uplink) { create(:uplink, thing: accumulator.uplink.thing) }
-      let!(:uplink2) { create(:uplink, thing: accumulator.uplink.thing) }
-      let!(:accumulator2) { create(:accumulator, uplink: uplink, created_at: Time.zone.now) }
-      let!(:accumulator3) { create(:accumulator, uplink: uplink2, created_at: Time.zone.now) }
+      let!(:acc1) { create(:accumulator, uplink: uplink1) }
+      let!(:acc2) { create(:accumulator, uplink: uplink2) }
+      let!(:acc3) { create(:accumulator, uplink: uplink3) }
 
       it "should return the latest accumulators" do
-        thing = accumulator.uplink.thing
-        last_accumulators = thing.last_accumulators(3)
+        last_acc = thing.last_accumulators(2)
 
-        expect(last_accumulators.length).to eq(3)
+        expect(last_acc.length).to eq(2)
+        expect(last_acc.pluck(:id)).to match_array([acc3.id, acc2.id])
       end
     end
   end
@@ -119,41 +124,45 @@ RSpec.describe Thing, :type => :model do
     end
   end
 
-  describe "#last_accumulators" do
-    let(:thing) { create(:thing) }
+  context "Validate units" do
+    context "The units is empty" do
+      it "Should be valid" do
+        thing = create(:thing)
 
-    context "When there are accumulators" do
-      it "should return the last accumulator" do
-        uplink = create(:uplink, thing: thing)
-        accumulator = create(:accumulator, uplink: uplink )
-
-        last_accumulator = thing.last_accumulators.last
-        expect(last_accumulator.id).to eq(accumulator.id)
-      end
-
-      it "should return the last accumulators" do
-        uplink = create(:uplink, thing: thing)
-        uplink2 = create(:uplink, thing: thing)
-        uplink3 = create(:uplink, thing: thing)
-        uplink4 = create(:uplink, thing: thing)
-        create(:accumulator, uplink: uplink )
-        create(:accumulator, uplink: uplink2 )
-        create(:accumulator, uplink: uplink3 )
-        create(:accumulator, uplink: uplink4 )
-
-        last_accumulators = thing.last_accumulators(4)
-
-        expect(last_accumulators.length).to eq(4)
+        expect(thing).to be_valid
       end
     end
 
-    context "When there are not accumulators" do
-      it "Should return the nil" do
-        last_accumulator = thing.last_accumulators.last
+    context "The unit has one value" do
+      it "Should be valid" do
+        thing = create(:thing, units: { liter: 200 })
 
-        expect(last_accumulator).to be_nil
+        expect(thing).to be_valid
+      end
+    end
+
+    context "The unit has n empty hash" do
+      it "Should be valid" do
+        thing = create(:thing, units: {})
+
+        expect(thing).to be_valid
+      end
+    end
+
+    context "The unit value is zero" do
+      it "Should be invalid" do
+        thing = build(:thing, units: { my_unit: 0 })
+
+        expect(thing).to_not be_valid
+      end
+    end
+
+    context "The unit is not a Hash" do
+      it "Should be invalid" do
+        thing = build(:thing, units: 2)
+
+        expect(thing).to_not be_valid
       end
     end
   end
-
 end

@@ -9,4 +9,10 @@ module Validators::Things
       required(:coordinates).each(:float?)
     end
   end
+
+  GetPricesSchema = Dry::Validation.Schema do
+    required(:thing).filled(type?: Thing)
+    required(:unit).filled(type?: Symbol)
+    required(:currency).value(type?: String)
+  end
 end

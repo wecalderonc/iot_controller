@@ -11,6 +11,10 @@ module Validators
       instant_cut:                        Validators::Downlinks::InstantSchema,
       restore_supply_with_scheduled_cut:  Validators::Downlinks::ScheduledSchema,
       reported:                           Validators::Downlinks::ReportedSchema
+    },
+
+    get_price: {
+      thing:        Validators::Things::GetPricesSchema
     }
   }
 end

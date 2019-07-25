@@ -5,5 +5,9 @@ class Accumulator
   validates :value, presence: true
 
   has_one :out, :uplink, type: :BELONGS_TO
-  has_one :out, :price, type: :BELONGS_TO
+  has_many :out, :prices, type: :BELONGS_TO
+
+  def int_value
+    Base::Maths.hexa_to_int self.value
+  end
 end

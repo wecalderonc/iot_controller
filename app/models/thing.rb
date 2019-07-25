@@ -5,13 +5,17 @@ class Thing
   property :pac, type: String
   property :company_id, type: String
   property :coordinates
+  property :units
 
   serialize :coordinates, type: Array
+  serialize :units
 
   validates_presence_of :name
   validates_presence_of :status
   validates_presence_of :pac
   validates_presence_of :company_id
+
+  validate :check_units
 
   has_many :out, :uplinks, type: :UPLINK_CREATED
 
@@ -28,5 +32,18 @@ class Thing
 
   def last_accumulators(quantity = 1)
     self.last_uplinks(quantity).map(&:accumulator)
+  end
+
+  private
+
+  #TODO: Fix this in the next version.
+  def check_units
+    if units.present?
+      if not units.is_a?(Hash)
+        errors.add(:units, "Units must be a Hash")
+      elsif units.values.any?(0)
+        errors.add(:units_values, "Units can not be zero")
+      end
+    end
   end
 end
