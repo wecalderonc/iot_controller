@@ -29,7 +29,7 @@ RSpec.describe Types::QueryType do
           end
         end
 
-        context 'coordinates field' do
+        context 'latitude and longitude fields' do
           let(:query_string) {
             "{
               things(thingInput: { latitude: 0.1, longitude: 1.2 }) {

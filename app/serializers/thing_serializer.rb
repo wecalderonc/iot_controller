@@ -7,7 +7,6 @@ class ThingSerializer < ActiveModel::Serializer
               :latitude,
               :longitude,
               :units,
-              :coordinates,
               :created_at,
               :updated_at,
 
