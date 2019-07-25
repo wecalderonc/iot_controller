@@ -109,22 +109,24 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
         get "/api/v1/things/#{accumulator.uplink.thing.id}", headers: header
 
         body = JSON.parse(response.body)
+        thing = accumulator.uplink.thing
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
 
         expected_response =
           {
-            "id"=>accumulator.uplink.thing.id,
-            "name"=>accumulator.uplink.thing.name,
-            "status"=>accumulator.uplink.thing.status,
-            "pac"=>accumulator.uplink.thing.pac,
-            "company_id"=>accumulator.uplink.thing.company_id,
-            "coordinates"=>accumulator.uplink.thing.coordinates,
-            "created_at"=>JSON.parse(accumulator.uplink.thing.created_at.to_json),
-            "updated_at"=>JSON.parse(accumulator.uplink.thing.updated_at.to_json),
-            "last_uplink"=>JSON.parse(ThingSerializer.new(accumulator.uplink.thing).last_uplink.to_json),
-            "last_messages"=>JSON.parse(ThingSerializer.new(accumulator.uplink.thing).last_messages.to_json)
+            "id"=>thing.id,
+            "name"=>thing.name,
+            "status"=>thing.status,
+            "pac"=>thing.pac,
+            "company_id"=>thing.company_id,
+            "units"=>thing.units,
+            "coordinates"=>thing.coordinates,
+            "created_at"=>JSON.parse(thing.created_at.to_json),
+            "updated_at"=>JSON.parse(thing.updated_at.to_json),
+            "last_uplink"=>JSON.parse(ThingSerializer.new(thing).last_uplink.to_json),
+            "last_messages"=>JSON.parse(ThingSerializer.new(thing).last_messages.to_json)
           }
 
 
