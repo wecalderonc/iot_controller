@@ -12,7 +12,7 @@ RSpec.describe Calculators::Prices do
     after  { Timecop.return }
 
     context "The current currency is different to the original once" do
-      it "should return the price of tha" do
+      it "should return the price of the last accumulator value" do
         price1 = create(:price, unit: 'cubic_metter')
         price2 = create(:price, value: 2000)
 
@@ -27,7 +27,7 @@ RSpec.describe Calculators::Prices do
     end
 
     context "The current currency is the same asked currency" do
-      it "should return the price of tha" do
+      it "should return the price of the last accumulator value in USD" do
         price1 = create(:price, unit: 'cubic_metter')
         price2 = create(:price, value: 2000)
 

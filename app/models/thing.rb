@@ -28,7 +28,7 @@ class Thing
 
   def check_units
     if units.present? && units.values.any?(0)
-      errors.add(:units_values, "units can not be zero")
+      errors.add(:units_values, "Units can not be zero")
     end
   end
 
