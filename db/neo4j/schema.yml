@@ -16,6 +16,7 @@
   ) ASSERT `neo4j::migrations::schemamigration`.migration_id IS UNIQUE
 - CONSTRAINT ON ( accumulator:Accumulator ) ASSERT accumulator.uuid IS UNIQUE
 - CONSTRAINT ON ( alarm:Alarm ) ASSERT alarm.uuid IS UNIQUE
+- CONSTRAINT ON ( alarmtype:AlarmType ) ASSERT alarmtype.uuid IS UNIQUE
 - CONSTRAINT ON ( aqueduct:Aqueduct ) ASSERT aqueduct.uuid IS UNIQUE
 - CONSTRAINT ON ( batterylevel:BatteryLevel ) ASSERT batterylevel.uuid IS UNIQUE
 - CONSTRAINT ON ( price:Price ) ASSERT price.uuid IS UNIQUE
@@ -61,3 +62,4 @@
 - '20190617225531'
 - '20190718201212'
 - '20190725165124'
+- '20190725202155'
