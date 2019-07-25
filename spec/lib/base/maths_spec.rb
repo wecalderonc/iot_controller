@@ -22,4 +22,22 @@ RSpec.describe Base::Maths do
       expect(response).to eq(170)
     end
   end
+
+  describe "#RuleOfThree" do
+    it "Should return the rule of three of those numbers" do
+      a = 2
+      b = 2
+      c = 2
+
+      response = subject::RuleOfThree.(a, b, c)
+
+      expect(response).to eq(2)
+
+      c = 1
+
+      response = subject::RuleOfThree.(a, b, c)
+
+      expect(response).to eq(4)
+    end
+  end
 end

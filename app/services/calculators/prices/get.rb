@@ -4,11 +4,12 @@ class Calculators::Prices::Get
   include Dry::Transaction::Operation
 
   def call(input)
-    price = Price.by_unit(input[:unit])
+    unit = input[:unit].to_s
+    price = Price.by_unit(unit)
 
     if price.present?
-      counters_per_unit = input[:thing].units[input[:unit].to_s]
-      final_price = price.value * (input[:last_acc].int_value / counters_per_unit)
+      counters_per_unit = input[:thing].units[unit]
+      final_price = Base::Maths::RuleOfThree.(price.value, input[:last_acc].int_value, counters_per_unit)
 
       Success.new(input.merge(price: final_price))
     else

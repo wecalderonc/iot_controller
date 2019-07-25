@@ -148,5 +148,13 @@ RSpec.describe Thing, :type => :model do
         expect(thing).to be_valid
       end
     end
+
+    context "The unit value is zero" do
+      it "Should be invalid" do
+        thing = build(:thing, units: { my_unit: 0 })
+
+        expect(thing).to_not be_valid
+      end
+    end
   end
 end
