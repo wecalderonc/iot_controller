@@ -156,5 +156,13 @@ RSpec.describe Thing, :type => :model do
         expect(thing).to_not be_valid
       end
     end
+
+    context "The unit is not a Hash" do
+      it "Should be invalid" do
+        thing = build(:thing, units: 2)
+
+        expect(thing).to_not be_valid
+      end
+    end
   end
 end
