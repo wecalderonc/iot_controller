@@ -70,7 +70,7 @@ RSpec.describe Calculators::Prices do
         result = subject::ByThingUnit.new.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_failure
-        expect(result.failure[:message]).to eq("No acc")
+        expect(result.failure[:message]).to eq("There are not accumulators")
       end
     end
 
