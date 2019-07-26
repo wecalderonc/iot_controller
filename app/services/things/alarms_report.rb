@@ -13,7 +13,6 @@ module Things
           csv << ["Device name: #{device.name}"]
 
           alarms.each do |alarm|
-#           date = ThingsUtils::GetUplinkDate.(alarm)
             date = Utils.parse_date(alarm.uplink.created_at)
             csv << [device.id, device.name, date, alarm.value]
           end

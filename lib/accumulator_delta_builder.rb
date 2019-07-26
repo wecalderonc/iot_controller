@@ -7,13 +7,18 @@ class AccumulatorDeltaBuilder
 
   def call(accumulators)
     delta_accumulated = 0
+
     accumulators.map.with_index do |accumulator, index|
+
+      current_value = GetConsumption.(accumulator)
+      last_value = GetConsumption.(accumulators[index-1])
+
       if index == 0
         delta = 0
-      elsif GetConsumption.(accumulator) < GetConsumption.(accumulators[index-1])
-        delta = CONSUMPTION_LIMIT - GetConsumption.(accumulators[index-1]) + GetConsumption.(accumulator)
+      elsif current_value < last_value
+        delta = CONSUMPTION_LIMIT - last_value + current_value
       else
-        delta = GetConsumption.(accumulator) - GetConsumption.(accumulators[index-1])
+        delta = current_value - last_value
       end
       delta_accumulated += delta
       { delta: delta, accumulated: delta_accumulated }
