@@ -5,6 +5,8 @@ class Common::Operations::Validate
   include Common::Container::Import["validator"]
 
   def call(input)
+    p "DENTRO DE COMMON OPERATIONS VALIDATE.RB **********"
+    p input
     result = validator.(input.to_h)
 
     if result.success?

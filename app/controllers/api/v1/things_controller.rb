@@ -20,12 +20,23 @@ module Api
       end
 
       def update
-        @thing = Thing.find_by(id: params[:id])
-        if @thing.present?
-          json_response(@thing)
-        else
-          json_response({ errors: "thing not found" }, :not_found)
-        end
+        p "1. THINGS CONTROLLER UPDATE *****************"
+        p create_params
+        p response = Things::Update::Execute.(create_params)
+        p "1. THINGS CONTROLLER UPDATE ***************** finaliza"
+        json_response(response, :ok)
+        # @thing = Thing.find_by(id: params[:id])
+        # if @thing.present?
+        #   json_response(@thing)
+        # else
+        #   json_response({ errors: "thing not found" }, :not_found)
+        # end
+      end
+
+      private
+
+      def create_params
+        params.permit(:name, :status, :pac, :company_id, :id, :thing_name).to_h.symbolize_keys
       end
     end
   end
