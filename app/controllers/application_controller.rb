@@ -6,6 +6,13 @@ class ApplicationController < ActionController::API
   before_action :authorize_request
   attr_reader :current_user
 
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { render json: { message: 'Access Denied: '  + exception.message }, status: :forbidden }
+      format.html { render json: { message: 'Access Denied: '  + exception.message }, status: :forbidden }
+    end
+  end
+
   private
 
   def authorize_request

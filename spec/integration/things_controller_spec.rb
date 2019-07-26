@@ -12,6 +12,9 @@ RSpec.describe "Things API", :type => :request do
         let!(:thing) { create(:thing) }
         let!(:thing2) { create(:thing) }
         let!(:thing3) { create(:thing) }
+        let!(:owner)  { Owner.create(from_node: user, to_node: thing) }
+        let!(:owner2) { Owner.create(from_node: user, to_node: thing2) }
+        let!(:owner3) { Owner.create(from_node: user, to_node: thing3) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
         parameter({
@@ -45,7 +48,7 @@ RSpec.describe "Things API", :type => :request do
         let(:user) { create(:user) }
         let(:accumulator) { create(:accumulator) }
         let(:id) { accumulator.uplink.thing.id }
-
+        let!(:owner) { Owner.create(from_node: user, to_node: accumulator.uplink.thing) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
@@ -59,6 +62,15 @@ RSpec.describe "Things API", :type => :request do
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         let(:id) { "invalid_id" }
+
+        run_test!
+      end
+
+      response '403', 'not authorized to access' do
+        let(:user) { create(:user) }
+        let(:accumulator) { create(:accumulator) }
+        let(:id) { accumulator.uplink.thing.id }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         run_test!
       end

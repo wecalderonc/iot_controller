@@ -4,12 +4,14 @@ module Api
       load_and_authorize_resource class: "Thing"
 
       def index
-        @things = Thing.all
+        @things =  Thing.accessible_by(current_ability)
+
         render json: @things, status: :ok, each_serializer: ThingsSerializer
       end
 
       def show
         @thing = Thing.find_by(id: params[:id])
+
         if @thing.present?
           json_response(@thing)
         else
