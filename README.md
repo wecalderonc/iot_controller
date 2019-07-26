@@ -36,6 +36,9 @@ If you want to migrate test database, you should add `RAILS_ENV=test` before eac
   - Run app locally but with production configuration `sudo docker-compose -f docker-compose.prod-local.yml up`
   - Run app in production mode `sudo docker-compose -f docker-compose.prod.yml -p iot_controller up`
 
+### Database Commands
+  - Create a migration: `rails generate neo4j:migration RenameUserNameToFirstName`
+
 ## Test Suite
 
   - Run `sudo docker-compose run web rspec spec` for Ruby tests.
