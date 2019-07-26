@@ -19,6 +19,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include RequestSpecHelper, type: :request
   config.include Neo4j::RSpec::Matchers
+  config.include RSpec::GraphqlMatchers::TypesHelper
   config.extend Helpers::ThingFieldsSpecHelper
   config.extend Helpers::LastMessagesSpecHelper
   config.extend Helpers::LastUplinkSpecHelper

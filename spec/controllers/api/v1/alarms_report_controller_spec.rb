@@ -85,12 +85,14 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       let(:body)        { CSV.parse(response.body) }
 
       it "generate a CSV" do
+        thing2.update(name: '04204')
+
         get "/api/v1/alarms_report/#{thing.id}", headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
         expect(body[2]).to include(uplink.thing.name)
-        expect(body.last).not_to include(thing2.name)
+        expect(body.last).not_to include('04204')
       end
     end
   end

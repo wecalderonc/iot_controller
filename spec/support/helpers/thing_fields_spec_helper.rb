@@ -7,7 +7,8 @@ module Helpers
         'status',
         'pac',
         'company_id',
-        'coordinates',
+        'latitude',
+        'longitude',
         'created_at',
         'updated_at',
         'last_uplink',
@@ -22,7 +23,8 @@ module Helpers
         status: { type: :string },
         pac: { type: :string },
         company_id: { type: :string },
-        coordinates: { type: :array },
+        latitude: { type: :float },
+        longitude: { type: :float },
         created_at: { type: :string },
         updated_at: { type: :string },
         last_uplink: {
@@ -43,7 +45,8 @@ module Helpers
         status: { type: :string },
         pac: { type: :string },
         company_id: { type: :string },
-        coordinates: { type: :array },
+        latitude: { type: :float },
+        longitude: { type: :float },
         created_at: { type: :string },
         updated_at: { type: :string }
       }
@@ -56,7 +59,8 @@ module Helpers
         'status',
         'pac',
         'company_id',
-        'coordinates',
+        'latitude',
+        'longitude',
         'created_at',
         'updated_at'
       ]
