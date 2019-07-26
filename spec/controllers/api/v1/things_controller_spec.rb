@@ -24,6 +24,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
       it "Should return an array with one thing" do
         thing = create(:thing)
         Owner.create(from_node: user, to_node: thing)
+
         get '/api/v1/things', headers: header
 
         body = JSON.parse(response.body)
@@ -38,7 +39,9 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
             "status" => thing.status,
             "pac" => thing.pac,
             "company_id" => thing.company_id,
-            "coordinates" => thing.coordinates,
+            "units" => thing.units,
+            "latitude" => thing.latitude,
+            "longitude" => thing.longitude,
             "created_at" => JSON.parse(thing.created_at.to_json),
             "updated_at" => JSON.parse(thing.updated_at.to_json)
           }
@@ -70,7 +73,9 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
             "status" => thing.status,
             "pac" => thing.pac,
             "company_id" => thing.company_id,
-            "coordinates" => thing.coordinates,
+            "units" => thing.units,
+            "latitude" => thing.latitude,
+            "longitude" => thing.longitude,
             "created_at" => JSON.parse(thing.created_at.to_json),
             "updated_at" => JSON.parse(thing.updated_at.to_json)
           }, {
@@ -79,7 +84,9 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
             "status" => thing2.status,
             "pac" => thing2.pac,
             "company_id" => thing2.company_id,
-            "coordinates" => thing2.coordinates,
+            "units" => thing2.units,
+            "latitude" => thing2.latitude,
+            "longitude" => thing2.longitude,
             "created_at" => JSON.parse(thing2.created_at.to_json),
             "updated_at" => JSON.parse(thing2.updated_at.to_json)
           }, {
@@ -88,7 +95,9 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
             "status" => thing3.status,
             "pac" => thing3.pac,
             "company_id" => thing3.company_id,
-            "coordinates" => thing3.coordinates,
+            "units" => thing3.units,
+            "latitude" => thing3.latitude,
+            "longitude" => thing3.longitude,
             "created_at" => JSON.parse(thing3.created_at.to_json),
             "updated_at" => JSON.parse(thing3.updated_at.to_json)
           }
@@ -122,7 +131,8 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
             "pac"=>thing.pac,
             "company_id"=>thing.company_id,
             "units"=>thing.units,
-            "coordinates"=>thing.coordinates,
+            "latitude" => thing.latitude,
+            "longitude" => thing.longitude,
             "created_at"=>JSON.parse(thing.created_at.to_json),
             "updated_at"=>JSON.parse(thing.updated_at.to_json),
             "last_uplink"=>JSON.parse(ThingSerializer.new(thing).last_uplink.to_json),
