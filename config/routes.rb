@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users,                         only: [:show, :index], param: :email
       resources :aqueducts,                     only: [:index]
-      resources :things,                        only: [:show, :index]
+      resources :things,                        only: [:show, :index, :update]
       resources :uplinks,                       only: [:index]
       resources :accumulators_report,           only: [:show, :index]
       resources :alarms_report,                 only: [:show, :index]

@@ -18,6 +18,15 @@ module Api
           json_response({ errors: "thing not found" }, :not_found)
         end
       end
+
+      def update
+        @thing = Thing.find_by(id: params[:id])
+        if @thing.present?
+          json_response(@thing)
+        else
+          json_response({ errors: "thing not found" }, :not_found)
+        end
+      end
     end
   end
 end
