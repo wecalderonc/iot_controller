@@ -20,10 +20,7 @@ module Api
       end
 
       def update
-        p "1. THINGS CONTROLLER UPDATE *****************"
-        p create_params
-        p update_response = Things::Update::Execute.(create_params)
-        p "1. THINGS CONTROLLER UPDATE ***************** finaliza"
+        update_response = Things::Update::Execute.(create_params)
 
         if update_response.success?
           json_response(update_response.success)
@@ -35,7 +32,7 @@ module Api
       private
 
       def create_params
-        p params.permit(:id, :thing_name, params: {}).to_h.symbolize_keys
+        params.permit(:id, :thing_name, params: {}).to_h.symbolize_keys
       end
     end
   end
