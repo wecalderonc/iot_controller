@@ -171,7 +171,7 @@
                 "thing_name": {
                   "type": "string"
                 },
-                "action": {
+                "action_type": {
                   "type": "string"
                 },
                 "payload": {
@@ -184,7 +184,7 @@
               "required": [
                 "payload",
                 "thing_name",
-                "action"
+                "action_type"
               ]
             }
           },
@@ -235,6 +235,12 @@
                   "company_id": {
                     "type": "string"
                   },
+                  "latitude": {
+                    "type": "float"
+                  },
+                  "longitude": {
+                    "type": "float"
+                  },
                   "created_at": {
                     "type": "string"
                   },
@@ -248,6 +254,8 @@
                   "status",
                   "pac",
                   "company_id",
+                  "latitude",
+                  "longitude",
                   "created_at",
                   "updated_at"
                 ]
@@ -290,6 +298,9 @@
                 "status",
                 "pac",
                 "company_id",
+                "units",
+                "latitude",
+                "longitude",
                 "created_at",
                 "updated_at",
                 "last_uplink",
@@ -310,6 +321,15 @@
                 },
                 "company_id": {
                   "type": "string"
+                },
+                "units": {
+                  "type": "object"
+                },
+                "latitude": {
+                  "type": "float"
+                },
+                "longitude": {
+                  "type": "float"
                 },
                 "created_at": {
                   "type": "string"
@@ -429,6 +449,237 @@
           },
           "404": {
             "description": "thing not found"
+          },
+          "403": {
+            "description": "not authorized to access"
+          }
+        }
+      },
+      "put": {
+        "summary": "Retrieves an updated thing",
+        "tags": [
+          "Things"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "thing_name": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "pac": {
+                      "type": "string"
+                    },
+                    "company_id": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "float"
+                    },
+                    "longitude": {
+                      "type": "float"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "thing_name",
+                "params"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "thing updated",
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "status",
+                "pac",
+                "company_id",
+                "units",
+                "latitude",
+                "longitude",
+                "created_at",
+                "updated_at",
+                "last_uplink",
+                "last_messages"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "pac": {
+                  "type": "string"
+                },
+                "company_id": {
+                  "type": "string"
+                },
+                "units": {
+                  "type": "object"
+                },
+                "latitude": {
+                  "type": "float"
+                },
+                "longitude": {
+                  "type": "float"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                },
+                "last_uplink": {
+                  "required": [
+                    "created_at",
+                    "updated_at",
+                    "data",
+                    "avgsnr",
+                    "rssi",
+                    "long",
+                    "lat",
+                    "snr",
+                    "station",
+                    "seqnumber",
+                    "time",
+                    "sec_uplinks",
+                    "sec_downlinks"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "avgsnr": {
+                      "type": "string"
+                    },
+                    "rssi": {
+                      "type": "string"
+                    },
+                    "long": {
+                      "type": "string"
+                    },
+                    "lat": {
+                      "type": "string"
+                    },
+                    "snr": {
+                      "type": "string"
+                    },
+                    "station": {
+                      "type": "string"
+                    },
+                    "seqnumber": {
+                      "type": "string"
+                    },
+                    "time": {
+                      "type": "string"
+                    },
+                    "sec_uplinks": {
+                      "type": "string"
+                    },
+                    "sec_downlinks": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "last_messages": {
+                  "required": [
+                    "accumulator",
+                    "alarm",
+                    "batteryLevel",
+                    "valvePosition",
+                    "sensor1",
+                    "sensor2",
+                    "sensor3",
+                    "sensor4",
+                    "uplinkBDownlink",
+                    "timeUplink"
+                  ],
+                  "properties": {
+                    "accumulator": {
+                      "type": "object"
+                    },
+                    "alarm": {
+                      "type": "object"
+                    },
+                    "batteryLevel": {
+                      "type": "object"
+                    },
+                    "valvePosition": {
+                      "type": "object"
+                    },
+                    "sensor1": {
+                      "type": "object"
+                    },
+                    "sensor2": {
+                      "type": "object"
+                    },
+                    "sensor3": {
+                      "type": "object"
+                    },
+                    "sensor4": {
+                      "type": "object"
+                    },
+                    "uplinkBDownlink": {
+                      "type": "object"
+                    },
+                    "timeUplink": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "thing not found"
+          },
+          "403": {
+            "description": "not authorized to access"
           }
         }
       }
@@ -570,6 +821,57 @@
           },
           "404": {
             "description": "user not found"
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "summary": "index users",
+        "tags": [
+          "Users"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email"
+                ]
+              }
+            }
           }
         }
       }
