@@ -30,8 +30,8 @@ module Validators::Things
     optional(:status).filled(type?: String)
     optional(:pac).value(type?: String)
     optional(:company_id).value(type?: Integer)
-    optional(:coordinates).value(:array?, size?: 2)
-    optional(:coordinates).each(:float?)
+    optional(:longitude).value(type?: Float)
+    optional(:latitude).value(type?: Float)
   end
 
 

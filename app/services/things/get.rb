@@ -4,7 +4,6 @@ class Things::Get
   include Dry::Transaction::Operation
 
   def call(input)
-    p "DENTRO DE THINGS::GET ****************"
     thing = Thing.find_by(name: input[:thing_name])
 
     if thing.present?
