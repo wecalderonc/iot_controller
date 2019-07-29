@@ -49,6 +49,9 @@ gem 'rack-cors'
 #queries
 gem "graphql"
 
+#Currencies
+gem 'money-open-exchange-rates'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'neo4j-rake_tasks'
