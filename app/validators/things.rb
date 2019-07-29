@@ -27,6 +27,4 @@ module Validators::Things
       optional(:latitude).value(type?: Float)
     end
   end
-
-
 end

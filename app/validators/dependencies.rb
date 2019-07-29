@@ -17,7 +17,7 @@ module Validators
       thing:        Validators::Things::GetPricesSchema
     },
 
-    update_thing: {
+    update: {
       thing:        Validators::Things::UpdateSchema
     }
   }
