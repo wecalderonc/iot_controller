@@ -18,6 +18,22 @@ module Api
           json_response({ errors: "thing not found" }, :not_found)
         end
       end
+
+      def update
+        update_response = Things::Update::Execute.new.(create_params)
+
+        if update_response.success?
+          json_response(update_response.success)
+        else
+          json_response({ errors: update_response.failure[:message] })
+        end
+      end
+
+      private
+
+      def create_params
+        params.permit(:id, :thing_name, params: {}).to_h.symbolize_keys
+      end
     end
   end
 end

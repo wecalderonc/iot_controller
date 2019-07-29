@@ -16,7 +16,7 @@ else
 fi
 #TODO: add Simple Cov to bin/shot and semaphore
 echo "Running RubyCritic.."
-bundle exec rubycritic app/ lib/ --minimum-score 98 --no-browser
+bundle exec rubycritic app/ lib/ --minimum-score 97.9 --no-browser
 if [ $? -ne 0 ]; then
   exit 1
 else

@@ -15,4 +15,16 @@ module Validators::Things
     required(:unit).filled(type?: Symbol)
     required(:currency).value(type?: String)
   end
+
+  UpdateSchema = Dry::Validation.Schema do
+    required(:thing_name)
+    required(:params).schema do
+      optional(:name).filled(type?: String)
+      optional(:status).filled(type?: String)
+      optional(:pac).value(type?: String)
+      optional(:company_id).value(type?: Integer)
+      optional(:longitude).value(type?: Float)
+      optional(:latitude).value(type?: Float)
+    end
+  end
 end
