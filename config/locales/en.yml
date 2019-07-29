@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  errors:
+    valid_currency: "The currency does not exist"

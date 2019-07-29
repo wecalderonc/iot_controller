@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Calculators::Prices do
-  describe "#Execute" do
+RSpec.describe Calculators::Prices::Execute do
+  describe "#call" do
     let(:currency) { 'COP' }
     let(:unit)     { :liter }
     let(:thing)    { create(:thing, units: { liter: 200 }) }
@@ -19,7 +19,7 @@ RSpec.describe Calculators::Prices do
         create(:accumulator, uplink: uplink1, value: "C8")
         create(:accumulator, uplink: uplink2, value: "190")
 
-        result = subject::Execute.new.(thing: thing, unit: unit, currency: currency)
+        result = subject.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_success
         expect(result.success).to eq(4000)
@@ -36,26 +36,26 @@ RSpec.describe Calculators::Prices do
 
         currency = 'USD'
 
-        result = subject::Execute.new.(thing: thing, unit: unit, currency: currency)
+        result = subject.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_success
-        expect(result.success).to eq(4000)
+        expect(result.success).to eq(1)
       end
     end
 
     context "There are no Thing" do
       it "should return a failure result" do
-        result = subject::Execute.new.(unit: unit, currency: currency)
+        result = subject.(unit: unit, currency: currency)
 
         expect(result).to be_failure
         expect(result.failure[:message]).to eq(:thing => ["is missing"])
 
-        result = subject::Execute.new.(thing: {}, unit: unit, currency: currency)
+        result = subject.(thing: {}, unit: unit, currency: currency)
 
         expect(result).to be_failure
         expect(result.failure[:message]).to eq(:thing => ["must be filled"])
 
-        result = subject::Execute.new.(thing: User, unit: unit, currency: currency)
+        result = subject.(thing: User, unit: unit, currency: currency)
 
         expect(result).to be_failure
         expect(result.failure[:message]).to eq(:thing => ["must be Thing"])
@@ -67,7 +67,7 @@ RSpec.describe Calculators::Prices do
         price1 = create(:price, unit: 'cubic_metter')
         price2 = create(:price, value: 2000)
 
-        result = subject::Execute.new.(thing: thing, unit: unit, currency: currency)
+        result = subject.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_failure
         expect(result.failure[:message]).to eq("There are not accumulators")
@@ -78,7 +78,7 @@ RSpec.describe Calculators::Prices do
       it "should return a failure result" do
         create(:accumulator, uplink: uplink2, value: "190")
 
-        result = subject::Execute.new.(thing: thing, unit: unit, currency: currency)
+        result = subject.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_failure
         expect(result.failure[:message]).to eq("There are any configured prices")
@@ -92,7 +92,7 @@ RSpec.describe Calculators::Prices do
 
         unit = :aja
 
-        result = subject::Execute.new.(thing: thing, unit: unit, currency: currency)
+        result = subject.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_failure
         expect(result.failure[:message]).to eq("There are any configured prices")
@@ -106,10 +106,10 @@ RSpec.describe Calculators::Prices do
 
         currency = 'aja'
 
-        result = subject::Execute.new.(thing: thing, unit: unit, currency: currency)
+        result = subject.(thing: thing, unit: unit, currency: currency)
 
         expect(result).to be_failure
-        expect(result.failure[:message]).to eq("The currency is not valid")
+        expect(result.failure[:message]).to eq({:valid_currency=>["The currency does not exist"]})
       end
     end
   end

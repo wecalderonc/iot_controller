@@ -9,7 +9,7 @@ oxr.update_rates
 # (optional)
 # See https://github.com/spk/money-open-exchange-rates#cache for more info
 # Updated only when `refresh_rates` is called
-oxr.cache = 'tmp/cache.json'
+oxr.cache = "tmp/#{Rails.env}_cache.json"
 
 # (optional)
 # Set the seconds after than the current rates are automatically expired
