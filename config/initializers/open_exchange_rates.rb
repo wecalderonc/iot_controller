@@ -10,6 +10,19 @@ oxr.update_rates
 # See https://github.com/spk/money-open-exchange-rates#cache for more info
 # Updated only when `refresh_rates` is called
 oxr.cache = "tmp/#{Rails.env}_cache.json"
+if Rails.env.test?
+  oxr.cache = Rails.root.join("spec/fixtures/currency-rates.json").to_s
+else
+  OXR_CACHE_KEY = "#{Rails.env}:money:exchange_rates".freeze
+
+  oxr.cache = Proc.new do |text|
+    if text
+      Rails.cache.write(OXR_CACHE_KEY, text)
+    else
+      Rails.cache.read(OXR_CACHE_KEY)
+    end
+  end
+end
 
 # (optional)
 # Set the seconds after than the current rates are automatically expired
@@ -47,7 +60,7 @@ oxr.prettyprint = false
 # If you are using unicorn-worker-killer gem or on Heroku like platform,
 # you should avoid to put this on the initializer of your Rails application,
 # because will increase your OXR API usage.
-oxr.refresh_rates
+#oxr.refresh_rates
 
 # (optional)
 # Force refresh rates cache and store on the fly when ttl is expired
