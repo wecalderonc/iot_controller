@@ -20,7 +20,7 @@ module Api
       end
 
       def update
-        update_response = Things::Update::Execute.(create_params)
+        update_response = Things::Update::Execute.new.(create_params)
 
         if update_response.success?
           json_response(update_response.success)

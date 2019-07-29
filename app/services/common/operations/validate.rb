@@ -5,7 +5,7 @@ class Common::Operations::Validate
   include Common::Container::Import["validator"]
 
   def call(input)
-    result = validator.(input[:params].to_h)
+    result = validator.(input.to_h)
 
     if result.success?
       Success input.deep_symbolize_keys

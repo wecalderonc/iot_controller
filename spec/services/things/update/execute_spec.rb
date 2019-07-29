@@ -42,7 +42,7 @@ RSpec.describe Things::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:message][:params]).to eq(expected_response)
         end
       end
 
@@ -56,7 +56,7 @@ RSpec.describe Things::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:message][:params]).to eq(expected_response)
         end
       end
 
@@ -70,7 +70,7 @@ RSpec.describe Things::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:message][:params]).to eq(expected_response)
         end
       end
 
@@ -84,7 +84,7 @@ RSpec.describe Things::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:message][:params]).to eq(expected_response)
         end
       end
 
@@ -98,7 +98,7 @@ RSpec.describe Things::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:message][:params]).to eq(expected_response)
         end
       end
 
@@ -112,7 +112,7 @@ RSpec.describe Things::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:message][:params]).to eq(expected_response)
         end
       end
 
