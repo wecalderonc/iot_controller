@@ -11,13 +11,31 @@ RSpec.describe Price, type: :model do
       expect(subject).to_not be_valid
 
       expected_errors = {
-        :currency=>["can't be blank"],
+        :currency=>["can't be blank", "is not included in the list"],
         :date=>["can't be blank"],
-        :value=>["can't be blank"],
+        :value=>["can't be blank", "is not a number"],
         :unit=>["can't be blank"]
       }
 
       expect(subject.errors.messages).to eq(expected_errors)
+    end
+
+    context "The value is zero" do
+      it "The Price should not be valid" do
+        price = build(:price, value: 0)
+
+        expect(price).to_not be_valid
+        expect(price.errors.messages).to eq({:value=>["must be greater than 0"]})
+      end
+    end
+
+    context "The currency does not exist" do
+      it "The Price should not be valid" do
+        price = build(:price, currency: 'HOLI')
+
+        expect(price).to_not be_valid
+        expect(price.errors.messages).to eq({:currency=>["is not included in the list"]})
+      end
     end
   end
 
