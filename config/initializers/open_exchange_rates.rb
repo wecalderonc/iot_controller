@@ -9,7 +9,8 @@ oxr.update_rates
 # (optional)
 # See https://github.com/spk/money-open-exchange-rates#cache for more info
 # Updated only when `refresh_rates` is called
-oxr.cache = "tmp/#{Rails.env}_cache.json"
+#oxr.cache = "tmp/#{Rails.env}_cache.json"
+
 if Rails.env.test?
   oxr.cache = Rails.root.join("spec/fixtures/currency-rates.json").to_s
 else
