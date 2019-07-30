@@ -18,7 +18,7 @@ module Validators::Things
     required(:currency).value(type?: String)
 
     validate(valid_currency: :currency) do |currency|
-      Money::Currency.find(currency).present?
+      Price::CURRENCIES.include?(currency)
     end
   end
 

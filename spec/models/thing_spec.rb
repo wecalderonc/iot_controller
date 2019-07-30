@@ -154,6 +154,7 @@ RSpec.describe Thing, :type => :model do
         thing = build(:thing, units: { my_unit: 0 })
 
         expect(thing).to_not be_valid
+        expect(thing.errors.messages).to eq({:units_values=>["Units can not be zero"]})
       end
     end
 
@@ -162,6 +163,7 @@ RSpec.describe Thing, :type => :model do
         thing = build(:thing, units: 2)
 
         expect(thing).to_not be_valid
+        expect(thing.errors.messages).to eq({:units=>["Units must be a Hash"]})
       end
     end
   end
