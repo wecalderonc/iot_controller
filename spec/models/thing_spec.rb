@@ -23,6 +23,8 @@ RSpec.describe Thing, :type => :model do
         :name=>["can't be blank"],
         :status=>["can't be blank"],
         :pac=>["can't be blank"],
+        :latitude => ["can't be blank"],
+        :longitude => ["can't be blank"],
         :company_id=>["can't be blank"],
       }
 
