@@ -32,18 +32,22 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       let(:end_date)       { Time.now.to_time.to_i.to_s }
       let(:uplink)         { create(:uplink, time: end_date) }
       let!(:accumulator)   { create(:accumulator, uplink: uplink) }
+      let(:thing)          { uplink.thing }
       let!(:accumulator2)  { create(:accumulator) }
       let(:thing2)         { accumulator2.uplink.thing }
       let(:params)         { { date: { start_date: start_date, end_date: end_date } } }
       let(:body)           { CSV.parse(response.body) }
 
       it "generate a CSV" do
+        thing.update(name: '90480')
+        thing2.update(name: '31249')
+
         get '/api/v1/accumulators_report', headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
-        expect(body[2]).to include(uplink.thing.name)
-        expect(body.last).not_to include(thing2.name)
+        expect(body[2]).to include('90480')
+        expect(body.last).not_to include('31249')
       end
     end
   end
@@ -86,12 +90,13 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
       it "generate a CSV" do
         thing2.update(name: '20489')
+        thing.update(name: '64029')
 
         get "/api/v1/accumulators_report/#{thing.id}", headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
-        expect(body[2]).to include(uplink.thing.name)
+        expect(body[2]).to include('64029')
         expect(body.last).not_to include('20489')
       end
     end
