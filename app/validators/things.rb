@@ -1,15 +1,4 @@
 module Validators::Things
-  CreateSchema = Dry::Validation.Schema do
-    required(:thing).schema do
-      required(:name).filled(type?: String)
-      required(:status).filled(type?: String)
-      required(:pac).value(type?: String)
-      required(:company_id).value(type?: Integer)
-      required(:longitude).value(type?: Float)
-      required(:latitude).value(type?: Float)
-    end
-  end
-
   GetPricesSchema = Dry::Validation.Schema do
     configure { config.messages_file = "config/locales/en.yml" }
 

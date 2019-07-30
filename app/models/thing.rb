@@ -10,10 +10,11 @@ class Thing
 
   serialize :units
 
-  validates_presence_of :name
-  validates_presence_of :status
-  validates_presence_of :pac
-  validates_presence_of :company_id
+  VALID_ACTIONS = [:scheduled_cut, :restore_supply, :instant_cut, :restore_supply_with_scheduled_cut]
+  VALID_UPDATE_TYPES = [:desired, :reported]
+  REQUIRED_FIELDS = [:name, :status, :pac, :company_id, :longitude, :latitude]
+
+  validates_presence_of REQUIRED_FIELDS
 
   validate :check_units
 
@@ -22,9 +23,6 @@ class Thing
   has_many :in, :owner,    rel_class: :Owner,    model_class: :User
   has_many :in, :operator, rel_class: :Operator, model_class: :User
   has_many :in, :viewer,   rel_class: :Viewer,   model_class: :User
-
-  VALID_ACTIONS = [:scheduled_cut, :restore_supply, :instant_cut, :restore_supply_with_scheduled_cut]
-  VALID_UPDATE_TYPES = [:desired, :reported]
 
   def last_uplinks(quantity = 1)
     self.uplinks.order(created_at: :desc).limit(quantity)
