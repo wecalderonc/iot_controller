@@ -1,4 +1,9 @@
 module Utils
+
+  def self.parse_date(date)
+    date.present? ? date.strftime('%a %d %b %Y') : ""
+  end
+
   def self.to_constant(object)
     object.to_s.capitalize.constantize
   end
