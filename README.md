@@ -58,6 +58,9 @@ Follow this good practices:
   * This command should be used carefully; it will delete the entire Redis DB.
   - Run in rails console `Sidekiq.redis { |r| puts r.flushall }`
 
+  * If there is a overcommit memory, please checkout Redis logs:
+  - `sudo docker-compose -f docker-compose.prod.yml -p iot_controller logs --tail=1000 -f redis`
+
 ## Deployment instructions
 This repository use [Capistrano](https://capistranorb.com/) gem for deployment. Please read the documentation first.
   - Run `script/up` to deploy the app to AWS.
@@ -66,6 +69,7 @@ This repository use [Capistrano](https://capistranorb.com/) gem for deployment. 
 
 * [Rails](https://github.com/rails/rails) - Framework used
 * [Sidekiq](https://github.com/mperham/sidekiq) - Enqueue jobs
+* [Neo4J](https://github.com/neo4jrb/neo4j) - Database
 
 ## Contributing
 
@@ -73,9 +77,11 @@ This is a private repository.
 
 ## Authors
 
-* **Nathaly Villamor** - *Development Lead at ProCibernética* - [Nathaly](https://github.com/Jinara)
+* **Nathaly Villamor** - *Tech Lead at ProCibernética* - [Nathaly](https://github.com/Jinara)
 * **William Calderon** - *Full stack developer at ProCibernética* - [William](https://github.com/wecalderonc)
-* **Daniela Patiño** - *Full stack developer at ProCibernética* - [Daniela](https://github.com/)
+* **Daniela Patiño**   - *Full stack developer at ProCibernética* - [Daniela](https://github.com/DaniPB)
+* **Jeisson Moreno**   - *Devops Engineer at ProCibernética* - [Jeisson](https://github.com/jmoreno-zw)
+* **Javier Varón**     - *QA developer at ProCibernética* - [Javier](https://github.com/jvaron)
 
 See also the list of [contributors](https://github.com/ZonaWiki/iot_controller/graphs/contributors) who participated in this project.
 
