@@ -9,7 +9,7 @@ RSpec.describe ScheduleBilling, :type => :model do
   it { is_expected.to define_property :extra_price, :Float }
   it { is_expected.to define_property :billing_frequency, :Integer }
   it { is_expected.to define_property :billing_period, :String }
-  it { is_expected.to define_property :cut_day, :String }
+  it { is_expected.to define_property :cut_day, :Integer }
   it { is_expected.to define_property :start_date, :String }
 
   it { is_expected.to have_one(:location).with_direction(:out) }

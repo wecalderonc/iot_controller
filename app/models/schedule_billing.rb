@@ -8,7 +8,7 @@ class ScheduleBilling
   property :extra_price, type: Float
   property :billing_frequency, type: Integer
   property :billing_period, type: String
-  property :cut_day, type: String
+  property :cut_day, type: Integer
   property :start_date, type: String
 
   REQUIRED_FIELDS = [:stratum, :basic_charge, :top_limit, :basic_price, :extra_price, :billing_frequency, :billing_period, :cut_day, :start_date]
