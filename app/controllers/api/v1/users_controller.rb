@@ -15,6 +15,18 @@ module Api
         users = User.all
         render json: users, status: :ok, each_serializer: UsersSerializer
       end
+
+      def create
+        user = Users::Create::Execute.new.(create_params)
+      end
+
+      private
+
+      def user_params
+        params.permit(:first_name, :last_name, :password, :email,
+                      :phone, :gender, :id_number, :id_type, :admin,
+                      :code_number, :user_type)
+      end
     end
   end
 end
