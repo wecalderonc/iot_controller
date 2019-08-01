@@ -20,7 +20,7 @@ module Api
         user = Users::Create::Execute.new.(user_params)
 
         if user.success?
-          render json: user, status: :ok
+          render json: user.success, status: :ok, serializer: UsersSerializer
         else
           render json: { errors: user.messages }, status: :not_found
         end
