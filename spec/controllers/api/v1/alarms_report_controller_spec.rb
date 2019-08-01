@@ -33,17 +33,21 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       let(:uplink)      { create(:uplink, time: end_date) }
       let!(:alarm)      { create(:alarm, uplink: uplink) }
       let!(:alarm2)     { create(:alarm) }
+      let(:thing)       { uplink.thing }
       let(:thing2)      { alarm2.uplink.thing }
       let(:params)      { { date: { start_date: start_date, end_date: end_date } } }
       let(:body)        { CSV.parse(response.body) }
 
       it "generate a CSV" do
+        thing.update(name: '19601')
+        thing2.update(name: '42020')
+
         get '/api/v1/alarms_report', headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
-        expect(body[2]).to include(uplink.thing.name)
-        expect(body.last).not_to include(thing2.name)
+        expect(body[2]).to include('19601')
+        expect(body.last).not_to include('42020')
       end
     end
   end
@@ -80,18 +84,20 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       let(:thing)       { alarm.uplink.thing }
       let!(:alarm)      { create(:alarm, uplink: uplink) }
       let!(:alarm2)     { create(:alarm) }
+      let(:thing)       { uplink.thing }
       let(:thing2)      { alarm2.uplink.thing }
       let(:params)      { { date: { start_date: start_date, end_date: end_date } } }
       let(:body)        { CSV.parse(response.body) }
 
       it "generate a CSV" do
         thing2.update(name: '04204')
+        thing.update(name: '16892')
 
         get "/api/v1/alarms_report/#{thing.id}", headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
-        expect(body[2]).to include(uplink.thing.name)
+        expect(body[2]).to include('16892')
         expect(body.last).not_to include('04204')
       end
     end
