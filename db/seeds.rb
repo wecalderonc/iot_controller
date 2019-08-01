@@ -30,19 +30,24 @@ thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo
 
 thing3 = Thing.create(name: "thing tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54")
 
-uplink2 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
-uplink3 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
+uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing2)
 
-uplink4 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing3)
 
 
-acumulator1 = Accumulator.create(value: rand(1000), uplink: uplink2)
-acumulator2 = Accumulator.create(value: rand(1000), uplink: uplink3)
-acumulator3 = Accumulator.create(value: rand(1000), uplink: uplink4)
+acumulator1 = Accumulator.create(value: rand(1000), uplink: uplink1)
+acumulator2 = Accumulator.create(value: rand(1000), uplink: uplink2)
+acumulator3 = Accumulator.create(value: rand(1000), uplink: uplink3)
+
+
+Owner.create(from_node:user1, to_node:thing1)
+Owner.create(from_node:user2, to_node:thing2)
+Owner.create(from_node:user3, to_node:thing3)
