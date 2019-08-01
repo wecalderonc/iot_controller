@@ -17,7 +17,13 @@ module Api
       end
 
       def create
-        user = Users::Create::Execute.new.(create_params)
+        user = Users::Create::Execute.new.(user_params)
+
+        if user.success?
+          render json: user, status: :ok
+        else
+          render json: { errors: user.messages }, status: :not_found
+        end
       end
 
       private
@@ -25,7 +31,7 @@ module Api
       def user_params
         params.permit(:first_name, :last_name, :password, :email,
                       :phone, :gender, :id_number, :id_type, :admin,
-                      :code_number, :user_type)
+                      :code_number, :user_type).to_h.symbolize_keys
       end
     end
   end

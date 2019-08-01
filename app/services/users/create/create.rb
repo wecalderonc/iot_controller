@@ -1,10 +1,10 @@
 require 'dry/transaction/operation'
 
-class Users::Create
+class Users::Create::Create
   include Dry::Transaction::Operation
 
   def call(input)
-    user = User.new(input[user_params])
+    user = User.new(input)
 
     if user.save
       Success input.merge(user: user)

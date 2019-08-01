@@ -14,7 +14,7 @@ class User
   property :code_number, type: String, constraint: :unique
   property :user_type, type: String
 
-  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type, :user_type]
+  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type]
   validates *MANDATORY_FIELDS, presence: true
 
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
