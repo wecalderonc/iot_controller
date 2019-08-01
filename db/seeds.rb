@@ -12,24 +12,42 @@
 #Thing.create(name: "device4")
 
 
-User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
+user1 = User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
             gender: "male", id_number: "1645634", user_type: "amigo", id_type: "1",
             email: "jvaron@procibernetica.com", password: "javier123" )
 
-User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
+user2 = User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
             gender: "male", id_number: "123456", user_type: "amigo", id_type: "1",
             email: "wcalderon@procibernetica.com", password: "123456" )
 
-thing = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12")
+user3 = User.create(first_name:"daniela", last_name: "", phone: "3123204312",
+            gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
+            email: "dpatino@procibernetica.com", password: "dani123" )
+
+thing1 = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12")
+
 thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20")
 
-uplink2 = Uplink.create(data: "006774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
-              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
+thing3 = Thing.create(name: "thing tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54")
 
-uplink3 = Uplink.create(data: "046774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
+uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing)
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
-Accumulator.create(value: rand(1000), uplink: uplink2)
-Accumulator.create(value: rand(1000), uplink: uplink3)
+uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing2)
+
+uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing3)
+
+
+acumulator1 = Accumulator.create(value: rand(1000), uplink: uplink1)
+acumulator2 = Accumulator.create(value: rand(1000), uplink: uplink2)
+acumulator3 = Accumulator.create(value: rand(1000), uplink: uplink3)
+
+
+Owner.create(from_node:user1, to_node:thing1)
+Owner.create(from_node:user2, to_node:thing2)
+Owner.create(from_node:user3, to_node:thing3)
