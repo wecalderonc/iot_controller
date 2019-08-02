@@ -33,3 +33,5 @@ en:
   hello: "Hello world"
   errors:
     valid_currency: "The currency does not exist"
+    uniq_email: "Email already exist"
+    uniq_code_number: "Code number already exist"

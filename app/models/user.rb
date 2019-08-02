@@ -14,6 +14,9 @@ class User
   property :code_number, type: String, constraint: :unique
   property :user_type, type: String
 
+  #TODO
+  #AGREGAR UNIQUE A ID_NUMBER
+
   MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type]
   validates *MANDATORY_FIELDS, presence: true
 

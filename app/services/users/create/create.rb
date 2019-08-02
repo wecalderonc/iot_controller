@@ -4,16 +4,12 @@ class Users::Create::Create
   include Dry::Transaction::Operation
 
   def call(input)
-    p user = User.new(input)
-    p "!!!!!! INICIO"
-    p hola = user.save
-    p hola.inspect
-    p "!!!!!!FINALLL"
+    user = User.new(input)
 
-    if hola
+    if user.save
       Success input.merge(user: user)
     else
-      Failure Errors.general_error("Problems with saving", self.class)
+      Failure Errors.general_error("Errors in saving process", self.class)
     end
   end
 end

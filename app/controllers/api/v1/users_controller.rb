@@ -22,7 +22,7 @@ module Api
         if user.success?
           render json: user.success, status: :ok, serializer: UsersSerializer
         else
-          render json: { errors: user.messages }, status: :not_found
+          render json: { errors: user.failure[:message] }, status: :not_found
         end
       end
 

@@ -1,5 +1,8 @@
 module Validators::Users
   CreateSchema = Dry::Validation.Schema do
+
+    configure { config.messages_file = "config/locales/en.yml" }
+
     required(:first_name).filled(type?: String)
     required(:last_name).filled(type?: String)
     required(:password).value(type?: String)
@@ -11,5 +14,13 @@ module Validators::Users
     required(:code_number).maybe(type?: String)
     optional(:admin).value(type?: (TrueClass || FalseClass))
     optional(:user_type).value(type?: Symbol, included_in?: User::USER_TYPE)
+
+    validate(uniq_email: :email) do |email|
+      !User.exists?(email: email)
+    end
+
+    validate(uniq_code_number: :code_number) do |code_number|
+      !User.exists?(code_number: code_number)
+    end
   end
 end
