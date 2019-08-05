@@ -21,7 +21,19 @@ module Api
         if user.success?
           json_response(user.success, :ok, UsersSerializer)
         else
-          render json: { errors: user.failure[:message] }, status: :not_found
+          render json: { errors: @user.failure[:message] }, status: :not_found
+        end
+      end
+
+      def confirm_email
+        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        p user = User.find_by(verification_code: params[:id])
+        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        if user
+          user.email_activate
+          p "SUCCESS ACTIVACTION"
+        else
+          p "error in the verificatoin"
         end
       end
 
