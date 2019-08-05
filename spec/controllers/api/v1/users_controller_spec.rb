@@ -5,10 +5,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
   describe "GET/index users" do
+    before(:each) do
+      User.all.each { |user| user.destroy }
+    end
 
     context "There are one user" do
       it "Should return an array with one user" do
-        User.all.each { |user| user.destroy }
+
         get '/api/v1/users', headers: header
 
         body = JSON.parse(response.body)
@@ -28,7 +31,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
     context "There are many users" do
       it "Should return an array with all users" do
-        User.all.each { |user| user.destroy }
+
         user2 = create(:user)
         user3 = create(:user)
 
