@@ -17,7 +17,7 @@ class User
   #TODO
   #AGREGAR UNIQUE A ID_NUMBER
 
-  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type]
+  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type, :user_type]
   validates *MANDATORY_FIELDS, presence: true
 
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing

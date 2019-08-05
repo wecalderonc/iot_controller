@@ -107,7 +107,9 @@ RSpec.describe "Users API", :type => :request do
           gender: :male,
           id_number: "123456",
           id_type: "cc",
-          code_number: "123456789"
+          code_number: "123456789",
+          admin: "true",
+          user_type: "administrator"
         }}
 
         run_test!

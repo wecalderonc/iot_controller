@@ -8,6 +8,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
     context "There are one user" do
       it "Should return an array with one user" do
+        User.all.each { |user| user.destroy }
         get '/api/v1/users', headers: header
 
         body = JSON.parse(response.body)
@@ -27,6 +28,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
     context "There are many users" do
       it "Should return an array with all users" do
+        User.all.each { |user| user.destroy }
         user2 = create(:user)
         user3 = create(:user)
 
@@ -73,7 +75,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "gender"=> "male",
             "id_number"=> "123456",
             "id_type"=> "cc",
-            "code_number"=>  "123456789"
+            "code_number"=>  "123456789",
+            "admin"=> "true",
+            "user_type"=> "administrator"
           }
 
         post '/api/v1/users', headers: header, params: body
@@ -108,7 +112,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "gender"=> "male",
             "id_number"=> "123456",
             "id_type"=> "cc",
-            "code_number"=> user.code_number
+            "code_number"=> user.code_number,
+            "user_type"=> "administrator",
+            "admin"=> "true"
           }
 
         post '/api/v1/users', headers: header, params: body
@@ -144,7 +150,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "gender"=> 123456,
             "id_number"=> "123456",
             "id_type"=> 123456,
-            "code_number"=> "123456"
+            "code_number"=> "123456",
+            "user_type"=> "administrator",
+            "admin"=> "true"
           }
 
         post '/api/v1/users', headers: header, params: body

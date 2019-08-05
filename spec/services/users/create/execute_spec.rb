@@ -13,7 +13,9 @@ RSpec.describe Users::Create::Execute do
           gender: "male",
           id_number: "123456",
           id_type: "cc",
-          code_number: "1032428363"
+          code_number: "1032428363",
+          admin: true,
+          user_type: :administrator
         }
       }
 
