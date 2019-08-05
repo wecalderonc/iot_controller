@@ -25,6 +25,16 @@ module Api
         end
       end
 
+      def update
+        update_response = Users::Update::Execute.new.(update_params)
+
+        if update_response.success?
+          json_response(update_response.success)
+        else
+          json_response({ errors: update_response.failure[:message] })
+        end
+      end
+
       private
 
       def user_params
@@ -39,6 +49,10 @@ module Api
       def return_default_show_response(params)
         response = Users::Show.find_user(params)
         default_show_response(response)
+      end
+
+      def update_params
+        params.permit(:first_name, :last_name, :email, :country, :actual_password, :password, :password_confirmation}).to_h.symbolize_keys
       end
     end
   end

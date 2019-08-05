@@ -35,3 +35,6 @@ en:
     valid_currency: "The currency does not exist"
     uniq_email: "Email already exist"
     uniq_code_number: "Code number already exist"
+    new_password: "Missing new password"
+    password_confirmation: "Missing password confirmation"
+    matched_passwords: "New password and password confirmation aren't match"

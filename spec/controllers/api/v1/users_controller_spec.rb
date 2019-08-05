@@ -123,9 +123,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         post '/api/v1/users', headers: header, params: body
 
-        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(200)
-
         response_body = JSON.parse(response.body)
 
         expected_response =
@@ -213,6 +210,60 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           }
 
         expect(response_body).to eq(expected_response)
+      end
+    end
+  end
+
+  describe "PUT/update/:user" do
+
+    context "right params" do
+      it "should update attributes of a user" do
+        user = create(:user)
+
+        body =
+          {
+            params: {
+              first_name: "Daniela",
+              last_name: "Patiño",
+              email: "dpatino@proci.com",
+              country: "colombia",
+              current_password: user.password,
+              password: "nuevopassword",
+              password_confirmation: "nuevopassword"
+            }
+          }
+
+        put "/api/v1/users/#{user.id}", headers: header, params: body
+
+        body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        expected_response =
+          {
+            "first_name"=>"Daniela",
+            "last_name"=>"Patiño",
+            "email"=>"dpatino@proci.com",
+            "country"=>"colombia",
+            "password"=>"nuevopassword"
+          }
+
+
+        expect(body).to eq(expected_response)
+      end
+    end
+
+    context "bad params" do
+      it "should return an update error" do
+        user = create(:user)
+
+        put "/api/v1/things/#{user.id}", headers: header
+
+        body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(403)
       end
     end
   end
