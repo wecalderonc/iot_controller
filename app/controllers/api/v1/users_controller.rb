@@ -25,18 +25,6 @@ module Api
         end
       end
 
-      def confirm_email
-        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        p user = User.find_by(verification_code: params[:id])
-        p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        if user
-          user.email_activate
-          p "SUCCESS ACTIVACTION"
-        else
-          p "error in the verificatoin"
-        end
-      end
-
       def update
         update_response = Users::Update::Execute.new.(update_params)
 
