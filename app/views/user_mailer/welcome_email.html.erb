@@ -9,9 +9,9 @@
     <p>
       You have successfully signed up to example.com,
       To confirm your registration click the URL below.
-            <%= confirm_email_api_v1_user_url(@user.id) %>
+            <%= api_v1_user_url(@user.id) %>
 
-      <%= confirm_email_api_v1_user_url(@user.verification_code) %>
+      <%= api_v1_user_url(@user.verification_code) + "?subaction=confirm_email" %>
     </p>
     <p>
       To login to the site, just follow this link:
