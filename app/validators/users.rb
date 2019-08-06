@@ -16,11 +16,11 @@ module Validators::Users
     optional(:user_type).value(type?: Symbol, included_in?: User::USER_TYPE)
 
     validate(uniq_email: :email) do |email|
-      !User.exists?(email: email)
+      User.find_by(email: email).nil?
     end
 
     validate(uniq_code_number: :code_number) do |code_number|
-      !User.exists?(code_number: code_number)
+      User.find_by(code_number: code_number).nil?
     end
   end
 end

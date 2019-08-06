@@ -20,7 +20,6 @@ RSpec.describe Users::Create::Execute do
 
     context "When input is valid" do
       it "should return a Success response" do
-        User.all.each { |user| user.destroy }
         expect(User.count).to eq(0)
 
         response = subject.(input)
@@ -95,7 +94,6 @@ RSpec.describe Users::Create::Execute do
     context "'create' operation" do
       describe "When the user email already exist" do
         it "Should return a failure response" do
-          User.all.each { |user| user.destroy }
           existing_email = "bat@mail.com"
           user = create(:user, email: existing_email)
           input[:email] = existing_email

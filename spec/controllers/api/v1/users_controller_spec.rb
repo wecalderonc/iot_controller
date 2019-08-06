@@ -5,10 +5,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
   describe "GET/index users" do
-    before(:each) do
-      User.all.each { |user| user.destroy }
-    end
-
     context "There are one user" do
       it "Should return an array with one user" do
 
@@ -166,14 +162,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         response_body = JSON.parse(response.body)
 
         expected_response =
-
-        {
-          "errors" => {
-            "email"=>["is in invalid format"],
-            "gender"=>["must be one of: male, female"],
-            "id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
+          {
+            "errors" => {
+              "email"=>["is in invalid format"],
+              "gender"=>["must be one of: male, female"],
+              "id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
+            }
           }
-        }
 
         expect(response_body).to eq(expected_response)
       end

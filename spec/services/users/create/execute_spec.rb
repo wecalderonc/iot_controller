@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Users::Create::Execute do
   describe "#call" do
     context "When someone is signing up" do
-      let(:input)       {
+      let(:input) {
         {
           first_name: "user_name_test",
           last_name: "user_last_test",
@@ -21,6 +21,7 @@ RSpec.describe Users::Create::Execute do
 
       context "When all the operations are successful" do
         it "Should return a Success response" do
+
           response = subject.(input)
 
           expect(response).to be_success
@@ -63,7 +64,7 @@ RSpec.describe Users::Create::Execute do
       end
 
       context "When the 'validation' operation fails with duplicate user email" do
-        user = FactoryBot.create(:user)
+        let(:user) { create(:user) }
 
         it "Should return a Failure response" do
           input[:first_name] = "name"
@@ -86,7 +87,7 @@ RSpec.describe Users::Create::Execute do
       end
 
       context "When the 'validation' operation fails with duplicate user code_number" do
-        user = FactoryBot.create(:user)
+        let(:user) { create(:user) }
 
         it "Should return a Failure response" do
           input[:first_name] = "name"

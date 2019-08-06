@@ -29,9 +29,7 @@ module Api
       private
 
       def user_params
-        params.permit(:first_name, :last_name, :password, :email,
-                      :phone, :gender, :id_number, :id_type, :admin,
-                      :code_number, :user_type).to_h.symbolize_keys
+        params.permit(User::PERMITTED_PARAMS).to_h.symbolize_keys
       end
     end
   end

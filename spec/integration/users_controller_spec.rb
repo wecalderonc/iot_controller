@@ -45,6 +45,8 @@ RSpec.describe "Users API", :type => :request do
 
       response '200', 'user found' do
         let(:user) { create(:user) }
+        let!(:user2) { create(:user) }
+        let!(:user3) { create(:user) }
         let(:email) { create(:user, email: 'valid@mail.com').email }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
