@@ -35,6 +35,7 @@ RSpec.describe "Users API", :type => :request do
     end
   end
 
+  #TODO REVISAR CON MÁS DE UN USUARIO
   path "/api/v1/users" do
     get 'index users' do
       tags 'Users'
@@ -44,6 +45,8 @@ RSpec.describe "Users API", :type => :request do
 
       response '200', 'user found' do
         let(:user) { create(:user) }
+        let!(:user2) { create(:user) }
+        let!(:user3) { create(:user) }
         let(:email) { create(:user, email: 'valid@mail.com').email }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -57,6 +60,59 @@ RSpec.describe "Users API", :type => :request do
           },
           required: [ 'first_name', 'last_name', 'email' ]
         }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/api/v1/users" do
+    post 'create user' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          first_name: { type: :string },
+          last_name: { type: :string },
+          email: { type: :string },
+          password: { type: :string },
+          phone: { type: :string  },
+          gender: { type: :string },
+          id_number: { type: :string },
+          id_type: { type: :string },
+          code_number: { type: :string }
+        },
+        required: [ 'first_name', 'last_name', 'email', 'password', 'phone', 'gender', 'id_number', 'id_type', 'code_number']
+      }
+
+      response '200', 'user created' do
+        let(:user) { create(:user) }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          required: [ 'first_name', 'last_name', 'email' ],
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            email: { type: :string }
+          }
+
+        let(:input) {{
+          first_name: "new_user",
+          last_name: "new_last",
+          email: "new_user@gmail.com",
+          password: "validpass",
+          phone: "3013632461",
+          gender: :male,
+          id_number: "123456",
+          id_type: "cc",
+          code_number: "123456789",
+          admin: "true",
+          user_type: "administrator"
+        }}
 
         run_test!
       end

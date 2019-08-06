@@ -15,6 +15,22 @@ module Api
         users = User.all
         render json: users, status: :ok, each_serializer: UsersSerializer
       end
+
+      def create
+        user = Users::Create::Execute.new.(user_params)
+
+        if user.success?
+          render json: user.success, status: :ok, serializer: UsersSerializer
+        else
+          render json: { errors: user.failure[:message] }, status: :not_found
+        end
+      end
+
+      private
+
+      def user_params
+        params.permit(User::PERMITTED_PARAMS).to_h.symbolize_keys
+      end
     end
   end
 end

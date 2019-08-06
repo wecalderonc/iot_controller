@@ -31,5 +31,9 @@ module ExceptionHandler
     rescue_from Neo4j::ActiveNode::Persistence::RecordInvalidError do |e|
       json_response({ message: e.message }, :unprocessable_entity)
     end
+
+    rescue_from Neo4j::Core::CypherSession::SchemaErrors::ConstraintValidationFailedError do |e|
+      json_response({ message: e.original_message }, :unprocessable_entity)
+    end
   end
 end

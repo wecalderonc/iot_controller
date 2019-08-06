@@ -14,8 +14,15 @@ class User
   property :code_number, type: String, constraint: :unique
   property :user_type, type: String
 
+  #TODO
+  #CHANGE UNIQUE FROM CODE_NUMBER TO ID_NUMBER
+
   MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type, :user_type]
   validates *MANDATORY_FIELDS, presence: true
+
+  PERMITTED_PARAMS = [:first_name, :last_name, :password, :email,
+                      :phone, :gender, :id_number, :id_type, :admin,
+                      :code_number, :user_type]
 
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
   has_many :out, :operates,  rel_class: :Operator, model_class: :Thing
