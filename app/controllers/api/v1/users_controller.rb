@@ -5,10 +5,15 @@ module Api
 
       def show
         options = {
-          confirm_email: -> { confirm_email(params) }
-          recover_password: -> { recover_password(params) }
+          confirm_email: -> {
+            response = Users::Confirmation.verification_code(params)
+            render json: response[:json], status: response[:status]
+          }
         }
-        options.default = -> { user_show(params) }
+        options.default = -> {
+          response = Users::Show.user_show(params)
+          render json: response[:json], status: response[:status]
+        }
 
         options[params[:subaction]&.to_sym].()
       end
@@ -19,13 +24,12 @@ module Api
       end
 
       def create
-        @user = Users::Create::Execute.new.(user_params)
+        user = Users::Create::Execute.new.(user_params)
 
-        if @user.success?
-          UserMailer.with(user: @user.success).welcome_email.deliver_now
-          render json: @user.success, status: :ok, serializer: UsersSerializer
+        if user.success?
+          render json: user.success, status: :ok, serializer: UsersSerializer
         else
-          render json: { errors: @user.failure[:message] }, status: :not_found
+          render json: { errors: user.failure[:message] }, status: :not_found
         end
       end
 
@@ -33,27 +37,6 @@ module Api
 
       def user_params
         params.permit(User::PERMITTED_PARAMS).to_h.symbolize_keys
-      end
-
-      def user_show(params)
-        user = User.find_by(email: "#{params["email"]}.#{params[:format]}")
-
-        if user
-          render json: { id: user.id, email: user.email, name: user.first_name }, status: :ok
-        else
-          render json: { errors: "user not found" }, status: :not_found
-        end
-      end
-
-      def confirm_email(params)
-        user = User.find_by(verification_code: params[:id])
-
-        if user
-          user.email_activate
-          render json: { message: "Email Confirmed! Thanks!" }, status: :ok
-        else
-          render json: { errors: @user.failure[:message] }, status: :not_found
-        end
       end
     end
   end

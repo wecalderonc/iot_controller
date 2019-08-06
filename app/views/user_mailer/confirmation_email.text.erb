@@ -3,8 +3,8 @@ Welcome to example.com, <%= @user.first_name %>
 ===============================================
 
 You have successfully signed up to example.com,
-your username is: NOTHING
+To confirm email please click:
 
-To login to the site, just follow this link:
+ <%= api_v1_user_url(@user.email) + "?subaction=confirm_email" + "&token=" + @user.verification_code %>
 
 Thanks for joining and have a great day!
