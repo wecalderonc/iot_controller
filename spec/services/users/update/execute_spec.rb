@@ -3,13 +3,15 @@ require 'rails_helper'
 RSpec.describe Users::Update::Execute do
   describe "#call" do
     context "When the user is updating user params" do
-      let(:user) { create(:user) }
+      let(:user)    { create(:user) }
+      let(:country) { create(:country, code_iso: 'CO') }
+
       let(:input) {
         { id: user.id,
           first_name: "Daniela",
           last_name: "Patiño",
           email: "dpatino@proci.com",
-          country: "colombia",
+          country_code: country.code_iso,
           current_password: user.password,
           password: "nuevopassword",
           password_confirmation: "nuevopassword"
@@ -24,8 +26,8 @@ RSpec.describe Users::Update::Execute do
           expect(response.success.first_name).to match("Daniela")
           expect(response.success.last_name).to match("Patiño")
           expect(response.success.email).to match("dpatino@proci.com")
-          expect(response.success.country).to match("colombia")
           expect(response.success.password).to match("nuevopassword")
+          expect(response.success.country.code_iso).to match("CO")
         end
       end
 
@@ -73,11 +75,11 @@ RSpec.describe Users::Update::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:country] = 12345
+          input[:country_code] = 12345
 
           response = subject.(input)
           expected_response = {
-            :country => ["must be String"]
+            :country_code => ["must be String"]
           }
 
           expect(response).to be_failure
@@ -118,8 +120,9 @@ RSpec.describe Users::Update::Execute do
           input[:password_confirmation] = 12345
 
           response = subject.(input)
+
           expected_response = {
-            :password_confirmation => ["must be String"]
+            :password_confirmation => ["Missing password confirmation"]
           }
 
           expect(response).to be_failure
@@ -130,24 +133,26 @@ RSpec.describe Users::Update::Execute do
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
           input[:password_confirmation] = "12345"
-          iput.delete(:password)
+          input.delete(:password)
 
           response = subject.(input)
+
           expected_response = {
             :new_password => ["Missing new password"]
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message][:params]).to eq(expected_response)
+          expect(response.failure[:message]).to eq(expected_response)
         end
       end
 
       context "When the 'get' operation fails" do
         it "Should return a Failure response" do
-          input.delete(:first_name)
+          input[:id] = "invalid_id"
 
           response = subject.(input)
-          expected_response = "The thing  does not exist"
+
+          expected_response = "The user Daniela does not exist"
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)

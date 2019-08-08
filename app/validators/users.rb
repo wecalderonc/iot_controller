@@ -30,7 +30,7 @@ module Validators::Users
     optional(:first_name).filled(type?: String)
     optional(:last_name).filled(type?: String)
     optional(:email).filled(type?: String, format?: User::VALID_EMAIL)
-    optional(:country).value(type?: String)
+    optional(:country_code).value(type?: String)
     optional(:current_password).value(type?: String)
     optional(:password).value(type?: String)
     optional(:password_confirmation).value(type?: String)

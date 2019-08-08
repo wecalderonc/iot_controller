@@ -6,6 +6,8 @@ RSpec.describe User, :type => :model do
   it { is_expected.to have_many(:operates).with_direction(:out) }
   it { is_expected.to have_many(:sees).with_direction(:out) }
 
+  it { is_expected.to have_one(:country).with_direction(:out) }
+
   describe "Validations" do
     it "email and password are required" do
       expect(subject).to_not be_valid

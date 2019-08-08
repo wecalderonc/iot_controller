@@ -222,29 +222,30 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         body =
           {
-            params: {
-              first_name: "Daniela",
-              last_name: "Patiño",
-              email: "dpatino@proci.com",
-              country: "colombia",
-              current_password: user.password,
-              password: "nuevopassword",
-              password_confirmation: "nuevopassword"
-            }
+            first_name: "Daniela",
+            last_name: "Patiño",
+            email: "unacosita123@gmail.com",
+            country: "colombia",
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
           }
 
-        put "/api/v1/users/#{user.id}", headers: header, params: body
+        put "/api/v1/users/#{user.email}", headers: header, params: body
 
         body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
+        puts "*" * 100
+        puts body.inspect
+        puts "*" * 100
 
         expected_response =
           {
             "first_name"=>"Daniela",
             "last_name"=>"Patiño",
-            "email"=>"dpatino@proci.com",
+            "email"=>"unacosita123@gmail.com",
             "country"=>"colombia",
             "password"=>"nuevopassword"
           }

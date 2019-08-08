@@ -4,6 +4,6 @@ module Users::Update
     step :get_user,             with: Users::Get.new
     step :validate_password,    with: Users::Update::ValidatePassword.new
     step :update,               with: Users::Update::Update.new
-#   map  :build_response,       with: Users::Update::BuildResponse.new
+    map  :build_response,       with: Users::Update::BuildResponse.new
   end.Do
 end

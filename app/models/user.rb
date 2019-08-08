@@ -31,6 +31,8 @@ class User
   has_many :out, :operates,  rel_class: :Operator, model_class: :Thing
   has_many :out, :sees,      rel_class: :Viewer,   model_class: :Thing
 
+  has_one :out, :country, type: :ORIGIN_COUNTRY
+
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   GENDERS = [:male, :female]
   ID_TYPES = [:cc, :ce, :natural_nit, :bussines_nit, :foreign_nit, :passport, :civil_register]

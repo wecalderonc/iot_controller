@@ -4,9 +4,7 @@ class Users::Get
   include Dry::Transaction::Operation
 
   def call(input)
-    puts "input -> #{input.inspect}"
-    puts User.all.inspect
-    user = User.find_by(id: input[:id])
+    user = User.find_by(email: input[:email])
 
     if user.present?
       Success input.merge(user: user)

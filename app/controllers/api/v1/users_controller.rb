@@ -52,7 +52,7 @@ module Api
       end
 
       def update_params
-        params.permit(:first_name, :last_name, :email, :country, :actual_password, :password, :password_confirmation}).to_h.symbolize_keys
+        params.permit(:first_name, :last_name, :email, :country_code, :actual_password, :password, :password_confirmation).to_h.symbolize_keys
       end
     end
   end
