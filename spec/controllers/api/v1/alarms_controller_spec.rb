@@ -33,12 +33,11 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
       end
     end
 
-    context "The alarm method is wrong" do
+    context "The URL is wrong" do
       it "Should return a bad URI error" do
-        put "/api/v1/alarms/#{alarm}", headers: header
+        put "/api/v1/alarms/326478956743856fhdsj", headers: header
 
-        expect(response.successful?).to be_falsey
-        expect(response).to have_http_status(201)
+        expect(response.successful?).to be_truthy
 
         alarm.reload
 
