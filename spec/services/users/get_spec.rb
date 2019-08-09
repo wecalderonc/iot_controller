@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Users::Get do
-  describe "#call" do
+  describe '#call' do
     let(:response) { subject.(input) }
 
-    context "user exists" do
-      let(:user) { create(:user) }
-      let(:input) { { id: user.id, first_name: user.first_name } }
+    context 'user exists' do
+      let!(:user) { create(:user, email: 'unusuario@gmail.com') }
+      let(:input) { { email: 'unusuario@gmail', format: 'com' } }
 
-      it "should return success response" do
+      it 'should return success response' do
         expect(response).to be_success
-        expect(response.success[:first_name]).to eq(user.first_name)
+        expect(response.success[:user]).to eq(user)
       end
     end
 
-    context "user doesn't exists" do
-      let(:input) { { id: "invalid_id", first_name: "Daniela" } }
+    context 'user does not exists' do
+      let(:input) { { email: 'invalid_id', format: 'com' } }
 
-      it "should return failure response" do
+      it 'should return failure response' do
         expect(response).to be_failure
-        expect(response.failure[:message]).to eq("The user Daniela does not exist")
+        expect(response.failure[:message]).to eq('User not found')
       end
     end
   end

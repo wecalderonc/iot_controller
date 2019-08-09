@@ -25,7 +25,7 @@ class User
 
   PERMITTED_PARAMS = [:first_name, :last_name, :password, :email,
                       :phone, :gender, :id_number, :id_type, :admin,
-                      :code_number, :user_type]
+                      :code_number, :user_type, :password_confirmation]
 
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
   has_many :out, :operates,  rel_class: :Operator, model_class: :Thing

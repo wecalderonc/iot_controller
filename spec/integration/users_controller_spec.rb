@@ -157,4 +157,60 @@ RSpec.describe "Users API", :type => :request do
       end
     end
   end
+
+  path "/api/v1/users/{email}" do
+    put 'update user' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          first_name: { type: :string },
+          last_name: { type: :string },
+          new_email: { type: :string },
+          country_code: { type: :string },
+          current_password: { type: :string },
+          password: { type: :string },
+          password_confirmation: { type: :string }
+        },
+        required: [ 'first_name', 'last_name', 'new_email', 'country_code', 'current_password', 'password', 'password_confirmation']
+      }
+
+      response '200', 'user created' do
+        let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
+        let(:email) { user.email }
+        let!(:country) { create(:country, code_iso: 'CO') }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          required: [ 'first_name', 'last_name', 'email', 'phone', 'gender', 'id_number', 'id_type', 'code_number', 'admin', 'user_type' ],
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            email: { type: :string },
+            phone: { type: :string },
+            gender: { type: :string },
+            id_number: { type: :string },
+            id_type: { type: :string }
+          }
+
+        let(:input) {
+          {
+            first_name: "Daniela",
+            last_name: "Patiño",
+            new_email: "unacosita123@gmail.com",
+            country_code: "CO",
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+        }
+
+        run_test!
+      end
+    end
+  end
 end

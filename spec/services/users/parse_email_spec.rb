@@ -15,8 +15,7 @@ RSpec.describe Users::ParseEmail do
 
     context 'new_email come in params' do
       it 'should return email and format joined' do
-        expect(response).to be_success
-        expect(response.success[:email]).to eq('unacosita123@gmail.com')
+        expect(response[:email]).to eq('unacosita123@gmail.com')
       end
     end
 
@@ -29,8 +28,7 @@ RSpec.describe Users::ParseEmail do
           last_name: 'Patiño'
         }
 
-        expect(response).to be_success
-        expect(response.success).to match(expected_response)
+        expect(response).to match(expected_response)
       end
     end
   end
