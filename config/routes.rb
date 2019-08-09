@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :accumulators_report,           only: [:show, :index]
       resources :alarms_report,                 only: [:show, :index]
       resources :downlinks,                     only: [:create]
+      resources :alarms,                        only: [:update]
     end
   end
 end

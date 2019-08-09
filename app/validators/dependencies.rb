@@ -1,7 +1,7 @@
 module Validators
   Dependencies = {
     create: {
-      user:       Validators::Users::CreateSchema,
+      user:                               Validators::Users::CreateSchema,
     },
 
     update_state: {
@@ -14,11 +14,12 @@ module Validators
     },
 
     get_price: {
-      thing:        Validators::Things::GetPricesSchema
+      thing:                              Validators::Things::GetPricesSchema
     },
 
     update: {
-      thing:        Validators::Things::UpdateSchema
+      thing:                              Validators::Things::UpdateSchema,
+      alarm:                              Validators::Alarms::UpdateSchema
     }
   }
 end

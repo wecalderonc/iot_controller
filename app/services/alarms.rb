@@ -1,0 +1,2 @@
+module Alarms
+end
