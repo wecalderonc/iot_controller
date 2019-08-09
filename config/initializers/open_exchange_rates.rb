@@ -4,7 +4,6 @@ require 'money/bank/open_exchange_rates_bank'
 # explained in https://github.com/RubyMoney/money#exchange-rate-stores
 oxr = Money::Bank::OpenExchangeRatesBank.new
 oxr.app_id = ENV['OXR_APP_ID']
-oxr.update_rates
 
 # (optional)
 # See https://github.com/spk/money-open-exchange-rates#cache for more info
@@ -14,6 +13,8 @@ oxr.update_rates
 if Rails.env.test?
   oxr.cache = Rails.root.join("spec/fixtures/currency-rates.json").to_s
 else
+  oxr.update_rates
+
   OXR_CACHE_KEY = "#{Rails.env}:money:exchange_rates".freeze
 
   oxr.cache = Proc.new do |text|
