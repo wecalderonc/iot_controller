@@ -11,20 +11,17 @@ RSpec.describe Users::Show do
           format: "com"
         }
 
-        response = described_class.user_show(params)
+        response = described_class.find_user(params)
 
         expected_response =
           {
-            :json =>
-              {
-                :id => user.id,
-                :email=> user.email,
-                :name=> user.first_name
-              },
-            :status=>:ok
+            :id => user.id,
+            :email=> user.email,
+            :name=> user.first_name,
           }
 
-        expect(response).to eq(expected_response)
+        expect(response).to be_success
+        expect(response.success).to eq(user)
       end
 
       it "doesn't exist in db" do
@@ -33,15 +30,13 @@ RSpec.describe Users::Show do
           format: "com"
         }
 
-        response = described_class.user_show(params)
+        response = described_class.find_user(params)
 
-        expected_response =
-            {
-              :json => {:errors=>"user not found"},
-              :status => :not_found
-            }
+        expected_response = "User not found"
 
-        expect(response).to eq(expected_response)
+
+        expect(response).to be_failure
+        expect(response.failure[:message]).to eq(expected_response)
       end
     end
   end

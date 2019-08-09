@@ -49,8 +49,6 @@ class User
   end
 
   def email_activate
-    self.verificated = true
-    self.verification_code = nil
-    save!(:validate => false)
+    self.update(verificated: true, verification_code: nil)
   end
 end

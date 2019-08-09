@@ -15,11 +15,11 @@ RSpec.describe "Users API", :type => :request do
 
         schema type: :object,
           properties: {
-            id: { type: :string },
+            first_name: { type: :string },
+            last_name: { type: :string },
             email: { type: :string },
-            name: { type: :string },
           },
-          required: [ 'id', 'email', 'name' ]
+          required: [ 'first_name', 'last_name', 'email' ]
 
         run_test!
       end
@@ -35,7 +35,6 @@ RSpec.describe "Users API", :type => :request do
     end
   end
 
-  #path "/api/v1/users/{email}" do
   path "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}" do
     get 'Retrieves a C' do
       tags 'Users'
@@ -67,9 +66,9 @@ RSpec.describe "Users API", :type => :request do
 
         schema type: :object,
           properties: {
-            errors: { type: :string },
+            message: { type: :string }
           },
-          required: [ 'errors' ]
+          required: [ 'message' ]
 
         run_test!
       end

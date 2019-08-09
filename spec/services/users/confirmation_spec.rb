@@ -11,13 +11,15 @@ RSpec.describe Users::Confirmation do
         }
 
         response = described_class.verification_code(params)
+        expect(response).to be_success
 
         expected_response =
           {
-            :json => {:message=>"Email Confirmed! Thanks!"}, :status=>:ok
+            :message=>"Email Confirmed! Thanks!"
           }
 
-        expect(response).to eq(expected_response)
+        expect(response).to be_success
+        expect(response.success).to eq(expected_response)
       end
 
       it "doesn't exist in db" do
@@ -26,14 +28,12 @@ RSpec.describe Users::Confirmation do
         }
 
         response = described_class.verification_code(params)
+        expect(response).to be_failure
 
-        expected_response =
-            {
-              :json => {:errors=>"Token expired or incorrect - User not found"},
-              :status => :not_found
-            }
+        expected_response = "Token expired or incorrect - User not found"
 
-        expect(response).to eq(expected_response)
+        expect(response).to be_failure
+        expect(response.failure[:message]).to eq(expected_response)
       end
     end
   end

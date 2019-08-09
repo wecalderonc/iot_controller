@@ -1,11 +1,15 @@
+require 'dry/monads'
+
 class Users::Show
-  def self.user_show(params)
+  extend Dry::Monads[:result]
+
+  def self.find_user(params)
     user = User.find_by(email: "#{params["email"]}.#{params[:format]}")
 
     if user
-      { json: { id: user.id, email: user.email, name: user.first_name }, status: :ok }
+      Success user
     else
-      { json: { errors: "user not found" }, status: :not_found }
+      Failure Errors.general_error("User not found", self.class)
     end
   end
 end

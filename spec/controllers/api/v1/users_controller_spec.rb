@@ -90,7 +90,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         expected_response =
           {
-            "errors" => "Token expired or incorrect - User not found"
+            "message"=>"Token expired or incorrect - User not found"
           }
 
         expect(response_body).to eq(expected_response)

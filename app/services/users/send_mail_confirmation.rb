@@ -5,6 +5,5 @@ class Users::SendMailConfirmation
 
   def call(input)
     UserMailer.with(user: input[:user]).confirmation_email.deliver_now
-    input
   end
 end

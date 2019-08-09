@@ -7,12 +7,22 @@ module Api
         options = {
           confirm_email: -> {
             response = Users::Confirmation.verification_code(params)
-            render json: response[:json], status: response[:status]
+
+            if response.success?
+              json_response({ message: response.success[:message] }, :ok)
+            else
+              json_response({ message: response.failure[:message] }, :not_found)
+            end
           }
         }
         options.default = -> {
-          response = Users::Show.user_show(params)
-          render json: response[:json], status: response[:status]
+          response = Users::Show.find_user(params)
+
+          if response.success?
+              render json: response.success, status: :ok, serializer: UsersSerializer
+            else
+              json_response({ message: response.failure[:message] }, :not_found)
+            end
         }
 
         options[params[:subaction]&.to_sym].()
