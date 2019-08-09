@@ -29,9 +29,9 @@ module Api
         update_response = Users::Update::Execute.new.(update_params)
 
         if update_response.success?
-          json_response(update_response.success)
+          render json: update_response.success, status: :ok, serializer: UsersSerializer
         else
-          json_response({ errors: update_response.failure[:message] })
+          json_response({ errors: update_response.failure[:message] }, :not_found)
         end
       end
 
@@ -52,7 +52,17 @@ module Api
       end
 
       def update_params
-        params.permit(:first_name, :last_name, :email, :country_code, :actual_password, :password, :password_confirmation).to_h.symbolize_keys
+        params.permit(
+          :first_name,
+          :last_name,
+          :email,
+          :format,
+          :new_email,
+          :country_code,
+          :current_password,
+          :password,
+          :password_confirmation
+        ).to_h.symbolize_keys
       end
     end
   end

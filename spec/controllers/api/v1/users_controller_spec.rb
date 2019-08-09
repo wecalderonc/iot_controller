@@ -18,7 +18,11 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expected_response = {
           "first_name" => user.first_name,
           "last_name" => user.last_name,
-          "email" => user.email
+          "email" => user.email,
+          "phone" => user.phone,
+          "gender" => user.gender,
+          "id_number" => user.id_number,
+          "id_type" => user.id_type
         }
 
         expect(body).to eq([expected_response])
@@ -42,15 +46,27 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           {
             "first_name" => user.first_name,
             "last_name" => user.last_name,
-            "email" => user.email
+            "email" => user.email,
+            "phone" => user.phone,
+            "gender" => user.gender,
+            "id_number" => user.id_number,
+            "id_type" => user.id_type
           }, {
             "first_name" => user2.first_name,
             "last_name" => user2.last_name,
-            "email" => user2.email
+            "email" => user2.email,
+            "phone" => user2.phone,
+            "gender" => user2.gender,
+            "id_number" => user2.id_number,
+            "id_type" => user2.id_type
           }, {
             "first_name" => user3.first_name,
             "last_name" => user3.last_name,
-            "email" => user3.email
+            "email" => user3.email,
+            "phone" => user3.phone,
+            "gender" => user3.gender,
+            "id_number" => user3.id_number,
+            "id_type" => user3.id_type
           }
         ]
 
@@ -131,6 +147,10 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "first_name"=> "new_user",
           "last_name" => "new_last",
           "email"=> "new_user@gmail.com",
+          "phone" => "3013632461",
+          "gender" => "male",
+          "id_number" => "123456",
+          "id_type" => "cc"
         }
 
         expect(response_body).to eq(expected_response)
@@ -217,15 +237,17 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   describe "PUT/update/:user" do
 
     context "right params" do
+      let(:user) { create(:user) }
+      let!(:country) { create(:country, code_iso: 'CO') }
+
       it "should update attributes of a user" do
-        user = create(:user)
 
         body =
           {
             first_name: "Daniela",
             last_name: "Patiño",
-            email: "unacosita123@gmail.com",
-            country: "colombia",
+            new_email: "unacosita123@gmail.com",
+            country_code: "CO",
             current_password: user.password,
             password: "nuevopassword",
             password_confirmation: "nuevopassword"
@@ -237,34 +259,28 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
-        puts "*" * 100
-        puts body.inspect
-        puts "*" * 100
 
-        expected_response =
-          {
-            "first_name"=>"Daniela",
-            "last_name"=>"Patiño",
-            "email"=>"unacosita123@gmail.com",
-            "country"=>"colombia",
-            "password"=>"nuevopassword"
-          }
+        expected_response = {
+          "first_name" => "Daniela",
+          "last_name" => "Patiño",
+          "email" => "unacosita123@gmail.com"
+        }
 
 
-        expect(body).to eq(expected_response)
+        expect(body).to include(expected_response)
+        expect(user.country.code_iso).to eq('CO')
       end
     end
 
     context "bad params" do
       it "should return an update error" do
-        user = create(:user)
-
-        put "/api/v1/things/#{user.id}", headers: header
+        put "/api/v1/users/invalid_id", headers: header
 
         body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(404)
+        expect(body["errors"]).to eq("User not found")
       end
     end
   end

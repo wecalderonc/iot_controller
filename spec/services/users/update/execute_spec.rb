@@ -3,14 +3,16 @@ require 'rails_helper'
 RSpec.describe Users::Update::Execute do
   describe "#call" do
     context "When the user is updating user params" do
-      let(:user)    { create(:user) }
+      let(:user)    { create(:user, email: "user@gmail.com") }
       let(:country) { create(:country, code_iso: 'CO') }
 
       let(:input) {
-        { id: user.id,
+        {
+          email: "user@gmail",
+          format: "com",
           first_name: "Daniela",
           last_name: "Patiño",
-          email: "dpatino@proci.com",
+          new_email: "dpatino@proci.com",
           country_code: country.code_iso,
           current_password: user.password,
           password: "nuevopassword",
@@ -61,11 +63,11 @@ RSpec.describe Users::Update::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:email] = 123456
+          input[:new_email] = 123456
 
           response = subject.(input)
           expected_response = {
-            :email => ["must be String"]
+            :new_email => ["must be String"]
           }
 
           expect(response).to be_failure
@@ -148,11 +150,11 @@ RSpec.describe Users::Update::Execute do
 
       context "When the 'get' operation fails" do
         it "Should return a Failure response" do
-          input[:id] = "invalid_id"
+          input[:email] = "invalid_id"
 
           response = subject.(input)
 
-          expected_response = "The user Daniela does not exist"
+          expected_response = "User not found"
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)
