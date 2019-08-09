@@ -21,6 +21,10 @@ module Validators
     update: {
       thing:                              Validators::Things::UpdateSchema,
       user:                               Validators::Users::UpdateSchema
+    },
+
+    recover_password: {
+      user:                               Validators::Users::RecoverPasswordSchema
     }
   }
 end

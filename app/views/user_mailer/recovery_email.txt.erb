@@ -1,0 +1,10 @@
+
+RECOVERY PASSWORD, <%= @user.first_name %>
+===============================================
+
+You have successfully signed up to example.com,
+To confirm email please click:
+
+ <%= api_v1_user_url(@user.email) + "?subaction=confirm_email" + "&token=" + @user.verification_code %>
+
+Thanks for joining and have a great day!

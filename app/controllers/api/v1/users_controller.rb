@@ -22,7 +22,7 @@ module Api
           json_response(user.success, :ok, UsersSerializer)
         else
           render json: { errors: @user.failure[:message] }, status: :not_found
-        end
+        en
       end
 
       def update

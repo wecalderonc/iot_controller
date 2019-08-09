@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>RECOVERY PASSWORD,
+    <p>
+      You have successfully signed up to IOT.com,
+      To confirm your registration click the URL below.
+
+      <%= api_v1_user_url(@user.email) + "?subaction=confirm_email"%>
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

@@ -50,6 +50,15 @@ module Validators::Users
       else
         true
       end
+
+  RecoverPasswordSchema = Dry::Validation.Schema do
+    required(:email).filled?(type?: String)
+    required(:current_password).filled(type?: String)
+    required(:new_password).filled(type?: String)
+    required(:new_password_confirmation).filled(type?: String)
+
+    validate(same_password: %i[new_password new_password_confirmation]) do |new_password, new_password_confirmation|
+      new_password.eql?(new_password_confirmation)
     end
   end
 end
