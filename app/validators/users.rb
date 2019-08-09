@@ -52,6 +52,9 @@ module Validators::Users
       end
 
   RecoverPasswordSchema = Dry::Validation.Schema do
+
+    configure { config.messages_file = "config/locales/en.yml" }
+
     required(:email).filled?(type?: String)
     required(:current_password).filled(type?: String)
     required(:new_password).filled(type?: String)

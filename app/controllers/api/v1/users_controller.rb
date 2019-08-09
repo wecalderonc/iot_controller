@@ -26,12 +26,20 @@ module Api
       end
 
       def update
+
         update_response = Users::Update::Execute.new.(update_params)
 
         if update_response.success?
           json_response(update_response.success, :ok, UsersSerializer)
         else
           json_response({ errors: update_response.failure[:message] }, :not_found)
+#WHATAAA
+        update_password_response = Users::Password::Execute.new.(password_params)
+
+        if update_password_response.success?
+          render json: update_password_response.success, status: :ok, serializer: UsersSerializer
+        else
+          json_response({ errors: update_password_response.failure[:message] }, :not_found)
         end
       end
 
