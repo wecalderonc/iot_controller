@@ -53,7 +53,7 @@ module Api
 
       def update_params
         params.permit(
-          User::PERMITTED_PARAMS << [:format, :new_email, :country_code]
+          User::PERMITTED_PARAMS << [:format, :new_email, :country_code, :current_password]
         ).to_h.symbolize_keys
       end
     end

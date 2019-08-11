@@ -18,11 +18,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expected_response = {
           "first_name" => user.first_name,
           "last_name" => user.last_name,
-          "email" => user.email,
-          "phone" => user.phone,
-          "gender" => user.gender,
-          "id_number" => user.id_number,
-          "id_type" => user.id_type
+          "email" => user.email
         }
 
         expect(body).to eq([expected_response])
@@ -46,27 +42,15 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           {
             "first_name" => user.first_name,
             "last_name" => user.last_name,
-            "email" => user.email,
-            "phone" => user.phone,
-            "gender" => user.gender,
-            "id_number" => user.id_number,
-            "id_type" => user.id_type
+            "email" => user.email
           }, {
             "first_name" => user2.first_name,
             "last_name" => user2.last_name,
-            "email" => user2.email,
-            "phone" => user2.phone,
-            "gender" => user2.gender,
-            "id_number" => user2.id_number,
-            "id_type" => user2.id_type
+            "email" => user2.email
           }, {
             "first_name" => user3.first_name,
             "last_name" => user3.last_name,
-            "email" => user3.email,
-            "phone" => user3.phone,
-            "gender" => user3.gender,
-            "id_number" => user3.id_number,
-            "id_type" => user3.id_type
+            "email" => user3.email
           }
         ]
 
@@ -146,11 +130,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         {
           "first_name"=> "new_user",
           "last_name" => "new_last",
-          "email"=> "new_user@gmail.com",
-          "phone" => "3013632461",
-          "gender" => "male",
-          "id_number" => "123456",
-          "id_type" => "cc"
+          "email"=> "new_user@gmail.com"
         }
 
         expect(response_body).to eq(expected_response)
@@ -237,7 +217,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   describe "PUT/update/:user" do
 
     context "right params" do
-      let(:user) { create(:user) }
+      let!(:user) { create(:user, password: 'validpassword') }
       let!(:country) { create(:country, code_iso: 'CO') }
 
       it "should update attributes of a user" do
@@ -248,7 +228,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             last_name: "Patiño",
             new_email: "unacosita123@gmail.com",
             country_code: "CO",
-            current_password: user.password,
+            current_password: 'validpassword',
             password: "nuevopassword",
             password_confirmation: "nuevopassword"
           }

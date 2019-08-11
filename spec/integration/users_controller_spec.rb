@@ -186,15 +186,11 @@ RSpec.describe "Users API", :type => :request do
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-          required: [ 'first_name', 'last_name', 'email', 'phone', 'gender', 'id_number', 'id_type', 'code_number', 'admin', 'user_type' ],
+          required: [ 'first_name', 'last_name', 'email'],
           properties: {
             first_name: { type: :string },
             last_name: { type: :string },
-            email: { type: :string },
-            phone: { type: :string },
-            gender: { type: :string },
-            id_number: { type: :string },
-            id_type: { type: :string }
+            email: { type: :string }
           }
 
         let(:input) {
