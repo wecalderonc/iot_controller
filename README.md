@@ -80,8 +80,8 @@ This is a private repository.
 * **Nathaly Villamor** - *Tech Lead at ProCibernética* - [Nathaly](https://github.com/Jinara)
 * **William Calderon** - *Full stack developer at ProCibernética* - [William](https://github.com/wecalderonc)
 * **Daniela Patiño**   - *Full stack developer at ProCibernética* - [Daniela](https://github.com/DaniPB)
-* **Jeisson Moreno**   - *Devops Engineer at ProCibernética* - [Jeisson](https://github.com/jmoreno-zw)
-* **Javier Varón**     - *QA developer at ProCibernética* - [Javier](https://github.com/jvaron)
+* **Jeisson Moreno**   - *DevOps Engineer at ProCibernética* - [Jeisson](https://github.com/jmoreno-zw)
+* **Javier Varón**     - *QA Developer at ProCibernética* - [Javier](https://github.com/jvaron)
 
 See also the list of [contributors](https://github.com/ZonaWiki/iot_controller/graphs/contributors) who participated in this project.
 
