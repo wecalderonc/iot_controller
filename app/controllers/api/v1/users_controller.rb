@@ -16,12 +16,12 @@ module Api
           }
         }
         options.default = -> {
-          response = Users::Show.find_user(params)
+          default_response = Users::Show.find_user(params)
 
-          if response.success?
-              render json: response.success, status: :ok, serializer: UsersSerializer
+          if default_response.success?
+              render json: default_response.success, status: :ok, serializer: UsersSerializer
             else
-              json_response({ message: response.failure[:message] }, :not_found)
+              json_response({ message: default_response.failure[:message] }, :not_found)
             end
         }
 

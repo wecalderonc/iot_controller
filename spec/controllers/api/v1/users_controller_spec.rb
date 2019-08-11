@@ -119,6 +119,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "user_type"=> "administrator"
           }
 
+        expect_any_instance_of(UserMailer).to receive(:confirmation_email).once
+
         post '/api/v1/users', headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
