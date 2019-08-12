@@ -4,26 +4,8 @@ module Api
      skip_before_action :authorize_request
 
       def show
-        options = {
-          confirm_email: -> {
-            response = Users::Confirmation.verification_code(params)
-
-            if response.success?
-              json_response({ message: response.success[:message] }, :ok)
-            else
-              json_response({ message: response.failure[:message] }, :not_found)
-            end
-          }
-        }
-        options.default = -> {
-          default_response = Users::Show.find_user(params)
-
-          if default_response.success?
-              render json: default_response.success, status: :ok, serializer: UsersSerializer
-            else
-              json_response({ message: default_response.failure[:message] }, :not_found)
-            end
-        }
+        options = { confirm_email: -> { return_mail_confirmation(params) } }
+        options.default = -> { return_default_show_response(params) }
 
         options[params[:subaction]&.to_sym].()
       end
@@ -47,6 +29,16 @@ module Api
 
       def user_params
         params.permit(User::PERMITTED_PARAMS).to_h.symbolize_keys
+      end
+
+      def return_mail_confirmation(params)
+        response = Users::Confirmation.verification_code(params)
+        build_confirm_email_response(response)
+      end
+
+      def return_default_show_response(params)
+        response = Users::Show.find_user(params)
+        default_show_response(response)
       end
     end
   end

@@ -8,7 +8,7 @@ class Users::Confirmation
 
     if user
       user.email_activate
-      Success message: "Email Confirmed! Thanks!"
+      Success "Email Confirmed! Thanks!"
     else
       Failure Errors.general_error("Token expired or incorrect - User not found", self.class)
     end

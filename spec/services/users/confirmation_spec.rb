@@ -13,10 +13,7 @@ RSpec.describe Users::Confirmation do
         response = described_class.verification_code(params)
         expect(response).to be_success
 
-        expected_response =
-          {
-            :message=>"Email Confirmed! Thanks!"
-          }
+        expected_response = "Email Confirmed! Thanks!"
 
         expect(response).to be_success
         expect(response.success).to eq(expected_response)
