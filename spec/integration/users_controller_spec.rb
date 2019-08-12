@@ -118,6 +118,7 @@ RSpec.describe "Users API", :type => :request do
           last_name: { type: :string },
           email: { type: :string },
           password: { type: :string },
+          country_code: { type: :string },
           phone: { type: :string  },
           gender: { type: :string },
           id_number: { type: :string },
@@ -129,6 +130,7 @@ RSpec.describe "Users API", :type => :request do
 
       response '200', 'user created' do
         let(:user) { create(:user) }
+        let!(:country) { create(:country, code_iso: 'CO') }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
@@ -145,6 +147,7 @@ RSpec.describe "Users API", :type => :request do
           email: "new_user@gmail.com",
           password: "validpass",
           phone: "3013632461",
+          country_code: "CO",
           gender: :male,
           id_number: "123456",
           id_type: "cc",

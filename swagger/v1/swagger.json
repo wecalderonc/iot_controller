@@ -1004,6 +1004,9 @@
                 "password": {
                   "type": "string"
                 },
+                "country_code": {
+                  "type": "string"
+                },
                 "phone": {
                   "type": "string"
                 },

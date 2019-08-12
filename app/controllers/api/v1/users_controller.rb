@@ -38,7 +38,9 @@ module Api
       private
 
       def user_params
-        params.permit(User::PERMITTED_PARAMS).to_h.symbolize_keys
+        params.permit(
+          User::PERMITTED_PARAMS << :country_code
+        ).to_h.symbolize_keys
       end
 
       def return_mail_confirmation(params)

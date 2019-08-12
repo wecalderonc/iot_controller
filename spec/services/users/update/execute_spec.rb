@@ -148,6 +148,17 @@ RSpec.describe Users::Update::Execute do
         end
       end
 
+      context "When country code is wrong" do
+        it "Should return a Failure response" do
+          input[:country_code] = "invalid_code"
+
+          response = subject.(input)
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq("Country not found")
+        end
+      end
+
       context "When the 'get' operation fails" do
         it "Should return a Failure response" do
           input[:email] = "invalid_id"
