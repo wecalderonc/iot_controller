@@ -16,7 +16,6 @@ class UserMailer < ApplicationMailer
 
   def recovery_email
     @user = params[:user]
-    @url  = 'http://example.com/login'
     mail(to: @user.email, subject: 'Password Recovery')
   end
 end
