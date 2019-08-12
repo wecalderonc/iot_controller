@@ -19,7 +19,7 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
     end
 
     context "The authorization code is wrong" do
-      it "Should return a 200 status" do
+      it "Should return a 401 status" do
         header['Authorization'] = "dsfkjsdhfsdhf"
 
         put "/api/v1/alarms/#{alarm.id}", headers: header

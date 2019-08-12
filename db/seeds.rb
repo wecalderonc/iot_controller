@@ -24,11 +24,11 @@ user3 = User.create(first_name:"daniela", last_name: "", phone: "3123204312",
             gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
             email: "dpatino@procibernetica.com", password: "dani123" )
 
-thing1 = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12")
+thing1 = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75)
 
-thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20")
+thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75)
 
-thing3 = Thing.create(name: "thing tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54")
+thing3 = Thing.create(name: "thing tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
 
 uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
@@ -47,7 +47,10 @@ acumulator1 = Accumulator.create(value: rand(1000), uplink: uplink1)
 acumulator2 = Accumulator.create(value: rand(1000), uplink: uplink2)
 acumulator3 = Accumulator.create(value: rand(1000), uplink: uplink3)
 
+alarm1 = Alarm.create(value: "jajajaja", viewed: false, date: "2019-08-12T20:27:10.000+00:00", uplink: uplink1)
+alarm2 = Alarm.create(value: "jijijiji", viewed: false, date: "2019-06-12T20:27:10.000+00:00", uplink: uplink2)
+alarm3 = Alarm.create(value: "jujujuju", viewed: false, date: "2019-04-12T20:27:10.000+00:00", uplink: uplink3)
 
-Owner.create(from_node:user1, to_node:thing1)
-Owner.create(from_node:user2, to_node:thing2)
-Owner.create(from_node:user3, to_node:thing3)
+#Owner.create(from_node:user1, to_node:thing1)
+#Owner.create(from_node:user2, to_node:thing2)
+#Owner.create(from_node:user3, to_node:thing3)
