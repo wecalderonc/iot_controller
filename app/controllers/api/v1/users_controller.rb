@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        user = Users::Create::Execute.new.(user_params)
+        user = Users::Create::Execute.new.(create_params)
 
         if user.success?
           render json: user.success, status: :ok, serializer: UsersSerializer
@@ -37,7 +37,7 @@ module Api
 
       private
 
-      def user_params
+      def create_params
         params.permit(
           User::PERMITTED_PARAMS << :country_code
         ).to_h.symbolize_keys

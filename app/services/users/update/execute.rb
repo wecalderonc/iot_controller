@@ -5,6 +5,5 @@ module Users::Update
     step :validate_password,    with: Users::Update::ValidatePassword.new
     map  :parse_email,          with: Users::ParseEmail.new
     step :update,               with: Users::Update::Update.new
-    map  :build_response,       with: Users::BuildParams.new
   end.Do
 end

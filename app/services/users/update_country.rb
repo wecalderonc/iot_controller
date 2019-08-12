@@ -9,7 +9,7 @@ class Users::UpdateCountry
     if country.present?
       input[:user].update(country: country)
 
-      Success input
+      Success input[:user]
     else
       Failure Errors.general_error("Country not found", self.class)
     end
