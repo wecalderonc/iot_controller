@@ -207,6 +207,20 @@ RSpec.describe "Users API", :type => :request do
 
         run_test!
       end
+
+      response '404', 'user not found' do
+        let(:user) { create(:user) }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        let(:email) { "invalid_email" }
+
+        let(:input) {{
+          first_name: "new_user",
+          last_name: "new_last"
+        }}
+
+        run_test!
+      end
     end
   end
 end

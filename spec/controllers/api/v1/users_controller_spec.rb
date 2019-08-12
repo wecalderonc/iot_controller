@@ -123,6 +123,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         post '/api/v1/users', headers: header, params: body
 
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
         response_body = JSON.parse(response.body)
 
         expected_response =

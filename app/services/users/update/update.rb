@@ -18,13 +18,15 @@ class Users::Update::Update
 
   def update_country(input)
     if input[:country_code].present?
-      find_country(input)
+      find_and_update_country(input)
     else
       Success input
     end
   end
 
-  def find_country(input)
+  private
+
+  def find_and_update_country(input)
     country = Country.find_by(code_iso: input[:country_code])
 
     if country.present?
