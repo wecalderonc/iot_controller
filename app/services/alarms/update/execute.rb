@@ -6,5 +6,3 @@ module Alarms::Update
     map  :build_response,        with: Alarms::Update::BuildResponse.new
   end.Do
 end
-
-
