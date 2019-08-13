@@ -1,6 +1,8 @@
 class User
   include Neo4j::ActiveNode
 
+  before_create :assign_verification_code
+
   property :first_name, type: String
   property :last_name, type: String
   property :email, type: String, constraint: :unique
@@ -13,7 +15,8 @@ class User
   property :id_type, type: String
   property :code_number, type: String, constraint: :unique
   property :user_type, type: String
-
+  property :verificated, type: Boolean, default: false
+  property :verification_code, type: String
   #TODO
   #CHANGE UNIQUE FROM CODE_NUMBER TO ID_NUMBER
 
@@ -37,5 +40,15 @@ class User
 
   def valid_password?(password)
     self.password.eql?(password)
+  end
+
+  def assign_verification_code
+    if self.verification_code.blank?
+      self.verification_code = SecureRandom.hex(6)
+    end
+  end
+
+  def email_activate
+    self.update(verificated: true, verification_code: nil)
   end
 end

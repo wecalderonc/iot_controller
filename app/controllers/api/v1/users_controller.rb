@@ -1,14 +1,13 @@
 module Api
   module V1
     class UsersController < ApplicationController
+     skip_before_action :authorize_request
 
       def show
-        user = User.find_by(email: "#{params["email"]}.#{params[:format]}")
-        if user
-          render json: { id: user.id, email: user.email, name: user.first_name }, status: :ok
-        else
-          render json: { errors: "user not found" }, status: :not_found
-        end
+        options = { confirm_email: -> { return_mail_confirmation(params) } }
+        options.default = -> { return_default_show_response(params) }
+
+        options[params[:subaction]&.to_sym].()
       end
 
       def index
@@ -30,6 +29,16 @@ module Api
 
       def user_params
         params.permit(User::PERMITTED_PARAMS).to_h.symbolize_keys
+      end
+
+      def return_mail_confirmation(params)
+        response = Users::Confirmation.verification_code(params)
+        build_confirm_email_response(response)
+      end
+
+      def return_default_show_response(params)
+        response = Users::Show.find_user(params)
+        default_show_response(response)
       end
     end
   end

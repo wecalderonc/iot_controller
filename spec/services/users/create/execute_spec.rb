@@ -21,6 +21,7 @@ RSpec.describe Users::Create::Execute do
 
       context "When all the operations are successful" do
         it "Should return a Success response" do
+          expect_any_instance_of(UserMailer).to receive(:confirmation_email).once
 
           response = subject.(input)
 

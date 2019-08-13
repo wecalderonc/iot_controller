@@ -57,6 +57,46 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expect(body).to match_array(expected_response)
       end
     end
+
+    context "The user is finishing the confirmation email process" do
+      it "Should return json with success message" do
+
+        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{user.verification_code}"
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "message" => "Email Confirmed! Thanks!"
+          }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
+    context "A user is finishing the confirmation email process with bad token" do
+      it "Should return json with success message" do
+
+        bad_token = "fffffff"
+        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{bad_token}"
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "message"=>"Token expired or incorrect - User not found"
+          }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
   end
 
   describe "POST/create users" do
@@ -78,6 +118,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "admin"=> "true",
             "user_type"=> "administrator"
           }
+
+        expect_any_instance_of(UserMailer).to receive(:confirmation_email).once
 
         post '/api/v1/users', headers: header, params: body
 

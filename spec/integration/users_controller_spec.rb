@@ -15,11 +15,11 @@ RSpec.describe "Users API", :type => :request do
 
         schema type: :object,
           properties: {
-            id: { type: :string },
+            first_name: { type: :string },
+            last_name: { type: :string },
             email: { type: :string },
-            name: { type: :string },
           },
-          required: [ 'id', 'email', 'name' ]
+          required: [ 'first_name', 'last_name', 'email' ]
 
         run_test!
       end
@@ -35,7 +35,46 @@ RSpec.describe "Users API", :type => :request do
     end
   end
 
-  #TODO REVISAR CON MÁS DE UN USUARIO
+  path "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}" do
+    get 'Retrieves a C' do
+      tags 'Users'
+      produces 'application/json'
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: :verification_code, :in => :path, :type => :string
+      parameter name: 'Authorization', :in => :header, :type => :string
+
+      response '200', 'user found with verification_code' do
+        let(:user) { create(:user) }
+        let(:email) { user.email }
+        let(:verification_code) { user.verification_code}
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          properties: {
+            message: { type: :string },
+          },
+          required: [ 'message' ]
+
+        run_test!
+      end
+
+      response '404', 'user not found or verification_code expired or fake' do
+        let(:user) { create(:user) }
+        let(:email) { user.email }
+        let!(:verification_code) { "fffffff" }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          properties: {
+            message: { type: :string }
+          },
+          required: [ 'message' ]
+
+        run_test!
+      end
+    end
+  end
+
   path "/api/v1/users" do
     get 'index users' do
       tags 'Users'
