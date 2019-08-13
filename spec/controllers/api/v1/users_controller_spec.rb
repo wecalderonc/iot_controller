@@ -240,6 +240,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             password_confirmation: "nuevopassword"
           }
 
+        expect_any_instance_of(UserMailer).to receive(:update_confirmation).once
+
         put "/api/v1/users/#{user.email}", headers: header, params: body
 
         body = JSON.parse(response.body)
