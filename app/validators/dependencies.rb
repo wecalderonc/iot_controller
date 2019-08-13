@@ -10,7 +10,8 @@ module Validators
       restore_supply:                     Validators::Downlinks::InstantSchema,
       instant_cut:                        Validators::Downlinks::InstantSchema,
       restore_supply_with_scheduled_cut:  Validators::Downlinks::ScheduledSchema,
-      reported:                           Validators::Downlinks::ReportedSchema
+      reported:                           Validators::Downlinks::ReportedSchema,
+      alarm:                              Validators::Alarms::UpdateSchema
     },
 
     get_price: {
@@ -18,8 +19,7 @@ module Validators
     },
 
     update: {
-      thing:                              Validators::Things::UpdateSchema,
-      alarm:                              Validators::Alarms::UpdateSchema
+      thing:                              Validators::Things::UpdateSchema
     }
   }
 end
