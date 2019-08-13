@@ -1,7 +1,7 @@
 module Validators
   Dependencies = {
     create: {
-      user:       Validators::Users::CreateSchema,
+      user:                               Validators::Users::CreateSchema,
     },
 
     update_state: {
@@ -10,15 +10,16 @@ module Validators
       restore_supply:                     Validators::Downlinks::InstantSchema,
       instant_cut:                        Validators::Downlinks::InstantSchema,
       restore_supply_with_scheduled_cut:  Validators::Downlinks::ScheduledSchema,
-      reported:                           Validators::Downlinks::ReportedSchema
+      reported:                           Validators::Downlinks::ReportedSchema,
+      alarm:                              Validators::Alarms::UpdateSchema
     },
 
     get_price: {
-      thing:        Validators::Things::GetPricesSchema
+      thing:                              Validators::Things::GetPricesSchema
     },
 
     update: {
-      thing:        Validators::Things::UpdateSchema
+      thing:                              Validators::Things::UpdateSchema
     }
   }
 end
