@@ -37,19 +37,11 @@ module Validators::Users
     optional(:password_confirmation).value(type?: String)
 
     validate(new_password: %i[current_password password]) do |current_password, password|
-      if current_password.present?
-        password.present?
-      else
-        true
-      end
+      current_password.present? ? password.present? : true
     end
 
     validate(password_confirmation: %i[password password_confirmation]) do |password, password_confirmation|
-      if password.present?
-        password_confirmation.present?
-      else
-        true
-      end
+      password.present? ? password_confirmation.present? : true
     end
 
     validate(matched_passwords: %i[password password_confirmation]) do |password, password_confirmation|

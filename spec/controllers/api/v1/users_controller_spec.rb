@@ -244,7 +244,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         put "/api/v1/users/#{user.email}", headers: header, params: body
 
-        body = JSON.parse(response.body)
+        response_body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -256,7 +256,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         }
 
 
-        expect(body).to include(expected_response)
+        expect(response_body).to include(expected_response)
         expect(user.country.code_iso).to eq('CO')
       end
     end
