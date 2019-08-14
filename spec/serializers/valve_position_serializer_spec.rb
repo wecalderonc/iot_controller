@@ -1,21 +1,20 @@
 require 'rails_helper'
 
-Rspec.describe BatteryLevelSerializer do
-  let(:base_obj) { create(:uplink) }
+Rspec.describe ValvePositionSerializer do
+  let(:base_obj) { build(:valve_position) }
   let(:serializer) { described_class.new(base_obj) }
   let(:serialization) { ActiveModelSerializers::Adapter.create(serializer) }
 
   let(:subject) { JSON.parse(serialization.to_json) }
 
-  before do
-  end
-
-  context "The thing is ok" do
+  context "The object is ok" do
     it "Should return a hash" do
       expected_response = {
         "id"=>nil,
-        "value"=>"",
-        "status"=>"activated"
+        "created_at"=>nil,
+        "id"=>nil,
+        "updated_at"=>nil,
+        "value"=>base_obj.value
       }
 
       expect(subject).to eq(expected_response)

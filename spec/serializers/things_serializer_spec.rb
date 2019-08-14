@@ -1,0 +1,41 @@
+require 'rails_helper'
+
+Rspec.describe ThingSerializer do
+  let(:thing) { build(:thing) }
+  let(:serializer) { described_class.new(thing) }
+  let(:serialization) { ActiveModelSerializers::Adapter.create(serializer) }
+
+  let(:subject) { JSON.parse(serialization.to_json) }
+
+  context "The thing is ok" do
+    it "Should return a hash" do
+      expected_response = {
+        "id"=>nil,
+        "name"=>thing.name,
+        "status"=>"activated",
+        "pac"=>thing.pac,
+        "company_id"=>thing.company_id,
+        "latitude"=>thing.latitude,
+        "longitude"=>thing.longitude,
+        "units"=>{"liters"=>thing.units[:liters]},
+        "created_at"=>nil,
+        "updated_at"=>nil,
+        "last_uplink"=>[],
+        "last_messages"=> {
+          "accumulator"=>{},
+          "alarm"=>{},
+          "batteryLevel"=>{},
+          "valvePosition"=>{},
+          "sensor1"=>{},
+          "sensor2"=>{},
+          "sensor3"=>{},
+          "sensor4"=>{},
+          "uplinkBDownlink"=>{},
+          "timeUplink"=>{}
+        }
+      }
+
+      expect(subject).to eq(expected_response)
+    end
+  end
+end
