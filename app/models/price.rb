@@ -1,7 +1,7 @@
 class Price
   include Neo4j::ActiveNode
 
-  CURRENCIES = Money::Currency.all.map(&:iso_code).freeze
+  CURRENCIES = ['COP']
 
   property :unit,     type: String
   property :value,    type: Float
