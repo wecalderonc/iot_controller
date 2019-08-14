@@ -17,7 +17,7 @@ Rspec.describe ThingSerializer do
         "company_id"=>thing.company_id,
         "latitude"=>thing.latitude,
         "longitude"=>thing.longitude,
-        "units"=>{"liters"=>thing.units[:liters]},
+        "units"=>{"liter"=>thing.units[:liter]},
         "created_at"=>nil,
         "updated_at"=>nil,
         "last_uplink"=>[],

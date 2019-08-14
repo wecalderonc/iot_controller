@@ -36,7 +36,7 @@ RSpec.describe Accumulator, type: :model do
     context "The value is AA" do
       it "Should return 170" do
         acc = create(:accumulator, value: "AA")
-        expected_response = {"liters"=>acc.uplink.thing.units["liters"]}
+        expected_response = {"liter"=>acc.uplink.thing.units["liter"]}
 
         expect(acc.my_units).to eq(expected_response)
       end

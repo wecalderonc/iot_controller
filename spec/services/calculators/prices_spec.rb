@@ -5,7 +5,7 @@ RSpec.describe Calculators::Prices::Execute do
     let(:currency) { 'COP' }
     let(:unit)     { :liter }
     let(:thing)    { create(:thing, units: { liter: 200 }) }
-    let(:uplink)  { create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes) }
+    let(:uplink)   { create(:uplink, thing: thing, created_at: Time.zone.now + 1.minutes) }
 
     before { Timecop.freeze(Time.zone.now) }
     after  { Timecop.return }

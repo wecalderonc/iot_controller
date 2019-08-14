@@ -12,16 +12,13 @@ class AccumulatorSerializer < UplinkBaseSerializer
   private
 
   def price_info
-    if self.object.class.eql?(Accumulator)
-      calculator_service = Calculators::Prices::Execute.new
-      result = calculator_service.(unit: :liters, accumulator: self.object)
-      if result.success?
-        result.success
-      else
-        result.failure
-      end
+    calculator_service = Calculators::Prices::Execute.new
+    result = calculator_service.(unit: :liter, accumulator: self.object)
+
+    if result.success?
+      result.success
     else
-      {}
+      result.failure
     end
   end
 end
