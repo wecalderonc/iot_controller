@@ -1,0 +1,2 @@
+class ValvePositionSerializer < UplinkBaseSerializer
+end

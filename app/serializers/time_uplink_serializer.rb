@@ -1,0 +1,2 @@
+class TimeUplinkSerializer < UplinkBaseSerializer
+end
