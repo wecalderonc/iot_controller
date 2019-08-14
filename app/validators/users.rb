@@ -50,6 +50,8 @@ module Validators::Users
       else
         true
       end
+    end
+  end
 
   RecoverPasswordSchema = Dry::Validation.Schema do
 

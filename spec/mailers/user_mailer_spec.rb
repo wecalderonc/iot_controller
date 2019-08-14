@@ -1,12 +1,8 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
-<<<<<<< HEAD
-  describe "confirmation email" do
-=======
 
-   describe "confirmation email" do
->>>>>>> first flow for confirmation
+  describe "confirmation email" do
     let(:user) { create(:user) }
     let(:params) { {user: user} }
     let(:mail) { described_class.with(user: user).confirmation_email.deliver_now }

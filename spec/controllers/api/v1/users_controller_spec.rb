@@ -286,7 +286,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "new_password_confirmation"=> "new_pass"
           }
 
-        put "/api/v1/users/#{user.email}", headers: header, params: body
+        put "/api/v1/users/#{user.email}?subaction=forgot_password", headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -305,7 +305,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       end
     end
 
-    context "Sign Up process failure with wrong user and password not related" do
+    context "Recover password process failure with wrong user and password not related" do
       it "Should return error message" do
 
         body =
@@ -332,7 +332,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       end
     end
 
-    context "Sign Up process failure with new_password and new_password_confirmation mismatched" do
+    context "Recover password process failure with new_password and new_password_confirmation mismatched" do
       it "Should return error message" do
 
         body =

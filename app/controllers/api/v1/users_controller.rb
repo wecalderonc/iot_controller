@@ -22,25 +22,14 @@ module Api
           json_response(user.success, :ok, UsersSerializer)
         else
           render json: { errors: @user.failure[:message] }, status: :not_found
-        en
+        end
       end
 
       def update
+        options = { forgot_password: -> { return_change_password } }
+        options.default = -> { return_default_update_response(update_params) }
 
-        update_response = Users::Update::Execute.new.(update_params)
-
-        if update_response.success?
-          json_response(update_response.success, :ok, UsersSerializer)
-        else
-          json_response({ errors: update_response.failure[:message] }, :not_found)
-#WHATAAA
-        update_password_response = Users::Password::Execute.new.(password_params)
-
-        if update_password_response.success?
-          render json: update_password_response.success, status: :ok, serializer: UsersSerializer
-        else
-          json_response({ errors: update_password_response.failure[:message] }, :not_found)
-        end
+        options[params[:subaction]&.to_sym].()
       end
 
       private
@@ -61,10 +50,35 @@ module Api
         default_show_response(response)
       end
 
+      def return_default_update_response(update_params)
+        update_response = Users::Update::Execute.new.(update_params)
+
+        if update_response.success?
+          json_response(update_response.success, :ok, UsersSerializer)
+        else
+          json_response({ errors: update_response.failure[:message] }, :not_found)
+        end
+      end
+
+      def return_change_password
+        p "papu"
+        p update_password_response = Users::Password::Execute.new.(password_params)
+
+        if update_password_response.success?
+          render json: update_password_response.success, status: :ok, serializer: UsersSerializer
+        else
+          json_response({ errors: update_password_response.failure[:message] }, :not_found)
+        end
+      end
+
       def update_params
         params.permit(
           User::PERMITTED_PARAMS << [:format, :new_email, :country_code, :current_password]
         ).to_h.symbolize_keys
+      end
+
+      def password_params
+        params.permit(:email, :format, :new_password, :current_password, :new_password_confirmation).to_h.symbolize_keys
       end
     end
   end
