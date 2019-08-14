@@ -1,15 +1,6 @@
-require 'dry/transaction/operation'
-
-class Users::Create::Create
-  include Dry::Transaction::Operation
-
-  def call(input)
-    user = User.new(input)
-
-    if user.save
-      Success input.merge(user: user)
-    else
-      Failure Errors.general_error("Errors in saving process", self.class)
-    end
-  end
+module Users::Create
+  _, Create = Common::TxMasterBuilder.new do
+    step :create_user,     with: Users::Create::User.new
+    step :assign_country,  with: Users::UpdateCountry.new
+  end.Do
 end

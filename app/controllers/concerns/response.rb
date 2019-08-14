@@ -2,8 +2,8 @@
 module Response
   include ActionController::MimeResponds
 
-  def json_response(object, status = :ok)
-    render json: object, status: status
+  def json_response(object, status = :ok, serializer = nil)
+    render json: object, status: status, serializer: serializer
   end
 
   def csv_response(data, filename)

@@ -19,7 +19,8 @@ module Validators
     },
 
     update: {
-      thing:                              Validators::Things::UpdateSchema
+      thing:                              Validators::Things::UpdateSchema,
+      user:                               Validators::Users::UpdateSchema
     }
   }
 end

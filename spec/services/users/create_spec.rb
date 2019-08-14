@@ -2,12 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Users::Create::Execute do
   describe "#call" do
+    let(:country) { create(:country, code_iso: 'CO') }
     let(:input) {
       {
         phone: Faker::PhoneNumber.phone_number,
         email: Faker::Internet.email,
         first_name: Faker::TvShows::Simpsons.character,
         last_name: Faker::TvShows::Simpsons.character,
+        country_code: country.code_iso,
         password: "pass",
         id_type: :cc,
         id_number: Faker::Number.number(10),
@@ -43,6 +45,7 @@ RSpec.describe Users::Create::Execute do
           input[:first_name] = 325434
           input[:last_name] = 325434
           input[:email] = 325434
+          input[:country_code] = 325434
           input[:password] = 325434
           input[:phone] = 325434
           input[:user_type] = "325434"
@@ -54,6 +57,7 @@ RSpec.describe Users::Create::Execute do
             :admin => ["must be TrueClass"],
             :code_number => ["must be String"],
             :email => ["must be String"],
+            :country_code => ["must be String"],
             :first_name => ["must be String"],
             :id_number => ["must be String"],
             :last_name => ["must be String"],

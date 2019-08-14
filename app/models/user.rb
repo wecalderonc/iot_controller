@@ -25,11 +25,13 @@ class User
 
   PERMITTED_PARAMS = [:first_name, :last_name, :password, :email,
                       :phone, :gender, :id_number, :id_type, :admin,
-                      :code_number, :user_type]
+                      :code_number, :user_type, :password_confirmation]
 
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
   has_many :out, :operates,  rel_class: :Operator, model_class: :Thing
   has_many :out, :sees,      rel_class: :Viewer,   model_class: :Thing
+
+  has_one :out, :country, type: :ORIGIN_COUNTRY
 
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   GENDERS = [:male, :female]

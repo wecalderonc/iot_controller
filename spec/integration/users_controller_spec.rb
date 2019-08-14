@@ -118,6 +118,7 @@ RSpec.describe "Users API", :type => :request do
           last_name: { type: :string },
           email: { type: :string },
           password: { type: :string },
+          country_code: { type: :string },
           phone: { type: :string  },
           gender: { type: :string },
           id_number: { type: :string },
@@ -129,6 +130,7 @@ RSpec.describe "Users API", :type => :request do
 
       response '200', 'user created' do
         let(:user) { create(:user) }
+        let!(:country) { create(:country, code_iso: 'CO') }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
@@ -145,12 +147,79 @@ RSpec.describe "Users API", :type => :request do
           email: "new_user@gmail.com",
           password: "validpass",
           phone: "3013632461",
+          country_code: "CO",
           gender: :male,
           id_number: "123456",
           id_type: "cc",
           code_number: "123456789",
           admin: "true",
           user_type: "administrator"
+        }}
+
+        run_test!
+      end
+    end
+  end
+
+  path "/api/v1/users/{email}" do
+    put 'update user' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          first_name: { type: :string },
+          last_name: { type: :string },
+          new_email: { type: :string },
+          country_code: { type: :string },
+          current_password: { type: :string },
+          password: { type: :string },
+          password_confirmation: { type: :string }
+        },
+        required: [ 'first_name', 'last_name', 'new_email', 'country_code', 'current_password', 'password', 'password_confirmation']
+      }
+
+      response '200', 'user created' do
+        let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
+        let(:email) { user.email }
+        let!(:country) { create(:country, code_iso: 'CO') }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          required: [ 'first_name', 'last_name', 'email'],
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            email: { type: :string }
+          }
+
+        let(:input) {
+          {
+            first_name: "Daniela",
+            last_name: "Patiño",
+            new_email: "unacosita123@gmail.com",
+            country_code: "CO",
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+        }
+
+        run_test!
+      end
+
+      response '404', 'user not found' do
+        let(:user) { create(:user) }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        let(:email) { "invalid_email" }
+
+        let(:input) {{
+          first_name: "new_user",
+          last_name: "new_last"
         }}
 
         run_test!

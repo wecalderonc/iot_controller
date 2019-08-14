@@ -100,6 +100,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   end
 
   describe "POST/create users" do
+    let(:country) { create(:country, code_iso: 'CO') }
 
     context "Sign Up process success" do
       it "Should return json with new User created" do
@@ -109,6 +110,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "first_name"=> "new_user",
             "last_name" => "new_last",
             "email"=> "new_user@gmail.com",
+            "country_code"=> country.code_iso,
             "password"=> "validpass",
             "phone"=> "3013632461",
             "gender"=> "male",
@@ -133,7 +135,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         {
           "first_name"=> "new_user",
           "last_name" => "new_last",
-          "email"=> "new_user@gmail.com",
+          "email"=> "new_user@gmail.com"
         }
 
         expect(response_body).to eq(expected_response)
@@ -148,6 +150,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "first_name"=> "new_user",
             "last_name" => "new_last",
             "email"=> user.email,
+            "country_code"=> country.code_iso,
             "password"=> "validpass",
             "phone"=> "3013632461",
             "gender"=> "male",
@@ -186,6 +189,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "first_name"=> "name",
             "last_name" => "last_name",
             "email"=> 123456,
+            "country_code"=> country.code_iso,
             "password"=> "123456",
             "phone"=> "12345689",
             "gender"=> 123456,
@@ -213,6 +217,59 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           }
 
         expect(response_body).to eq(expected_response)
+      end
+    end
+  end
+
+  describe "PUT/update/:user" do
+
+    context "right params" do
+      let!(:user) { create(:user, password: 'validpassword') }
+      let(:country) { create(:country, code_iso: 'CO') }
+
+      it "should update attributes of a user" do
+
+        body =
+          {
+            first_name: "Daniela",
+            last_name: "Patiño",
+            new_email: "unacosita123@gmail.com",
+            country_code: country.code_iso,
+            current_password: 'validpassword',
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+
+        expect_any_instance_of(UserMailer).to receive(:update_confirmation).once
+
+        put "/api/v1/users/#{user.email}", headers: header, params: body
+
+        response_body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        expected_response = {
+          "first_name" => "Daniela",
+          "last_name" => "Patiño",
+          "email" => "unacosita123@gmail.com"
+        }
+
+
+        expect(response_body).to include(expected_response)
+        expect(user.country.code_iso).to eq('CO')
+      end
+    end
+
+    context "wrong params" do
+      it "should return an update error" do
+        put "/api/v1/users/invalid_id", headers: header
+
+        body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+        expect(body["errors"]).to eq("User not found")
       end
     end
   end

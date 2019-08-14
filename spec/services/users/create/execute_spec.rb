@@ -3,11 +3,13 @@ require 'rails_helper'
 RSpec.describe Users::Create::Execute do
   describe "#call" do
     context "When someone is signing up" do
+      let(:country) { create(:country, code_iso: 'CO') }
       let(:input) {
         {
           first_name: "user_name_test",
           last_name: "user_last_test",
           email: "test@gmail.com",
+          country_code: country.code_iso,
           password: "validpass",
           phone: "3013632461",
           gender: "male",
@@ -42,6 +44,7 @@ RSpec.describe Users::Create::Execute do
           input[:first_name] = 12345
           input[:last_name] = 12345
           input[:email] = 12345
+          input[:country_code] = 12345
           input[:phone] = 12345
           input[:gender] = 12345.to_s
           input[:id_number] = 12345
@@ -52,6 +55,7 @@ RSpec.describe Users::Create::Execute do
           expected_response = {
             :email => ["must be String"],
             :first_name => ["must be String"],
+            :country_code => ["must be String"],
             :gender => ["must be one of: male, female"],
             :id_number => ["must be String"],
             :id_type => ["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"],
