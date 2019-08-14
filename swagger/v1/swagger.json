@@ -64,6 +64,69 @@
         }
       }
     },
+    "/api/v1/alarms/{id}": {
+      "put": {
+        "summary": "Retrieves a viewed alarm",
+        "tags": [
+          "Alarms"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Token is missing"
+          },
+          "200": {
+            "description": "alarms founded",
+            "schema": {
+              "type": "object",
+              "required": [
+                "created_at",
+                "updated_at",
+                "value",
+                "date",
+                "viewed",
+                "id"
+              ],
+              "properties": {
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string"
+                },
+                "viewed": {
+                  "type": "boolean"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/aqueducts": {
       "get": {
         "summary": "Retrieves all Aqueducts",
@@ -805,20 +868,20 @@
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
                   "type": "string"
                 },
                 "email": {
                   "type": "string"
-                },
-                "name": {
-                  "type": "string"
                 }
               },
               "required": [
-                "id",
-                "email",
-                "name"
+                "first_name",
+                "last_name",
+                "email"
               ]
             }
           },
@@ -915,6 +978,66 @@
           },
           "404": {
             "description": "user not found"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}": {
+      "get": {
+        "summary": "Retrieves a C",
+        "tags": [
+          "Users"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "verification_code",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found with verification_code",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          },
+          "404": {
+            "description": "user not found or verification_code expired or fake",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
           }
         }
       }
