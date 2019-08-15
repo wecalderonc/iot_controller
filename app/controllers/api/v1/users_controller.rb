@@ -4,7 +4,9 @@ module Api
      skip_before_action :authorize_request
 
       def show
-        options = { confirm_email: -> { return_mail_confirmation(params) } }
+        options = { confirm_email: -> { return_mail_confirmation(params) },
+                    request_password_recovery: -> { return_request_password_recovery(params) }
+                  }
         options.default = -> { return_default_show_response(params) }
 
         options[params[:subaction]&.to_sym].()
@@ -27,7 +29,7 @@ module Api
 
       def update
         options = { forgot_password: -> { return_change_password } }
-        options.default = -> { return_default_update_response(update_params) }
+        options.default = -> { return_default_update_response.(update_params) }
 
         options[params[:subaction]&.to_sym].()
       end
@@ -61,13 +63,22 @@ module Api
       end
 
       def return_change_password
-        p "papu"
-        p update_password_response = Users::Password::Execute.new.(password_params)
+        update_password_response = Users::Password::Execute.new.(password_params)
 
         if update_password_response.success?
           render json: update_password_response.success, status: :ok, serializer: UsersSerializer
         else
           json_response({ errors: update_password_response.failure[:message] }, :not_found)
+        end
+      end
+
+      def return_request_password_recovery(params)
+        response = Users::Password::Recovery.new.(params)
+
+        if response.success
+          render json: { message: response.success[:message] }, status: :ok
+        else
+          render json: response.failure, status: :not_found
         end
       end
 

@@ -7,7 +7,7 @@ class Users::Password::Update
     user = input[:user]
 
     if user.update(password: input[:new_password])
-      Success input
+      Success input[:user]
     else
       Failure Errors.general_error(user.errors.messages, self.class)
     end

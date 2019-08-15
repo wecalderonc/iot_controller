@@ -1,10 +1,7 @@
 
-RECOVERY PASSWORD, <%= @user.first_name %>
+PASSWORD RECOVERY
 ===============================================
 
-You have successfully signed up to example.com,
-To confirm email please click:
+Someone has requested a link to change your password, and you can do this through the link below.
 
- <%= api_v1_user_url(@user.email) + "?subaction=confirm_email" + "&token=" + @user.verification_code %>
-
-Thanks for joining and have a great day!
+ <%= api_v1_user_url(@user.email) + "?subaction=forgot_password"%>
