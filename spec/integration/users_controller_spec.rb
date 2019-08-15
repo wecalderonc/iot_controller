@@ -261,4 +261,61 @@ RSpec.describe "Users API", :type => :request do
       end
     end
   end
+
+  path "/api/v1/users/{email}?subaction=change_password" do
+    put 'update password user' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          current_password: { type: :string },
+          password: { type: :string },
+          password_confirmation: { type: :string }
+        },
+        required: [ 'current_password', 'password', 'password_confirmation']
+      }
+
+      response '200', 'user password updated' do
+        let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
+        let(:email) { user.email }
+        let!(:country) { create(:country, code_iso: 'CO') }
+
+        schema type: :object,
+          required: [ 'first_name', 'last_name', 'email'],
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            email: { type: :string }
+          }
+
+        let(:input) {
+          {
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+        }
+
+        run_test!
+      end
+
+      response '404', 'user not found' do
+        let(:user) { create(:user) }
+        let(:email) { "invalid_email" }
+
+        let(:input) {
+          {
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+        }
+
+        run_test!
+      end
+    end
+  end
 end

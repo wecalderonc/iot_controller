@@ -323,7 +323,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "password_confirmation"=> "new_pass"
           }
 
-        put "/api/v1/users/#{user.email}?subaction=forgot_password", headers: header, params: body
+        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -337,7 +337,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "last_name" => user.last_name,
           "email"=> user.email,
         }
+        user.reload
 
+        expect(user.password).to eq("new_pass")
         expect(response_body).to eq(expected_response)
       end
     end
@@ -352,7 +354,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "password_confirmation"=> "new_pass"
           }
 
-        put "/api/v1/users/#{user.email}", headers: header, params: body
+        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -362,7 +364,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expected_response =
 
         {
-          "errors" => "Invalid password"
+          "errors" => "Current Password is incorrect"
         }
 
         expect(response_body).to eq(expected_response)
@@ -379,7 +381,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "password_confirmation"=> "new_pass_wrong"
           }
 
-        put "/api/v1/users/#{user.email}", headers: header, params: body
+        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -388,7 +390,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         expected_response =
           {
-            "errors" => {"matched_passwords"=>["New password and password confirmation don't match"]}
+            "errors" => {"same_password"=>["The new password doesn't match with the confirmation"]}
           }
 
         expect(response_body).to eq(expected_response)

@@ -28,7 +28,7 @@ module Api
       end
 
       def update
-        options = { forgot_password: -> { return_change_password } }
+        options = { change_password: -> { return_change_password } }
         options.default = -> { return_default_update_response(update_params) }
 
         options[params[:subaction]&.to_sym].()
