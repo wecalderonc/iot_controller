@@ -15,7 +15,6 @@ class UserMailer < ApplicationMailer
   end
 
   def recovery_email
-    @user = params[:user]
-    mail(to: @user.email, subject: 'Password Recovery')
+    base_email('Password Recovery')
   end
 end
