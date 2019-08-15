@@ -76,9 +76,9 @@ module Api
         response = Users::Password::Recovery.new.(params)
 
         if response.success
-          render json: { message: response.success[:message] }, status: :ok
+          json_response(response.success, :ok)
         else
-          render json: response.failure, status: :not_found
+          json_response(response.failure, :not_found)
         end
       end
 

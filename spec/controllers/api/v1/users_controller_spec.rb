@@ -97,6 +97,43 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       end
     end
 
+    context "A user forgot the password and is requesting the password recovery process" do
+      it "Should return json with success message" do
+
+        expect_any_instance_of(UserMailer).to receive(:recovery_email).once
+        get "/api/v1/users/#{user.email}?subaction=request_password_recovery"
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "message"=>'Recovery Password Email Sended! Go to your inbox!'
+          }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
+    context "A user without account is requesting the password recovery process" do
+      it "Should return json with failure message" do
+
+        bad_email = "bad_email@gmail.com"
+        get "/api/v1/users/#{bad_email}?subaction=request_password_recovery"
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response = 'User not found'
+
+        expect(response_body["message"]).to eq(expected_response)
+      end
+    end
+
   end
 
   describe "POST/create users" do
