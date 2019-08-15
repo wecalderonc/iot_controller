@@ -39,4 +39,21 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match(user.email)
     end
   end
+
+  describe "#recovery_email" do
+    let(:user) { create(:user) }
+    let(:params) { {user: user} }
+    let(:mail) { described_class.with(user: user).recovery_email.deliver_now }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq("Password Recovery")
+      expect(mail.to).to eq([user.email])
+      expect(mail.from).to eq(["notifications@example.com"])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to match("Someone has requested a link to change your password, and you can do this through the link below.")
+      expect(mail.body.encoded).to match(user.email)
+    end
+  end
 end
