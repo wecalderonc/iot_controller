@@ -23,13 +23,13 @@ module Api
         if user.success?
           json_response(user.success, :ok, UsersSerializer)
         else
-          render json: { errors: @user.failure[:message] }, status: :not_found
+          render json: { errors: user.failure[:message] }, status: :not_found
         end
       end
 
       def update
         options = { forgot_password: -> { return_change_password } }
-        options.default = -> { return_default_update_response.(update_params) }
+        options.default = -> { return_default_update_response(update_params) }
 
         options[params[:subaction]&.to_sym].()
       end
@@ -89,7 +89,7 @@ module Api
       end
 
       def password_params
-        params.permit(:email, :format, :new_password, :current_password, :new_password_confirmation).to_h.symbolize_keys
+        params.permit(:email, :format, :password, :current_password, :password_confirmation).to_h.symbolize_keys
       end
     end
   end

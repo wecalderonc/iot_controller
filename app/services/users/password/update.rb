@@ -6,7 +6,7 @@ class Users::Password::Update
   def call(input)
     user = input[:user]
 
-    if user.update(password: input[:new_password])
+    if user.update(password: input[:password])
       Success input[:user]
     else
       Failure Errors.general_error(user.errors.messages, self.class)

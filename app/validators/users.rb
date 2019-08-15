@@ -40,7 +40,7 @@ module Validators::Users
       current_password.present? ? password.present? : true
     end
 
-    validate(password_confirmation: %i[password password_confirmation]) do |password, password_confirmation|
+    validate(wrong_password_confirmation: %i[password password_confirmation]) do |password, password_confirmation|
       password.present? ? password_confirmation.present? : true
     end
 
@@ -59,10 +59,10 @@ module Validators::Users
 
     required(:email).filled?(type?: String)
     required(:current_password).filled(type?: String)
-    required(:new_password).filled(type?: String)
-    required(:new_password_confirmation).filled(type?: String)
+    required(:password).filled(type?: String)
+    required(:password_confirmation).filled(type?: String)
 
-    validate(same_password: %i[new_password new_password_confirmation]) do |new_password, new_password_confirmation|
+    validate(same_password: %i[password password_confirmation]) do |new_password, new_password_confirmation|
       new_password.eql?(new_password_confirmation)
     end
   end

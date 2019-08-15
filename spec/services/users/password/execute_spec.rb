@@ -10,8 +10,8 @@ RSpec.describe Users::Password::Execute do
           email: "test@gmail",
           format: "com",
           current_password: user.password,
-          new_password: "new_password",
-          new_password_confirmation: "new_password"
+          password: "new_password",
+          password_confirmation: "new_password"
         }
       }
 
@@ -30,15 +30,15 @@ RSpec.describe Users::Password::Execute do
       context "When the 'validation' operation fails with wrong type of inputs" do
         it "Should return a Failure response" do
           input[:current_password] = 12345
-          input[:new_password] = 12345
-          input[:new_password_confirmation] = 12345
+          input[:password_confirmation] = 12345
+          input[:password] = true
 
           response = subject.(input)
 
           expected_response = {
             :current_password => ["must be String"],
-            :new_password => ["must be String"],
-            :new_password_confirmation => ["must be String"]
+            :password => ["must be String"],
+            :password_confirmation => ["must be String"]
           }
 
           expect(response).to be_failure
@@ -49,7 +49,7 @@ RSpec.describe Users::Password::Execute do
       context "When the 'validation' operation fails with different new_password and new_password_confirmation" do
 
         it "Should return a Failure response" do
-          input[:new_password_confirmation] = "different_new_password"
+          input[:password_confirmation] = "different_new_password"
 
           response = subject.(input)
 

@@ -282,8 +282,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         body =
           {
             "current_password"=> user.password,
-            "new_password" => "new_pass",
-            "new_password_confirmation"=> "new_pass"
+            "password" => "new_pass",
+            "password_confirmation"=> "new_pass"
           }
 
         put "/api/v1/users/#{user.email}?subaction=forgot_password", headers: header, params: body
@@ -311,8 +311,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         body =
           {
             "current_password"=> "wrong_current_password",
-            "new_password" => "new_pass",
-            "new_password_confirmation"=> "new_pass"
+            "password" => "new_pass",
+            "password_confirmation"=> "new_pass"
           }
 
         put "/api/v1/users/#{user.email}", headers: header, params: body
@@ -325,7 +325,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expected_response =
 
         {
-          "errors" => "Current Password is incorrect"
+          "errors" => "Invalid password"
         }
 
         expect(response_body).to eq(expected_response)
@@ -338,8 +338,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         body =
           {
             "current_password"=> user.password,
-            "new_password" => "new_pass",
-            "new_password_confirmation"=> "new_pass_wrong"
+            "password" => "new_pass",
+            "password_confirmation"=> "new_pass_wrong"
           }
 
         put "/api/v1/users/#{user.email}", headers: header, params: body
@@ -351,7 +351,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         expected_response =
           {
-            "errors" => {"same_password"=>["The new password doesn't match with the confirmation"]}
+            "errors" => {"matched_passwords"=>["New password and password confirmation don't match"]}
           }
 
         expect(response_body).to eq(expected_response)
