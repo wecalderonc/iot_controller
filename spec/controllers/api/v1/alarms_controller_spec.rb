@@ -37,11 +37,11 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
       it "Should return a bad URI error" do
         put "/api/v1/alarms/326478956743856fhdsj", headers: header
 
-        expect(response.successful?).to be_truthy
+        parsed_response = JSON.parse(response.body)
 
-        alarm.reload
+        expected_response = "The alarm 326478956743856fhdsj does not exist"
+        expect(parsed_response["message"]).to eq(expected_response)
 
-        expect(alarm.viewed).to be_falsey
       end
     end
   end
