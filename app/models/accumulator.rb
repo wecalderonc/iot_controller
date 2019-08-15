@@ -7,6 +7,10 @@ class Accumulator
   has_one :out, :uplink, type: :BELONGS_TO
   has_many :out, :prices, type: :BELONGS_TO
 
+  def my_units
+    self.uplink.thing.units
+  end
+
   def int_value
     Base::Maths.hexa_to_int self.value
   end

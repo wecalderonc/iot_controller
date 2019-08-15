@@ -1,4 +1,4 @@
-class MessagesInsideUplinkSerializer < ActiveModel::Serializer
+class UplinkBaseSerializer < ActiveModel::Serializer
   attributes  :id,
               :value,
               :created_at,

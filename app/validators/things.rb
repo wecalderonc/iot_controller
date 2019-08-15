@@ -2,13 +2,8 @@ module Validators::Things
   GetPricesSchema = Dry::Validation.Schema do
     configure { config.messages_file = "config/locales/en.yml" }
 
-    required(:thing).filled(type?: Thing)
+    required(:accumulator).filled(type?: Accumulator)
     required(:unit).filled(type?: Symbol)
-    required(:currency).value(type?: String)
-
-    validate(valid_currency: :currency) do |currency|
-      Price::CURRENCIES.include?(currency)
-    end
   end
 
   UpdateSchema = Dry::Validation.Schema do

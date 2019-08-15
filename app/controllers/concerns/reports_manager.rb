@@ -36,7 +36,7 @@ module ReportsManager
 
   def build_response(collection, model)
     if collection.present?
-      data =  ReportClass.(model).(collection)
+      data = ReportClass.(model).(collection)
 
       csv_response(data, "Device-#{model}")
     else

@@ -8,11 +8,11 @@ class Calculators::Prices::Get
     price = Price.by_unit(unit)
 
     if price.present?
-      counters_per_unit = input[:thing].units[unit]
-      final_price = Base::Maths::RuleOfThree.(price.value, input[:last_acc].int_value, counters_per_unit)
-      price_info = { original_currency: price.currency, price: final_price }
+      counters_per_unit = input[:accumulator].my_units[unit].to_f
+      final_price = Base::Maths::RuleOfThree.(price.value, input[:accumulator].int_value, counters_per_unit)
+      units_count = input[:accumulator].int_value * counters_per_unit
 
-      Success.new(input.merge(price_info))
+      Success.new({ units_count: units_count, final_price: final_price })
     else
       Failure.new(Errors.general_error("There are any configured prices", self.class))
     end

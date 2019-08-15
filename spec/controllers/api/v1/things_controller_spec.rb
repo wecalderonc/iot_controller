@@ -32,19 +32,18 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
 
-        expected_response =
-          {
-            "id" => thing.id,
-            "name" => thing.name,
-            "status" => thing.status,
-            "pac" => thing.pac,
-            "company_id" => thing.company_id,
-            "units" => thing.units,
-            "latitude" => thing.latitude,
-            "longitude" => thing.longitude,
-            "created_at" => JSON.parse(thing.created_at.to_json),
-            "updated_at" => JSON.parse(thing.updated_at.to_json)
-          }
+        expected_response = {
+          "id" => thing.id,
+          "name" => thing.name,
+          "status" => thing.status,
+          "pac" => thing.pac,
+          "company_id" => thing.company_id,
+          "units" => thing.units,
+          "latitude" => thing.latitude,
+          "longitude" => thing.longitude,
+          "created_at" => JSON.parse(thing.created_at.to_json),
+          "updated_at" => JSON.parse(thing.updated_at.to_json)
+        }
 
         expect(body).to eq([expected_response])
       end
@@ -148,9 +147,8 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
     context "Access to a thing" do
       it "User doesn't have relation with the thing" do
         thing  = create(:thing)
-        id = thing.id
 
-        get "/api/v1/things/#{id}", headers: header
+        get "/api/v1/things/#{thing.id}", headers: header
 
         body = JSON.parse(response.body)
 
@@ -165,58 +163,55 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
     context "update attributes of a thing" do
       it "User owns the thing" do
         accumulator = create(:accumulator)
-        thing = accumulator.uplink.thing
+        uplink = accumulator.uplink
+        battery_level = create(:battery_level, uplink: uplink)
+        thing = uplink.thing
         Owner.create(from_node: user, to_node: thing)
 
-        body =
-          {
-            thing_name: thing.name,
-            id: thing.id,
-            params: {
-              pac: "123456",
-              company_id: 987654,
-              latitude: 4.5,
-              longitude: 74.6,
-              name: "new_name",
-              status: "deactivated"
-            }
+        params = {
+          thing_name: thing.name,
+          id: thing.id,
+          params: {
+            pac: "123456",
+            company_id: 987654,
+            latitude: 4.5,
+            longitude: 74.6,
+            name: "new_name",
+            status: "deactivated"
           }
+        }
 
-        put "/api/v1/things/#{thing.id}", headers: header, params: body
+        put "/api/v1/things/#{thing.id}", headers: header, params: params
 
-        body = JSON.parse(response.body)
+        parsed_body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
 
-        expected_response =
-          {
-            "id"=>thing.id,
-            "name"=>"new_name",
-            "status"=>"deactivated",
-            "pac"=>"123456",
-            "company_id"=>"987654",
-            "units"=>thing.units,
-            "latitude" => 4.5,
-            "longitude" => 74.6,
-            "created_at"=>JSON.parse(thing.created_at.to_json),
-            "updated_at"=>body["updated_at"],
-            "last_uplink"=>JSON.parse(ThingSerializer.new(thing).last_uplink.to_json),
-            "last_messages"=>JSON.parse(ThingSerializer.new(thing).last_messages.to_json)
-          }
+        expected_response = {
+          "id"=>thing.id,
+          "name"=>"new_name",
+          "status"=>"deactivated",
+          "pac"=>"123456",
+          "company_id"=>"987654",
+          "units"=>thing.units,
+          "latitude" => 4.5,
+          "longitude" => 74.6,
+          "created_at"=>JSON.parse(thing.created_at.to_json),
+          "updated_at"=>parsed_body["updated_at"],
+          "last_uplink"=>JSON.parse(ThingSerializer.new(thing).last_uplink.to_json),
+          "last_messages"=>JSON.parse(ThingSerializer.new(thing).last_messages.to_json)
+        }
 
-
-        expect(body).to eq(expected_response)
-
+        expect(parsed_body).to eq(expected_response)
       end
     end
 
     context "Access to a thing" do
       it "User doesn't have relation with the thing" do
-        thing  = create(:thing)
-        id = thing.id
+        thing = create(:thing)
 
-        put "/api/v1/things/#{id}", headers: header
+        put "/api/v1/things/#{thing.id}", headers: header
 
         body = JSON.parse(response.body)
 
@@ -225,6 +220,4 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
       end
     end
   end
-
-
 end

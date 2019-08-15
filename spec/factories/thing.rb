@@ -4,7 +4,7 @@ FactoryBot.define do
     status { "activated" }
     pac { Faker::Alphanumeric.alphanumeric 7 }
     company_id { Faker::Number.decimal_part(5) }
-    units { { liters: Faker::Number.decimal_part(5) } }
+    units { { liter: Faker::Number.decimal_part(5) } }
     longitude { Faker::Address.longitude }
     latitude { Faker::Address.latitude }
 

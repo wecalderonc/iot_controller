@@ -1,0 +1,2 @@
+class BatteryLevelSerializer < UplinkBaseSerializer
+end
