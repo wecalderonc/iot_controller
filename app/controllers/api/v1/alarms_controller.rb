@@ -7,9 +7,9 @@ module Api
         alarm_service = Alarms::Update::Execute.new.(update_params)
 
         if alarm_service.success?
-          json_response(alarm_service.success)
+          json_response(alarm_service.success, :ok)
         else
-          json_response(alarm_service.failure)
+          json_response(alarm_service.failure, :not_found)
         end
       end
 

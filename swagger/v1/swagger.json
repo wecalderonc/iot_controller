@@ -75,21 +75,18 @@
         ],
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
             "name": "id",
             "in": "path",
             "type": "string",
             "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
-          "401": {
-            "description": "Token is missing"
-          },
           "200": {
             "description": "alarms founded",
             "schema": {
@@ -123,6 +120,12 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "404": {
+            "description": "The alarm does not exist"
           }
         }
       }

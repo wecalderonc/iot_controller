@@ -5,29 +5,8 @@ RSpec.describe "Alarms API", :type => :request do
     put 'Retrieves a viewed alarm' do
       tags 'Alarms'
       produces 'application/json'
-
-      parameter name: 'Authorization', :in => :header, :type => :string
       parameter name: :id, :in => :path, :type => :string
-
-      response '401', 'Token is missing' do
-        let(:user) { create(:user) }
-        let(:alarm) { create(:alarm) }
-        let(:id) { alarm.id }
-
-        let(:'Authorization') { "Access denied!" }
-
-        run_test!
-      end
-
-      response '200', 'The alarm does not exist' do
-        let(:user) { create(:user) }
-        let(:alarm) { create(:alarm) }
-        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
-
-        let(:id) { "invalid_id" }
-
-        run_test!
-      end
+      parameter name: 'Authorization', :in => :header, :type => :string
 
       response '200', 'alarms founded' do
         let(:user)  { create(:user) }
@@ -45,6 +24,26 @@ RSpec.describe "Alarms API", :type => :request do
             viewed:     { type: :boolean },
             id:         { type: :string }
           }
+
+        run_test!
+
+      end
+      response '401', 'Token is missing' do
+        let(:user) { create(:user) }
+        let(:alarm) { create(:alarm) }
+        let(:id) { alarm.id }
+
+        let(:'Authorization') { "Access denied!" }
+
+        run_test!
+      end
+
+      response '404', 'The alarm does not exist' do
+        let(:user) { create(:user) }
+        let(:alarm) { create(:alarm) }
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
+        let(:id) { "invalid_id" }
 
         run_test!
       end
