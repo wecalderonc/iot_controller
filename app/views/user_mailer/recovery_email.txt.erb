@@ -1,0 +1,7 @@
+
+PASSWORD RECOVERY
+===============================================
+
+Someone has requested a link to change your password, and you can do this through the link below.
+
+ <%= api_v1_user_url(@user.email) + "?subaction=forgot_password"%>

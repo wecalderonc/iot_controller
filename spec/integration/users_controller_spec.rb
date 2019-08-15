@@ -36,7 +36,7 @@ RSpec.describe "Users API", :type => :request do
   end
 
   path "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}" do
-    get 'Retrieves a C' do
+    get 'Retrieves a confirmation to the confirm email process' do
       tags 'Users'
       produces 'application/json'
       parameter name: :email, :in => :path, :type => :string
@@ -74,6 +74,41 @@ RSpec.describe "Users API", :type => :request do
       end
     end
   end
+
+  path "/api/v1/users/{email}?subaction=request_password_recovery" do
+    get 'Retrieves a success response with recovery password email sended' do
+      tags 'Users'
+      produces 'application/json'
+      parameter name: :email, :in => :path, :type => :string
+
+      response '200', 'user found with email' do
+        let(:user) { create(:user) }
+        let(:email) { user.email }
+
+        schema type: :object,
+          properties: {
+            message: { type: :string },
+          },
+          required: [ 'message' ]
+
+        run_test!
+      end
+
+      response '404', 'user not found' do
+        let(:email) { "bad_email@gmail.com" }
+
+        schema type: :object,
+          properties: {
+            message: { type: :string }
+          },
+          required: [ 'message' ]
+
+        run_test!
+      end
+    end
+  end
+
+
 
   path "/api/v1/users" do
     get 'index users' do
@@ -221,6 +256,63 @@ RSpec.describe "Users API", :type => :request do
           first_name: "new_user",
           last_name: "new_last"
         }}
+
+        run_test!
+      end
+    end
+  end
+
+  path "/api/v1/users/{email}?subaction=change_password" do
+    put 'update password user' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          current_password: { type: :string },
+          password: { type: :string },
+          password_confirmation: { type: :string }
+        },
+        required: [ 'current_password', 'password', 'password_confirmation']
+      }
+
+      response '200', 'user password updated' do
+        let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
+        let(:email) { user.email }
+        let!(:country) { create(:country, code_iso: 'CO') }
+
+        schema type: :object,
+          required: [ 'first_name', 'last_name', 'email'],
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            email: { type: :string }
+          }
+
+        let(:input) {
+          {
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+        }
+
+        run_test!
+      end
+
+      response '404', 'user not found' do
+        let(:user) { create(:user) }
+        let(:email) { "invalid_email" }
+
+        let(:input) {
+          {
+            current_password: user.password,
+            password: "nuevopassword",
+            password_confirmation: "nuevopassword"
+          }
+        }
 
         run_test!
       end

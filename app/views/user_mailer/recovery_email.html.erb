@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>PASSWORD RECOVERY
+    <p>
+      Someone has requested a link to change your password, and you can do this through the link below.
+
+      <%= api_v1_user_url(@user.email) + "?subaction=forgot_password"%>
+    </p>
+  </body>
+</html>

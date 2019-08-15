@@ -17,7 +17,7 @@ RSpec.describe Users::Update::Execute do
           current_password: user.password,
           password: "nuevopassword",
           password_confirmation: "nuevopassword"
-        }  
+        }
       }
 
       context "When all the operations are successful" do
@@ -126,7 +126,7 @@ RSpec.describe Users::Update::Execute do
           response = subject.(input)
 
           expected_response = {
-            :password_confirmation => ["Missing password confirmation"]
+            :password_confirmation => ["must be String"]
           }
 
           expect(response).to be_failure

@@ -7,7 +7,7 @@ RSpec.describe Users::Show do
     context "Search a user" do
       it "does exist in db" do
         params = {
-          "email" => "test@gmail",
+          email: "test@gmail",
           format: "com"
         }
 
@@ -26,7 +26,7 @@ RSpec.describe Users::Show do
 
       it "doesn't exist in db" do
         params = {
-          "email" => "test2@gmail",
+          email: "test2@gmail",
           format: "com"
         }
 

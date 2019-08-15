@@ -36,5 +36,7 @@ en:
     uniq_email: "Email already exist"
     uniq_code_number: "Code number already exist"
     new_password: "Missing new password"
-    password_confirmation: "Missing password confirmation"
+    wrong_password_confirmation: "Missing password confirmation"
     matched_passwords: "New password and password confirmation don't match"
+    same_password: "The new password doesn't match with the confirmation"
+

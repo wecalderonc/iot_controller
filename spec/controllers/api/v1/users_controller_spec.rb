@@ -97,6 +97,43 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       end
     end
 
+    context "A user forgot the password and is requesting the password recovery process" do
+      it "Should return json with success message" do
+
+        expect_any_instance_of(UserMailer).to receive(:recovery_email).once
+        get "/api/v1/users/#{user.email}?subaction=request_password_recovery"
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "message"=>'Recovery Password Email Sended! Go to your inbox!'
+          }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
+    context "A user without account is requesting the password recovery process" do
+      it "Should return json with failure message" do
+
+        bad_email = "bad_email@gmail.com"
+        get "/api/v1/users/#{bad_email}?subaction=request_password_recovery"
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response = 'User not found'
+
+        expect(response_body["message"]).to eq(expected_response)
+      end
+    end
+
   end
 
   describe "POST/create users" do
@@ -270,6 +307,93 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
         expect(body["errors"]).to eq("User not found")
+      end
+    end
+  end
+
+  describe "PUT/update password user" do
+
+    context "Recover Password process success" do
+      it "Should return json with success response" do
+
+        body =
+          {
+            "current_password"=> user.password,
+            "password" => "new_pass",
+            "password_confirmation"=> "new_pass"
+          }
+
+        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+
+        {
+          "first_name"=> user.first_name,
+          "last_name" => user.last_name,
+          "email"=> user.email,
+        }
+        user.reload
+
+        expect(user.password).to eq("new_pass")
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
+    context "Recover password process failure with wrong user and password not related" do
+      it "Should return error message" do
+
+        body =
+          {
+            "current_password"=> "wrong_current_password",
+            "password" => "new_pass",
+            "password_confirmation"=> "new_pass"
+          }
+
+        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+
+        {
+          "errors" => "Current Password is incorrect"
+        }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
+    context "Recover password process failure with new_password and new_password_confirmation mismatched" do
+      it "Should return error message" do
+
+        body =
+          {
+            "current_password"=> user.password,
+            "password" => "new_pass",
+            "password_confirmation"=> "new_pass_wrong"
+          }
+
+        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "errors" => {"same_password"=>["The new password doesn't match with the confirmation"]}
+          }
+
+        expect(response_body).to eq(expected_response)
       end
     end
   end
