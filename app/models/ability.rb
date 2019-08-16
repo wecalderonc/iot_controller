@@ -19,10 +19,12 @@ class Ability
 
   def owns_abilities(user)
     can :manage, Thing, owner: { id: user.id }
+    can :manage, BatteryLevel, uplink: { thing: { owner: { id: user.id } } }
   end
 
   def sees_abilities(user)
     can :read, Thing, viewer: { id: user.id }
+    can :read, BatteryLevel, uplink: { thing: { viewer: { id: user.id } } }
   end
 
   def operates_abilities(user)

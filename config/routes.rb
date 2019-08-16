@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :alarms_report,                 only: [:show, :index]
       resources :downlinks,                     only: [:create]
       resources :alarms,                        only: [:update]
+      resources :battery_levels,                only: [:index]
     end
   end
 end
