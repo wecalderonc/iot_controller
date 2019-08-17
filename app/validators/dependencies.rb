@@ -2,6 +2,7 @@ module Validators
   Dependencies = {
     create: {
       user:                               Validators::Users::CreateSchema,
+      location:                           Validators::Locations::CreateSchema
     },
 
     update_state: {

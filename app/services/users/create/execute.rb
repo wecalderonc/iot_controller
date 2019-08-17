@@ -6,5 +6,3 @@ module Users::Create
     tee  :send_confirmation_mail, with: Users::SendMailConfirmation.new
   end.Do
 end
-
-
