@@ -17,7 +17,6 @@ module Api
       private
 
       def index_params
-        p params
         params.permit(:thing_name).to_h.symbolize_keys
       end
     end
