@@ -5,7 +5,7 @@ class BatteryLevels::Get
 
   def call(input)
     thing = input[:thing]
-    batteries = thing.uplinks.batteryLevel.to_a
+    batteries = thing.uplinks.batteryLevel
 
     if batteries.present?
       Success input.merge(batteries: batteries)

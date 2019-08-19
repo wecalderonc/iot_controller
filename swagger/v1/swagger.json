@@ -180,6 +180,73 @@
         }
       }
     },
+    "/api/v1/battery_levels": {
+      "get": {
+        "summary": "Retrieves all battery levels from a thing",
+        "tags": [
+          "Battery Levels"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "thing_name",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "battery levels founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "level_label": {
+                    "type": "string"
+                  },
+                  "digit": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "created_at",
+                  "updated_at",
+                  "value",
+                  "level_label",
+                  "digit"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "thing not found"
+          },
+          "403": {
+            "description": "not authorized to access"
+          }
+        }
+      }
+    },
     "/api/v1/downlinks": {
       "post": {
         "summary": "Generates a downlink",
