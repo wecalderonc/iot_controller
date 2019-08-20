@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::LocationController, :type => :request do
+RSpec.describe Api::V1::LocationsController, :type => :request do
   describe "POST/create location" do
     let(:country) { create(:country, code_iso: 'CO') }
 

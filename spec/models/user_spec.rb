@@ -5,6 +5,7 @@ RSpec.describe User, :type => :model do
   it { is_expected.to have_many(:owns).with_direction(:out) }
   it { is_expected.to have_many(:operates).with_direction(:out) }
   it { is_expected.to have_many(:sees).with_direction(:out) }
+  it { is_expected.to have_many(:locates).with_direction(:out) }
 
   it { is_expected.to have_one(:country).with_direction(:out) }
 

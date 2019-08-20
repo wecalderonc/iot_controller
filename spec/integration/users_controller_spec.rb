@@ -59,7 +59,7 @@ RSpec.describe "Users API", :type => :request do
       end
 
       response '404', 'user not found or verification_code expired or fake' do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, email: 'holaamigo@mail.com') }
         let(:email) { user.email }
         let!(:verification_code) { "fffffff" }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }

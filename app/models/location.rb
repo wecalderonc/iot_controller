@@ -12,4 +12,8 @@ class Location
   has_one :out, :city, type: :city
   has_one :out, :schedule_report, type: :schedule_report
   has_one :out, :schedule_billing, type: :schedule_report
+
+  has_one :in, :thing, rel_class: :ThingLocation, model_class: :Thing
+
+  has_many :in, :users,  rel_class: :UserLocation, model_class: :User
 end

@@ -43,6 +43,9 @@ module Api
       end
 
       def return_mail_confirmation(params)
+        puts "*" * 100
+        puts params.inspect
+        puts "*" * 100
         response = Users::Confirmation.verification_code(params)
         build_confirm_email_response(response)
       end

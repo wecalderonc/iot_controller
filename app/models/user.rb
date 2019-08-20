@@ -30,6 +30,7 @@ class User
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
   has_many :out, :operates,  rel_class: :Operator, model_class: :Thing
   has_many :out, :sees,      rel_class: :Viewer,   model_class: :Thing
+  has_many :out, :locates,   rel_class: :UserLocation, model_class: :Location
 
   has_one :out, :country, type: :ORIGIN_COUNTRY
 

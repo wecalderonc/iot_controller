@@ -5,23 +5,24 @@ module Validators::Locations
 
     required(:thing_id).filled(type?: String)
     required(:location).schema do
-      required(:name).filled(type?: String, size?: 30)
+      required(:name).filled(type?: String, max_size?: 30)
       required(:address).filled(type?: String)
       optional(:latitude).filled(type?: Float)
       optional(:longitude).filled(type?: Float)
 
-      validate(valid_coordinates: :latitude) do |latitude|
-        (latitude <= 90 or latitude >= -90) ? true : false
+      validate(invalid_latitude: :latitude) do |latitude|
+        false
+        (latitude > 90 or latitude < -90) ? false : true
       end
 
-      validate(valid_coordinates: :longitude) do |longitude|
-        (longitude <= 90 or longitude >= -90) ? true : false
+      validate(invalid_longitude: :longitude) do |longitude|
+        (longitude > 180 or longitude < -180) ? false : true
       end
     end
     required(:country_state_city).schema do
       required(:country).filled(type?: String)
-      required(:state).filled(type?: String, size?: 50)
-      required(:city).filled(type?: String, size?: 50)
+      required(:state).filled(type?: String, max_size?: 50)
+      required(:city).filled(type?: String, max_size?: 50)
     end
     required(:schedule_billing).schema do
       optional(:stratum).filled(type?: Integer)

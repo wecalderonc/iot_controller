@@ -24,6 +24,8 @@ class Thing
   has_many :in, :operator, rel_class: :Operator, model_class: :User
   has_many :in, :viewer,   rel_class: :Viewer,   model_class: :User
 
+  has_one :out, :locates, rel_class: :ThingLocation, model_class: :Location
+
   def last_uplinks(quantity = 1)
     self.uplinks.order(created_at: :desc).limit(quantity)
   end

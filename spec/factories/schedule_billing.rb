@@ -6,8 +6,8 @@ FactoryBot.define do
     basic_price { Faker::Number.decimal(l_digits: 2, r_digits: 3) }
     extra_price { Faker::Number.decimal(l_digits: 2, r_digits: 3) }
     billing_frequency { Faker::Number.between(from: 1, to: 10) }
-    billing_period { "month" }
+    billing_period { :month }
     cut_day { Faker::Number.between(from: 1, to: 10) }
-    start_date { Faker::Time.between(2.days.ago, Time.now) }
+    start_date { Faker::Time.between(from: 2.days.ago, to: Time.now) }
   end
 end
