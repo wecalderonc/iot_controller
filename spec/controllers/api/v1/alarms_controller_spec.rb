@@ -9,7 +9,9 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
 
     context "The request is ok" do
       it "Should return a 200 status" do
-        put "/api/v1/alarms/#{alarm.id}", headers: header
+        thing_name = alarm.uplink.thing.name
+
+        put "/api/v1/things/#{thing_name}/alarms/#{alarm.id}", headers: header
 
         expect(response.successful?).to be_truthy
 
@@ -22,8 +24,9 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
     context "The authorization code is wrong" do
       it "Should return a 401 status" do
         header['Authorization'] = "dsfkjsdhfsdhf"
+        thing_name = alarm.uplink.thing.name
 
-        put "/api/v1/alarms/#{alarm.id}", headers: header
+        put "/api/v1/things/#{thing_name}/alarms/#{alarm.id}", headers: header
 
         expect(response.successful?).to be_falsey
         expect(response.status).to eq(401)
@@ -36,7 +39,9 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
 
     context "The URL is wrong" do
       it "Should return a bad URI error" do
-        put "/api/v1/alarms/326478956743856fhdsj", headers: header
+        thing_name = alarm.uplink.thing.name
+
+        put "/api/v1/things/#{thing_name}/alarms/326478956743856fhdsj", headers: header
 
         parsed_response = JSON.parse(response.body)
 
@@ -51,16 +56,16 @@ end
 
     context "There is one thing with their alarms" do
       it "Should return an array with all alarms of a one thing" do
-        thing = alarm.uplink.thing
+        thing_name = alarm.uplink.thing.name
 
-        get "/api/v1/things/#{thing.id}/alarms", headers: header
+        get "/api/v1/things/#{thing_name}/alarms/", headers: header
 
         body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
 
-        expected_response = { 
+        expected_response = {
           "id" => alarm.id,
           "value" => alarm.value,
           "created_at" => JSON.parse(alarm.created_at.to_json),
@@ -74,16 +79,16 @@ end
       end
     end
 
-    context "Thing id don't exist" do
-      it "Should return a message of thing not found" do
-        thing = alarm.uplink.thing
+    context "Thing name don't exist" do
+      it "Should return a message thing not found" do
+        thing_name = alarm.uplink.thing.name
 
-        get "/api/v1/things/c3712cec-8ccc-40b5-851a-f62b2375d987", headers: header
+        get "/api/v1/things/wrongname", headers: header
 
 
         parsed_response = JSON.parse(response.body)
 
-        expected_response = "Couldn't find Thing with 'uuid'=\"c3712cec-8ccc-40b5-851a-f62b2375d987\""
+        expected_response = "thing not found"
         expect(parsed_response["message"]).to eq(expected_response)
         expect(response.status).to eq(404)
 
@@ -92,9 +97,9 @@ end
 
     context "Thing has no associated alarms" do
       it "Should return a message of alarms not found" do
-        thing = create(:thing)
+        thing_name = alarm.uplink.thing.name
 
-        get "/api/v1/things/#{thing.id}/alarms", headers: header
+        get "/api/v1/things/#{thing_name}/alarms", headers: header
 
         body = JSON.parse(response.body)
 
