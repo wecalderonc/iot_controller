@@ -10,7 +10,7 @@ module Api
       end
 
       def show
-        @thing = Thing.find_by(id: params[:id])
+        @thing = Thing.find_by(name: params[:thing_name])
 
         if @thing.present?
           json_response(@thing)
@@ -23,9 +23,9 @@ module Api
         update_response = Things::Update::Execute.new.(create_params)
 
         if update_response.success?
-          json_response(update_response.success)
+          json_response(update_response.success, :ok)
         else
-          json_response({ errors: update_response.failure[:message] })
+          json_response({ errors: update_response.failure[:message] }, :not_found)
         end
       end
 

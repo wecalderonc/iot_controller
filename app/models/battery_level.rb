@@ -5,4 +5,12 @@ class BatteryLevel
   validates :value, presence: true
 
   has_one :out, :uplink, type: :BELONGS_TO
+
+  LEVEL_LABELS = {
+    1 => :low,
+    2 => :middle_low,
+    3 => :middle_high,
+    4 => :high,
+    5 => :no_available
+  }
 end

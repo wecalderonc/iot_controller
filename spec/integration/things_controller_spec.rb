@@ -37,17 +37,17 @@ RSpec.describe "Things API", :type => :request do
     end
   end
 
-  path "/api/v1/things/{id}" do
+  path "/api/v1/things/{thing_name}" do
     get 'Retrieves a thing' do
       tags 'Things'
       produces 'application/json'
-      parameter name: :id, :in => :path, :type => :string
+      parameter name: :thing_name, :in => :path, :type => :string
       parameter name: 'Authorization', :in => :header, :type => :string
 
       response '200', 'thing found' do
         let(:user) { create(:user) }
         let(:accumulator) { create(:accumulator) }
-        let(:id) { accumulator.uplink.thing.id }
+        let(:thing_name) { accumulator.uplink.thing.name }
         let!(:owner) { Owner.create(from_node: user, to_node: accumulator.uplink.thing) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -60,8 +60,11 @@ RSpec.describe "Things API", :type => :request do
       response '404', 'thing not found' do
         let(:user) { create(:user) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+        let(:accumulator) { create(:accumulator) }
+        let(:thing_name) { accumulator.uplink.thing.name }
+        let!(:owner) { Owner.create(from_node: user, to_node: accumulator.uplink.thing) }
 
-        let(:id) { "invalid_id" }
+        let(:thing_name) { "thing_not_created" }
 
         run_test!
       end
@@ -69,7 +72,7 @@ RSpec.describe "Things API", :type => :request do
       response '403', 'not authorized to access' do
         let(:user) { create(:user) }
         let(:accumulator) { create(:accumulator) }
-        let(:id) { accumulator.uplink.thing.id }
+        let(:thing_name) { accumulator.uplink.thing.name }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         run_test!
@@ -77,17 +80,16 @@ RSpec.describe "Things API", :type => :request do
     end
   end
 
-  path "/api/v1/things/{id}" do
+  path "/api/v1/things/{thing_name}" do
     put 'Retrieves an updated thing' do
       tags 'Things'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :id, :in => :path, :type => :string
+      parameter name: :thing_name, :in => :path, :type => :string
       parameter name: 'Authorization', :in => :header, :type => :string
       parameter name: :input, in: :body, schema: {
         type: :object,
         properties: {
-          thing_name: { type: :string },
           params: {
             type: :object,
             properties: {
@@ -100,13 +102,13 @@ RSpec.describe "Things API", :type => :request do
             }
           }
         },
-        required: [ 'thing_name', 'params']
+        required: ['params']
       }
 
       response '200', 'thing updated' do
         let(:user) { create(:user) }
         let!(:accumulator) { create(:accumulator) }
-        let!(:id) { accumulator.uplink.thing.id }
+        let!(:thing_name) { accumulator.uplink.thing.name }
         let!(:owner) { Owner.create(from_node: user, to_node: accumulator.uplink.thing) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -115,7 +117,6 @@ RSpec.describe "Things API", :type => :request do
           properties: thing_properties
 
         let(:input) {{
-            thing_name: accumulator.uplink.thing.name,
             params: {
               pac: "123456",
               company_id: 987654,
@@ -132,11 +133,13 @@ RSpec.describe "Things API", :type => :request do
       response '404', 'thing not found' do
         let(:user) { create(:user) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+        let(:accumulator) { create(:accumulator) }
+        let(:thing_name) { accumulator.uplink.thing.name }
+        let!(:owner) { Owner.create(from_node: user, to_node: accumulator.uplink.thing) }
 
-        let(:id) { "invalid_id" }
+        let(:thing_name) { "invalid_name" }
 
         let(:input) {{
-            thing_name: "error_name",
             params: {
               pac: "123456",
               company_id: 987654,
@@ -153,11 +156,10 @@ RSpec.describe "Things API", :type => :request do
       response '403', 'not authorized to access' do
         let(:user) { create(:user) }
         let(:accumulator) { create(:accumulator) }
-        let(:id) { accumulator.uplink.thing.id }
+        let(:thing_name) { accumulator.uplink.thing.name }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         let(:input) {{
-            thing_name: accumulator.uplink.thing.name,
             params: {
               pac: "123456",
               company_id: 987654,

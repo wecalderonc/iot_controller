@@ -25,6 +25,10 @@ module Validators
 
     recover_password: {
       user:                               Validators::Users::RecoverPasswordSchema
+    },
+
+    get: {
+      battery_level:                      Validators::BatteryLevels::GetSchema
     }
   }
 end

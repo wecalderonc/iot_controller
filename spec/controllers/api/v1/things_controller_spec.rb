@@ -114,7 +114,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
         accumulator = create(:accumulator)
         Owner.create(from_node: user, to_node: accumulator.uplink.thing)
 
-        get "/api/v1/things/#{accumulator.uplink.thing.id}", headers: header
+        get "/api/v1/things/#{accumulator.uplink.thing.name}", headers: header
 
         body = JSON.parse(response.body)
         thing = accumulator.uplink.thing
@@ -181,7 +181,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
           }
         }
 
-        put "/api/v1/things/#{thing.id}", headers: header, params: params
+        put "/api/v1/things/#{thing.name}", headers: header, params: params
 
         parsed_body = JSON.parse(response.body)
 
