@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BatteryLevels::Execute do
+RSpec.describe Things::BatteryLevels::Execute do
   describe "#call" do
     let(:battery_level) { create(:battery_level, value: "0001") }
     let(:thing) { battery_level.uplink.thing }

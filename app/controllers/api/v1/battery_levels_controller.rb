@@ -5,7 +5,7 @@ module Api
     load_and_authorize_resource class: "BatteryLevel"
 
       def index
-        response = BatteryLevels::Execute.new.(index_params)
+        response = Things::BatteryLevels::Execute.new.(index_params)
 
         if response.success?
           json_response(response.success, :ok)
@@ -17,7 +17,9 @@ module Api
       private
 
       def index_params
-        params.permit(:thing_name).to_h.symbolize_keys
+        #TODO: Change this when thing_name -> aws_id
+        aws_id = params.permit(:thing_thing_name).to_h.symbolize_keys
+        { thing_name: aws_id[:thing_thing_name] }
       end
     end
   end

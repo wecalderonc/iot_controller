@@ -11,11 +11,7 @@ RSpec.describe Api::V1::BatteryLevelsController, :type => :request do
     context "User doesn't have related things" do
       it "Should return unauthorized_message" do
 
-        params = {
-          thing_name: thing.name
-        }
-
-        get '/api/v1/battery_levels', headers: header, params: params
+        get "/api/v1/things/#{thing.name}/battery_levels", headers: header
 
         #The Content-Type is text/html because is the CanCan answer. In postman works and return json
         expect(response.headers["Content-Type"]).to eq("text/html; charset=utf-8")
@@ -32,11 +28,7 @@ RSpec.describe Api::V1::BatteryLevelsController, :type => :request do
       it "Should return an array with battery_levels" do
         Owner.create(from_node: user, to_node: thing)
 
-        params = {
-          thing_name: thing.name
-        }
-
-        get '/api/v1/battery_levels', headers: header, params: params
+        get "/api/v1/things/#{thing.name}/battery_levels", headers: header
 
         body = JSON.parse(response.body)
 
@@ -45,8 +37,8 @@ RSpec.describe Api::V1::BatteryLevelsController, :type => :request do
 
         expected_response = {
           "created_at"=>JSON.parse(battery_level.created_at.to_json),
-          "digit"=>"3",
-          "level_label"=>"middle-high",
+          "digit"=>3,
+          "level_label"=>"middle_high",
           "updated_at"=>JSON.parse(battery_level.updated_at.to_json),
           "value"=>"0003"
         }
@@ -55,15 +47,12 @@ RSpec.describe Api::V1::BatteryLevelsController, :type => :request do
       end
     end
 
-    context "The thing does not exist in db" do
+    context "The thing_name param has errrs" do
       it "Should return a message error" do
         Owner.create(from_node: user, to_node: thing)
 
-        params = {
-          thing_name: "wrong_name"
-        }
-
-        get '/api/v1/battery_levels', headers: header, params: params
+        wrong_name = "wrong_name"
+        get "/api/v1/things/#{wrong_name}/battery_levels", headers: header
 
         body = JSON.parse(response.body)
 
@@ -72,29 +61,6 @@ RSpec.describe Api::V1::BatteryLevelsController, :type => :request do
 
         expected_response = {
           "errors" => "The thing wrong_name does not exist"
-        }
-
-        expect(body).to eq(expected_response)
-      end
-    end
-
-    context "The thing_name param has errrs" do
-      it "Should return a message error" do
-        Owner.create(from_node: user, to_node: thing)
-
-        params = {
-          thingggg_name: "wrong_name"
-        }
-
-        get '/api/v1/battery_levels', headers: header, params: params
-
-        body = JSON.parse(response.body)
-
-        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(404)
-
-        expected_response = {
-          "errors" => {"thing_name"=>["is missing"]}
         }
 
         expect(body).to eq(expected_response)

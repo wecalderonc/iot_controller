@@ -1,6 +1,6 @@
 require 'dry/transaction/operation'
 
-class BatteryLevels::Get
+class Things::BatteryLevels::Get
   include Dry::Transaction::Operation
 
   def call(input)

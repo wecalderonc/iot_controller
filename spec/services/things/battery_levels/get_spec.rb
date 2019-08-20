@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BatteryLevels::Get do
+RSpec.describe Things::BatteryLevels::Get do
   describe '#call' do
     let(:response) { subject.(input) }
 
