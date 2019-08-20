@@ -5,4 +5,8 @@ module Validators::Alarms
       required(:viewed).filled(type?: TrueClass)
     end
   end
+
+  GetSchema = Dry::Validation.Schema do
+    required(:thing_name).filled(type?: String)
+  end
 end
