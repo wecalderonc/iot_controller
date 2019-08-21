@@ -3,7 +3,7 @@ module Validators::Locations
 
     configure { config.messages_file = "config/locales/en.yml" }
 
-    required(:thing_id).filled(type?: String)
+    required(:thing_name).filled(type?: String)
     required(:location).schema do
       required(:name).filled(type?: String, max_size?: 30)
       required(:address).filled(type?: String)
@@ -37,7 +37,7 @@ module Validators::Locations
       required(:start_month).filled(type?: Integer)
       required(:start_year).filled(type?: Integer)
 
-      validate(valid_basic_charge: :basic_charge) do |basic_charge|
+      validate(invalid_basic_charge: :basic_charge) do |basic_charge|
         basic_charge >= 0 ? true : false
       end
     end

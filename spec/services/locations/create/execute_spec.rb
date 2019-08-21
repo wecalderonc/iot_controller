@@ -8,9 +8,11 @@ RSpec.describe Locations::Create::Execute do
       let(:user)    { create(:user, email: "user@gmail.com") }
       let(:thing)   { create(:thing) }
       let(:country) { create(:country, code_iso: 'CO') }
+      let(:state)   { create(:state, code_iso: 'CO-DC', country: country) }
+      let(:city)    { create(:city, name: 'Bogota', state: state) }
 
       let(:input) {
-        { thing_id: thing.id,
+        { thing_name: thing.name,
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -18,9 +20,9 @@ RSpec.describe Locations::Create::Execute do
             longitude: -74.071840
           },
           country_state_city: {
-            country: 'Colombia',
-            state: 'Bogota DC',
-            city: 'Bogota'
+            country: 'CO',
+            state: 'CO-DC',
+            city: city.name
           },
           schedule_billing: {
             stratum: 5,
@@ -126,7 +128,7 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:location][:latitude] = -12
+          input[:location][:latitude] = -92.0
 
           expected_response = {
             :invalid_latitude => ["Wrong latitude"]
@@ -167,7 +169,7 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:location][:longitude] = -12
+          input[:location][:longitude] = -182.0
 
           expected_response = {
             :invalid_longitude => ["Wrong longitude"]
@@ -210,11 +212,11 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:country_state_city][:state] = 'estaesunpaismuylargoynodeberiaserasi123456'
+          input[:country_state_city][:state] = Faker::String.random(length: 54)
 
           expected_response = {
             :country_state_city => {
-              :state => ["ojo pues"]
+              :state => ["size cannot be greater than 50"]
             }
           }
 
@@ -240,11 +242,11 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:country_state_city][:city] = 'estaesunaciudadmuylargaynodeberiaserasi123456'
+          input[:country_state_city][:city] = Faker::String.random(length: 54)
 
           expected_response = {
             :country_state_city => {
-              :city => ["ojo pues"]
+              :city => ["size cannot be greater than 50"]
             }
           }
 
@@ -285,12 +287,10 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:schedule_billing][:basic_charge] = -1
+          input[:schedule_billing][:basic_charge] = -1.0
 
           expected_response = {
-            :schedule_billing => {
-              :basic_charge => ["ojo pues"]
-            }
+              :invalid_basic_charge => ["The value must be positive"]
           }
 
           expect(response).to be_failure

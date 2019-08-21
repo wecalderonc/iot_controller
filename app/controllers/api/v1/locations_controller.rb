@@ -8,7 +8,7 @@ module Api
         if create_response.success?
           json_response(create_response.success)
         else
-          json_response({ errors: create_response.failure[:message] }, create_response.failure[:code])
+          json_response({ errors: create_response.failure[:message] }, :not_found)
         end
       end
 
