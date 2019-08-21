@@ -6,5 +6,6 @@ module Locations::Create
     step :assign_contry_state_city, with: Locations::Create::CountryStateCity.new
     step :create_schedule_billing,  with: Locations::Create::CreateScheduleBilling.new
     step :create_schedule_report,   with: Locations::Create::CreateScheduleReport.new
+    map  :build_response,           with: Locations::Create::BuildResponse.new
   end.Do
 end

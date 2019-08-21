@@ -49,18 +49,26 @@ RSpec.describe Locations::Create::Execute do
       }
 
       context "When all the operations are successful" do
+        let(:location) { thing.locates }
+        let(:schedule_billing) { location.schedule_billing }
+        let(:schedule_report) { location.schedule_report }
+
         it "Should return a Success response" do
           expect(response).to be_success
-          expect(response.success).to match(input)
+
+          expect(response.success).to match(location)
+          expect(location.city.name).to eq('Bogota')
+          expect(schedule_billing.stratum).to eq(5)
+          expect(schedule_report.email).to eq('unacosita@gmail.com')
         end
       end
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:thing_id] = 12345
+          input[:thing_name] = 12345
 
           expected_response = {
-            :thing_id => ["must be String"]
+            :thing_name => ["must be String"]
           }
 
           expect(response).to be_failure
@@ -499,7 +507,7 @@ RSpec.describe Locations::Create::Execute do
 
           expected_response = {
             :schedule_report => {
-              :email => ["ojo pues"]
+              :email => ["is in invalid format"]
             }
           }
 
@@ -612,9 +620,9 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'get' operation fails" do
         it "Should return a Failure response" do
-          input[:thing_id] = "invalid_id"
+          input[:thing_name] = "invalid_name"
 
-          expected_response = "Device not found"
+          expected_response = "The thing invalid_name does not exist"
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)

@@ -7,7 +7,8 @@ class Locations::Create::CreateLocation
     location = Location.new(input[:location])
 
     if location.save
-      create_relationship(input.merge(location: location))
+      input[:location] = location
+      create_relationship(input)
 
       Success input
     else

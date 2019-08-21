@@ -15,8 +15,6 @@ RSpec.describe ScheduleReport, :type => :model do
 
       expected_errors = {
         :email=>["can't be blank"],
-        :frequency_day=>["can't be blank"],
-        :frequency_interval=>["can't be blank"],
         :start_date => ["can't be blank"],
       }
 

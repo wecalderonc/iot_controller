@@ -8,11 +8,12 @@ module Locations::Create
   end
 
   Assign = -> input do
+    input[:location].update(schedule_report: input[:schedule_report])
   end
 
   _, CreateScheduleReport = Common::TxMasterBuilder.new do
     tee  :parse_date,      with: GetDate
     step :create_schedule, with: Locations::ScheduleR.new
-    map  :assign_location, with: Assign
+    tee  :assign_location, with: Assign
   end.Do
 end

@@ -4,10 +4,6 @@ class Locations::ScheduleR
   include Dry::Transaction
 
   def call(input)
-    puts "*" * 100
-    puts input.inspect
-    puts "*" * 100
-
     schedule = ScheduleReport.new(input[:schedule_report])
 
     if schedule.save
