@@ -63,6 +63,489 @@ RSpec.describe Locations::Create::Execute do
         end
       end
 
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:thing_id] = 12345
+
+          expected_response = {
+            :thing_id => ["must be String"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:name] = 12345
+
+          expected_response = {
+            :location => {
+              :name => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:address] = 12345
+
+          expected_response = {
+            :location => {
+              :address => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:latitude] = "123456"
+
+          expected_response = {
+            :location => {
+              :latitude => ["must be Float"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:latitude] = 1234.56
+
+          expected_response = {
+            :invalid_latitude => ["Wrong latitude"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:latitude] = -92.0
+
+          expected_response = {
+            :invalid_latitude => ["Wrong latitude"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:longitude] = 12345
+
+          expected_response = {
+            :location => {
+              :longitude => ["must be Float"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:longitude] = 1234.56
+
+          expected_response = {
+            :invalid_longitude => ["Wrong longitude"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:location][:longitude] = -182.0
+
+          expected_response = {
+            :invalid_longitude => ["Wrong longitude"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:country_state_city][:country] = 12345
+
+          expected_response = {
+            :country_state_city => {
+              :country => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:country_state_city][:state] = 12345
+
+          expected_response = {
+            :country_state_city => {
+              :state => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:country_state_city][:state] = Faker::String.random(length: 54)
+
+          expected_response = {
+            :country_state_city => {
+              :state => ["size cannot be greater than 50"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:country_state_city][:city] = 12345
+
+          expected_response = {
+            :country_state_city => {
+              :city => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:country_state_city][:city] = Faker::String.random(length: 54)
+
+          expected_response = {
+            :country_state_city => {
+              :city => ["size cannot be greater than 50"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:stratum] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :stratum => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:basic_charge] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :basic_charge => ["must be Float"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:basic_charge] = -1.0
+
+          expected_response = {
+              :invalid_basic_charge => ["The value must be positive"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:top_limit] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :top_limit => ["must be Float"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:basic_price] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :basic_price => ["must be Float"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:extra_price] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :extra_price => ["must be Float"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:billing_frequency] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :billing_frequency => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:billing_period] = 12345
+
+          expected_response = {
+            :schedule_billing => {
+              :billing_period => ["must be Symbol"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:cut_day] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :cut_day => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:start_day] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :start_day => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:start_month] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :start_month => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:start_year] = "12345"
+
+          expected_response = {
+            :schedule_billing => {
+              :start_year => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:email] = 12345
+
+          expected_response = {
+            :schedule_report => {
+              :email => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:email] = "estonisiquieraesuncorreo.aja"
+
+          expected_response = {
+            :schedule_report => {
+              :email => ["ojo pues"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:frequency_day] = 12345
+
+          expected_response = {
+            :schedule_report => {
+              :frequency_day => ["must be String"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:frequency_interval] = 12345
+
+          expected_response = {
+            :schedule_report => {
+              :frequency_interval => ["must be Symbol"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:start_day] = "12345"
+
+          expected_response = {
+            :schedule_report => {
+              :start_day => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:start_month] = "12345"
+
+          expected_response = {
+            :schedule_report => {
+              :start_month => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_report][:start_year] = "12345"
+
+          expected_response = {
+            :schedule_report => {
+              :start_year => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
       context "When country is wrong" do
         it "Should return a Failure response" do
           input[:country_state_city][:country] = "invalid_code"

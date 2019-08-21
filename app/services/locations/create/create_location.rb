@@ -19,6 +19,6 @@ class Locations::Create::CreateLocation
   private
 
   def create_relationship(input)
-    ThingLocation.create!(from_node: input[:thing], to_node: input[:location])
+    ThingLocation.create(from_node: input[:thing], to_node: input[:location])
   end
 end
