@@ -11,12 +11,11 @@ module Validators::Locations
       optional(:longitude).filled(type?: Float)
 
       validate(invalid_latitude: :latitude) do |latitude|
-        false
-        (latitude > 90 or latitude < -90) ? false : true
+        latitude.present? ? (latitude > 90 or latitude < -90) : true
       end
 
       validate(invalid_longitude: :longitude) do |longitude|
-        (longitude > 180 or longitude < -180) ? false : true
+        longitude.present? ? (longitude > 180 or longitude < -180) : true
       end
     end
     required(:country_state_city).schema do
