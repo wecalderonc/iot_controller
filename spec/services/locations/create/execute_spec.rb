@@ -390,6 +390,21 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
+          input[:schedule_billing][:cut_day] = 42
+
+          expected_response = {
+            :schedule_billing => {
+              :cut_day => ["must be less than or equal to 30"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
           input[:schedule_billing][:start_day] = "12345"
 
           expected_response = {
@@ -405,11 +420,41 @@ RSpec.describe Locations::Create::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
+          input[:schedule_billing][:start_day] = 40  
+
+          expected_response = {
+            :schedule_billing => {
+              :start_day => ["must be less than or equal to 30"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
           input[:schedule_billing][:start_month] = "12345"
 
           expected_response = {
             :schedule_billing => {
               :start_month => ["must be Integer"]
+            }
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails" do
+        it "Should return a Failure response" do
+          input[:schedule_billing][:start_month] = 14
+
+          expected_response = {
+            :schedule_billing => {
+              :start_month => ["must be less than or equal to 12"]
             }
           }
 
