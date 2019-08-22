@@ -8,4 +8,6 @@ class AlarmType
   validates :value, presence: true
   validates :name, presence: true
   validates :type, presence: true
+
+  has_one :in, :alarm, type: :TYPE
 end

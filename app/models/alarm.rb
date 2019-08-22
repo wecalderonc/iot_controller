@@ -9,6 +9,6 @@ class Alarm
   validates :date, presence: true
 
   has_one :out, :uplink, type: :BELONGS_TO
-  has_one :out, :alarm_type, type: :BELONGS_TO
+  has_one :out, :alarm_type, type: :TYPE
 
 end
