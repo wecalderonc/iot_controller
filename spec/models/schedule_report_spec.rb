@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ScheduleReport, :type => :model do
 
   it { is_expected.to define_property :email, :String }
-  it { is_expected.to define_property :frequency_day, :String }
+  it { is_expected.to define_property :frequency_day, :Integer }
   it { is_expected.to define_property :frequency_interval, :String }
   it { is_expected.to define_property :start_date, :String }
 

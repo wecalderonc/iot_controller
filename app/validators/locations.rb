@@ -7,22 +7,24 @@ module Validators::Locations
     required(:location).schema do
       required(:name).filled(type?: String, max_size?: 30)
       required(:address).filled(type?: String)
-      optional(:latitude).filled(type?: Float)
-      optional(:longitude).filled(type?: Float)
+      optional(:latitude).value(type?: Float)
+      optional(:longitude).value(type?: Float)
 
       validate(invalid_latitude: :latitude) do |latitude|
-        latitude.present? ? (latitude > 90 or latitude < -90) : true
+        latitude.present? ? (latitude <= 90 && latitude >= -90) : true
       end
 
       validate(invalid_longitude: :longitude) do |longitude|
-        longitude.present? ? (longitude > 180 or longitude < -180) : true
+        longitude.present? ? (longitude <= 180 && longitude >= -180) : true
       end
     end
+
     required(:country_state_city).schema do
       required(:country).filled(type?: String)
       required(:state).filled(type?: String, max_size?: 50)
       required(:city).filled(type?: String, max_size?: 50)
     end
+
     required(:schedule_billing).schema do
       optional(:stratum).filled(type?: Integer)
       required(:basic_charge).filled(type?: Float)
@@ -40,9 +42,10 @@ module Validators::Locations
         basic_charge >= 0 ? true : false
       end
     end
+
     required(:schedule_report).schema do
       required(:email).filled(type?: String, format?: User::VALID_EMAIL)
-      required(:frequency_day).filled(type?: String)
+      required(:frequency_day).filled(type?: Integer)
       required(:frequency_interval).filled(type?: Symbol, included_in?: ScheduleReport::VALID_INTERVALS)
       required(:start_day).filled(type?: Integer)
       required(:start_month).filled(type?: Integer)

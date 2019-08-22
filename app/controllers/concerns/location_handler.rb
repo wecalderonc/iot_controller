@@ -1,38 +1,24 @@
-module ExceptionHandler
-  extend ActiveSupport::Concern
+# app/controllers/concerns/locatiton_handler.rb
+module LocationHandler
+
+  START_DATE = [:start_day, :start_month, :start_year]
+  COUNTRY_STATE_CITY = [:country, :state, :city]
 
   def create_location_params
     params.permit(
       :thing_name,
-      location: {
+      location: (
         Location::REQUIRED_FIELDS << [:latitude, :longitude]
-      },
-      country_state_city: {
-        :country,
-        :state,
-        :city
-      },
-      schedule_billing: {
-        :stratum,
-        :basic_charge,
-        :top_limit,
-        :basic_price,
-        :extra_price,
-        :billing_frequency,
-        :billing_period,
-        :cut_day,
-        :start_day,
-        :start_month,
-        :start_year
-      },
-      schedule_report: {
-        :email,
-        :frequency_day,
-        :frequency_interval,
-        :start_day,
-        :start_month,
-        :start_year
-      }
-    ).to_h.symbolize_keys
+      ),
+      country_state_city: (
+        COUNTRY_STATE_CITY
+      ),
+      schedule_billing: (
+        ScheduleBilling::REQUIRED_FIELDS << START_DATE
+      ),
+      schedule_report: (
+        ScheduleReport::REQUIRED_FIELDS << START_DATE
+      )
+    ).to_h.deep_symbolize_keys
   end
 end

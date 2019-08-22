@@ -2,7 +2,7 @@ class ScheduleReport
   include Neo4j::ActiveNode
 
   property :email, type: String
-  property :frequency_day, type: String, default: 1
+  property :frequency_day, type: Integer, default: 1
   property :frequency_interval, type: String, default: 'month'
   property :start_date, type: String
 

@@ -1,5 +1,6 @@
 module Locations::Create
   _, Execute = Common::TxMasterBuilder.new do
+    map  :parse_input,              with: Locations::ParseInput.new
     step :validation,               with: Common::Operations::Validator.(:create, :location)
     step :get_thing,                with: Things::Get.new
     step :create_location,          with: Locations::Create::CreateLocation.new
