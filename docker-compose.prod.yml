@@ -11,7 +11,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
   web:
-    image: zonawiki/iot_controller:prod
+    image: devsproci/iot_controller:prod
     build:
       context: .
       dockerfile: ./docker/prod/Dockerfile
