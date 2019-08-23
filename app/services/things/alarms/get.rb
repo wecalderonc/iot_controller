@@ -8,7 +8,7 @@ class Things::Alarms::Get
     alarms = thing.uplinks.alarm
 
     if alarms.present?
-      Success  alarms
+      Success alarms
     else
       Failure Errors.general_error("The thing #{input[:thing_name]} does not have alarms", self.class)
     end
