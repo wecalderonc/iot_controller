@@ -180,7 +180,61 @@
         }
       }
     },
-    "/api/v1/battery_levels": {
+    "/authentication": {
+      "post": {
+        "summary": "Retrieves a token",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auth_token": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "auth_token",
+                "email"
+              ]
+            }
+          },
+          "401": {
+            "description": "user not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/things/{thing_name}/battery_levels": {
       "get": {
         "summary": "Retrieves all battery levels from a thing",
         "tags": [
@@ -200,8 +254,9 @@
           },
           {
             "name": "thing_name",
-            "in": "query",
-            "type": "string"
+            "in": "path",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -219,7 +274,7 @@
                     "type": "string"
                   },
                   "digit": {
-                    "type": "string"
+                    "type": "integer"
                   },
                   "created_at": {
                     "type": "string"
@@ -398,7 +453,7 @@
         }
       }
     },
-    "/api/v1/things/{id}": {
+    "/api/v1/things/{thing_name}": {
       "get": {
         "summary": "Retrieves a thing",
         "tags": [
@@ -409,7 +464,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "thing_name",
             "in": "path",
             "type": "string",
             "required": true
@@ -601,7 +656,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "thing_name",
             "in": "path",
             "type": "string",
             "required": true
@@ -617,9 +672,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "thing_name": {
-                  "type": "string"
-                },
                 "params": {
                   "type": "object",
                   "properties": {
@@ -645,7 +697,6 @@
                 }
               },
               "required": [
-                "thing_name",
                 "params"
               ]
             }
