@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :alarm do
-    value { Faker::Number.hexadecimal(digits=4) }
-    date { Faker::Date.between(2.days.ago, Date.today) }
+    value { Faker::Number.hexadecimal(digits: 4) }
+    date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
     viewed { false }
 
     association :uplink, factory: :uplink

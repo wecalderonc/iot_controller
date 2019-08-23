@@ -74,7 +74,7 @@ group :test do
   gem 'vcr'
   gem 'webmock'
   gem 'timecop'
-  gem 'faker'
+  gem 'faker',  '~> 2.1.2'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
   gem 'factory_bot_rails'

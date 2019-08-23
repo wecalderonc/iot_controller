@@ -39,4 +39,6 @@ en:
     wrong_password_confirmation: "Missing password confirmation"
     matched_passwords: "New password and password confirmation don't match"
     same_password: "The new password doesn't match with the confirmation"
-
+    invalid_latitude: "Wrong latitude"
+    invalid_longitude: "Wrong longitude"
+    invalid_basic_charge: "The value must be positive"

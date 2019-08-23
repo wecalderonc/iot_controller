@@ -10,6 +10,9 @@ RSpec.describe Location, :type => :model do
   it { is_expected.to have_one(:city).with_direction(:out) }
   it { is_expected.to have_one(:schedule_report).with_direction(:out) }
   it { is_expected.to have_one(:schedule_billing).with_direction(:out) }
+  it { is_expected.to have_one(:thing).with_direction(:in) }
+
+  it { is_expected.to have_many(:users).with_direction(:in) }
 
   describe "Validations" do
     it "name, address, longitude and latitude are required" do

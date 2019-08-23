@@ -51,6 +51,10 @@ alarm1 = Alarm.create(value: "jajajaja", viewed: false, date: "2019-08-12T20:27:
 alarm2 = Alarm.create(value: "jijijiji", viewed: false, date: "2019-06-12T20:27:10.000+00:00", uplink: uplink2)
 alarm3 = Alarm.create(value: "jujujuju", viewed: false, date: "2019-04-12T20:27:10.000+00:00", uplink: uplink3)
 
+country = Country.create(name: 'Colombia', code_iso: 'CO')
+state = State.create(name: 'Bogota DC', code_iso: 'CO-DC', country: country)
+city = City.create(name: 'Bogota', state: state)
+
 #Owner.create(from_node:user1, to_node:thing1)
 #Owner.create(from_node:user2, to_node:thing2)
 #Owner.create(from_node:user3, to_node:thing3)

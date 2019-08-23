@@ -10,13 +10,13 @@ RSpec.describe Users::Create::Execute do
         first_name: Faker::TvShows::Simpsons.character,
         last_name: Faker::TvShows::Simpsons.character,
         country_code: country.code_iso,
-        password: "pass",
+        password: 'pass',
         id_type: :cc,
-        id_number: Faker::Number.number(10),
+        id_number: '9881304167',
         user_type: :administrator,
         gender: :female,
         admin: true,
-        code_number: Faker::Number.number(10)
+        code_number: '9743807606'
       }
     }
 
