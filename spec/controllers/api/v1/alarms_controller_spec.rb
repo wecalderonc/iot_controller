@@ -19,6 +19,7 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
         alarm.reload
 
         expect(alarm.viewed).to be_truthy
+        expect(response.status).to eq(200)
       end
     end
 
