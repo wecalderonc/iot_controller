@@ -61,9 +61,9 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "address" => 'Carrera 7 # 71 - 21',
           "latitude" => 84.606880,
           "longitude" => -94.071840,
-          "country" => country.name,
-          "state" => state.name,
-          "city" => city.name,
+          "city" => {
+            "name" => city.name,
+          },
           "schedule_billing" => {
             "stratum" => 5,
             "basic_charge" => 13.841,

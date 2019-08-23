@@ -19,9 +19,9 @@ Rspec.describe LocationSerializer do
         "address"=>location.address,
         "latitude"=>location.latitude,
         "longitude"=>location.longitude,
-        "country"=>location.city.state.country.name,
-        "state"=>location.city.state.name,
-        "city"=>location.city.name,
+        "city"=> {
+          "name"=>location.city.name,
+        },
         "schedule_billing"=> {
           "stratum"=>schedule_billing.stratum,
           "basic_charge"=>schedule_billing.basic_charge,

@@ -68,7 +68,7 @@ RSpec.describe "Locations API", :type => :request do
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-          required: [ 'name', 'address', 'latitude', 'longitude', 'country', 'state', 'city', 'schedule_billing', 'schedule_report' ],
+          required: [ 'name', 'address', 'latitude', 'longitude', 'city', 'schedule_billing', 'schedule_report' ],
           properties: {
             type: :object,
             properties: {
@@ -76,9 +76,12 @@ RSpec.describe "Locations API", :type => :request do
               address: { type: :string },
               latitude: { type: :float },
               longitude: { type: :float },
-              country: { type: :string },
-              state: { type: :string },
-              city: { type: :string },
+              city: {
+                type: :object,
+                properties: {
+                  name: { type: :string }
+                }
+              },
               schedule_billing: {
                 type: :object,
                 properties: {

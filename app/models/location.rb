@@ -15,5 +15,5 @@ class Location
 
   has_one :in, :thing, rel_class: :ThingLocation, model_class: :Thing
 
-  has_many :in, :users,  rel_class: :UserLocation, model_class: :User
+  has_many :in, :users, rel_class: :UserLocation, model_class: :User
 end

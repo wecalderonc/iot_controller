@@ -7,7 +7,6 @@ class Locations::ParseInput
     parse_location(input[:location])
     parse_schedule_billing(input[:schedule_billing])
     parse_schedule_report(input[:schedule_report])
-    input
   end
 
   private

@@ -14,5 +14,4 @@ class Locations::Create::BuildResponse
     Assign.(input)
     input[:location]
   end
-
 end
