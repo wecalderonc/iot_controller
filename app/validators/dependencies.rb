@@ -29,7 +29,8 @@ module Validators
     },
 
     get: {
-      battery_level:                      Validators::BatteryLevels::GetSchema
+      battery_level:                      Validators::BatteryLevels::GetSchema,
+      alarm:                              Validators::Alarms::GetSchema
     }
   }
 end

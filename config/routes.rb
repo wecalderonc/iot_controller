@@ -20,13 +20,13 @@ Rails.application.routes.draw do
       resources :users,                         except: [:destroy], param: :email
       resources :aqueducts,                     only: [:index]
       resources :things,                        only: [:show, :index, :update], param: :thing_name do
-        resources :battery_levels,                only: [:index]
+        resources :battery_levels,              only: [:index]
+        resources :alarms,                      only: [:index, :update]
       end
       resources :uplinks,                       only: [:index]
       resources :accumulators_report,           only: [:show, :index]
       resources :alarms_report,                 only: [:show, :index]
       resources :downlinks,                     only: [:create]
-      resources :alarms,                        only: [:update]
       resources :locations,                     only: [:create]
     end
   end
