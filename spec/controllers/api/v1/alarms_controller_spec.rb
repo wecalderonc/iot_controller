@@ -1,14 +1,15 @@
 require 'rails_helper'
-
 RSpec.describe Api::V1::AlarmsController, :type => :request do
-  let(:alarm)  { create(:alarm) }
   let(:user)   { create(:user) }
+  let(:alarm)  { create(:alarm) }
+  let(:thing)  { alarm.uplink.thing }
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
   describe "PUT/update alarm state" do
 
     context "The request is ok" do
       it "Should return a 200 status" do
+        Owner.create(from_node: user, to_node: thing)
         thing_name = alarm.uplink.thing.name
 
         put "/api/v1/things/#{thing_name}/alarms/#{alarm.id}", headers: header
@@ -45,7 +46,7 @@ RSpec.describe Api::V1::AlarmsController, :type => :request do
 
         parsed_response = JSON.parse(response.body)
 
-        expected_response = "The alarm 326478956743856fhdsj does not exist"
+        expected_response = "Couldn't find Alarm with 'uuid'=\"326478956743856fhdsj\""
         expect(parsed_response["message"]).to eq(expected_response)
 
       end
@@ -56,9 +57,10 @@ end
 
     context "There is one thing with their alarms" do
       it "Should return an array with all alarms of a one thing" do
-        thing_name = alarm.uplink.thing.name
+       Owner.create(from_node: user, to_node: thing)
+       thing_name = alarm.uplink.thing.name
 
-        get "/api/v1/things/#{thing_name}/alarms/", headers: header
+        get "/api/v1/things/#{thing_name}/alarms", headers: header
 
         body = JSON.parse(response.body)
 
@@ -80,15 +82,16 @@ end
     end
 
     context "Thing name don't exist" do
-      it "Should return a message thing not found" do
+      it "Should return a message thing does not exist" do
+        Owner.create(from_node: user, to_node: thing)
         thing_name = alarm.uplink.thing.name
 
-        get "/api/v1/things/wrongname", headers: header
+        get "/api/v1/things/wrongname/alarms", headers: header
 
 
         parsed_response = JSON.parse(response.body)
 
-        expected_response = "thing not found"
+        expected_response = "The thing wrongname does not exist"
         expect(parsed_response["message"]).to eq(expected_response)
         expect(response.status).to eq(404)
 
@@ -97,9 +100,10 @@ end
 
     context "Thing has no associated alarms" do
       it "Should return a message of alarms not found" do
-        thing_name = alarm.uplink.thing.name
+      Owner.create(from_node: user, to_node: thing)
+      thing = create(:thing)
 
-        get "/api/v1/things/#{thing_name}/alarms", headers: header
+        get "/api/v1/things/#{thing.name}/alarms", headers: header
 
         body = JSON.parse(response.body)
 

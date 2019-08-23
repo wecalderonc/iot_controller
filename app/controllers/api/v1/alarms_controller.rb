@@ -2,9 +2,9 @@ module Api
   module V1
     class AlarmsController < ApplicationController
     include ActionController::MimeResponds
+    load_and_authorize_resource class: "Alarm"
 
       def index
-
         thing_alarms = Things::Alarms::Index::Execute.new.(index_params)
 
         if thing_alarms.success?
@@ -32,7 +32,9 @@ module Api
       end
 
       def index_params
-        params.permit(:thing_id).to_h.symbolize_keys
+        #TODO: Change this when thing_name -> aws_id·
+        aws_id = params.permit(:thing_thing_name).to_h.symbolize_keys
+        { thing_name: aws_id[:thing_thing_name] }
       end
     end
   end
