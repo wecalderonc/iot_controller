@@ -61,7 +61,6 @@ RSpec.describe "Things API", :type => :request do
         let(:user) { create(:user) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
         let(:accumulator) { create(:accumulator) }
-        let(:thing_name) { accumulator.uplink.thing.name }
         let!(:owner) { Owner.create(from_node: user, to_node: accumulator.uplink.thing) }
 
         let(:thing_name) { "thing_not_created" }

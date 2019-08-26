@@ -54,6 +54,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
         thing  = create(:thing)
         thing2 = create(:thing)
         thing3 = create(:thing)
+        thing4 = create(:thing)
         Owner.create(from_node: user, to_node: thing)
         Owner.create(from_node: user, to_node: thing2)
         Owner.create(from_node: user, to_node: thing3)
@@ -148,7 +149,22 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
       it "User doesn't have relation with the thing" do
         thing  = create(:thing)
 
-        get "/api/v1/things/#{thing.id}", headers: header
+        get "/api/v1/things/#{thing.name}", headers: header
+
+        body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(403)
+      end
+    end
+
+    context "Access to a thing" do
+      it "User doesn't have relation with the thing but has a owner relation with other thing" do
+        thing2 = create(:thing)
+        Owner.create(from_node: user, to_node: thing2)
+        thing  = create(:thing)
+
+        get "/api/v1/things/#{thing.name}", headers: header
 
         body = JSON.parse(response.body)
 
@@ -169,16 +185,12 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
         Owner.create(from_node: user, to_node: thing)
 
         params = {
-          thing_name: thing.name,
-          id: thing.id,
-          params: {
-            pac: "123456",
-            company_id: 987654,
-            latitude: 4.5,
-            longitude: 74.6,
-            name: "new_name",
-            status: "deactivated"
-          }
+          pac: "123456",
+          company_id: 987654,
+          latitude: 4.5,
+          longitude: 74.6,
+          name: "new_name",
+          status: "deactivated"
         }
 
         put "/api/v1/things/#{thing.name}", headers: header, params: params
@@ -207,11 +219,44 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
       end
     end
 
-    context "Access to a thing" do
+    context "Update a thing" do
       it "User doesn't have relation with the thing" do
         thing = create(:thing)
 
-        put "/api/v1/things/#{thing.id}", headers: header
+        params = {
+          pac: "123456",
+          company_id: 987654,
+          latitude: 4.5,
+          longitude: 74.6,
+          name: "new_name",
+          status: "deactivated"
+        }
+
+        put "/api/v1/things/#{thing.name}", headers: header, params: params
+
+        body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(403)
+      end
+    end
+
+    context "Update a thing" do
+      it "User doesn't have relation with the thing but has another relation with other thing" do
+        thing2 = create(:thing)
+        Owner.create(from_node: user, to_node: thing2)
+        thing = create(:thing)
+
+        params = {
+          pac: "123456",
+          company_id: 987654,
+          latitude: 4.5,
+          longitude: 74.6,
+          name: "new_name",
+          status: "deactivated"
+        }
+
+        put "/api/v1/things/#{thing.name}", headers: header, params: params
 
         body = JSON.parse(response.body)
 

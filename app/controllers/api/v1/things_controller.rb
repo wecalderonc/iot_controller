@@ -12,7 +12,7 @@ module Api
       def show
         @thing = Thing.find_by(name: params[:thing_name])
 
-         if @thing.present?
+        if @thing.present?
           authorize! :read, @thing
           json_response(@thing)
         else

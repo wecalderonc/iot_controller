@@ -6,7 +6,7 @@ class Things::Update::Update
   def call(input)
     thing = input[:thing]
 
-    if thing.update(input[:params])
+    if thing.update(input)
       Success input
     else
       Failure Errors.general_error(thing.errors.messages, self.class)

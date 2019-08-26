@@ -13,10 +13,6 @@ class Ability
     available_relations.each {|relation| send("#{relation}_abilities", user) }
   end
 
-  def administrates_abilities(user)
-    # can :manage, :all
-  end
-
   def owns_abilities(user)
     can :manage, Thing, owner: { id: user.id }
     can :manage, BatteryLevel, uplink: { thing: { owner: { id: user.id } } }
@@ -31,5 +27,4 @@ class Ability
   def operates_abilities(user)
     can :read, Thing, operator: { id: user.id }
   end
-
 end

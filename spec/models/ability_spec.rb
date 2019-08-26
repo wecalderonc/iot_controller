@@ -10,8 +10,6 @@ RSpec.describe Ability do
     let(:alarm)         { create(:alarm, uplink: uplink) }
     subject(:ability) { Ability.new(Dry::Monads::Result::Success.new(user)) }
 
-    #*************THINGS**************
-
     context "when user owns a thing" do
       it "can manage it" do
         Owner.create(from_node: user, to_node: thing)
