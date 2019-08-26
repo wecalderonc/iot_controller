@@ -14,7 +14,7 @@ class Ability
   end
 
   def administrates_abilities(user)
-    can :manage, :all
+    # can :manage, :all
   end
 
   def owns_abilities(user)

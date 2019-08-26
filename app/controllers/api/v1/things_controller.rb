@@ -1,7 +1,7 @@
 module Api
   module V1
     class ThingsController < ApplicationController
-      load_and_authorize_resource class: "Thing"
+      load_and_authorize_resource
 
       def index
         @things =  Thing.accessible_by(current_ability)
@@ -12,7 +12,8 @@ module Api
       def show
         @thing = Thing.find_by(name: params[:thing_name])
 
-        if @thing.present?
+         if @thing.present?
+          authorize! :read, @thing
           json_response(@thing)
         else
           json_response({ errors: "thing not found" }, :not_found)
@@ -23,7 +24,8 @@ module Api
         update_response = Things::Update::Execute.new.(create_params)
 
         if update_response.success?
-          json_response(update_response.success, :ok)
+
+          json_response(authorize! :update, update_response.success, :ok)
         else
           json_response({ errors: update_response.failure[:message] }, :not_found)
         end
@@ -32,7 +34,7 @@ module Api
       private
 
       def create_params
-        params.permit(:id, :thing_name, params: {}).to_h.symbolize_keys
+        params.permit(:thing_name, :pac, :company_id, :latitude, :longitude, :name, :status).to_h.symbolize_keys
       end
     end
   end
