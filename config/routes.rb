@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :things,                        only: [:show, :index, :update], param: :thing_name do
         resources :battery_levels,              only: [:index]
         resources :alarms,                      only: [:index, :update]
+        resources :accumulators,                only: [:index]
       end
       resources :uplinks,                       only: [:index]
       resources :accumulators_report,           only: [:show, :index], param: :thing_name

@@ -17,6 +17,7 @@ class Ability
     can :manage, Thing, owner: { id: user.id }
     can :manage, BatteryLevel, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Alarm, uplink: { thing: { owner: { id: user.id } } }
+    can :manage, Accumulator, uplink: { thing: { owner: { id: user.id } } }
   end
 
   def sees_abilities(user)
