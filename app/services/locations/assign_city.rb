@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class Locations::Create::AssignCity
+class Locations::AssignCity
   include Dry::Transaction
 
   FindCity = -> input do
