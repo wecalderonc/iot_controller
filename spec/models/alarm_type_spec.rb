@@ -6,6 +6,8 @@ RSpec.describe AlarmType, type: :model do
   it { is_expected.to define_property :name, :String }
   it { is_expected.to define_property :type, :String }
 
+  it { is_expected.to have_one(:alarm).with_direction(:in) }
+
   describe "Validations" do
     it "name, type and value are required" do
       expect(subject).to_not be_valid
