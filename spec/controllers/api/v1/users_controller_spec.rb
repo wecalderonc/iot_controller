@@ -57,11 +57,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expect(body).to match_array(expected_response)
       end
     end
+  end
 
+  describe "GET/show users" do
     context "The user is finishing the confirmation email process" do
       it "Should return json with success message" do
 
-        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{user.verification_code}"
+        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{user.verification_code}", headers: header
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -81,7 +83,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       it "Should return json with success message" do
 
         bad_token = "fffffff"
-        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{bad_token}"
+        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{bad_token}", headers: header
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -101,7 +103,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       it "Should return json with success message" do
 
         expect_any_instance_of(UserMailer).to receive(:recovery_email).once
-        get "/api/v1/users/#{user.email}?subaction=request_password_recovery"
+        get "/api/v1/users/#{user.email}?subaction=request_password_recovery", headers: header
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -121,7 +123,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       it "Should return json with failure message" do
 
         bad_email = "bad_email@gmail.com"
-        get "/api/v1/users/#{bad_email}?subaction=request_password_recovery"
+        get "/api/v1/users/#{bad_email}?subaction=request_password_recovery", headers: header
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)

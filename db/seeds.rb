@@ -24,6 +24,10 @@ user3 = User.create(first_name:"daniela", last_name: "", phone: "3123204312",
             gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
             email: "dpatino@procibernetica.com", password: "dani123" )
 
+user3 = User.create(first_name:"daniela", last_name: "", phone: "3123204312",
+            gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
+            email: "test@procibernetica.com", password: "dani123" )
+
 thing1 = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75)
 
 thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75)

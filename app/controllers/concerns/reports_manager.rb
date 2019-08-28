@@ -10,23 +10,23 @@ module ReportsManager
   end
 
   def index_handler(input)
-    query_result = build_query(input)
-    build_response(query_result, input[:model])
+    options = {
+      last_accumulators: -> { render_last_accumulators(input[:params][:thing_name]) }
+    }
+    options.default = -> {
+      query_result = build_query(input)
+      build_response(query_result, input[:model])
+    }
+
+    options[input[:params][:query]&.to_sym].()
   end
 
   def show_handler(input)
-    thing = Thing.find_by(id: params[:id])
+    thing = Thing.find_by(name: params[:thing_name])
 
     if thing.present?
-      options = {
-        last_accumulators: -> { render_last_accumulators(thing) }
-      }
-      options.default = -> {
         query_result = build_query(input, thing)
         build_response(query_result, input[:model])
-      }
-
-      options[input[:params][:query]&.to_sym].()
     else
       json_response({ errors: "Device not found" }, :not_found)
     end
@@ -55,7 +55,13 @@ module ReportsManager
     end
   end
 
-  def render_last_accumulators(thing)
-    render json: thing.last_accumulators(10).compact, each_serializer: AccumulatorSerializer
+  def render_last_accumulators(thing_name)
+    thing = Thing.find_by(name: thing_name)
+
+    if thing.present?
+      render json: thing.last_accumulators(10).compact, each_serializer: AccumulatorSerializer
+    else
+      json_response({ errors: "Device not found" }, :not_found)
+    end
   end
 end

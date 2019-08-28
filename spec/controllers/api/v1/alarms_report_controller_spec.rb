@@ -54,11 +54,11 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
 
   describe "GET/show generate CSV" do
     let(:alarm) { create(:alarm) }
-    let(:thing_id) { alarm.uplink.thing.id }
+    let(:thing_name) { alarm.uplink.thing.name }
 
     context "result found" do
       it "generate return a JSON" do
-        get "/api/v1/alarms_report/#{thing_id}", headers: header
+        get "/api/v1/alarms_report/#{thing_name}", headers: header
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
@@ -67,7 +67,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
 
     context "device not found" do
       it "generate a CSV" do
-        get "/api/v1/alarms_report/#{"invalid_id"}", headers: header
+        get "/api/v1/alarms_report/#{"invalid_name"}", headers: header
 
         body = JSON.parse(response.body)
 
@@ -93,7 +93,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
         thing2.update(name: '04204')
         thing.update(name: '16892')
 
-        get "/api/v1/alarms_report/#{thing.id}", headers: header, params: params
+        get "/api/v1/alarms_report/#{thing.name}", headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("text/csv")
         expect(response.status).to eq(200)
