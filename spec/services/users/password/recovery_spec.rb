@@ -8,9 +8,7 @@ RSpec.describe Users::Password::Recovery do
     context "Search a user email" do
       let(:params) {
         {
-          sub_action: "request_password_recovery",
-          email: 'test@gmail',
-          format: "com"
+          email: 'test@gmail.com',
         }
       }
 
@@ -25,9 +23,7 @@ RSpec.describe Users::Password::Recovery do
     context "Search a invalid email" do
       let(:params) {
         {
-          sub_action: "request_password_recovery",
-          email: "test2@gmail",
-          format: "com"
+          email: "test2@gmail.com"
         }
       }
       it "that doesn't exist in db" do

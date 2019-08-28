@@ -1,15 +1,15 @@
 module Api
   module V1
     class UsersController < ApplicationController
-     skip_before_action :authorize_request, only: [:create]
+     skip_before_action :authorize_request, only: [ :create,
+                                                    :request_password_recovery,
+                                                    :change_forgotten_password,
+                                                    :confirm_email
+                                                  ]
 
       def show
-        options = { confirm_email: -> { return_mail_confirmation(params) },
-                    request_password_recovery: -> { return_request_password_recovery(params) }
-                  }
-        options.default = -> { return_default_show_response(params) }
-
-        options[params[:subaction]&.to_sym].()
+        response = Users::Show.find_user(show_params)
+        default_show_response(response)
       end
 
       def index
@@ -28,31 +28,6 @@ module Api
       end
 
       def update
-        options = { change_password: -> { return_change_password } }
-        options.default = -> { return_default_update_response(update_params) }
-
-        options[params[:subaction]&.to_sym].()
-      end
-
-      private
-
-      def create_params
-        params.permit(
-          User::PERMITTED_PARAMS << :country_code
-        ).to_h.symbolize_keys
-      end
-
-      def return_mail_confirmation(params)
-        response = Users::Confirmation.verification_code(params)
-        build_confirm_email_response(response)
-      end
-
-      def return_default_show_response(params)
-        response = Users::Show.find_user(show_params)
-        default_show_response(response)
-      end
-
-      def return_default_update_response(update_params)
         update_response = Users::Update::Execute.new.(update_params)
 
         if update_response.success?
@@ -62,7 +37,18 @@ module Api
         end
       end
 
-      def return_change_password
+      #NON-RESTFUL
+      def request_password_recovery
+        response = Users::Password::Recovery.new.(params)
+
+        if response.success
+          json_response(response.success, :ok)
+        else
+          json_response(response.failure, :not_found)
+        end
+      end
+
+      def change_forgotten_password
         update_password_response = Users::Password::Execute.new.(password_params)
 
         if update_password_response.success?
@@ -72,14 +58,17 @@ module Api
         end
       end
 
-      def return_request_password_recovery(params)
-        response = Users::Password::Recovery.new.(params)
+      def confirm_email
+        response = Users::Confirmation.verification_code(params)
+        build_confirm_email_response(response)
+      end
 
-        if response.success
-          json_response(response.success, :ok)
-        else
-          json_response(response.failure, :not_found)
-        end
+      private
+
+      def create_params
+        params.permit(
+          User::PERMITTED_PARAMS << :country_code
+        ).to_h.symbolize_keys
       end
 
       def update_params

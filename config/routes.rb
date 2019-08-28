@@ -13,7 +13,10 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  post '/authentication', to: 'authentication#authenticate_user'
+  post '/authentication',             to: 'authentication#authenticate_user'
+  post '/request_password_recovery',  to: 'api/v1/users#request_password_recovery'
+  put  '/change_forgotten_password',  to: 'api/v1/users#change_forgotten_password'
+  post '/confirm_email',              to: 'api/v1/users#confirm_email'
 
   namespace :api do
     namespace :v1 do
@@ -28,6 +31,7 @@ Rails.application.routes.draw do
       resources :alarms_report,                 only: [:show, :index], param: :thing_name
       resources :downlinks,                     only: [:create]
       resources :locations,                     only: [:create]
+
     end
   end
 end

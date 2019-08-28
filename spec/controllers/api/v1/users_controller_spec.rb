@@ -59,11 +59,15 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     end
   end
 
-  describe "GET/show users" do
+  describe "POST/confirm_email " do
     context "The user is finishing the confirmation email process" do
       it "Should return json with success message" do
+        params = {
+          email: user.email,
+          token: user.verification_code
+        }
 
-        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{user.verification_code}", headers: header
+        post '/confirm_email', params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -75,7 +79,10 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "message" => "Email Confirmed! Thanks!"
           }
 
+        user.reload
+
         expect(response_body).to eq(expected_response)
+        expect(user.verification_code).to eq(nil)
       end
     end
 
@@ -83,7 +90,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       it "Should return json with success message" do
 
         bad_token = "fffffff"
-        get "/api/v1/users/#{user.email}?subaction=confirm_email&token=#{bad_token}", headers: header
+        params = {
+          email: user.email,
+          token: bad_token
+        }
+
+        post '/confirm_email', params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -98,12 +110,19 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expect(response_body).to eq(expected_response)
       end
     end
+  end
 
+  describe "POST/request_password_recovery " do
     context "A user forgot the password and is requesting the password recovery process" do
       it "Should return json with success message" do
 
         expect_any_instance_of(UserMailer).to receive(:recovery_email).once
-        get "/api/v1/users/#{user.email}?subaction=request_password_recovery", headers: header
+
+        params = {
+          email: user.email
+        }
+
+        post "/request_password_recovery", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -122,8 +141,11 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "A user without account is requesting the password recovery process" do
       it "Should return json with failure message" do
 
-        bad_email = "bad_email@gmail.com"
-        get "/api/v1/users/#{bad_email}?subaction=request_password_recovery", headers: header
+        params = {
+          email: "bad_email@gmail.com"
+        }
+
+        post "/request_password_recovery", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -135,7 +157,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expect(response_body["message"]).to eq(expected_response)
       end
     end
-
   end
 
   describe "POST/create users" do
@@ -320,12 +341,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         body =
           {
+            "email"=> user.email,
             "current_password"=> user.password,
             "password" => "new_pass",
             "password_confirmation"=> "new_pass"
           }
 
-        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
+        put "/change_forgotten_password", params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -351,12 +373,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         body =
           {
+            "email"=> user.email,
             "current_password"=> "wrong_current_password",
             "password" => "new_pass",
             "password_confirmation"=> "new_pass"
           }
 
-        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
+        put "/change_forgotten_password", params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -378,12 +401,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         body =
           {
+            "email"=> user.email,
             "current_password"=> user.password,
             "password" => "new_pass",
             "password_confirmation"=> "new_pass_wrong"
           }
 
-        put "/api/v1/users/#{user.email}?subaction=change_password", headers: header, params: body
+        put "/change_forgotten_password", params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
