@@ -97,6 +97,28 @@ RSpec.describe "Alarms API", :type => :request do
         run_test!
       end
 
+      response '401', 'Token is missing' do
+        let(:user)        { create(:user) }
+        let(:thing)       { uplink.thing.name }
+        let(:thing_name)  { alarm.uplink.thing.name  }
+        let(:uplink)      { create(:uplink) }
+        let(:alarm) { create(:alarm) }
+
+        let(:'Authorization') { "Access denied!" }
+
+        run_test!
+      end
+
+     response '403', 'not authorized to access' do
+       let(:user_no_relations) { create(:user) }
+       let(:alarm)             { create(:alarm) }
+       let(:Authorization)     { JsonWebToken.encode({ user_id: user_no_relations.id }) }
+
+       let(:thing_name) { alarm.uplink.thing.name }
+
+       run_test!
+     end
+
        response '404', 'thing not found' do
         let(:user)    { create(:user) }
         let(:alarm)   { create(:alarm) }
@@ -123,16 +145,6 @@ RSpec.describe "Alarms API", :type => :request do
 
         run_test!
       end
-
-     response '403', 'not authorized to access' do
-       let(:user_no_relations) { create(:user) }
-       let(:alarm)             { create(:alarm) }
-       let(:Authorization)     { JsonWebToken.encode({ user_id: user_no_relations.id }) }
-
-       let(:thing_name) { alarm.uplink.thing.name }
-
-       run_test!
-     end
     end
   end
 end

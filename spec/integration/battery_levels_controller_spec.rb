@@ -37,6 +37,28 @@ RSpec.describe "Battery levels API", :type => :request do
         run_test!
       end
 
+      response '401', 'Token is missing' do
+        let(:user)        { create(:user) }
+        let(:thing)       { uplink.thing.name }
+        let(:thing_name)  { battery_level.uplink.thing.name  }
+        let(:uplink)      { create(:uplink) }
+        let(:battery_level) { create(:battery_level) }
+
+        let(:'Authorization') { "Access denied!" }
+
+        run_test!
+      end
+
+      response '403', 'not authorized to access' do
+        let(:user_no_relations) { create(:user) }
+        let(:battery_level)     { create(:battery_level) }
+        let(:'Authorization')   { JsonWebToken.encode({ user_id: user_no_relations.id }) }
+
+        let(:thing_name) { battery_level.uplink.thing.name }
+
+        run_test!
+      end
+
        response '404', 'thing not found' do
         let(:user)            { create(:user) }
         let(:battery_level)   { create(:battery_level, value: "0001") }
@@ -52,18 +74,10 @@ RSpec.describe "Battery levels API", :type => :request do
         run_test!
       end
 
-      response '403', 'not authorized to access' do
-        let(:user_no_relations) { create(:user) }
-        let(:battery_level)     { create(:battery_level) }
-        let(:'Authorization')   { JsonWebToken.encode({ user_id: user_no_relations.id }) }
 
-        let(:thing_name) { battery_level.uplink.thing.name }
-
-        run_test!
-      end
 
       response '404', 'battery levels not found' do
-        let(:user)   { create(:user) }
+        let(:user)    { create(:user) }
         let(:thing)   { uplink.thing }
         let(:uplink)  { create(:uplink) }
         let!(:owner)  { Owner.create(from_node: user, to_node: thing) }

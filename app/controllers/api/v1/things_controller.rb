@@ -4,7 +4,7 @@ module Api
       load_and_authorize_resource
 
       def index
-        @things =  Thing.accessible_by(current_ability)
+        @things = Thing.accessible_by(current_ability)
 
         render json: @things, status: :ok, each_serializer: ThingsSerializer
       end

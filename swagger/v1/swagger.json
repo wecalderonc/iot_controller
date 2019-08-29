@@ -5,9 +5,84 @@
     "version": "v1"
   },
   "paths": {
-    "/api/v1/accumulators_report/{id}": {
+    "/api/v1/things/{thing_name}/accumulators": {
       "get": {
-        "summary": "Retrieves a last accumulators of a thing",
+        "summary": "Retrieves all accumulators from a thing",
+        "tags": [
+          "Accumulators"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "accumulators founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  },
+                  "units_count": {
+                    "type": "float"
+                  },
+                  "final_price": {
+                    "type": "float"
+                  }
+                },
+                "required": [
+                  "id",
+                  "value",
+                  "created_at",
+                  "updated_at",
+                  "units_count",
+                  "final_price"
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "403": {
+            "description": "not authorized to access"
+          },
+          "404": {
+            "description": "accumulators not found"
+          }
+        }
+      }
+    },
+    "/api/v1/accumulators_report/": {
+      "get": {
+        "summary": "Retrieves last accumulators of a thing",
         "tags": [
           "Things"
         ],
@@ -16,10 +91,9 @@
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
+            "name": "thing_name",
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "query",
@@ -60,20 +134,43 @@
                 ]
               }
             }
+          },
+          "404": {
+            "description": "thing not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
+            }
           }
         }
       }
     },
-    "/api/v1/alarms/{id}": {
+    "/api/v1/things/{thing_name}/alarms/{id}": {
       "put": {
         "summary": "Retrieves a viewed alarm",
         "tags": [
           "Alarms"
         ],
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
           {
             "name": "id",
             "in": "path",
@@ -130,6 +227,78 @@
         }
       }
     },
+    "/api/v1/things/{thing_name}/alarms": {
+      "get": {
+        "summary": "Retrieves all alarms from a thing",
+        "tags": [
+          "Alarms"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alarms founded",
+            "schema": {
+              "type": "array",
+              "required": [
+                "created_at",
+                "updated_at",
+                "value",
+                "date",
+                "viewed",
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                },
+                "viewed": {
+                  "type": "boolean"
+                },
+                "date": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "403": {
+            "description": "not authorized to access"
+          },
+          "404": {
+            "description": "alarms not found"
+          }
+        }
+      }
+    },
     "/api/v1/aqueducts": {
       "get": {
         "summary": "Retrieves all Aqueducts",
@@ -175,6 +344,60 @@
                   "name"
                 ]
               }
+            }
+          }
+        }
+      }
+    },
+    "/authentication": {
+      "post": {
+        "summary": "Retrieves a token",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auth_token": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "auth_token",
+                "email"
+              ]
+            }
+          },
+          "401": {
+            "description": "user not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
             }
           }
         }
@@ -239,11 +462,14 @@
               }
             }
           },
-          "404": {
-            "description": "thing not found"
+          "401": {
+            "description": "Token is missing"
           },
           "403": {
             "description": "not authorized to access"
+          },
+          "404": {
+            "description": "battery levels not found"
           }
         }
       }
@@ -464,8 +690,6 @@
                 "address",
                 "latitude",
                 "longitude",
-                "country",
-                "state",
                 "city",
                 "schedule_billing",
                 "schedule_report"
@@ -485,14 +709,13 @@
                   "longitude": {
                     "type": "float"
                   },
-                  "country": {
-                    "type": "string"
-                  },
-                  "state": {
-                    "type": "string"
-                  },
                   "city": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "schedule_billing": {
                     "type": "object",
@@ -1288,32 +1511,37 @@
         }
       }
     },
-    "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}": {
-      "get": {
+    "/confirm_email": {
+      "post": {
         "summary": "Retrieves a confirmation to the confirm email process",
         "tags": [
           "Users"
+        ],
+        "consumes": [
+          "application/json"
         ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "verification_code",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "token"
+              ]
+            }
           }
         ],
         "responses": {
@@ -1348,21 +1576,33 @@
         }
       }
     },
-    "/api/v1/users/{email}?subaction=request_password_recovery": {
-      "get": {
+    "/request_password_recovery": {
+      "post": {
         "summary": "Retrieves a success response with recovery password email sended",
         "tags": [
           "Users"
+        ],
+        "consumes": [
+          "application/json"
         ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "path",
-            "type": "string",
-            "required": true
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
           }
         ],
         "responses": {
@@ -1541,7 +1781,7 @@
         }
       }
     },
-    "/api/v1/users/{email}?subaction=change_password": {
+    "/change_forgotten_password": {
       "put": {
         "summary": "update password user",
         "tags": [
@@ -1555,17 +1795,14 @@
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
             "name": "input",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
+                "email": {
+                  "type": "string"
+                },
                 "current_password": {
                   "type": "string"
                 },
@@ -1577,6 +1814,7 @@
                 }
               },
               "required": [
+                "email",
                 "current_password",
                 "password",
                 "password_confirmation"
