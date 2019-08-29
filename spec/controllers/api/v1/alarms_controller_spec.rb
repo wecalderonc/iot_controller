@@ -74,7 +74,7 @@ end
           "created_at" => JSON.parse(alarm.created_at.to_json),
           "updated_at" => JSON.parse(alarm.updated_at.to_json),
           "viewed" => alarm.viewed,
-          "date" => JSON.parse(alarm.date.to_json)
+          "viewed_date" => JSON.parse(alarm.viewed_date.to_json)
         }
 
         expect(body).to eq([expected_response])
