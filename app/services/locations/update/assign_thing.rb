@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class Locations::Update::ValidateThing
+class Locations::Update::AssignThing
   include Dry::Transaction
 
   def call(input)

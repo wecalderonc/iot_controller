@@ -33,11 +33,15 @@ module Validators::Locations
       required(:basic_price).filled(type?: Float)
       required(:extra_price).filled(type?: Float)
       required(:billing_frequency).filled(type?: Integer)
-      required(:billing_period).value(type?: Symbol, included_in?: ScheduleBilling::VALID_PERIODS)
+      required(:billing_period).filled(type?: String)
       required(:cut_day).filled(type?: Integer, lteq?: 30)
       required(:start_day).filled(type?: Integer, lteq?: 30)
       required(:start_month).filled(type?: Integer, lteq?: 12)
       required(:start_year).filled(type?: Integer)
+
+      validate(invalid_period: :billing_period) do |billing_period|
+        ScheduleBilling::VALID_PERIODS.include?(billing_period.to_sym)
+      end
 
       validate(invalid_basic_charge: :basic_charge) do |basic_charge|
         basic_charge >= 0 ? true : false
@@ -47,20 +51,14 @@ module Validators::Locations
     required(:schedule_report).schema do
       required(:email).filled(type?: String, format?: User::VALID_EMAIL)
       required(:frequency_day).filled(type?: Integer)
-      required(:frequency_interval).filled(type?: Symbol, included_in?: ScheduleReport::VALID_INTERVALS)
+      required(:frequency_interval).filled(type?: String)
       required(:start_day).filled(type?: Integer)
       required(:start_month).filled(type?: Integer)
       required(:start_year).filled(type?: Integer)
-    end
-  end
 
-  SymbolsSchema = Dry::Validation.Schema do
-    required(:schedule_billing).schema do
-      required(:billing_period).value(type?: String)
-    end
-
-    required(:schedule_report).schema do
-      required(:frequency_interval).filled(type?: String)
+      validate(invalid_interval: :frequency_interval) do |frequency_interval|
+        ScheduleReport::VALID_INTERVALS.include?(frequency_interval.to_sym)
+      end
     end
   end
 end

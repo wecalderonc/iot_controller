@@ -42,3 +42,5 @@ en:
     invalid_latitude: "Wrong latitude"
     invalid_longitude: "Wrong longitude"
     invalid_basic_charge: "The value must be positive"
+    invalid_period: "Wrong period"
+    invalid_interval: "Wrong interval"

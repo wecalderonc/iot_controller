@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Locations::Update::ValidateThing do
+RSpec.describe Locations::Update::AssignThing do
   describe '#call' do
     let(:response) { subject.(input) }
     let(:user)     { create(:user, email: "user@gmail.com") }

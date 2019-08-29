@@ -31,7 +31,7 @@ RSpec.describe Locations::Create::Execute do
             basic_price: 2.000,
             extra_price: 2.500,
             billing_frequency: 2,
-            billing_period: :month,
+            billing_period: 'month',
             cut_day: 10,
             start_day: 10,
             start_month: 10,
@@ -40,7 +40,7 @@ RSpec.describe Locations::Create::Execute do
           schedule_report: {
             email: 'unacosita@gmail.com',
             frequency_day: 1,
-            frequency_interval: :week,
+            frequency_interval: 'week',
             start_day: 10,
             start_month: 10,
             start_year: 2019
