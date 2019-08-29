@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 Rspec.describe AlarmSerializer do
-  let(:base_obj) { build(:alarm, date: Date.new(2019, 8, 12)) }
+  let(:base_obj) { build(:alarm, viewed_date: Date.new(2019, 8, 12)) }
   let(:serializer) { described_class.new(base_obj) }
   let(:serialization) { ActiveModelSerializers::Adapter.create(serializer) }
 
@@ -16,7 +16,7 @@ Rspec.describe AlarmSerializer do
         "updated_at"=>nil,
         "value"=>base_obj.value,
         "viewed"=>base_obj.viewed,
-        "date"=>"2019-08-12"
+        "viewed_date"=>"2019-08-12"
       }
 
       expect(subject).to eq(expected_response)

@@ -21,12 +21,12 @@ RSpec.describe "Alarms API", :type => :request do
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
-          required: ['created_at', 'updated_at', 'value', 'date', 'viewed', 'id'],
+          required: ['created_at', 'updated_at', 'value', 'viewed_date', 'viewed', 'id'],
           properties: {
             created_at: { type: :string },
             updated_at: { type: :string },
             value:      { type: :string },
-            date:       { type: :string },
+            viewed_date:{ type: :string },
             viewed:     { type: :boolean },
             id:         { type: :string }
           }
@@ -84,14 +84,14 @@ RSpec.describe "Alarms API", :type => :request do
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :array,
-          required: ['created_at', 'updated_at', 'value', 'date', 'viewed', 'id'],
+          required: ['created_at', 'updated_at', 'value', 'viewed_date', 'viewed', 'id'],
           properties: {
             id:         { type: :string },
             value:      { type: :string },
             created_at: { type: :string },
             updated_at: { type: :string },
             viewed:     { type: :boolean },
-            date:       { type: :string }
+            viewed_date:{ type: :string }
           }
 
         run_test!

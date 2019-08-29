@@ -1,38 +1,76 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' , { name: 'Lord of the Rings' ])
-#   Character.create(name: 'Luke', movie: movies.first)
+#ERASE ALL NODES
 
-#Thing.create(name: "device1")
-#Thing.create(name: "device2")
-#Thing.create(name: "device3")
-#Thing.create(name: "device4")
+p "Erasing Things"
+Thing.destroy_all
+p "Erasing Uplinks"
+Uplink.destroy_all
+p "Erasing Users"
+User.destroy_all
+p "Erasing Accumulators"
+Accumulator.destroy_all
+p "Erasing Alarms"
+Alarm.destroy_all
+p "Erasing AlarmType"
+AlarmType.destroy_all
+p "Erasing Aqueducts"
+Aqueduct.destroy_all
+p "Erasing BatteryLevels"
+BatteryLevel.destroy_all
+p "Erasing Sensors"
+Sensor1.destroy_all
+Sensor2.destroy_all
+Sensor3.destroy_all
+Sensor4.destroy_all
+p "Erasing TimeUplink"
+TimeUplink.destroy_all
+p "Erasing UplinkBDownlink"
+UplinkBDownlink.destroy_all
+p "Erasing ValvePosition"
+ValvePosition.destroy_all
 
-
-user1 = User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
+p "****************"
+p "                "
+p "CREATING USERS"
+p "                "
+p "****************"
+p user1 = User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
             gender: "male", id_number: "1645634", user_type: "amigo", id_type: "1",
             email: "jvaron@procibernetica.com", password: "javier123" )
 
-user2 = User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
+p user2 = User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
             gender: "male", id_number: "123456", user_type: "amigo", id_type: "1",
-            email: "wcalderon@procibernetica.com", password: "123456" )
+            email: "wcalderon@procibernetica.com", password: "william123" )
 
-user3 = User.create(first_name:"daniela", last_name: "", phone: "3123204312",
+p user3 = User.create(first_name:"daniela", last_name: "patino", phone: "3123204312",
             gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
             email: "dpatino@procibernetica.com", password: "dani123" )
 
-user3 = User.create(first_name:"daniela", last_name: "", phone: "3123204312",
-            gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
-            email: "test@procibernetica.com", password: "dani123" )
+p "****************"
+p "                "
+p "CREATING THINGS"
+p "                "
+p "****************"
+p thing1 = Thing.create(name: "thing_one", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75)
 
-thing1 = Thing.create(name: "thing", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75)
+p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75)
 
-thing2 = Thing.create(name: "thing two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75)
+p thing3 = Thing.create(name: "thing_tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
 
-thing3 = Thing.create(name: "thing tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
+p "****************"
+p "                "
+p "CREATING RELATIONS BETWEEN USERS AND THINGS"
+p "                "
+p "****************"
+
+p Owner.create( from_node: user1, to_node: thing1)
+p Owner.create(from_node:user2, to_node:thing2)
+p Owner.create(from_node:user3, to_node:thing3)
+
+p "****************"
+p "                "
+p "CREATING UPLINKS FOR EVERY THING"
+p "                "
+p "****************"
 
 uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
@@ -47,18 +85,31 @@ uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi:
               time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing3)
 
 
-acumulator1 = Accumulator.create(value: rand(1000), uplink: uplink1)
-acumulator2 = Accumulator.create(value: rand(1000), uplink: uplink2)
-acumulator3 = Accumulator.create(value: rand(1000), uplink: uplink3)
+p "****************"
+p "                "
+p "CREATING ACCUMULATORS"
+p "                "
+p "****************"
+p accumulator1 = Accumulator.create(value: "0001", uplink: uplink1)
+p accumulator2 = Accumulator.create(value: "0002", uplink: uplink2)
+p accumulator3 = Accumulator.create(value: "0003", uplink: uplink3)
 
-alarm1 = Alarm.create(value: "jajajaja", viewed: false, date: "2019-08-12T20:27:10.000+00:00", uplink: uplink1)
-alarm2 = Alarm.create(value: "jijijiji", viewed: false, date: "2019-06-12T20:27:10.000+00:00", uplink: uplink2)
-alarm3 = Alarm.create(value: "jujujuju", viewed: false, date: "2019-04-12T20:27:10.000+00:00", uplink: uplink3)
+p "****************"
+p "                "
+p "CREATING ALARMS"
+p "                "
+p "****************"
 
-country = Country.create(name: 'Colombia', code_iso: 'CO')
-state = State.create(name: 'Bogota DC', code_iso: 'CO-DC', country: country)
-city = City.create(name: 'Bogota', state: state)
+p alarm1 = Alarm.create(value: "0001", viewed: false, uplink: uplink1)
+p alarm2 = Alarm.create(value: "0002", viewed: false, uplink: uplink2)
+p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink3)
 
-#Owner.create(from_node:user1, to_node:thing1)
-#Owner.create(from_node:user2, to_node:thing2)
-#Owner.create(from_node:user3, to_node:thing3)
+p "****************"
+p "                "
+p "CREATING COUNTRY-STATE-CITY"
+p "                "
+p "****************"
+p country = Country.create(name: 'Colombia', code_iso: 'CO')
+p state = State.create(name: 'Bogota DC', code_iso: 'CO-DC', country: country)
+p city = City.create(name: 'Bogota', state: state)
+

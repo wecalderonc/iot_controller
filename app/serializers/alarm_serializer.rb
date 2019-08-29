@@ -1,3 +1,3 @@
 class AlarmSerializer < UplinkBaseSerializer
-  attributes :viewed, :date
+  attributes :viewed, :viewed_date
 end
