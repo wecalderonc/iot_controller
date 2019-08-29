@@ -29,7 +29,7 @@ RSpec.describe Validators::Locations do
           basic_price: 2.000,
           extra_price: 2.500,
           billing_frequency: 2,
-          billing_period: :month,
+          billing_period: 'month',
           cut_day: 10,
           start_day: 10,
           start_month: 10,
@@ -38,7 +38,7 @@ RSpec.describe Validators::Locations do
         schedule_report: {
           email: 'unacosita@gmail.com',
           frequency_day: 1,
-          frequency_interval: :week,
+          frequency_interval: 'week',
           start_day: 10,
           start_month: 10,
           start_year: 2019
@@ -354,8 +354,21 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :schedule_billing => {
-            :billing_period => ["must be Symbol"]
+            :billing_period => ["must be String"]
           }
+        }
+
+        expect(response.failure?).to be_truthy
+        expect(response.errors).to eq(expected_response)
+      end
+    end
+
+    context "When the 'validation' operation fails" do
+      it "Should return a Failure response" do
+        input[:schedule_billing][:billing_period] = 'jaja'
+
+        expected_response = {
+          :invalid_period => ["Wrong period"]
         }
 
         expect(response.failure?).to be_truthy
@@ -519,8 +532,21 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :schedule_report => {
-            :frequency_interval => ["must be Symbol"]
+            :frequency_interval => ["must be String"]
           }
+        }
+
+        expect(response.failure?).to be_truthy
+        expect(response.errors).to eq(expected_response)
+      end
+    end
+
+    context "When the 'validation' operation fails" do
+      it "Should return a Failure response" do
+        input[:schedule_report][:frequency_interval] = 'jaja'
+
+        expected_response = {
+          :invalid_interval => ["Wrong interval"]
         }
 
         expect(response.failure?).to be_truthy

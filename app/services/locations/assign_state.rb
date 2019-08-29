@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class Locations::Create::AssignState
+class Locations::AssignState
   include Dry::Transaction
 
   FindState = -> input do

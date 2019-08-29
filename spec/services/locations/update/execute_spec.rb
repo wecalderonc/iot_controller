@@ -1,15 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe Locations::Create::Execute do
+RSpec.describe Locations::Update::Execute do
   describe "#call" do
     let(:response) { subject.(input) }
 
     context "When the user is creating a new location" do
-      let(:user)    { create(:user, email: "user@gmail.com") }
-      let(:thing)   { create(:thing) }
-      let(:country) { create(:country, code_iso: 'CO') }
-      let(:state)   { create(:state, code_iso: 'CO-DC', country: country) }
-      let(:city)    { create(:city, name: 'Bogota', state: state) }
+      let(:user)     { create(:user, email: "user@gmail.com") }
+      let(:country)  { create(:country, code_iso: 'CO') }
+      let(:state)    { create(:state, code_iso: 'CO-DC', country: country) }
+      let(:city)     { create(:city, name: 'Bogota', state: state) }
+      let(:location) { create(:location, city: city) }
+      let(:thing)    { create(:thing, locates: location) }
+      let(:schedule_billing) { location.schedule_billing }
+      let(:schedule_report) { location.schedule_report }
 
       let(:input) {
         { thing_name: thing.name,
@@ -49,17 +52,45 @@ RSpec.describe Locations::Create::Execute do
       }
 
       context "When all the operations are successful" do
-        let(:location) { thing.locates }
-        let(:schedule_billing) { location.schedule_billing }
-        let(:schedule_report) { location.schedule_report }
+        context"Thing name doesn't change" do
+          it "Should return a Success response" do
+            expect(response).to be_success
+         
+            expect(response.success).to match(location)
+            expect(thing.name).to eq(thing.name)
+            expect(location.city.name).to eq('Bogota')
+            expect(schedule_billing.stratum).to eq(5)
+            expect(schedule_report.email).to eq('unacosita@gmail.com')
+          end
+        end
 
-        it "Should return a Success response" do
-          expect(response).to be_success
+        context"Thing name have been changed" do
+          it "Should return a Success response" do
+            create(:thing, name: 'new_name')
+            input[:new_thing_name] = 'new_name'
 
-          expect(response.success).to match(location)
-          expect(location.city.name).to eq('Bogota')
-          expect(schedule_billing.stratum).to eq(5)
-          expect(schedule_report.email).to eq('unacosita@gmail.com')
+            expect(response).to be_success
+         
+            expect(response.success).to match(location)
+            expect(location.thing.name).to eq('new_name')
+            expect(location.city.name).to eq('Bogota')
+            expect(schedule_billing.stratum).to eq(5)
+            expect(schedule_report.email).to eq('unacosita@gmail.com')
+          end
+        end
+
+        context"Thing name is empty" do
+          it "Should return a Success response" do
+            input[:new_thing_name] = ''
+
+            expect(response).to be_success
+         
+            expect(response.success).to match(location)
+            expect(location.thing).to be_nil
+            expect(location.city.name).to eq('Bogota')
+            expect(schedule_billing.stratum).to eq(5)
+            expect(schedule_report.email).to eq('unacosita@gmail.com')
+          end
         end
       end
 

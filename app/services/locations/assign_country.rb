@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class Locations::Create::AssignCountry
+class Locations::AssignCountry
   include Dry::Transaction
 
   FindCountry = -> input do

@@ -790,6 +790,252 @@
         }
       }
     },
+    "/api/v1/locations/{thing_name}": {
+      "put": {
+        "summary": "update location",
+        "tags": [
+          "Locations"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "new_thing_name": {
+                  "type": "stirng"
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "float"
+                    },
+                    "longitude": {
+                      "type": "float"
+                    }
+                  }
+                },
+                "country_state_city": {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "schedule_billing": {
+                  "type": "object",
+                  "properties": {
+                    "stratum": {
+                      "type": "integer"
+                    },
+                    "basic_charge": {
+                      "type": "float"
+                    },
+                    "top_limit": {
+                      "type": "float"
+                    },
+                    "basic_price": {
+                      "type": "float"
+                    },
+                    "extra_price": {
+                      "type": "float"
+                    },
+                    "billing_frequency": {
+                      "type": "integer"
+                    },
+                    "billing_period": {
+                      "type": "string"
+                    },
+                    "cut_day": {
+                      "type": "integer"
+                    },
+                    "start_day": {
+                      "type": "integer"
+                    },
+                    "start_month": {
+                      "type": "integer"
+                    },
+                    "start_year": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "schedule_report": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "frequency_day": {
+                      "type": "integer"
+                    },
+                    "frequency_interval": {
+                      "type": "string"
+                    },
+                    "start_day": {
+                      "type": "integer"
+                    },
+                    "start_month": {
+                      "type": "integer"
+                    },
+                    "start_year": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "new_thing_name",
+                "location",
+                "country_state_city",
+                "schedule_billing",
+                "schedule_report"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "location updated",
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "address",
+                "latitude",
+                "longitude",
+                "city",
+                "schedule_billing",
+                "schedule_report"
+              ],
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "latitude": {
+                    "type": "float"
+                  },
+                  "longitude": {
+                    "type": "float"
+                  },
+                  "city": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "schedule_billing": {
+                    "type": "object",
+                    "properties": {
+                      "stratum": {
+                        "type": "integer"
+                      },
+                      "basic_charge": {
+                        "type": "float"
+                      },
+                      "top_limit": {
+                        "type": "float"
+                      },
+                      "basic_price": {
+                        "type": "float"
+                      },
+                      "extra_price": {
+                        "type": "float"
+                      },
+                      "billing_frequency": {
+                        "type": "integer"
+                      },
+                      "billing_period": {
+                        "type": "string"
+                      },
+                      "cut_day": {
+                        "type": "integer"
+                      },
+                      "start_date": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "schedule_report": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "frequency_day": {
+                        "type": "integer"
+                      },
+                      "frequency_interval": {
+                        "type": "string"
+                      },
+                      "start_date": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "thing not found",
+            "schema": {
+              "type": "object",
+              "required": [
+                "errors"
+              ],
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "errors": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/things": {
       "get": {
         "summary": "Retrieves all Things",
