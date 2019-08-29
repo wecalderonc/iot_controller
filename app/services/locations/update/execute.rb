@@ -1,6 +1,6 @@
-
 module Locations::Update
   _, Execute = Common::TxMasterBuilder.new do
+    step :validate_symbols,         with: Common::Operations::Validator.(:validate, :symbols)
     tee  :parse_input,              with: Locations::ParseInput.new
     step :validation,               with: Common::Operations::Validator.(:create, :location)
     step :get_thing,                with: Things::Get.new

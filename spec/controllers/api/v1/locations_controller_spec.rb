@@ -55,7 +55,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         expect(response.status).to eq(200)
 
         response_body = JSON.parse(response.body)
-        
+
         expected_response = {
           "name" => 'My house',
           "address" => 'Carrera 7 # 71 - 21',
@@ -158,15 +158,16 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
     let(:country)  { create(:country, code_iso: 'CO') }
     let(:state)    { create(:state, code_iso: 'CO-DC', country: country) }
     let(:city)     { create(:city, name: 'Bogota', state: state) }
-    let(:thing)    { create(:thing) }
-    let(:location) { thing.locates }
+    let(:location) { create(:location, city: city) }
+    let(:thing)    { create(:thing, locates: location) }
 
     context "Right params" do
       it "Should update a location with his relationships" do
+        create(:thing, name: 'new_name')
 
         body = {
           thing_name: thing.name,
-          new_thing_name: 'New name',
+          new_thing_name: 'new_name',
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -187,8 +188,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
             billing_frequency: 2,
             billing_period: 'month',
             cut_day: 10,
-            start_day: 10,
-            start_month: 10,
+            start_day: 11,
+            start_month: 9,
             start_year: 2019
           },
           schedule_report: {
@@ -201,15 +202,14 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           }
         }.to_json
 
-        post '/api/v1/locations', headers: header, params: body
+        put "/api/v1/locations/#{thing.name}", headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
 
         response_body = JSON.parse(response.body)
-        
+
         expected_response = {
-          "thing_name" => thing.name,
           "name" => 'My house',
           "address" => 'Carrera 7 # 71 - 21',
           "latitude" => 84.606880,
@@ -226,7 +226,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
             "billing_frequency" => 2,
             "billing_period" => 'month',
             "cut_day" => 10,
-            "start_date" => "2019-10-10"
+            "start_date" => "2019-09-11"
           },
           "schedule_report" => {
             "email" => 'unacosita@gmail.com',
@@ -280,7 +280,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         }.to_json
 
 
-        post '/api/v1/locations', headers: header, params: body
+        put "/api/v1/locations/#{thing.name}", headers: header, params: body
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
@@ -291,6 +291,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           {
             "errors" => {
               "location"=>{
+                "latitude"=>["must be Float"],
                 "name"=>["must be String"]
               },
               "schedule_billing"=>{

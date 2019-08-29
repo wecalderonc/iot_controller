@@ -4,6 +4,7 @@ module Validators::Locations
     configure { config.messages_file = "config/locales/en.yml" }
 
     required(:thing_name).filled(type?: String)
+    optional(:new_thing_name).value(type?: String)
     required(:location).schema do
       required(:name).filled(type?: String, max_size?: 30)
       required(:address).filled(type?: String)
@@ -50,6 +51,16 @@ module Validators::Locations
       required(:start_day).filled(type?: Integer)
       required(:start_month).filled(type?: Integer)
       required(:start_year).filled(type?: Integer)
+    end
+  end
+
+  SymbolsSchema = Dry::Validation.Schema do
+    required(:schedule_billing).schema do
+      required(:billing_period).value(type?: String)
+    end
+
+    required(:schedule_report).schema do
+      required(:frequency_interval).filled(type?: String)
     end
   end
 end

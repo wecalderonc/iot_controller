@@ -4,13 +4,11 @@ RSpec.describe Locations::Update::ValidateThing do
   describe '#call' do
     let(:response) { subject.(input) }
     let(:user)     { create(:user, email: "user@gmail.com") }
-    let(:location) { create(:location) }
-    let(:thing)    { create(:thing, locates: location) }
     let(:country)  { create(:country, code_iso: 'CO') }
     let(:state)    { create(:state, code_iso: 'CO-DC', country: country) }
     let(:city)     { create(:city, name: 'Bogota', state: state) }
-    let(:schedule_billing) { location.schedule_billing }
-    let(:schedule_report) { location.schedule_report }
+    let(:location) { create(:location, city: city) }
+    let(:thing)    { create(:thing, locates: location) }
 
     let(:input) {
       { thing_name: thing.name,
@@ -45,47 +43,51 @@ RSpec.describe Locations::Update::ValidateThing do
           start_day: 10,
           start_month: 10,
           start_year: 2019
-        }
+        },
+        thing: thing
       }
     }
 
-    contex "new_thing_name is present" do
+    context "new_thing_name is present" do
       it "Should update the thing of location" do
+        create(:thing, name: 'new_name')
         input[:new_thing_name] = 'new_name'
 
         expect(response).to be_success
-     
-        expect(response.success).to match(location)
-        expect(locatio.thing.name).to match('new_name')
+        expect(location.thing.name).to eq('new_name')
         expect(location.city.name).to eq('Bogota')
-        expect(schedule_billing.stratum).to eq(5)
-        expect(schedule_report.email).to eq('unacosita@gmail.com')
       end
     end
 
-    contex "new_thing_name is empty" do
+    context "new_thing_name is present but is wrong" do
+      it "Should update the thing of location" do
+        input[:new_thing_name] = 'invalid_name'
+
+        expected_response = "The thing invalid_name does not exist"
+
+        expect(response).to be_failure
+        expect(response.failure[:message]).to eq(expected_response)
+        expect(location.city.name).to eq('Bogota')
+      end
+    end
+
+    context "new_thing_name is empty" do
       it "Should delete relationship between thing and location" do
         input[:new_thing_name] = ''
 
         expect(response).to be_success
-     
-        expect(response.success).to match(location)
+
         expect(location.thing).to be_nil
         expect(location.city.name).to eq('Bogota')
-        expect(schedule_billing.stratum).to eq(5)
-        expect(schedule_report.email).to eq('unacosita@gmail.com')
       end
     end
 
-    contex "new_thing_name isn't present" do
+    context "new_thing_name isn't present" do
       it "Should return original input" do
         expect(response).to be_success
-     
-        expect(response.success).to match(location)
-        expect(location.thing).to be_nil
+
+        expect(location.thing).to eq(thing)
         expect(location.city.name).to eq('Bogota')
-        expect(schedule_billing.stratum).to eq(5)
-        expect(schedule_report.email).to eq('unacosita@gmail.com')
       end
     end
   end

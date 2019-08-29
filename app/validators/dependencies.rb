@@ -30,8 +30,17 @@ module Validators
 
     get: {
       battery_level:                      Validators::BatteryLevels::GetSchema,
+<<<<<<< HEAD
       alarm:                              Validators::Alarms::GetSchema,
       accumulator:                        Validators::Accumulators::GetSchema
+=======
+      alarm:                              Validators::Alarms::GetSchema
+    },
+
+    validate: {
+      symbols:                            Validators::Locations::SymbolsSchema
+>>>>>>> green tests
     }
   }
+
 end

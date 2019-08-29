@@ -6,7 +6,7 @@ module Api
       COUNTRY_STATE_CITY = [:country, :state, :city]
 
       def create
-        create_response = Locations::Create::Execute.new.(create_location)
+        create_response = Locations::Create::Execute.new.(create_params)
 
         if create_response.success?
           json_response(create_response.success)
@@ -15,9 +15,24 @@ module Api
         end
       end
 
+      def update
+        update_response = Locations::Update::Execute.new.(update_params)
+
+        if update_response.success?
+          json_response(update_response.success)
+        else
+          json_response({ errors: update_response.failure[:message] }, :not_found)
+        end
+      end
+
       private
 
-      def create_location
+      def update_params
+        params.permit(:new_thing_name).to_h.symbolize_keys
+        .merge(create_params)
+      end
+
+      def create_params
         params.permit(
           :thing_name,
           location: (
