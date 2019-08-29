@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-     skip_before_action :authorize_request
+     skip_before_action :authorize_request, only: [:create]
 
       def show
         options = { confirm_email: -> { return_mail_confirmation(params) },
@@ -48,7 +48,7 @@ module Api
       end
 
       def return_default_show_response(params)
-        response = Users::Show.find_user(params)
+        response = Users::Show.find_user(show_params)
         default_show_response(response)
       end
 
@@ -90,6 +90,10 @@ module Api
 
       def password_params
         params.permit(:email, :format, :password, :current_password, :password_confirmation).to_h.symbolize_keys
+      end
+
+      def show_params
+        params.permit(:email, :format).to_h.symbolize_keys
       end
     end
   end

@@ -80,10 +80,12 @@ RSpec.describe "Users API", :type => :request do
       tags 'Users'
       produces 'application/json'
       parameter name: :email, :in => :path, :type => :string
+      parameter name: 'Authorization', :in => :header, :type => :string
 
       response '200', 'user found with email' do
         let(:user) { create(:user) }
         let(:email) { user.email }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
@@ -95,7 +97,9 @@ RSpec.describe "Users API", :type => :request do
       end
 
       response '404', 'user not found' do
+        let(:user) { create(:user) }
         let(:email) { "bad_email@gmail.com" }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
@@ -268,6 +272,7 @@ RSpec.describe "Users API", :type => :request do
       consumes 'application/json'
       produces 'application/json'
       parameter name: :email, :in => :path, :type => :string
+      parameter name: 'Authorization', :in => :header, :type => :string
       parameter name: :input, in: :body, schema: {
         type: :object,
         properties: {
@@ -281,6 +286,7 @@ RSpec.describe "Users API", :type => :request do
       response '200', 'user password updated' do
         let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
         let(:email) { user.email }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
         let!(:country) { create(:country, code_iso: 'CO') }
 
         schema type: :object,
@@ -305,6 +311,7 @@ RSpec.describe "Users API", :type => :request do
       response '404', 'user not found' do
         let(:user) { create(:user) }
         let(:email) { "invalid_email" }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         let(:input) {
           {

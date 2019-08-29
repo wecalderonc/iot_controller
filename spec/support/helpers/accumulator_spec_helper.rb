@@ -6,8 +6,8 @@ module Helpers
 
     def accumulator_properties
       {
-        id: { type: :string},
-        value: { type: :string},
+        id:         { type: :string},
+        value:      { type: :string},
         created_at: { type: :string },
         updated_at: { type: :string }
       }

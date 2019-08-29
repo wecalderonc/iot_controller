@@ -22,6 +22,7 @@ class Ability
   def sees_abilities(user)
     can :read, Thing, viewer: { id: user.id }
     can :read, BatteryLevel, uplink: { thing: { viewer: { id: user.id } } }
+    can :read, Alarm, uplink: { thing: { owner: { id: user.id } } }
   end
 
   def operates_abilities(user)
