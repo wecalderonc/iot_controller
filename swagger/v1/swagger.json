@@ -36,7 +36,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "typr": "object",
+                "type": "object",
                 "properties": {
                   "id": {
                     "type": "string"
@@ -80,9 +80,9 @@
         }
       }
     },
-    "/api/v1/accumulators_report/{id}": {
+    "/api/v1/accumulators_report/": {
       "get": {
-        "summary": "Retrieves a last accumulators of a thing",
+        "summary": "Retrieves last accumulators of a thing",
         "tags": [
           "Things"
         ],
@@ -91,10 +91,9 @@
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
+            "name": "thing_name",
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "query",
@@ -134,6 +133,20 @@
                   "value"
                 ]
               }
+            }
+          },
+          "404": {
+            "description": "thing not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
             }
           }
         }
@@ -1498,32 +1511,37 @@
         }
       }
     },
-    "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}": {
-      "get": {
+    "/confirm_email": {
+      "post": {
         "summary": "Retrieves a confirmation to the confirm email process",
         "tags": [
           "Users"
+        ],
+        "consumes": [
+          "application/json"
         ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "verification_code",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "token"
+              ]
+            }
           }
         ],
         "responses": {
@@ -1558,21 +1576,33 @@
         }
       }
     },
-    "/api/v1/users/{email}?subaction=request_password_recovery": {
-      "get": {
+    "/request_password_recovery": {
+      "post": {
         "summary": "Retrieves a success response with recovery password email sended",
         "tags": [
           "Users"
+        ],
+        "consumes": [
+          "application/json"
         ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "path",
-            "type": "string",
-            "required": true
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
           }
         ],
         "responses": {
@@ -1751,7 +1781,7 @@
         }
       }
     },
-    "/api/v1/users/{email}?subaction=change_password": {
+    "/change_forgotten_password": {
       "put": {
         "summary": "update password user",
         "tags": [
@@ -1765,17 +1795,14 @@
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
             "name": "input",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
+                "email": {
+                  "type": "string"
+                },
                 "current_password": {
                   "type": "string"
                 },
@@ -1787,6 +1814,7 @@
                 }
               },
               "required": [
+                "email",
                 "current_password",
                 "password",
                 "password_confirmation"

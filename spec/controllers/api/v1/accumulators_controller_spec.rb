@@ -85,8 +85,8 @@ RSpec.describe Api::V1::AccumulatorsController, :type => :request do
 
         body = JSON.parse(response.body)
 
-       expected_response = "Access denied!. Token is missing."
-       expect(body["message"]).to eq(expected_response)
+        expected_response = "Access denied!. Token is missing."
+        expect(body["message"]).to eq(expected_response)
       end
     end
 
@@ -100,8 +100,8 @@ RSpec.describe Api::V1::AccumulatorsController, :type => :request do
 
         body = JSON.parse(response.body)
 
-       expected_response = "Access Denied: You are not authorized to access this page."
-       expect(body["message"]).to eq(expected_response)
+        expected_response = "Access Denied: You are not authorized to access this page."
+        expect(body["message"]).to eq(expected_response)
       end
     end
   end

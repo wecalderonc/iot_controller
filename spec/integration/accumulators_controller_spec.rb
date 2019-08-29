@@ -23,7 +23,7 @@ RSpec.describe "Accumulators API", :type => :request do
 
         schema type: :array,
         items: {
-          typr: :object,
+          type: :object,
           properties: {
             id:          { type: :string },
             value:       { type: :string },
