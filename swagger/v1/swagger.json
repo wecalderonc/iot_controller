@@ -5,6 +5,81 @@
     "version": "v1"
   },
   "paths": {
+    "/api/v1/things/{thing_name}/accumulators": {
+      "get": {
+        "summary": "Retrieves all accumulators from a thing",
+        "tags": [
+          "Accumulators"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "accumulators founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "typr": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  },
+                  "units_count": {
+                    "type": "float"
+                  },
+                  "final_price": {
+                    "type": "float"
+                  }
+                },
+                "required": [
+                  "id",
+                  "value",
+                  "created_at",
+                  "updated_at",
+                  "units_count",
+                  "final_price"
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "403": {
+            "description": "not authorized to access"
+          },
+          "404": {
+            "description": "accumulators not found"
+          }
+        }
+      }
+    },
     "/api/v1/accumulators_report/{id}": {
       "get": {
         "summary": "Retrieves a last accumulators of a thing",
@@ -64,16 +139,25 @@
         }
       }
     },
-    "/api/v1/alarms/{id}": {
+    "/api/v1/things/{thing_name}/alarms/{id}": {
       "put": {
         "summary": "Retrieves a viewed alarm",
         "tags": [
           "Alarms"
         ],
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
           {
             "name": "id",
             "in": "path",
@@ -130,6 +214,78 @@
         }
       }
     },
+    "/api/v1/things/{thing_name}/alarms": {
+      "get": {
+        "summary": "Retrieves all alarms from a thing",
+        "tags": [
+          "Alarms"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alarms founded",
+            "schema": {
+              "type": "array",
+              "required": [
+                "created_at",
+                "updated_at",
+                "value",
+                "date",
+                "viewed",
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                },
+                "viewed": {
+                  "type": "boolean"
+                },
+                "date": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "403": {
+            "description": "not authorized to access"
+          },
+          "404": {
+            "description": "alarms not found"
+          }
+        }
+      }
+    },
     "/api/v1/aqueducts": {
       "get": {
         "summary": "Retrieves all Aqueducts",
@@ -175,6 +331,60 @@
                   "name"
                 ]
               }
+            }
+          }
+        }
+      }
+    },
+    "/authentication": {
+      "post": {
+        "summary": "Retrieves a token",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auth_token": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "auth_token",
+                "email"
+              ]
+            }
+          },
+          "401": {
+            "description": "user not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
             }
           }
         }
@@ -239,11 +449,14 @@
               }
             }
           },
-          "404": {
-            "description": "thing not found"
+          "401": {
+            "description": "Token is missing"
           },
           "403": {
             "description": "not authorized to access"
+          },
+          "404": {
+            "description": "battery levels not found"
           }
         }
       }
@@ -464,8 +677,6 @@
                 "address",
                 "latitude",
                 "longitude",
-                "country",
-                "state",
                 "city",
                 "schedule_billing",
                 "schedule_report"
@@ -485,14 +696,13 @@
                   "longitude": {
                     "type": "float"
                   },
-                  "country": {
-                    "type": "string"
-                  },
-                  "state": {
-                    "type": "string"
-                  },
                   "city": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "schedule_billing": {
                     "type": "object",

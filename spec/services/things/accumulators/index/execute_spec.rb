@@ -14,29 +14,29 @@ RSpec.describe Things::Accumulators::Index::Execute do
         }
       }
 
-      context "When all the operations are successfull" do
-        it "Should return a Success response" do
-          response = subject.(input)
+    context "When all the operations are successfull" do
+      it "Should return a Success response" do
+        response = subject.(input)
 
-          expect(response).to be_success
-          expect(response.success.count).to match(2)
-        end
+        expect(response).to be_success
+        expect(response.success.count).to match(2)
       end
+    end
 
-   context "When the 'validation' operation fails with wrong type of input" do
-     it "Should return a Failure response" do
-       input[:thing_name] = 12345
+    context "When the 'validation' operation fails with wrong type of input" do
+      it "Should return a Failure response" do
+        input[:thing_name] = 12345
 
-       response = subject.(input)
+        response = subject.(input)
 
-       expected_response = {
-         :thing_name => ["must be String"]
-       }
+        expected_response = {
+          :thing_name => ["must be String"]
+        }
 
-       expect(response).to be_failure
-       expect(response.failure[:message]).to eq(expected_response)
-     end
-   end
+        expect(response).to be_failure
+        expect(response.failure[:message]).to eq(expected_response)
+      end
+    end
 
     context "When the 'validation' operation fails without thing_name in body" do
 

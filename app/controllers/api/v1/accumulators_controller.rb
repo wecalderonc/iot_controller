@@ -2,6 +2,7 @@ module Api
   module V1
     class AccumulatorsController < ApplicationController
     include ActionController::MimeResponds
+      load_and_authorize_resource
 
       def index
         thing_accumulators = Things::Accumulators::Index::Execute.new.(index_params)
