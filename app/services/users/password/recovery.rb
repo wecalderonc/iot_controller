@@ -4,7 +4,7 @@ class Users::Password::Recovery
   include Dry::Transaction::Operation
 
   def call(input)
-    user = User.find_by(email: "#{input[:email]}.#{input[:format]}")
+    user = User.find_by(email: input[:email])
 
     if user
       UserMailer.with(user: user).recovery_email.deliver_now

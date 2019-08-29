@@ -7,8 +7,7 @@ RSpec.describe Users::Password::Execute do
     context "When a user is trying to recover password" do
       let(:input) {
         {
-          email: "test@gmail",
-          format: "com",
+          email: "test@gmail.com",
           current_password: user.password,
           password: "new_password",
           password_confirmation: "new_password"

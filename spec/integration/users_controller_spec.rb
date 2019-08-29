@@ -35,25 +35,35 @@ RSpec.describe "Users API", :type => :request do
     end
   end
 
-  path "/api/v1/users/{email}?subaction=confirm_email&token={verification_code}" do
-    get 'Retrieves a confirmation to the confirm email process' do
+  path "/confirm_email" do
+    post 'Retrieves a confirmation to the confirm email process' do
       tags 'Users'
+      consumes 'application/json'
       produces 'application/json'
-      parameter name: :email, :in => :path, :type => :string
-      parameter name: :verification_code, :in => :path, :type => :string
-      parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          email: { type: :string },
+          token: { type: :string }
+        },
+        required: [ 'email', 'token' ]
+      }
 
       response '200', 'user found with verification_code' do
         let(:user) { create(:user) }
         let(:email) { user.email }
         let(:verification_code) { user.verification_code}
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
             message: { type: :string },
           },
           required: [ 'message' ]
+
+        let(:input) {{
+          email: email,
+          token: verification_code
+        }}
 
         run_test!
       end
@@ -62,7 +72,6 @@ RSpec.describe "Users API", :type => :request do
         let(:user) { create(:user, email: 'holaamigo@mail.com') }
         let(:email) { user.email }
         let!(:verification_code) { "fffffff" }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
@@ -70,22 +79,32 @@ RSpec.describe "Users API", :type => :request do
           },
           required: [ 'message' ]
 
+        let(:input) {{
+          email: email,
+          token: verification_code
+        }}
+
         run_test!
       end
     end
   end
 
-  path "/api/v1/users/{email}?subaction=request_password_recovery" do
-    get 'Retrieves a success response with recovery password email sended' do
+  path "/request_password_recovery" do
+    post 'Retrieves a success response with recovery password email sended' do
       tags 'Users'
+      consumes 'application/json'
       produces 'application/json'
-      parameter name: :email, :in => :path, :type => :string
-      parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          email: { type: :string }
+        },
+        required: [ 'email' ]
+      }
 
       response '200', 'user found with email' do
         let(:user) { create(:user) }
         let(:email) { user.email }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
@@ -93,19 +112,26 @@ RSpec.describe "Users API", :type => :request do
           },
           required: [ 'message' ]
 
+        let(:input) {{
+          email: email
+        }}
+
         run_test!
       end
 
       response '404', 'user not found' do
         let(:user) { create(:user) }
         let(:email) { "bad_email@gmail.com" }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
             message: { type: :string }
           },
           required: [ 'message' ]
+
+        let(:input) {{
+          email: email
+        }}
 
         run_test!
       end
@@ -266,27 +292,25 @@ RSpec.describe "Users API", :type => :request do
     end
   end
 
-  path "/api/v1/users/{email}?subaction=change_password" do
+  path "/change_forgotten_password" do
     put 'update password user' do
       tags 'Users'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :email, :in => :path, :type => :string
-      parameter name: 'Authorization', :in => :header, :type => :string
       parameter name: :input, in: :body, schema: {
         type: :object,
         properties: {
+          email: { type: :string },
           current_password: { type: :string },
           password: { type: :string },
           password_confirmation: { type: :string }
         },
-        required: [ 'current_password', 'password', 'password_confirmation']
+        required: [ 'email', 'current_password', 'password', 'password_confirmation']
       }
 
       response '200', 'user password updated' do
         let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
         let(:email) { user.email }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
         let!(:country) { create(:country, code_iso: 'CO') }
 
         schema type: :object,
@@ -299,6 +323,7 @@ RSpec.describe "Users API", :type => :request do
 
         let(:input) {
           {
+            email: email,
             current_password: user.password,
             password: "nuevopassword",
             password_confirmation: "nuevopassword"
@@ -311,10 +336,10 @@ RSpec.describe "Users API", :type => :request do
       response '404', 'user not found' do
         let(:user) { create(:user) }
         let(:email) { "invalid_email" }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         let(:input) {
           {
+            email: email,
             current_password: user.password,
             password: "nuevopassword",
             password_confirmation: "nuevopassword"
