@@ -1,11 +1,10 @@
 module Api
   module V1
     class UsersController < ApplicationController
-     skip_before_action :authorize_request, only: [ :create,
-                                                    :request_password_recovery,
-                                                    :change_forgotten_password,
-                                                    :confirm_email
-                                                  ]
+
+      METHODS_WITHOUT_AUTH = [ :create, :request_password_recovery, :change_forgotten_password, :confirm_email ]
+
+      skip_before_action :authorize_request, only: METHODS_WITHOUT_AUTH
 
       def show
         response = Users::Show.find_user(show_params)
@@ -68,13 +67,13 @@ module Api
       def create_params
         params.permit(
           User::PERMITTED_PARAMS << :country_code
-        ).to_h.symbolize_keys
+          ).to_h.symbolize_keys
       end
 
       def update_params
         params.permit(
           User::PERMITTED_PARAMS << [:format, :new_email, :country_code, :current_password]
-        ).to_h.symbolize_keys
+          ).to_h.symbolize_keys
       end
 
       def password_params
