@@ -40,7 +40,7 @@ module Api
       def request_password_recovery
         response = Users::Password::Recovery.new.(params)
 
-        if response.success
+        if response.success?
           json_response(response.success, :ok)
         else
           json_response(response.failure, :not_found)
