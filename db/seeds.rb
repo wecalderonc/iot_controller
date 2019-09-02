@@ -54,7 +54,9 @@ p thing1 = Thing.create(name: "thing_one", status: "activated", pac: "io46eui4oe
 
 p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75)
 
-p thing3 = Thing.create(name: "thing_tree", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
+p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
+
+p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
 
 p "****************"
 p "                "
@@ -65,6 +67,7 @@ p "****************"
 p Owner.create( from_node: user1, to_node: thing1)
 p Owner.create(from_node:user2, to_node:thing2)
 p Owner.create(from_node:user3, to_node:thing3)
+p Owner.create(from_node:user1, to_node:thing4)
 
 p "****************"
 p "                "
@@ -103,6 +106,17 @@ p "****************"
 p alarm1 = Alarm.create(value: "0001", viewed: false, uplink: uplink1)
 p alarm2 = Alarm.create(value: "0002", viewed: false, uplink: uplink2)
 p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink3)
+
+p "****************"
+p "                "
+p "CREATING BATTERYLEVESL"
+p "                "
+p "****************"
+
+p BatteryLevel.create(value: "0001", uplink: uplink1)
+p BatteryLevel.create(value: "0002", uplink: uplink2)
+p BatteryLevel.create(value: "0003", uplink: uplink3)
+
 
 p "****************"
 p "                "
