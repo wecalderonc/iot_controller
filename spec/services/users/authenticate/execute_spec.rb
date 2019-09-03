@@ -1,9 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe AuthenticateUser do
+RSpec.describe Users::Authenticate::Execute do
   describe "#call" do
-    subject { described_class.new }
-    let (:user) { create(:user) }
+    let(:response) { subject.(params) }
+    let(:user) { create(:user) }
+    let(:params) {
+      {
+        email: user.email,
+        password: user.password
+      }
+    }
 
     after(:all) do
       User.where(email: "valid@mail.co").each(&:destroy)
@@ -15,9 +21,6 @@ RSpec.describe AuthenticateUser do
         valid_token = "eyJhbGciOiJIUzI1NiJ9.eyJhcGlfdXNlcl9pZCI6MywiZXhwIjoxNTMwOTUyMDMzfQ.MW1tzWpDQWrZWgepHMoaT4vDVL0nT7H3yb_tfNQjYk0"
 
         expect(JsonWebToken).to receive(:encode).and_return(valid_token)
-
-        params = { email: user.email, password: user.password }
-        response = subject.(params)
 
         expected_response = {
           "auth_token": valid_token,
@@ -33,7 +36,7 @@ RSpec.describe AuthenticateUser do
       it "Should return a error message" do
         expect(JsonWebToken).to_not receive(:encode)
 
-        params = { email: "invalid@mail.co", password: user.password }
+        params[:email] = "invalid@mail.co"
         response = subject.(params)
 
         expect(response).to be_failure
