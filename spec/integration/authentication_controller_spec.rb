@@ -1,4 +1,3 @@
-
 require 'swagger_helper'
 
 RSpec.describe "Users API", :type => :request do
@@ -9,7 +8,7 @@ RSpec.describe "Users API", :type => :request do
       parameter name: :password, :in => :query, :type => :string
 
       response '200', 'user found' do
-        let(:user) { create(:user, email: 'valid@mail.com', password: 'validpassword') }
+        let(:user) { create(:user, email: 'valid@mail.com', password: 'Validpassword1*') }
         let(:email) { user.email }
         let(:password) { user.password }
 
@@ -24,9 +23,9 @@ RSpec.describe "Users API", :type => :request do
       end
 
       response '401', 'user not found' do
-        let(:user) { create(:user, email: 'valid@mail.com', password: 'validpassword') }
+        let(:user) { create(:user) }
         let(:email) { 'invalid@mail.com' }
-        let(:password) { 'invalidpassword' }
+        let(:password) { 'Invalidpassword1*' }
 
         schema type: :object,
           properties: {

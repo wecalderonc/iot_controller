@@ -3,11 +3,20 @@ class AuthenticationController < ApplicationController
   skip_before_action :authorize_request
 
   def authenticate_user
-    request = AuthenticateUser.new.(params)
+    request = Users::Authenticate::Execute.new.(authenticate_params)
+
     if request.success?
-      render json: request.success, status: :ok
+      json_response(request.success, :ok)
     else
-      render json: { errors: request.failure[:message] }, status: :unauthorized
+      message, code = request.failure.values_at(:message, :code)
+
+      json_response({ errors: message, code: code }, :unauthorized)
     end
+  end
+
+  private
+
+  def authenticate_params
+    params.permit(:email, :password).to_h.symbolize_keys
   end
 end

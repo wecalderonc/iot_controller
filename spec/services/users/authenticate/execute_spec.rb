@@ -1,13 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe AuthenticateUser do
+RSpec.describe Users::Authenticate::Execute do
   describe "#call" do
-    subject { described_class.new }
-    let (:user) { create(:user) }
-
-    after(:all) do
-      User.where(email: "valid@mail.co").each(&:destroy)
-    end
+    let(:response) { subject.(params) }
+    let(:user) { create(:user) }
+    let(:params) {
+      {
+        email: user.email,
+        password: user.password
+      }
+    }
 
     context "The data is valid" do
       it "Should return a succesfull message" do
@@ -15,9 +17,6 @@ RSpec.describe AuthenticateUser do
         valid_token = "eyJhbGciOiJIUzI1NiJ9.eyJhcGlfdXNlcl9pZCI6MywiZXhwIjoxNTMwOTUyMDMzfQ.MW1tzWpDQWrZWgepHMoaT4vDVL0nT7H3yb_tfNQjYk0"
 
         expect(JsonWebToken).to receive(:encode).and_return(valid_token)
-
-        params = { email: user.email, password: user.password }
-        response = subject.(params)
 
         expected_response = {
           "auth_token": valid_token,
@@ -33,11 +32,11 @@ RSpec.describe AuthenticateUser do
       it "Should return a error message" do
         expect(JsonWebToken).to_not receive(:encode)
 
-        params = { email: "invalid@mail.co", password: user.password }
-        response = subject.(params)
+        params[:email] = "invalid@mail.co"
 
         expect(response).to be_failure
         expect(response.failure[:message]).to eq("User not found")
+        expect(response.failure[:code]).to eq(10104)
       end
     end
 
@@ -45,22 +44,38 @@ RSpec.describe AuthenticateUser do
       it "Should return a error message" do
         expect(JsonWebToken).to_not receive(:encode)
 
-        params = { email: user.email, password: "invalidpass" }
-        response = subject.(params)
+        params[:password] = "Invalid123*"
 
         expect(response).to be_failure
         expect(response.failure[:message]).to eq("Invalid Username/Password")
+        expect(response.failure[:code]).to eq(10105)
       end
     end
 
     context "The data is invalid: the params are empty" do
+      let(:params) { {} }
+
       it "Should return a error message" do
         expect(JsonWebToken).to_not receive(:encode)
 
-        response = subject.({})
+        expected_response = {:password=>["is missing"]}
 
         expect(response).to be_failure
-        expect(response.failure[:message]).to eq("User not found")
+        expect(response.failure[:message]).to match(expected_response)
+        expect(response.failure[:extra][:code]).to eq(400)
+      end
+    end
+
+    context "Invalid password format" do
+      it "Should return a failure response" do
+        expect(JsonWebToken).to_not receive(:encode)
+
+        params[:password] = "invalidformat"
+        expected_response = {:password=>["is in invalid format"]}
+
+        expect(response).to be_failure
+        expect(response.failure[:message]).to match(expected_response)
+        expect(response.failure[:extra][:code]).to eq(400)
       end
     end
   end

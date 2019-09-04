@@ -66,4 +66,9 @@ module Validators::Users
       new_password.eql?(new_password_confirmation)
     end
   end
+
+  AuthenticateSchema = Dry::Validation.Schema do
+    required(:email).filled?(type?: String)
+    required(:password).filled(type?: String, format?: User::VALID_PASSWORD)
+  end
 end
