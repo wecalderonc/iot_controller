@@ -5,10 +5,6 @@ RSpec.describe AuthenticationController, :type => :controller do
   describe "POST authenticate_user" do
     let (:user) { create(:user) }
 
-    after(:all) do
-      User.where(email: "valid@mail.co").each(&:destroy)
-    end
-
     context "The User is authenticating" do
       context "The data is valid" do
         it "Should return a succesfull message" do
@@ -31,7 +27,7 @@ RSpec.describe AuthenticationController, :type => :controller do
       end
 
       context "The data is invalid: the email is wrong" do
-        it "Should return a error message" do
+        it "Should return an error message" do
           expect(JsonWebToken).to_not receive(:encode)
 
           post :authenticate_user, params: { email: "invalid@mail.co", password: user.password }
@@ -45,10 +41,10 @@ RSpec.describe AuthenticationController, :type => :controller do
       end
 
       context "The data is invalid: the password is wrong" do
-        it "Should return a error message" do
+        it "Should return an error message" do
           expect(JsonWebToken).to_not receive(:encode)
 
-          post :authenticate_user, params: { email: user.email, password: "invalidpass" }
+          post :authenticate_user, params: { email: user.email, password: "Invalidpass*" }
 
           expected_response = { errors: 'Invalid Username/Password' }
 
@@ -59,16 +55,16 @@ RSpec.describe AuthenticationController, :type => :controller do
       end
 
       context "The data is invalid: the params are empty" do
-        it "Should return a error message" do
+        it "Should return an error message" do
           expect(JsonWebToken).to_not receive(:encode)
 
           post :authenticate_user, params: { }
 
-          expected_response = { errors: 'User not found' }
+          expected_response = { errors: { password: ["is missing"] } }.to_json
 
           expect(response.content_type).to eq "application/json"
           expect(response.status).to eq 401
-          expect(response.body).to eq expected_response.to_json
+          expect(response.body).to eq expected_response
         end
       end
     end

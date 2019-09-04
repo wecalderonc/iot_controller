@@ -8,6 +8,7 @@ module Users::Authenticate
   end
 
   _, Execute = Common::TxMasterBuilder.new do
+    step :validation,        with: Common::Operations::Validator.(:authenticate, :user)
     step :find_user,         with: Users::Authenticate::FindUser.new
     step :validate_password, with: Users::Authenticate::ValidatePassword.new
     map  :build_payload,     with: BuildPayload
