@@ -9,7 +9,7 @@ class Users::Authenticate::FindUser
     if user.present?
       Success input.merge(user: user)
     else
-      Failure Errors.general_error("User not found", self.class)
+      Failure Errors.service_error("User not found", 10104, self.class)
     end
   end
 end

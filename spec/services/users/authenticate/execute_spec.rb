@@ -36,6 +36,7 @@ RSpec.describe Users::Authenticate::Execute do
 
         expect(response).to be_failure
         expect(response.failure[:message]).to eq("User not found")
+        expect(response.failure[:code]).to eq(10104)
       end
     end
 
@@ -47,6 +48,7 @@ RSpec.describe Users::Authenticate::Execute do
 
         expect(response).to be_failure
         expect(response.failure[:message]).to eq("Invalid Username/Password")
+        expect(response.failure[:code]).to eq(10105)
       end
     end
 
@@ -60,6 +62,7 @@ RSpec.describe Users::Authenticate::Execute do
 
         expect(response).to be_failure
         expect(response.failure[:message]).to match(expected_response)
+        expect(response.failure[:extra][:code]).to eq(400)
       end
     end
 
@@ -72,6 +75,7 @@ RSpec.describe Users::Authenticate::Execute do
 
         expect(response).to be_failure
         expect(response.failure[:message]).to match(expected_response)
+        expect(response.failure[:extra][:code]).to eq(400)
       end
     end
   end

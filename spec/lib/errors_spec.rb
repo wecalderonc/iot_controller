@@ -5,6 +5,7 @@ RSpec.describe Errors do
   let(:status)  { :success }
   let(:message) { "this is a message"}
   let(:location) { self.class }
+  let(:code)    { 10105 }
 
   describe "#failed_request" do
     it "Should return a hash" do
@@ -38,6 +39,17 @@ RSpec.describe Errors do
       it "Should return a hash" do
         response = subject.model_error(status, message, extra: "amm aja un extra")
         expected_response = { message: status, model: message, extra: "amm aja un extra" }
+
+        expect(response).to eq(expected_response)
+      end
+    end
+  end
+
+  describe "#service_error" do
+    context "without extra" do
+      it "Should return a hash" do
+        response = subject.service_error(status, code, location)
+        expected_response = { message: status, code: code, location: location }
 
         expect(response).to eq(expected_response)
       end

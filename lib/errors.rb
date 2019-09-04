@@ -20,4 +20,9 @@ module Errors
     format = { message: error, model: model, extra: extra }
     MergeErrorType.(format, :model)
   end
+
+  def self.service_error(error, code, location)
+    format = { message: error, code: code, location: location }
+    MergeErrorType.(format, :service)
+  end
 end
