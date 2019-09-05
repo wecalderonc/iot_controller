@@ -4,7 +4,7 @@ class Users::Confirmation
   extend Dry::Monads[:result]
 
   def self.verification_code(params)
-    user = User.find_by(verification_code: params[:token])
+    user = User.find_by(verification_code: params[:verificationCode])
 
     if user
       user.email_activate

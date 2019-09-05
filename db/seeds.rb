@@ -35,15 +35,15 @@ p "                "
 p "****************"
 p user1 = User.create(first_name:"javier", last_name: "varon", phone: "31261258231",
             gender: "male", id_number: "1645634", user_type: "amigo", id_type: "1",
-            email: "jvaron@procibernetica.com", password: "javier123" )
+            email: "jvaron@procibernetica.com", password: "Javier123*" )
 
 p user2 = User.create(first_name:"william", last_name: "calderon", phone: "3013632461",
             gender: "male", id_number: "123456", user_type: "amigo", id_type: "1",
-            email: "wcalderon@procibernetica.com", password: "william123" )
+            email: "wcalderon@procibernetica.com", password: "William123*" )
 
 p user3 = User.create(first_name:"daniela", last_name: "patino", phone: "3123204312",
             gender: "male", id_number: "364553", user_type: "amigo", id_type: "2",
-            email: "dpatino@procibernetica.com", password: "dani123" )
+            email: "dpatino@procibernetica.com", password: "Dani123*" )
 
 p "****************"
 p "                "
