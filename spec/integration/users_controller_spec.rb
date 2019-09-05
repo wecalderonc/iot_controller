@@ -62,7 +62,7 @@ RSpec.describe "Users API", :type => :request do
 
         let(:input) {{
           email: email,
-          token: verification_code
+          verificationCode: verification_code
         }}
 
         run_test!

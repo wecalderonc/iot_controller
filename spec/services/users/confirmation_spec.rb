@@ -7,7 +7,7 @@ RSpec.describe Users::Confirmation do
     context "Search a user with verification_code" do
       it "does exist in db" do
         params = {
-          token: user.verification_code
+          verificationCode: user.verification_code
         }
 
         response = described_class.verification_code(params)

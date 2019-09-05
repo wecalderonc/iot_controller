@@ -64,7 +64,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       it "Should return json with success message" do
         params = {
           email: user.email,
-          token: user.verification_code
+          verificationCode: user.verification_code
         }
 
         post '/confirm_email', params: params
