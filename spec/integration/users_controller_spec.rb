@@ -75,9 +75,9 @@ RSpec.describe "Users API", :type => :request do
 
         schema type: :object,
           properties: {
-            message: { type: :string }
+            errors: { type: :string }
           },
-          required: [ 'message' ]
+          required: [ 'errors' ]
 
         let(:input) {{
           email: email,
