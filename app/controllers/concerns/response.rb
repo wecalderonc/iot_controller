@@ -16,7 +16,7 @@ module Response
     if response.success?
       json_response({ message: response.success }, :ok)
     else
-      json_response({ message: response.failure[:message] }, :not_found)
+      json_response({ errors: response.failure[:message] }, :not_found)
     end
   end
 
