@@ -7,7 +7,7 @@ class Users::Authenticate::ValidatePassword
     if input[:user].valid_password?(input[:password])
       Success input[:user]
     else
-      Failure Errors.service_error("Invalid Username/Password", 10105, self.class)
+      Failure Errors.service_error({ password: "Invalid Username/Password" }, 10105, self.class)
     end
   end
 end

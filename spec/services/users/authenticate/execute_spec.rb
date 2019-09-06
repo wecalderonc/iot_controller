@@ -45,9 +45,12 @@ RSpec.describe Users::Authenticate::Execute do
         expect(JsonWebToken).to_not receive(:encode)
 
         params[:password] = "Invalid123*"
+        expected_response = {
+          password: "Invalid Username/Password"
+        }
 
         expect(response).to be_failure
-        expect(response.failure[:message]).to eq("Invalid Username/Password")
+        expect(response.failure[:message]).to eq(expected_response)
         expect(response.failure[:code]).to eq(10105)
       end
     end
