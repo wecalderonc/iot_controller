@@ -46,7 +46,12 @@ RSpec.describe AuthenticationController, :type => :controller do
 
           post :authenticate_user, params: { email: user.email, password: "Invalidpass*" }
 
-          expected_response = { errors: 'Invalid Username/Password', code: 10105 }
+          expected_response = {
+            errors: {
+              password: 'Invalid Username/Password'
+            },
+            code: 10105
+          }
 
           expect(response.content_type).to eq "application/json"
           expect(response.status).to eq 401
