@@ -18,7 +18,8 @@ class Thing
 
   validate :check_units
 
-  has_many :out, :uplinks, type: :UPLINK_CREATED
+  has_many :out, :uplinks,      type: :UPLINK_CREATED
+  has_one  :out, :valve_state,  type: :VALVE_STATE
 
   has_many :in, :owner,    rel_class: :Owner,    model_class: :User
   has_many :in, :operator, rel_class: :Operator, model_class: :User
