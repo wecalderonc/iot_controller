@@ -192,7 +192,7 @@
                 "created_at",
                 "updated_at",
                 "value",
-                "date",
+                "viewed_date",
                 "viewed",
                 "id"
               ],
@@ -206,7 +206,7 @@
                 "value": {
                   "type": "string"
                 },
-                "date": {
+                "viewed_date": {
                   "type": "string"
                 },
                 "viewed": {
@@ -261,7 +261,7 @@
                 "created_at",
                 "updated_at",
                 "value",
-                "date",
+                "viewed_date",
                 "viewed",
                 "id"
               ],
@@ -281,7 +281,7 @@
                 "viewed": {
                   "type": "boolean"
                 },
-                "date": {
+                "viewed_date": {
                   "type": "string"
                 }
               }
@@ -470,6 +470,40 @@
           },
           "404": {
             "description": "battery levels not found"
+          }
+        }
+      }
+    },
+    "/api/v1/countries": {
+      "get": {
+        "summary": "Retrieves all Countries",
+        "tags": [
+          "Countries"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "things founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "code_iso": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "code_iso"
+                ]
+              }
+            }
           }
         }
       }
@@ -1810,12 +1844,12 @@
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
+                "errors": {
                   "type": "string"
                 }
               },
               "required": [
-                "message"
+                "errors"
               ]
             }
           }
