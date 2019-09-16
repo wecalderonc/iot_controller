@@ -18,7 +18,11 @@ RSpec.describe Thing, :type => :model do
   it { is_expected.to have_many(:viewer).with_direction(:in) }
 
   describe "Validations" do
-    it "email and password are required" do
+    let(:thing) { create(:thing) }
+    let(:thing2) { build(:thing, name: thing.name) }
+
+    it "name, status, pac, latitude, longitude, company_id are required" do
+
       expect(subject).to_not be_valid
 
       expected_errors = {
@@ -31,6 +35,18 @@ RSpec.describe Thing, :type => :model do
       }
 
       expect(subject.errors.messages).to eq(expected_errors)
+    end
+
+    it "name uniqueness" do
+
+      expect(thing2).to_not be_valid
+
+      expected_errors = {
+        :name=>["has already been taken"]
+      }
+      p thing2
+
+      expect(thing2.errors.messages).to eq(expected_errors)
     end
   end
 
