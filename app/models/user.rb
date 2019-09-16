@@ -8,19 +8,19 @@ class User
   property :email, type: String, constraint: :unique
   property :password, type: String
   property :password_confirmation, type: String
-  property :admin, type: Boolean
+  property :admin, type: Boolean, default: false
   property :phone, type: String
   property :gender, type: String
   property :id_number, type: String
   property :id_type, type: String
-  property :code_number, type: String, constraint: :unique
+  property :code_number, type: String
   property :user_type, type: String
   property :verificated, type: Boolean, default: false
   property :verification_code, type: String
   #TODO
   #CHANGE UNIQUE FROM CODE_NUMBER TO ID_NUMBER
 
-  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password, :phone, :gender, :id_number, :id_type, :user_type]
+  MANDATORY_FIELDS = [:first_name, :last_name, :email, :password]
   validates *MANDATORY_FIELDS, presence: true
 
   PERMITTED_PARAMS = [:first_name, :last_name, :password, :email,

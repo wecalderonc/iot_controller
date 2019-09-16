@@ -8,20 +8,28 @@ module Validators::Users
     required(:password).value(type?: String)
     required(:email).filled(type?: String, format?: User::VALID_EMAIL)
     required(:country_code).value(type?: String)
-    required(:phone).value(type?: String)
-    required(:gender).value(type?: Symbol, included_in?: User::GENDERS)
-    required(:id_number).value(type?: String)
-    required(:id_type).value(type?: Symbol, included_in?: User::ID_TYPES)
-    required(:code_number).maybe(type?: String)
-    optional(:admin).value(type?: (TrueClass || FalseClass))
-    optional(:user_type).value(type?: Symbol, included_in?: User::USER_TYPE)
+    optional(:phone).value(type?: String)
+    optional(:gender).value(type?: String)
+    optional(:id_number).value(type?: String)
+    optional(:id_type).value(type?: String)
+    optional(:code_number).maybe(type?: String)
+    optional(:admin).value(:bool?)
+    optional(:user_type).value(type?: String)
 
     validate(uniq_email: :email) do |email|
       User.find_by(email: email).nil?
     end
 
-    validate(uniq_code_number: :code_number) do |code_number|
-      User.find_by(code_number: code_number).nil?
+    validate(invalid_gender: :gender) do |gender|
+      gender.present? ? User::GENDERS.include?(gender.to_sym) : true
+    end
+
+    validate(invalid_id_type: :id_type) do |id_type|
+      id_type.present? ? User::ID_TYPES.include?(id_type.to_sym) : true
+    end
+
+    validate(invalid_user_type: :user_type) do |user_type|
+      user_type.present? ? User::USER_TYPE.include?(user_type.to_sym) : true
     end
   end
 

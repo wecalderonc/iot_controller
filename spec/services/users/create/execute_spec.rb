@@ -17,7 +17,7 @@ RSpec.describe Users::Create::Execute do
           id_type: "cc",
           code_number: "1032428363",
           admin: true,
-          user_type: :administrator
+          user_type: "administrator"
         }
       }
 
@@ -56,9 +56,9 @@ RSpec.describe Users::Create::Execute do
             :email => ["must be String"],
             :first_name => ["must be String"],
             :country_code => ["must be String"],
-            :gender => ["must be one of: male, female"],
+            :invalid_gender => ["must be one of: male, female"],
             :id_number => ["must be String"],
-            :id_type => ["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"],
+            :invalid_id_type => ["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"],
             :last_name => ["must be String"],
             :phone => ["must be String"],
           }
@@ -84,29 +84,6 @@ RSpec.describe Users::Create::Execute do
 
           expected_response = {
             :uniq_email => ["Email already exist"]
-          }
-
-          expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
-        end
-      end
-
-      context "When the 'validation' operation fails with duplicate user code_number" do
-        let(:user) { create(:user) }
-
-        it "Should return a Failure response" do
-          input[:first_name] = "name"
-          input[:last_name] = "last_name"
-          input[:email] = "new@gmail.com"
-          input[:phone] = "3013632461"
-          input[:gender] = "male"
-          input[:code_number] = user.code_number
-          input[:id_type] = "cc"
-
-          response = subject.(input)
-
-          expected_response = {
-            :uniq_code_number => ["Code number already exist"]
           }
 
           expect(response).to be_failure

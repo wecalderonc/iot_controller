@@ -177,7 +177,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
             "id_number"=> "123456",
             "id_type"=> "cc",
             "code_number"=>  "123456789",
-            "admin"=> "true",
+            "admin"=> "false",
             "user_type"=> "administrator"
           }
 
@@ -232,7 +232,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         {
           "errors" => {
-            "uniq_code_number"=>["Code number already exist"],
             "uniq_email"=>["Email already exist"]
           }
         }
@@ -271,8 +270,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           {
             "errors" => {
               "email"=>["is in invalid format"],
-              "gender"=>["must be one of: male, female"],
-              "id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
+              "invalid_gender"=>["must be one of: male, female"],
+              "invalid_id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
             }
           }
 

@@ -44,3 +44,6 @@ en:
     invalid_basic_charge: "The value must be positive"
     invalid_period: "Wrong period"
     invalid_interval: "Wrong interval"
+    invalid_gender: "must be one of: male, female"
+    invalid_id_type: "must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"
+    invalid_user_type: "must be one of: aqueduct_administrator, administrator, aqueduct_client, aqueduct_operator, citizen_admin, citizen_viewer"
