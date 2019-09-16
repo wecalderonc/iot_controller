@@ -11,7 +11,7 @@ RSpec.describe Thing, :type => :model do
 
   it { is_expected.to have_one(:uplinks).with_direction(:out) }
   it { is_expected.to have_one(:locates).with_direction(:out) }
-  it { is_expected.to have_one(:valve_state).with_direction(:out) }
+  it { is_expected.to have_one(:valve_transition).with_direction(:out) }
 
   it { is_expected.to have_many(:owner).with_direction(:in) }
   it { is_expected.to have_many(:operator).with_direction(:in) }

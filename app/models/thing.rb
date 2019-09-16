@@ -14,12 +14,13 @@ class Thing
   VALID_UPDATE_TYPES = [:desired, :reported]
   REQUIRED_FIELDS = [:name, :status, :pac, :company_id, :longitude, :latitude]
 
+
   validates_presence_of REQUIRED_FIELDS
 
   validate :check_units
 
   has_many :out, :uplinks,      type: :UPLINK_CREATED
-  has_one  :out, :valve_state,  type: :VALVE_STATE
+  has_one  :out, :valve_transition,  type: :VALVE_TRANSITION
 
   has_many :in, :owner,    rel_class: :Owner,    model_class: :User
   has_many :in, :operator, rel_class: :Operator, model_class: :User
