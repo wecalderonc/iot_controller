@@ -20,6 +20,10 @@ Rspec.describe ThingSerializer do
         "units"=>{"liter"=>thing.units[:liter]},
         "created_at"=>nil,
         "updated_at"=>nil,
+        "valve_transition"=>{
+          "real_state"=>thing.valve_transition.real_state,
+          "showed_state"=>thing.valve_transition.showed_state,
+        },
         "last_uplink"=>[],
         "last_messages"=> {
           "accumulator"=>{},

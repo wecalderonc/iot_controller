@@ -10,6 +10,7 @@ class ThingSerializer < ActiveModel::Serializer
               :created_at,
               :updated_at,
 
+              :valve_transition,
               :last_uplink,
               :last_messages
 
@@ -30,5 +31,12 @@ class ThingSerializer < ActiveModel::Serializer
         false => -> { {} }
       }[last_message.present?].()
     end
+  end
+
+  def valve_transition
+    {
+      real_state: object.valve_transition.real_state,
+      showed_state: object.valve_transition.showed_state
+    }
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe Types::QueryType do
       context 'there are things with that property' do
         let!(:thing1) { create(:thing, name: '42040', status: 'activated') }
         let!(:thing2) { create(:thing, name: '42916', status: 'activated', latitude: 0.1, longitude: 1.2) }
-        let!(:thing3) { create(:thing, name: '42916', status: 'desactivated', latitude: 0.1, longitude: 1.2) }
+        let!(:thing3) { create(:thing, name: '42918', status: 'desactivated', latitude: 0.1, longitude: 1.2) }
 
         # Querying examples
 

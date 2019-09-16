@@ -12,6 +12,7 @@ module Helpers
         'longitude',
         'created_at',
         'updated_at',
+        'valve_transition',
         'last_uplink',
         'last_messages'
       ]
@@ -29,6 +30,13 @@ module Helpers
         longitude: { type: :float },
         created_at: { type: :string },
         updated_at: { type: :string },
+        valve_transition: {
+          required: [ 'real_state', 'showed_state' ],
+          properties: {
+            real_state: { type: :string},
+            showed_state: { type: :string},
+          }
+        },
         last_uplink: {
           required: last_uplink_fields,
           properties: last_uplink_properties

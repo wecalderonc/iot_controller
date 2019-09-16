@@ -27,6 +27,8 @@ p "Erasing UplinkBDownlink"
 UplinkBDownlink.destroy_all
 p "Erasing ValvePosition"
 ValvePosition.destroy_all
+p "Erasing ValveTransition"
+ValveTransition.destroy_all
 
 p "****************"
 p "                "
@@ -50,13 +52,13 @@ p "                "
 p "CREATING THINGS"
 p "                "
 p "****************"
-p thing1 = Thing.create(name: "thing_one", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75)
+p thing1 = Thing.create(name: "thing_one", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 
-p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75)
+p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 
-p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
+p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 
-p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75)
+p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 
 p "****************"
 p "                "
