@@ -3,9 +3,9 @@
     "app_path": "/iot_controller",
     "rails_version": "5.2.3",
     "security_warnings": 0,
-    "start_time": "2019-09-14 02:12:17 +0000",
-    "end_time": "2019-09-14 02:12:17 +0000",
-    "duration": 0.440620854,
+    "start_time": "2019-09-16 22:11:03 +0000",
+    "end_time": "2019-09-16 22:11:03 +0000",
+    "duration": 0.749605627,
     "checks_performed": [
       "BasicAuth",
       "BasicAuthTimingAttack",

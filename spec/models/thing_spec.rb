@@ -44,7 +44,6 @@ RSpec.describe Thing, :type => :model do
       expected_errors = {
         :name=>["has already been taken"]
       }
-      p thing2
 
       expect(thing2.errors.messages).to eq(expected_errors)
     end

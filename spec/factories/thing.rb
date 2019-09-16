@@ -15,5 +15,7 @@ FactoryBot.define do
     trait :desactivated do
       status { "desactivated" }
     end
+
+    association :valve_transition, factory: :valve_transition
   end
 end

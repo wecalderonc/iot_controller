@@ -135,6 +135,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
             "longitude" => thing.longitude,
             "created_at"=>JSON.parse(thing.created_at.to_json),
             "updated_at"=>JSON.parse(thing.updated_at.to_json),
+            "valve_transition"=>JSON.parse(ThingSerializer.new(thing).valve_transition.to_json),
             "last_uplink"=>JSON.parse(ThingSerializer.new(thing).last_uplink.to_json),
             "last_messages"=>JSON.parse(ThingSerializer.new(thing).last_messages.to_json)
           }
@@ -211,6 +212,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
           "longitude" => 74.6,
           "created_at"=>JSON.parse(thing.created_at.to_json),
           "updated_at"=>parsed_body["updated_at"],
+          "valve_transition"=>JSON.parse(ThingSerializer.new(thing).valve_transition.to_json),
           "last_uplink"=>JSON.parse(ThingSerializer.new(thing).last_uplink.to_json),
           "last_messages"=>JSON.parse(ThingSerializer.new(thing).last_messages.to_json)
         }
