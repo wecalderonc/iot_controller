@@ -15,4 +15,8 @@ module Validators::Things
     optional(:longitude).value(type?: Float)
     optional(:latitude).value(type?: Float)
   end
+
+  CreateSchema = Dry::Validation.Schema do
+
+  end
 end
