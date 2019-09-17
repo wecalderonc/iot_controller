@@ -125,6 +125,8 @@ p "                "
 p "CREATING COUNTRY-STATE-CITY"
 p "                "
 p "****************"
+p Country.create(name: 'Estados Unidos', code_iso: 'USA')
+p Country.create(name: 'Mexico', code_iso: 'MX')
 p country = Country.create(name: 'Colombia', code_iso: 'CO')
 p state = State.create(name: 'Bogota DC', code_iso: 'CO-DC', country: country)
 p city = City.create(name: 'Bogota', state: state)
