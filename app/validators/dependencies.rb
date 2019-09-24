@@ -32,7 +32,8 @@ module Validators
     get: {
       battery_level:                      Validators::BatteryLevels::GetSchema,
       alarm:                              Validators::Alarms::GetSchema,
-      accumulator:                        Validators::Accumulators::GetSchema
+      accumulator:                        Validators::Accumulators::GetSchema,
+      state:                              Validators::States::GetSchema
     },
 
     authenticate: {

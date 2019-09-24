@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :downlinks,                     only: [:create]
       resources :locations,                     only: [:create, :update], param: :thing_name
       resources :countries,                     only: [:index]
+      resources :states,                        only: [:index], param: :country_code
     end
   end
 end

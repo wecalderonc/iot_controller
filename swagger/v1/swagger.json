@@ -1070,6 +1070,76 @@
         }
       }
     },
+    "/api/v1/states": {
+      "get": {
+        "summary": "Retrieves all states related with a specific country",
+        "tags": [
+          "States"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "country_code",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "states founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "code_iso": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "code_iso": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "code_iso",
+                  "country"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "country not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "errors"
+              ]
+            }
+          }
+        }
+      }
+    },
     "/api/v1/things": {
       "get": {
         "summary": "Retrieves all Things",
@@ -1179,6 +1249,7 @@
                 "longitude",
                 "created_at",
                 "updated_at",
+                "valve_transition",
                 "last_uplink",
                 "last_messages"
               ],
@@ -1212,6 +1283,20 @@
                 },
                 "updated_at": {
                   "type": "string"
+                },
+                "valve_transition": {
+                  "required": [
+                    "real_state",
+                    "showed_state"
+                  ],
+                  "properties": {
+                    "real_state": {
+                      "type": "string"
+                    },
+                    "showed_state": {
+                      "type": "string"
+                    }
+                  }
                 },
                 "last_uplink": {
                   "required": [
@@ -1406,6 +1491,7 @@
                 "longitude",
                 "created_at",
                 "updated_at",
+                "valve_transition",
                 "last_uplink",
                 "last_messages"
               ],
@@ -1439,6 +1525,20 @@
                 },
                 "updated_at": {
                   "type": "string"
+                },
+                "valve_transition": {
+                  "required": [
+                    "real_state",
+                    "showed_state"
+                  ],
+                  "properties": {
+                    "real_state": {
+                      "type": "string"
+                    },
+                    "showed_state": {
+                      "type": "string"
+                    }
+                  }
                 },
                 "last_uplink": {
                   "required": [
