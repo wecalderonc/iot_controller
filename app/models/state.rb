@@ -8,5 +8,5 @@ class State
   validates_presence_of :code_iso
 
   has_one :in, :country, type: :states
-  has_many :in, :cities, type: :cities
+  has_many :out, :cities, type: :cities
 end

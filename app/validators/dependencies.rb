@@ -33,7 +33,8 @@ module Validators
       battery_level:                      Validators::BatteryLevels::GetSchema,
       alarm:                              Validators::Alarms::GetSchema,
       accumulator:                        Validators::Accumulators::GetSchema,
-      state:                              Validators::States::GetSchema
+      state:                              Validators::States::GetSchema,
+      city:                               Validators::Cities::GetSchema
     },
 
     authenticate: {
