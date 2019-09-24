@@ -7,5 +7,5 @@ class Country
   validates_presence_of :name
   validates_presence_of :code_iso
 
-  has_many :in, :states, type: :states
+  has_many :out, :states, type: :states
 end
