@@ -5,5 +5,5 @@ class City
 
   validates_presence_of :name
 
-  has_one :out, :state, type: :cities
+  has_one :in, :state, type: :cities
 end

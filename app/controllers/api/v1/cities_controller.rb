@@ -1,17 +1,17 @@
 module Api
   module V1
-    class StatesController < ApplicationController
+    class CitiesController < ApplicationController
 
       skip_before_action :authorize_request
 
       def index
-        index_response_handler(:states, index_params)
+        index_response_handler(:cities, index_params)
       end
 
       private
 
       def index_params
-        params.permit(:country_code).to_h.symbolize_keys
+        params.permit(:state_code).to_h.symbolize_keys
       end
     end
   end

@@ -57,4 +57,13 @@ RSpec.describe Utils do
       end
     end
   end
+
+  describe "#camelize_symbol" do
+    it "Should return a camelized string" do
+      response = subject.camelize_symbol(:thing)
+      expected_response = "Thing"
+
+      expect(response).to eq(expected_response)
+    end
+  end
 end

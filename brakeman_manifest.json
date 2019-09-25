@@ -3,9 +3,9 @@
     "app_path": "/iot_controller",
     "rails_version": "5.2.3",
     "security_warnings": 0,
-    "start_time": "2019-09-24 20:57:43 +0000",
-    "end_time": "2019-09-24 20:57:43 +0000",
-    "duration": 0.440301736,
+    "start_time": "2019-09-25 16:31:57 +0000",
+    "end_time": "2019-09-25 16:31:57 +0000",
+    "duration": 0.488806828,
     "checks_performed": [
       "BasicAuth",
       "BasicAuthTimingAttack",
@@ -73,7 +73,7 @@
       "XMLDoS",
       "YAMLParsing"
     ],
-    "number_of_controllers": 17,
+    "number_of_controllers": 18,
     "number_of_models": 30,
     "number_of_templates": 4,
     "ruby_version": "2.6.3",
