@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :locations,                     only: [:create, :update], param: :thing_name
       resources :countries,                     only: [:index]
       resources :states,                        only: [:index], param: :country_code
+      resources :cities,                        only: [:index], param: :state_code
     end
   end
 end
