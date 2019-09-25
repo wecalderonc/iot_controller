@@ -5,14 +5,14 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
   describe "GET/index index last accumulators from a thing" do
-    let(:accumulator)     { create(:accumulator) }
-    let(:uplink)          { create(:uplink, thing: accumulator.uplink.thing) }
-    let(:uplink2)         { create(:uplink, thing: accumulator.uplink.thing) }
-    let!(:accumulator2)   { create(:accumulator, uplink: uplink) }
-    let!(:accumulator3)   { create(:accumulator, uplink: uplink2) }
-    let(:thing_name)      { accumulator.uplink.thing.name }
-    let(:params)          { { thing_name: thing_name, query: "last_accumulators" } }
-    let(:thing_no_accs)   { create(:thing) }
+    let(:accumulator)    { create(:accumulator) }
+    let(:uplink)         { create(:uplink, thing: accumulator.uplink.thing) }
+    let(:uplink2)        { create(:uplink, thing: accumulator.uplink.thing) }
+    let!(:accumulator2)  { create(:accumulator, uplink: uplink) }
+    let!(:accumulator3)  { create(:accumulator, uplink: uplink2) }
+    let(:thing)          { accumulator.uplink.thing }
+    let(:params)         { { thing_name: thing_name, query: "last_accumulators" } }
+    let(:thing_no_accs)  { create(:thing) }
 
     context "index last accumulators" do
       it "return accumulators" do
@@ -67,13 +67,17 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     end
 
     context "results found" do
-      before { create :accumulator }
-      it "generate a CSV" do
-        get '/api/v1/accumulators_report', headers: header
+      context "csv response" do
+        before { create :accumulator }
 
-        expect(response.headers["Content-Type"]).to eq("text/csv")
-        expect(response.status).to eq(200)
+        it "generate a CSV" do
+          get '/api/v1/accumulators_report', headers: header
+
+          expect(response.headers["Content-Type"]).to eq("text/csv")
+          expect(response.status).to eq(200)
+        end
       end
+
     end
 
     context "date filter in params" do
@@ -106,11 +110,52 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     let(:thing_name) { accumulator.uplink.thing.name }
 
     context "result found" do
-      it "generate return a JSON" do
-        get "/api/v1/accumulators_report/#{thing_name}", headers: header
+      context "csv response" do
+        it "generate a csv" do
+          header["Content-Type"] = "text/xml"
+          get "/api/v1/accumulators_report/#{thing_name}", headers: header
+       
+          expect(response.headers["Content-Type"]).to eq("text/csv")
+          expect(response.status).to eq(200)
+        end
+      end
 
-        expect(response.headers["Content-Type"]).to eq("text/csv")
-        expect(response.status).to eq(200)
+      context "json response" do
+        it "generate a JSON response" do
+          header["Content-Type"] = "application/json"
+
+          get "/api/v1/accumulators_report/#{thing_name}", headers: header
+       
+          body = JSON.parse(response.body)
+          puts "*" * 100
+          puts response.inspect
+          puts "*" * 100
+
+          expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+          expect(response.status).to eq(200)
+
+          expected_response = [
+            {
+              "thing_id" => thing.id,
+              "thing_name" => thing.name,
+              "accumulators" => [
+                "date" => accumulator.uplink.created_at,
+                "value" => accumulator.value,
+                "consumption_delta" => "",
+                "accumulated" => ""
+              ],
+            },
+            {
+              "name" => mosquera.name,
+              "state" => {
+                "name" => cundinamarca.name,
+                "code_iso" => cundinamarca.code_iso
+              }
+            }
+          ]
+
+          expect(body).to match_array(expected_response)
+        end
       end
     end
 
