@@ -5,16 +5,7 @@ module Api
       skip_before_action :authorize_request
 
       def index
-        states = States::Index::Execute.new.(index_params)
-
-        if states.success?
-          render json: states.success, status: :ok, each_serializer: StateSerializer
-        else
-          message, code = states.failure.values_at(:message, :code)
-
-          json_response({ errors: message, code: code}, :not_found)
-        end
-
+        index_response_handler(:states, index_params)
       end
 
       private

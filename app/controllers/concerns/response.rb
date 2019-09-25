@@ -27,4 +27,25 @@ module Response
       json_response({ message: response.failure[:message] }, :not_found)
     end
   end
+
+  def index_response_handler(model, params)
+    response = index_resolver(model, params)
+
+    if response.success?
+      serializer = "#{Utils.to_constant(model)}Serializer".constantize
+
+      render json: response.success, status: :ok, each_serializer:  serializer
+    else
+      message, code = response.failure.values_at(:message, :code)
+
+      json_response({ errors: message, code: code}, :not_found)
+    end
+  end
+
+  private
+
+  def index_resolver(model, params)
+    resolver = "#{Utils.camelize_symbol(model)}::Index::Execute".constantize
+    resolver.new.(params)
+  end
 end

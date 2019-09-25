@@ -14,4 +14,8 @@ module Utils
       .transform_values(&:to_sym)
       .merge hash.except(*keys)
   end
+
+  def self.camelize_symbol(object)
+    object.to_s.camelize
+  end
 end
