@@ -11,8 +11,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     let!(:accumulator2)  { create(:accumulator, uplink: uplink) }
     let!(:accumulator3)  { create(:accumulator, uplink: uplink2) }
     let(:thing)          { accumulator.uplink.thing }
-    let(:params)         { { thing_name: thing_name, query: "last_accumulators" } }
     let(:thing_no_accs)  { create(:thing) }
+    let(:params)         { { thing_name: thing.name, query: "last_accumulators" } }
 
     context "index last accumulators" do
       it "return accumulators" do
@@ -68,9 +68,10 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
     context "results found" do
       context "csv response" do
-        before { create :accumulator }
+        before { create_list(:accumulator, 2)  }
 
         it "generate a CSV" do
+          header["Content-Type"] = "text/csv"
           get '/api/v1/accumulators_report', headers: header
 
           expect(response.headers["Content-Type"]).to eq("text/csv")
@@ -126,10 +127,10 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
           get "/api/v1/accumulators_report/#{thing_name}", headers: header
        
+          puts "*" * 100
+          puts body.inspect
+          puts "*" * 100
           body = JSON.parse(response.body)
-          puts "*" * 100
-          puts response.inspect
-          puts "*" * 100
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)

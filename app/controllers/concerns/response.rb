@@ -6,9 +6,32 @@ module Response
     render json: object, status: status, serializer: serializer
   end
 
-  def csv_response(data, filename)
+  def csv_report_response(input)
+    type = Utils.camelize_symbol(input[:model])
+    data = "Reports::#{type}s::Index::CsvFormat".constantize.new.(input)
+
     respond_to do |format|
-      format.all { send_data data, filename: "#{filename}-#{Date.today}.csv" }
+      if data.success?
+        format.all { send_data data.success, filename: "Device-#{input[:model]}", content_type: "text/csv" }
+      else
+        message, code = data.failure.values_at(:message, :code)
+       
+        json_response({ errors: message, code: code}, :not_found)
+      end
+    end
+  end
+
+  def json_report_response(input)
+    type = Utils.camelize_symbol(input[:model])
+    data = "Reports::#{type}s::Index::JsonFormat".constantize.new.(input)
+    serializer = "#{Utils.to_constant(model)}Serializer".constantize
+
+    if data.success?
+      render json: data.success, status: :ok, each_serializer: serializer
+    else
+      message, code = data.failure.values_at(:message, :code)
+     
+      json_response({ errors: message, code: code}, :not_found)
     end
   end
 

@@ -4,7 +4,8 @@ module Api
     include ActionController::MimeResponds
 
       def index
-        index_handler({ params: params, model: :alarm })
+        content_type = request.headers["CONTENT_TYPE"]
+        index_handler({ params: params, model: :alarm, thing: Thing }, content_type)
       end
 
       def show
