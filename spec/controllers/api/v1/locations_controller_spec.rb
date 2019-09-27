@@ -373,8 +373,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
     context "Thing has no associated location" do
       it "Should return a message of location not found" do
-      Owner.create(from_node: user, to_node: thing)
-      thing = create(:thing)
+        Owner.create(from_node: user, to_node: thing)
+        thing = create(:thing)
 
         get "/api/v1/locations/#{thing.name}", headers: header
 
