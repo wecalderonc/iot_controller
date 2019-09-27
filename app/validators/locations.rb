@@ -1,4 +1,8 @@
 module Validators::Locations
+  GetSchema = Dry::Validation.Schema do
+    required(:thing_name).filled(type?: String)
+  end
+
   CreateSchema = Dry::Validation.Schema do
 
     configure { config.messages_file = "config/locales/en.yml" }

@@ -77,7 +77,7 @@ RSpec.describe Things::Update::Execute do
           input.delete(:thing_name)
 
           response = subject.(input)
-          expected_response = "The thing  does not exist"
+          expected_response = {:thing_name=>["is missing"]}
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)

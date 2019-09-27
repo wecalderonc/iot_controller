@@ -66,7 +66,7 @@ p "CREATING RELATIONS BETWEEN USERS AND THINGS"
 p "                "
 p "****************"
 
-p Owner.create( from_node: user1, to_node: thing1)
+p Owner.create(from_node: user1, to_node: thing1)
 p Owner.create(from_node:user2, to_node:thing2)
 p Owner.create(from_node:user3, to_node:thing3)
 p Owner.create(from_node:user1, to_node:thing4)
@@ -119,7 +119,6 @@ p BatteryLevel.create(value: "0001", uplink: uplink1)
 p BatteryLevel.create(value: "0002", uplink: uplink2)
 p BatteryLevel.create(value: "0003", uplink: uplink3)
 
-
 p "****************"
 p "                "
 p "CREATING COUNTRY-STATE-CITY"
@@ -131,3 +130,12 @@ p country = Country.create(name: 'Colombia', code_iso: 'CO')
 p state = State.create(name: 'Bogota DC', code_iso: 'CO-DC', country: country)
 p city = City.create(name: 'Bogota', state: state)
 
+p "****************"
+p "                "
+p "CREATING LOCATIONS"
+p "                "
+p "****************"
+p Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4, longitude: 74, thing: thing1)
+p Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5, longitude: 75, thing: thing2)
+p Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6, longitude: 76, thing: thing3)
+p city = City.create(name: 'Bogota', state: state)

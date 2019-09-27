@@ -54,7 +54,7 @@ RSpec.describe "Alarms API", :type => :request do
         let(:thing_name)    { alarm.uplink.thing.name  }
         let(:uplink)        { create(:uplink) }
         let(:alarm)         { create(:alarm) }
-        let!(:owner)     { Owner.create(from_node: user, to_node: thing) }
+        let!(:owner)        { Owner.create(from_node: user, to_node: thing) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
         let(:id) { "invalid_id" }
@@ -102,24 +102,24 @@ RSpec.describe "Alarms API", :type => :request do
         let(:thing)       { uplink.thing.name }
         let(:thing_name)  { alarm.uplink.thing.name  }
         let(:uplink)      { create(:uplink) }
-        let(:alarm) { create(:alarm) }
+        let(:alarm)       { create(:alarm) }
 
         let(:'Authorization') { "Access denied!" }
 
         run_test!
       end
 
-     response '403', 'not authorized to access' do
-       let(:user_no_relations) { create(:user) }
-       let(:alarm)             { create(:alarm) }
-       let(:Authorization)     { JsonWebToken.encode({ user_id: user_no_relations.id }) }
+      response '403', 'not authorized to access' do
+        let(:user_no_relations) { create(:user) }
+        let(:alarm)             { create(:alarm) }
+        let(:Authorization)     { JsonWebToken.encode({ user_id: user_no_relations.id }) }
 
-       let(:thing_name) { alarm.uplink.thing.name }
+        let(:thing_name) { alarm.uplink.thing.name }
 
-       run_test!
-     end
+        run_test!
+      end
 
-       response '404', 'thing not found' do
+      response '404', 'thing not found' do
         let(:user)    { create(:user) }
         let(:alarm)   { create(:alarm) }
         let(:thing)   { alarm.uplink.thing }

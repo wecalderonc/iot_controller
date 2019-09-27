@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       resources :accumulators_report,           only: [:show, :index], param: :thing_name
       resources :alarms_report,                 only: [:show, :index], param: :thing_name
       resources :downlinks,                     only: [:create]
-      resources :locations,                     only: [:create, :update], param: :thing_name
+      resources :locations,                     only: [:show, :create, :update], param: :thing_name
       resources :countries,                     only: [:index]
       resources :states,                        only: [:index], param: :country_code
       resources :cities,                        only: [:index], param: :state_code

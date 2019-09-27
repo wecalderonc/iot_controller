@@ -34,7 +34,8 @@ module Validators
       alarm:                              Validators::Alarms::GetSchema,
       accumulator:                        Validators::Accumulators::GetSchema,
       state:                              Validators::States::GetSchema,
-      city:                               Validators::Cities::GetSchema
+      city:                               Validators::Cities::GetSchema,
+      location:                           Validators::Locations::GetSchema
     },
 
     authenticate: {
