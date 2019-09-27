@@ -3,16 +3,28 @@ module Api
     class AccumulatorsReportController < ApplicationController
 
       def index
-#        puts "estoy en el controller.................."
-#        puts request.headers["CONTENT_TYPE"].inspect
-#        puts request.format.inspect
-#        puts "estoy en el controller.................."
-        content_type = request.headers["CONTENT_TYPE"]
-        index_handler({ params: params, model: :accumulator, thing: Thing }, content_type)
+        index_handler({
+          params: params,
+          model: :accumulator,
+          thing: Thing,
+          content_type: get_content_type,
+          action: :index
+        })
       end
 
       def show
-        show_handler({ params: params, model: :accumulator })
+        get_report({
+          params: params,
+          model: :accumulator,
+          content_type: get_content_type,
+          action: :show
+        })
+      end
+
+      private
+
+      def get_content_type
+        request.headers["CONTENT_TYPE"]
       end
     end
   end

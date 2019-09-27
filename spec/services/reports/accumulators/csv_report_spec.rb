@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Reports::Accumulators::Report do
+RSpec.describe Reports::Accumulators::CsvReport do
   describe "#call" do
     let(:input)    { ThingsQuery.new.sort_accumulators }
     let(:response) { subject.(input) }

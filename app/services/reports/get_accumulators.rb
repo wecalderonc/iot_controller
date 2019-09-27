@@ -1,6 +1,6 @@
 require 'dry/transaction/operation'
 
-class Reports::Accumulators::GetAccumulators
+class Reports::GetAccumulators
   include Dry::Transaction::Operation
 
   def call(input)

@@ -9,36 +9,22 @@ module ReportsManager
     "sort_#{model.downcase}s".to_sym
   end
 
-  def index_handler(input, content_type)
+  def index_handler(input)
     options = {
       last_accumulators: -> { render_last_accumulators(input[:params][:thing_name]) }
     }
     options.default = -> {
-      if content_type == "text/csv"
-        csv_report_response(input)
-      else
-        json_report_response(input)
-      end
-#       index_handler({ params: params, model: :accumulator, thing: Thing })
-      
-#     query_result = build_query(input)
-#     build_response(query_result, input[:model])
+      get_report(input)
     }
 
     options[input[:params][:query]&.to_sym].()
   end
 
-  def show_handler(input)
-    thing = Thing.find_by(name: params[:thing_name])
-
-    if thing.present?
-        query_result = build_query(input, thing)
-    puts "*" * 100
-    puts query_result.inspect
-    puts "*" * 100
-        build_response(query_result, input[:model])
+  def get_report(input)
+    if input[:content_type] == "text/csv"
+      csv_report_response(input.merge(option: :csv_format))
     else
-      json_response({ errors: "Device not found" }, :not_found)
+      csv_report_response(input.merge(option: :json_format))
     end
   end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Reports::Accumulators::Index::CsvFormat do
+RSpec.describe Reports::Accumulators::Index::Execute do
   describe '#call' do
     let(:response) { subject.(input) }
     let(:uplink)   { create(:uplink) }

@@ -60,16 +60,21 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
         body = JSON.parse(response.body)
 
+        expected_response = {"errors"=>"Results not found", "code"=>10104}
+
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
-        expect(body["errors"]).to eq("No results found")
+        expect(body).to eq(expected_response)
       end
     end
 
     context "results found" do
-      context "csv response" do
-        before { create_list(:accumulator, 2)  }
+      let!(:accumulator1) { create(:accumulator) }
+      let!(:accumulator2) { create(:accumulator) }
+      let!(:uplink_1) { accumulator1.uplink }
+      let!(:uplink_2) { accumulator2.uplink }
 
+      context "csv response" do
         it "generate a CSV" do
           header["Content-Type"] = "text/csv"
           get '/api/v1/accumulators_report', headers: header
@@ -79,6 +84,48 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         end
       end
 
+      context "json response" do
+        it "generate a JSON" do
+          get '/api/v1/accumulators_report', headers: header
+
+          expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+          expect(response.status).to eq(200)
+
+          body = JSON.parse(response.body)
+
+          date1 = uplink_1.created_at.strftime('%a %d %b %Y')
+          date2 = uplink_2.created_at.strftime('%a %d %b %Y')
+
+          accumulator2_response = {
+            "thing_id" => uplink_2.thing.id,
+            "thing_name" => uplink_2.thing.name,
+            "accumulators" => [
+              {
+                  "date" => date2,
+                  "value" => accumulator2.value,
+                  "consumption_delta" => 0,
+                  "accumulated_delta" => 0
+              }
+            ]
+          }
+
+          accumulator1_response = {
+            "thing_id" => uplink_1.thing.id,
+            "thing_name" => uplink_1.thing.name,
+            "accumulators" => [
+              {
+                  "date" => date1,
+                  "value" => accumulator1.value,
+                  "consumption_delta" => 0,
+                  "accumulated_delta" => 0
+              }
+            ]
+          }
+
+          expect(body).to include(accumulator1_response)
+          expect(body).to include(accumulator2_response)
+        end
+      end
     end
 
     context "date filter in params" do
@@ -95,6 +142,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       it "generate a CSV" do
         thing.update(name: '90480')
         thing2.update(name: '31249')
+        header["Content-Type"] = "text/csv"
 
         get '/api/v1/accumulators_report', headers: header, params: params
 
@@ -107,14 +155,22 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
   end
 
   describe "GET/show generate CSV" do
-    let(:accumulator) { create(:accumulator) }
-    let(:thing_name) { accumulator.uplink.thing.name }
+    let(:thing)    { create(:thing) }
+    let(:uplink_1) { create(:uplink, thing: thing) }
+    let(:uplink_2) { create(:uplink, thing: thing) }
+    let!(:accumulator1) { create(:accumulator, uplink: uplink_1) }
+    let!(:accumulator2) { create(:accumulator, uplink: uplink_2) }
+    let(:thing_name) { thing.name }
 
     context "result found" do
       context "csv response" do
         it "generate a csv" do
           header["Content-Type"] = "text/xml"
           get "/api/v1/accumulators_report/#{thing_name}", headers: header
+          puts "*" * 100
+          puts request.body.inspect
+          puts "*" * 100
+
        
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
@@ -127,34 +183,32 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
           get "/api/v1/accumulators_report/#{thing_name}", headers: header
        
-          puts "*" * 100
-          puts body.inspect
-          puts "*" * 100
           body = JSON.parse(response.body)
+
+          date1 = uplink_1.created_at.strftime('%a %d %b %Y')
+          date2 = uplink_2.created_at.strftime('%a %d %b %Y')
+
+          expected_response = {
+            "thing_id" => thing.id,
+            "thing_name" => thing.name,
+            "accumulators" => [
+                {
+                    "date" => date1,
+                    "value" => accumulator1.value,
+                    "consumption_delta" => 0,
+                    "accumulated_delta" => 0
+                },
+                {
+                    "date" => date2,
+                    "value" => accumulator2.value,
+                    "consumption_delta" => 0,
+                    "accumulated_delta" => 0
+                }
+            ]
+          }
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)
-
-          expected_response = [
-            {
-              "thing_id" => thing.id,
-              "thing_name" => thing.name,
-              "accumulators" => [
-                "date" => accumulator.uplink.created_at,
-                "value" => accumulator.value,
-                "consumption_delta" => "",
-                "accumulated" => ""
-              ],
-            },
-            {
-              "name" => mosquera.name,
-              "state" => {
-                "name" => cundinamarca.name,
-                "code_iso" => cundinamarca.code_iso
-              }
-            }
-          ]
-
           expect(body).to match_array(expected_response)
         end
       end

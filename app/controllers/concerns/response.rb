@@ -7,32 +7,32 @@ module Response
   end
 
   def csv_report_response(input)
-    type = Utils.camelize_symbol(input[:model])
-    data = "Reports::#{type}s::Index::CsvFormat".constantize.new.(input)
+    action = Utils.camelize_symbol(input[:action])
 
-    respond_to do |format|
-      if data.success?
-        format.all { send_data data.success, filename: "Device-#{input[:model]}", content_type: "text/csv" }
-      else
-        message, code = data.failure.values_at(:message, :code)
-       
-        json_response({ errors: message, code: code}, :not_found)
-      end
-    end
-  end
-
-  def json_report_response(input)
-    type = Utils.camelize_symbol(input[:model])
-    data = "Reports::#{type}s::Index::JsonFormat".constantize.new.(input)
-    serializer = "#{Utils.to_constant(model)}Serializer".constantize
-
+    data = "Reports::#{action}::Execute".constantize.(input)
+    
     if data.success?
-      render json: data.success, status: :ok, each_serializer: serializer
+      success_report_response(data.success, input[:option], input[:model])
     else
       message, code = data.failure.values_at(:message, :code)
      
       json_response({ errors: message, code: code}, :not_found)
     end
+  end
+
+  def success_report_response(input, type, model = nil)
+    csv = -> input do
+      respond_to do |format|
+        format.all { send_data input, filename: "Device-#{model}", content_type: "text/csv" }
+      end
+    end
+
+    options = {
+      csv_format: -> data { csv.(data) },
+      json_format: -> data { json_response(data, :ok) }
+    }
+    
+    options[type].(input)
   end
 
   def build_confirm_email_response(response)
