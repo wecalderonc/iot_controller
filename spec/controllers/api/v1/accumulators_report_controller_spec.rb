@@ -165,13 +165,10 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     context "result found" do
       context "csv response" do
         it "generate a csv" do
-          header["Content-Type"] = "text/xml"
-          get "/api/v1/accumulators_report/#{thing_name}", headers: header
-          puts "*" * 100
-          puts request.body.inspect
-          puts "*" * 100
+          header["Content-Type"] = "text/csv"
 
-       
+          get "/api/v1/accumulators_report/#{thing_name}", headers: header
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
         end
@@ -209,7 +206,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)
-          expect(body).to match_array(expected_response)
+          expect(body).to include(expected_response)
         end
       end
     end
