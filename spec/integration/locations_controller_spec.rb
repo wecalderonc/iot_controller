@@ -415,4 +415,108 @@ RSpec.describe "Locations API", :type => :request do
       end
     end
   end
+
+  path "/api/v1/locations/{thing_name}" do
+    get 'get location' do
+      tags 'Locations'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :thing_name, :in => :path, :type => :string
+      parameter name: 'Authorization', :in => :header, :type => :string
+
+      response '200', 'location founded' do
+        let(:user)       { create(:user) }
+        let(:location)   { create(:location, city: city) }
+        let(:thing)      { create(:thing, locates: location) }
+        let(:thing_name) { thing.name }
+        let(:city)       { create(:city) }
+        let!(:owner)     { Owner.create(from_node: user, to_node: thing) }
+
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          required: [ 'name', 'address', 'latitude', 'longitude', 'city', 'schedule_billing', 'schedule_report' ],
+          properties: {
+            type: :object,
+            properties: {
+              name: { type: :string },
+              address: { type: :string },
+              latitude: { type: :float },
+              longitude: { type: :float },
+              city: {
+                type: :object,
+                properties: {
+                  name: { type: :string }
+                }
+              },
+              schedule_billing: {
+                type: :object,
+                properties: {
+                  stratum: { type: :integer },
+                  basic_charge: { type: :float },
+                  top_limit: { type: :float },
+                  basic_price: { type: :float },
+                  extra_price: { type: :float },
+                  billing_frequency: { type: :integer },
+                  billing_period: { type: :string },
+                  cut_day: { type: :integer },
+                  start_date: { type: :string }
+                }
+              },
+              schedule_report: {
+                type: :object,
+                properties: {
+                  email: { type: :string },
+                  frequency_day: { type: :integer },
+                  frequency_interval: { type: :string },
+                  start_date: { type: :string }
+                }
+              }
+            }
+          }
+
+        run_test!
+      end
+
+      response '401', 'Token is missing' do
+        let(:user)       { create(:user) }
+        let(:location)   { create(:location, city: city) }
+        let(:thing)      { create(:thing, locates: location) }
+        let(:thing_name) { thing.name }
+        let(:city)       { create(:city) }
+        let!(:owner)     { Owner.create(from_node: user, to_node: thing) }
+
+        let(:'Authorization') { "Access denied!" }
+
+        run_test!
+      end
+
+       response '404', 'thing not found' do
+        let(:user)       { create(:user) }
+        let(:location)   { create(:location, city: city) }
+        let(:thing)      { create(:thing, locates: location) }
+        let(:thing_name) { thing.name }
+        let(:city)       { create(:city) }
+        let!(:owner)     { Owner.create(from_node: user, to_node: thing) }
+
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
+        let(:thing_name) { "wrong_name" }
+
+        run_test!
+      end
+
+      response '404', 'location not found' do
+        let(:user)       { create(:user) }
+        let(:thing)      { create(:thing) }
+        let!(:owner)     { Owner.create(from_node: user, to_node: thing) }
+
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
+        let(:thing_name) { thing.name }
+
+        run_test!
+      end
+    end
+  end
 end

@@ -8,5 +8,9 @@ FactoryBot.define do
     association :city, factory: :city
     association :schedule_report, factory: :schedule_report
     association :schedule_billing, factory: :schedule_billing
+
+    trait :with_thing do
+      association :thing, factory: :thing
+    end
   end
 end

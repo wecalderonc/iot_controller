@@ -304,4 +304,86 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
       end
     end
   end
+
+  describe "GET/show location" do
+    let(:user)     { create(:user) }
+    let(:location) { create(:location, city: city) }
+    let(:thing)    { create(:thing, locates: location) }
+    let(:city)     { create(:city) }
+    let(:header)   { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
+
+    context "There is one thing with their location" do
+      it "Should return an array with the location of a one thing" do
+        Owner.create(from_node: user, to_node: thing)
+        thing_name = thing.name
+
+        get "/api/v1/locations/#{thing_name}", headers: header
+
+        body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+
+        expected_response = {
+          "address" => location.address,
+          "latitude" => location.latitude,
+          "longitude" => location.longitude,
+          "name" => location.name,
+          "city" => {
+            "name" => city.name,
+          },
+          "schedule_billing" => {
+            "stratum" => location.schedule_billing.stratum,
+            "basic_charge" => location.schedule_billing.basic_charge,
+            "top_limit" => location.schedule_billing.top_limit,
+            "basic_price" => location.schedule_billing.basic_price,
+            "extra_price" => location.schedule_billing.extra_price,
+            "billing_frequency" => location.schedule_billing.billing_frequency,
+            "billing_period" => location.schedule_billing.billing_period,
+            "cut_day" => location.schedule_billing.cut_day,
+            "start_date" => JSON.parse(location.schedule_billing.start_date.to_json)
+          },
+          "schedule_report" => {
+            "email" => location.schedule_report.email,
+            "frequency_day" => location.schedule_report.frequency_day,
+            "frequency_interval" => location.schedule_report.frequency_interval,
+            "start_date" => location.schedule_report.start_date
+          }
+        }
+
+        expect(body).to eq(expected_response)
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context "Thing name don't exist" do
+      it "Should return a message thing does not exist" do
+        Owner.create(from_node: user, to_node: thing)
+        thing_name = thing.name
+
+        get "/api/v1/locations/wrongname", headers: header
+
+
+        parsed_response = JSON.parse(response.body)
+
+        expected_response = "The thing wrongname does not exist"
+        expect(parsed_response["errors"]).to eq(expected_response)
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context "Thing has no associated location" do
+      it "Should return a message of location not found" do
+        Owner.create(from_node: user, to_node: thing)
+        thing = create(:thing)
+
+        get "/api/v1/locations/#{thing.name}", headers: header
+
+        parsed_response = JSON.parse(response.body)
+
+        expected_response = "The thing #{thing.name} does not have location"
+        expect(parsed_response["errors"]).to eq(expected_response)
+        expect(response.status).to eq(404)
+      end
+    end
+  end
 end

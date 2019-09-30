@@ -7,7 +7,7 @@ module Validators::Things
   end
 
   UpdateSchema = Dry::Validation.Schema do
-    required(:thing_name)
+    required(:thing_name).filled(type?: String)
     optional(:name).filled(type?: String)
     optional(:status).filled(type?: String)
     optional(:pac).value(type?: String)

@@ -1134,6 +1134,128 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "get location",
+        "tags": [
+          "Locations"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "location founded",
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "address",
+                "latitude",
+                "longitude",
+                "city",
+                "schedule_billing",
+                "schedule_report"
+              ],
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "latitude": {
+                    "type": "float"
+                  },
+                  "longitude": {
+                    "type": "float"
+                  },
+                  "city": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "schedule_billing": {
+                    "type": "object",
+                    "properties": {
+                      "stratum": {
+                        "type": "integer"
+                      },
+                      "basic_charge": {
+                        "type": "float"
+                      },
+                      "top_limit": {
+                        "type": "float"
+                      },
+                      "basic_price": {
+                        "type": "float"
+                      },
+                      "extra_price": {
+                        "type": "float"
+                      },
+                      "billing_frequency": {
+                        "type": "integer"
+                      },
+                      "billing_period": {
+                        "type": "string"
+                      },
+                      "cut_day": {
+                        "type": "integer"
+                      },
+                      "start_date": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "schedule_report": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "frequency_day": {
+                        "type": "integer"
+                      },
+                      "frequency_interval": {
+                        "type": "string"
+                      },
+                      "start_date": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "404": {
+            "description": "location not found"
+          }
+        }
       }
     },
     "/api/v1/states": {

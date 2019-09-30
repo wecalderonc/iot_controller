@@ -106,10 +106,10 @@ end
 
         get "/api/v1/things/#{thing.name}/alarms", headers: header
 
-        body = JSON.parse(response.body)
+        parsed_response = JSON.parse(response.body)
 
-        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expetected_response = "Alarms not found"
+        expected_response = "The thing #{thing.name} does not have alarms"
+        expect(parsed_response["message"]).to eq(expected_response)
         expect(response.status).to eq(404)
       end
     end
