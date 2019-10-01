@@ -8,6 +8,7 @@ module Api
 
       def show
         response = Users::Show.find_user(show_params)
+
         default_show_response(response)
       end
 
@@ -22,7 +23,7 @@ module Api
         if user.success?
           json_response(user.success, :ok, UsersSerializer)
         else
-          render json: { errors: user.failure[:message] }, status: :not_found
+          json_response({ errors: user.failure[:message] }, :not_found)
         end
       end
 
@@ -51,7 +52,7 @@ module Api
         update_password_response = Users::Password::Execute.new.(password_params)
 
         if update_password_response.success?
-          render json: update_password_response.success, status: :ok, serializer: UsersSerializer
+          json_response(update_password_response.success, :ok, UsersSerializer)
         else
           json_response({ errors: update_password_response.failure[:message] }, :not_found)
         end

@@ -22,7 +22,7 @@ class Reports::Accumulators::JsonReport
       end
 
       response << {
-        thing_id: device.id, 
+        thing_id: device.id,
         thing_name: device.name,
         accumulators: proccesed_acc
       }

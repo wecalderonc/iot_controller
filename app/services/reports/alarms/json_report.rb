@@ -19,7 +19,7 @@ class Reports::Alarms::JsonReport
       end
 
       response << {
-        thing_id: device.id, 
+        thing_id: device.id,
         thing_name: device.name,
         alarms: proccesed_alarms
       }

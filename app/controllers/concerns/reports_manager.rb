@@ -28,6 +28,37 @@ module ReportsManager
     end
   end
 
+  def get_content_type
+    request.headers["CONTENT_TYPE"]
+  end
+
+  def csv_report_response(input)
+    action = Utils.camelize_symbol(input[:action])
+
+    data = "Reports::#{action}::Execute".constantize.(input)
+
+    if data.success?
+      success_report_response(data.success, input[:option], input[:model])
+    else
+      failure_response(data, :not_found)
+    end
+  end
+
+  def success_report_response(input, type, model = nil)
+    csv = -> input do
+      respond_to do |format|
+        format.all { send_data input, filename: "Device-#{model}", content_type: "text/csv" }
+      end
+    end
+
+    options = {
+      csv_format: -> data { csv.(data) },
+      json_format: -> data { json_response(data, :ok) }
+    }
+
+    options[type].(input)
+  end
+
   private
 
   def build_response(collection, model)
