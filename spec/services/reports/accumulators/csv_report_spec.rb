@@ -12,10 +12,10 @@ RSpec.describe Reports::Accumulators::CsvReport do
       thing = uplink.thing
       date = uplink.created_at.strftime('%a %d %b %Y')
 
-      expect(result).to include("BD ID,ID Dispositivo,Fecha/Hora,Valor Acumulador,Delta Consumo,Delta Acumulado")
-      expect(result).to include("#{thing.name}")
-      expect(result).to include("#{thing.id}")
-      expect(result).to include("#{date}")
+      expect(response).to include("BD ID,ID Dispositivo,Fecha/Hora,Valor Acumulador,Delta Consumo,Delta Acumulado")
+      expect(response).to include("#{thing.name}")
+      expect(response).to include("#{thing.id}")
+      expect(response).to include("#{date}")
     end
   end
 end

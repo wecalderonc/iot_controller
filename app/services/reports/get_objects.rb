@@ -1,19 +1,19 @@
 require 'dry/transaction/operation'
 
-class Reports::GetAccumulators
+class Reports::GetObjects
   include Dry::Transaction::Operation
 
   def call(input)
     params, model, thing = input.values_at(:params, :model, :thing)
 
     if params[:date].present?
-      accumulators = ThingsQuery.new(thing)
+      objects = ThingsQuery.new(thing)
       .date_uplinks_filter(params[:date], model)
     else
-      accumulators = ThingsQuery.new(thing).send(query_method(model))
+      objects = ThingsQuery.new(thing).send(query_method(model))
     end
 
-    build_response(accumulators)
+    build_response(objects)
   end
 
   private
@@ -22,9 +22,9 @@ class Reports::GetAccumulators
     "sort_#{model.downcase}s".to_sym
   end
 
-  def build_response(accumulators)
-    if accumulators.present?
-      Success accumulators
+  def build_response(objects)
+    if objects.present?
+      Success objects
     else
       Failure Errors.service_error("Results not found", 10104, self.class)
     end

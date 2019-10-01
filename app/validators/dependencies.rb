@@ -35,7 +35,8 @@ module Validators
       accumulator:                        Validators::Accumulators::GetSchema,
       state:                              Validators::States::GetSchema,
       city:                               Validators::Cities::GetSchema,
-      location:                           Validators::Locations::GetSchema
+      location:                           Validators::Locations::GetSchema,
+      accumulators_report:                Validators::Accumulators::ReportSchema
     },
 
     authenticate: {

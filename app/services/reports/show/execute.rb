@@ -1,15 +1,15 @@
 module Reports::Show
 
   ParseInput = -> input do
-    input.merge(thing_name: input[:params][:thing_name])
+    input.merge!(thing_name: input[:params][:thing_name])
   end
 
   _, BaseTx = Common::TxMasterBuilder.new do
-    step :validation,       with: Common::Operations::Validator.(:get, :accumulator)
-    map  :parse_input,      with: ParseInput
-    step :get_thing,        with: Things::Get.new
-    step :get_accumulators, with: Reports::GetAccumulators.new
-    map  :build_report,     with: Reports::Accumulators::JsonReport.new
+    step :validation,   with: Common::Operations::Validator.(:get, :accumulators_report)
+    map  :parse_input,  with: ParseInput
+    step :get_thing,    with: Things::Get.new
+    step :get_objects,  with: Reports::GetObjects.new
+    map  :build_report, with: Reports::Accumulators::CsvReport.new
   end.Do
 
   Options = {

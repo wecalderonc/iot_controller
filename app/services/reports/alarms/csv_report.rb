@@ -15,6 +15,7 @@ class Reports::Alarms::CsvReport
 
         alarms.each do |alarm|
           date = Utils.parse_date(alarm.uplink.created_at)
+
           csv << [device.id, device.name, date, alarm.value]
         end
       end

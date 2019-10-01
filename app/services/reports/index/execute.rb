@@ -1,7 +1,7 @@
 module Reports::Index
   _, BaseTx = Common::TxMasterBuilder.new do
-    step :get_accumulators,  with: Reports::GetAccumulators.new
-    map  :build_report,      with: Reports::Accumulators::CsvReport.new
+    step :get_objects,  with: Reports::GetObjects.new
+    map  :build_report, with: Reports::Accumulators::CsvReport.new
   end.Do
 
   Options = {
