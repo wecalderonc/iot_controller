@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Reports::Accumulators::JsonReport do
   describe "#call" do
-    let(:input)    { ThingsQuery.new.sort_alarms }
+    let(:input)    { ThingsQuery.new.sort_accumulators }
     let(:response) { subject.(input) }
 
     it "should return a csv file with thing's accumulators data"do
@@ -16,9 +16,11 @@ RSpec.describe Reports::Accumulators::JsonReport do
         {
           :thing_id => thing.id,
           :thing_name => thing.name,
-          :alarms => [{
+          :accumulators => [{
             :date => date,
-            :value => accumulator.value
+            :value => accumulator.value,
+            :consumption_delta => 0,
+            :accumulated_delta => 0
           }]
         }
       ]

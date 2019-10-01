@@ -29,5 +29,5 @@ module Reports::Show
     }
   }
 
-  Execute = -> input { puts "input -> #{input.inspect}"; Options[input[:option]][input[:model]].(input) }
+  Execute = -> input { Options[input[:option]][input[:model]].(input) }
 end

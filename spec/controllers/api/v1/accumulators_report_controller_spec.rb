@@ -77,6 +77,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       context "csv response" do
         it "generate a CSV" do
           header["Content-Type"] = "text/csv"
+
           get '/api/v1/accumulators_report', headers: header
 
           expect(response.headers["Content-Type"]).to eq("text/csv")
@@ -142,6 +143,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       it "generate a CSV" do
         thing.update(name: '90480')
         thing2.update(name: '31249')
+
         header["Content-Type"] = "text/csv"
 
         get '/api/v1/accumulators_report', headers: header, params: params
@@ -176,37 +178,18 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
       context "json response" do
         it "generate a JSON response" do
-          header["Content-Type"] = "application/json"
-
           get "/api/v1/accumulators_report/#{thing_name}", headers: header
        
-          body = JSON.parse(response.body)
+          body = JSON.parse(response.body)[0]
 
           date1 = uplink_1.created_at.strftime('%a %d %b %Y')
           date2 = uplink_2.created_at.strftime('%a %d %b %Y')
 
-          expected_response = {
-            "thing_id" => thing.id,
-            "thing_name" => thing.name,
-            "accumulators" => [
-                {
-                    "date" => date1,
-                    "value" => accumulator1.value,
-                    "consumption_delta" => 0,
-                    "accumulated_delta" => 0
-                },
-                {
-                    "date" => date2,
-                    "value" => accumulator2.value,
-                    "consumption_delta" => 0,
-                    "accumulated_delta" => 0
-                }
-            ]
-          }
-
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)
-          expect(body).to include(expected_response)
+          expect(body["thing_id"]).to eq(thing.id)
+          expect(body["thing_name"]).to eq(thing.name)
+          expect(body["accumulators"].count).to eq(2)
         end
       end
     end
@@ -219,7 +202,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
-        expect(body["errors"]).to eq("Device not found")
+        expect(body["errors"]).to eq("The thing invalid_name does not exist")
       end
     end
 
@@ -237,6 +220,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       it "generate a CSV" do
         thing2.update(name: '20489')
         thing.update(name: '64029')
+
+        header["Content-Type"] = "text/csv"
 
         get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
 

@@ -23,10 +23,6 @@ module Api
 
       private
 
-      def get_content_type
-        request.headers["CONTENT_TYPE"]
-      end
-
       def show_params
         params.permit(:thing_name).to_h.symbolize_keys
       end

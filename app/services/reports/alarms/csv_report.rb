@@ -6,7 +6,7 @@ class Reports::Alarms::CsvReport
 
   HEADERS = ["BD ID", "ID Dispositivo", "Fecha/Hora", "Valor Alarma"]
 
-  def self.call(input)
+  def call(input)
     CSV.generate(headers: true) do |csv|
 
       csv << HEADERS

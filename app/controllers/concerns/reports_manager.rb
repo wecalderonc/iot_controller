@@ -22,9 +22,9 @@ module ReportsManager
 
   def get_report(input)
     if input[:content_type] == "text/csv"
-      csv_report_response(input.merge(option: :csv_format))
+      report_response(input.merge(option: :csv_format))
     else
-      csv_report_response(input.merge(option: :json_format))
+      report_response(input.merge(option: :json_format))
     end
   end
 
@@ -32,7 +32,7 @@ module ReportsManager
     request.headers["CONTENT_TYPE"]
   end
 
-  def csv_report_response(input)
+  def report_response(input)
     action = Utils.camelize_symbol(input[:action])
 
     data = "Reports::#{action}::Execute".constantize.(input)
