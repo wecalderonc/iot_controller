@@ -21,10 +21,10 @@ module Reports::Show
     },
     json_format: {
       accumulator: BaseTx.new(
-        build_report: Reports::Accumulators::JsonReport.new
+        build_report: Reports::BaseJsonReport.new
       ),
       alarm: BaseTx.new(
-        build_report: Reports::Alarms::JsonReport.new
+        build_report: Reports::BaseJsonReport.new
       )
     }
   }

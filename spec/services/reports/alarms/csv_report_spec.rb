@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Reports::Alarms::CsvReport do
   describe "#call" do
-    let(:input)   { ThingsQuery.new.sort_alarms }
+    let(:input)   { { objects: ThingsQuery.new.sort_alarms, model: :alarm } }
     let(:response) { subject.(input) }
 
     it "should return a csv file with thing's alarms data"do

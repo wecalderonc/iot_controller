@@ -10,7 +10,7 @@ class Reports::Alarms::CsvReport
     CSV.generate(headers: true) do |csv|
 
       csv << HEADERS
-      input.each do |device, alarms|
+      input[:objects].each do |device, alarms|
         csv << ["Device name: #{device.name}"]
 
         alarms.each do |alarm|

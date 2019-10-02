@@ -13,7 +13,7 @@ class Reports::GetObjects
       objects = ThingsQuery.new(thing).send(query_method(model))
     end
 
-    build_response(objects)
+    build_response(input, objects)
   end
 
   private
@@ -22,9 +22,9 @@ class Reports::GetObjects
     "sort_#{model.downcase}s".to_sym
   end
 
-  def build_response(objects)
+  def build_response(input, objects)
     if objects.present?
-      Success objects
+      Success input.merge(objects: objects)
     else
       Failure Errors.service_error("Results not found", 10104, self.class)
     end

@@ -10,7 +10,7 @@ class Reports::Accumulators::CsvReport
     CSV.generate(headers: true) do |csv|
 
       csv << HEADERS
-      input.each do |device, accumulators|
+      input[:objects].each do |device, accumulators|
         csv << ["Device name: #{device.name}"]
 
         deltas = AccumulatorDeltaBuilder.new.(accumulators)

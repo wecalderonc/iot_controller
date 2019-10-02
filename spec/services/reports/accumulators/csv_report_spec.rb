@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Reports::Accumulators::CsvReport do
   describe "#call" do
-    let(:input)    { ThingsQuery.new.sort_accumulators }
+    let(:input)    { { objects: ThingsQuery.new.sort_accumulators, model: :accumulator } }
     let(:response) { subject.(input) }
 
     it "should return a csv file with thing's accumulators data"do
