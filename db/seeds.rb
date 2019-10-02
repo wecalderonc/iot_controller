@@ -144,6 +144,6 @@ p "****************"
 p billing = ScheduleBilling.create(stratum: 3, billing_period: 4, start_date: Date.today)
 p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", frequency_interval: 2, start_date: Date.today)
 
-p Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4, longitude: 74, thing: thing1, schedule_billing: billing, schedule_report: report)
+p Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4, longitude: 74, thing: thing1, schedule_billing: billing, schedule_report: report, city: city)
 p Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5, longitude: 75, thing: thing2)
 p Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6, longitude: 76, thing: thing3)
