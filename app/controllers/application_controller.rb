@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
   include Response
   include ReportsManager
   include Authorization
+  include ActionController::MimeResponds
 
   before_action :authorize_request
   attr_reader :current_user

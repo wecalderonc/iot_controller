@@ -9,7 +9,7 @@ class Things::Get
     if thing.present?
       Success input.merge(thing: thing)
     else
-      Failure Errors.general_error("The thing #{input[:thing_name]} does not exist", self.class)
+      Failure Errors.service_error("The thing #{input[:thing_name]} does not exist", 10104, self.class)
     end
   end
 end

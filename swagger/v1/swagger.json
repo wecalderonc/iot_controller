@@ -80,6 +80,178 @@
         }
       }
     },
+    "/api/v1/accumulators_report": {
+      "get": {
+        "summary": "Retrieves all accumulators related with all things",
+        "tags": [
+          "Alarms Report"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "accumulators founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "thing_id": {
+                    "type": "string"
+                  },
+                  "thing_name": {
+                    "type": "string"
+                  },
+                  "accumulators": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "consumption_delta": {
+                          "type": "integer"
+                        },
+                        "accumulated_delta": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "thing_id",
+                  "thing_name",
+                  "accumulators"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Results not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "errors",
+                "code"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/accumulators_report/{thing_name}": {
+      "get": {
+        "summary": "Retrieves all accumulators related with a specific things",
+        "tags": [
+          "Alarms Report"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "accumulators founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "thing_id": {
+                    "type": "string"
+                  },
+                  "thing_name": {
+                    "type": "string"
+                  },
+                  "accumulators": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "consumption_delta": {
+                          "type": "integer"
+                        },
+                        "accumulated_delta": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "thing_id",
+                  "thing_name",
+                  "accumulators"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The thing thing_name does not exist",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "errors",
+                "code"
+              ]
+            }
+          }
+        }
+      }
+    },
     "/api/v1/accumulators_report/": {
       "get": {
         "summary": "Retrieves last accumulators of a thing",
@@ -295,6 +467,172 @@
           },
           "404": {
             "description": "alarms not found"
+          }
+        }
+      }
+    },
+    "/api/v1/alarms_report": {
+      "get": {
+        "summary": "Retrieves all alarms related with all things",
+        "tags": [
+          "Alarms Report"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alarms founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "thing_id": {
+                    "type": "string"
+                  },
+                  "thing_name": {
+                    "type": "string"
+                  },
+                  "alarms": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "thing_id",
+                  "thing_name",
+                  "alarms"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Results not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "errors",
+                "code"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alarms_report/{thing_name}": {
+      "get": {
+        "summary": "Retrieves all alarms related with a specific things",
+        "tags": [
+          "Alarms Report"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alarms founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "thing_id": {
+                    "type": "string"
+                  },
+                  "thing_name": {
+                    "type": "string"
+                  },
+                  "alarms": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "consumption_delta": {
+                          "type": "integer"
+                        },
+                        "accumulated_delta": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "thing_id",
+                  "thing_name",
+                  "alarms"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The thing thing_name does not exist",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "errors",
+                "code"
+              ]
+            }
           }
         }
       }

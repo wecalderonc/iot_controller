@@ -8,9 +8,7 @@ class AuthenticationController < ApplicationController
     if request.success?
       json_response(request.success, :ok)
     else
-      message, code = request.failure.values_at(:message, :code)
-
-      json_response({ errors: message, code: code }, :unauthorized)
+      failure_response(request, :unauthorized)
     end
   end
 

@@ -6,12 +6,6 @@ module Response
     render json: object, status: status, serializer: serializer
   end
 
-  def csv_response(data, filename)
-    respond_to do |format|
-      format.all { send_data data, filename: "#{filename}-#{Date.today}.csv" }
-    end
-  end
-
   def build_confirm_email_response(response)
     if response.success?
       json_response({ message: response.success }, :ok)
@@ -36,10 +30,14 @@ module Response
 
       render json: response.success, status: :ok, each_serializer:  serializer
     else
-      message, code = response.failure.values_at(:message, :code)
-
-      json_response({ errors: message, code: code}, :not_found)
+      failure_response(response, :not_found)
     end
+  end
+
+  def failure_response(data, status)
+    message, code = data.failure.values_at(:message, :code)
+
+    json_response({ errors: message, code: code}, status)
   end
 
   private

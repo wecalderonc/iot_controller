@@ -14,22 +14,49 @@ module ReportsManager
       last_accumulators: -> { render_last_accumulators(input[:params][:thing_name]) }
     }
     options.default = -> {
-      query_result = build_query(input)
-      build_response(query_result, input[:model])
+      get_report(input)
     }
 
     options[input[:params][:query]&.to_sym].()
   end
 
-  def show_handler(input)
-    thing = Thing.find_by(name: params[:thing_name])
-
-    if thing.present?
-        query_result = build_query(input, thing)
-        build_response(query_result, input[:model])
+  def get_report(input)
+    if input[:content_type] == "text/csv"
+      report_response(input.merge(option: :csv_format))
     else
-      json_response({ errors: "Device not found" }, :not_found)
+      report_response(input.merge(option: :json_format))
     end
+  end
+
+  def get_content_type
+    request.headers["CONTENT_TYPE"]
+  end
+
+  def report_response(input)
+    action = Utils.camelize_symbol(input[:action])
+
+    data = "Reports::#{action}::Execute".constantize.(input)
+
+    if data.success?
+      success_report_response(data.success, input[:option], input[:model])
+    else
+      failure_response(data, :not_found)
+    end
+  end
+
+  def success_report_response(input, type, model = nil)
+    csv = -> input do
+      respond_to do |format|
+        format.all { send_data input, filename: "Device-#{model}", content_type: "text/csv" }
+      end
+    end
+
+    options = {
+      csv_format: -> data { csv.(data) },
+      json_format: -> data { json_response(data, :ok) }
+    }
+
+    options[type].(input)
   end
 
   private

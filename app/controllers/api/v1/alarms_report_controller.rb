@@ -4,11 +4,28 @@ module Api
     include ActionController::MimeResponds
 
       def index
-        index_handler({ params: params, model: :alarm })
+        index_handler({
+          params: params,
+          model: :alarm,
+          thing: Thing,
+          content_type: get_content_type,
+          action: :index
+        })
       end
 
       def show
-        show_handler({ params: params, model: :alarm })
+        get_report({
+          params: show_params,
+          model: :alarm,
+          content_type: get_content_type,
+          action: :show
+        })
+      end
+
+      private
+
+      def show_params
+        params.permit(:thing_name).to_h.symbolize_keys
       end
     end
   end
