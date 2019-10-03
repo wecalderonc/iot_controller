@@ -29,7 +29,7 @@ RSpec.describe Locations::Update::Execute do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2.000,
             extra_price: 2.500,

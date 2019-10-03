@@ -31,7 +31,7 @@ RSpec.describe "Locations API", :type => :request do
             type: :object,
             properties: {
               stratum: { type: :integer },
-              basic_charge: { type: :float },
+              basic_charge_price: { type: :float },
               top_limit: { type: :float },
               basic_price: { type: :float },
               extra_price: { type: :float },
@@ -86,7 +86,7 @@ RSpec.describe "Locations API", :type => :request do
                 type: :object,
                 properties: {
                   stratum: { type: :integer },
-                  basic_charge: { type: :float },
+                  basic_charge_price: { type: :float },
                   top_limit: { type: :float },
                   basic_price: { type: :float },
                   extra_price: { type: :float },
@@ -123,7 +123,7 @@ RSpec.describe "Locations API", :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -179,7 +179,7 @@ RSpec.describe "Locations API", :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -237,7 +237,7 @@ RSpec.describe "Locations API", :type => :request do
             type: :object,
             properties: {
               stratum: { type: :integer },
-              basic_charge: { type: :float },
+              basic_charge_price: { type: :float },
               top_limit: { type: :float },
               basic_price: { type: :float },
               extra_price: { type: :float },
@@ -296,7 +296,7 @@ RSpec.describe "Locations API", :type => :request do
                 type: :object,
                 properties: {
                   stratum: { type: :integer },
-                  basic_charge: { type: :float },
+                  basic_charge_price: { type: :float },
                   top_limit: { type: :float },
                   basic_price: { type: :float },
                   extra_price: { type: :float },
@@ -333,7 +333,7 @@ RSpec.describe "Locations API", :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -390,7 +390,7 @@ RSpec.describe "Locations API", :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -453,7 +453,7 @@ RSpec.describe "Locations API", :type => :request do
                 type: :object,
                 properties: {
                   stratum: { type: :integer },
-                  basic_charge: { type: :float },
+                  basic_charge_price: { type: :float },
                   top_limit: { type: :float },
                   basic_price: { type: :float },
                   extra_price: { type: :float },

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ScheduleBilling, :type => :model do
 
   it { is_expected.to define_property :stratum, :Integer }
-  it { is_expected.to define_property :basic_charge, :Float }
+  it { is_expected.to define_property :basic_charge_price, :Float }
   it { is_expected.to define_property :top_limit, :Float }
   it { is_expected.to define_property :basic_price, :Float }
   it { is_expected.to define_property :extra_price, :Float }
