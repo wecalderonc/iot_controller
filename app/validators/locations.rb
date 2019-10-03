@@ -32,7 +32,7 @@ module Validators::Locations
 
     required(:schedule_billing).schema do
       optional(:stratum).filled(type?: Integer)
-      required(:basic_charge).filled(type?: Float)
+      required(:basic_charge_price).filled(type?: Float)
       required(:top_limit).filled(type?: Float)
       required(:basic_price).filled(type?: Float)
       required(:extra_price).filled(type?: Float)
@@ -47,8 +47,8 @@ module Validators::Locations
         ScheduleBilling::VALID_PERIODS.include?(billing_period.to_sym)
       end
 
-      validate(invalid_basic_charge: :basic_charge) do |basic_charge|
-        basic_charge >= 0 ? true : false
+      validate(invalid_basic_charge_price: :basic_charge_price) do |basic_charge_price|
+        basic_charge_price >= 0 ? true : false
       end
     end
 

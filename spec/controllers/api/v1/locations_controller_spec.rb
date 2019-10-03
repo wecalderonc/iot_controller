@@ -28,7 +28,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -66,7 +66,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           "schedule_billing" => {
             "stratum" => 5,
-            "basic_charge" => 13.841,
+            "basic_charge_price" => 13.841,
             "top_limit" => 40.0,
             "basic_price" => 2000.0,
             "extra_price" => 2500.0,
@@ -105,7 +105,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -181,7 +181,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -219,7 +219,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           "schedule_billing" => {
             "stratum" => 5,
-            "basic_charge" => 13.841,
+            "basic_charge_price" => 13.841,
             "top_limit" => 40.0,
             "basic_price" => 2000.0,
             "extra_price" => 2500.0,
@@ -258,7 +258,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           schedule_billing: {
             stratum: 5,
-            basic_charge: 13.841,
+            basic_charge_price: 13.841,
             top_limit: 40.0,
             basic_price: 2000.0,
             extra_price: 2500.0,
@@ -333,7 +333,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           },
           "schedule_billing" => {
             "stratum" => location.schedule_billing.stratum,
-            "basic_charge" => location.schedule_billing.basic_charge,
+            "basic_charge_price" => location.schedule_billing.basic_charge_price,
             "top_limit" => location.schedule_billing.top_limit,
             "basic_price" => location.schedule_billing.basic_price,
             "extra_price" => location.schedule_billing.extra_price,

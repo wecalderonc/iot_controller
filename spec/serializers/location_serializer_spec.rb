@@ -24,7 +24,7 @@ Rspec.describe LocationSerializer do
         },
         "schedule_billing"=> {
           "stratum"=>schedule_billing.stratum,
-          "basic_charge"=>schedule_billing.basic_charge,
+          "basic_charge_price"=>schedule_billing.basic_charge_price,
           "top_limit"=>schedule_billing.top_limit,
           "basic_price"=>schedule_billing.basic_price,
           "extra_price"=>schedule_billing.extra_price,

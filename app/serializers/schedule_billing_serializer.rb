@@ -1,6 +1,6 @@
 class ScheduleBillingSerializer < ActiveModel::Serializer
   attributes  :stratum,
-              :basic_charge,
+              :basic_charge_price,
               :top_limit,
               :basic_price,
               :extra_price,

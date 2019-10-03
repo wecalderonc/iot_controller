@@ -1053,7 +1053,7 @@
                     "stratum": {
                       "type": "integer"
                     },
-                    "basic_charge": {
+                    "basic_charge_price": {
                       "type": "float"
                     },
                     "top_limit": {
@@ -1161,7 +1161,7 @@
                       "stratum": {
                         "type": "integer"
                       },
-                      "basic_charge": {
+                      "basic_charge_price": {
                         "type": "float"
                       },
                       "top_limit": {
@@ -1298,7 +1298,7 @@
                     "stratum": {
                       "type": "integer"
                     },
-                    "basic_charge": {
+                    "basic_charge_price": {
                       "type": "float"
                     },
                     "top_limit": {
@@ -1407,7 +1407,7 @@
                       "stratum": {
                         "type": "integer"
                       },
-                      "basic_charge": {
+                      "basic_charge_price": {
                         "type": "float"
                       },
                       "top_limit": {
@@ -1540,7 +1540,7 @@
                       "stratum": {
                         "type": "integer"
                       },
-                      "basic_charge": {
+                      "basic_charge_price": {
                         "type": "float"
                       },
                       "top_limit": {

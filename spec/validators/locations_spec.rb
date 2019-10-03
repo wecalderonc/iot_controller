@@ -24,7 +24,7 @@ RSpec.describe Validators::Locations do
         },
         schedule_billing: {
           stratum: 5,
-          basic_charge: 13.841,
+          basic_charge_price: 13.841,
           top_limit: 40.0,
           basic_price: 2.000,
           extra_price: 2.500,
@@ -262,11 +262,11 @@ RSpec.describe Validators::Locations do
 
     context "When the 'validation' operation fails" do
       it "Should return a Failure response" do
-        input[:schedule_billing][:basic_charge] = "12345"
+        input[:schedule_billing][:basic_charge_price] = "12345"
 
         expected_response = {
           :schedule_billing => {
-            :basic_charge => ["must be Float"]
+            :basic_charge_price => ["must be Float"]
           }
         }
 
@@ -277,10 +277,10 @@ RSpec.describe Validators::Locations do
 
     context "When the 'validation' operation fails" do
       it "Should return a Failure response" do
-        input[:schedule_billing][:basic_charge] = -1.0
+        input[:schedule_billing][:basic_charge_price] = -1.0
 
         expected_response = {
-            :invalid_basic_charge => ["The value must be positive"]
+            :invalid_basic_charge_price => ["The value must be positive"]
         }
 
         expect(response.failure?).to be_truthy
