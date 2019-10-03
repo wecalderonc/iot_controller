@@ -35,6 +35,8 @@ p "Erasing ScheduleReport"
 ScheduleReport.destroy_all
 p "Erasing Locations"
 Location.destroy_all
+p "Erasing Prices"
+Price.destroy_all
 
 p "****************"
 p "                "
@@ -58,13 +60,31 @@ p "                "
 p "CREATING THINGS"
 p "                "
 p "****************"
-p thing1 = Thing.create(name: "thing_one", status: "activated", pac: "io46eui4oe6uioe1ui6o4", company_id: "12", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
+
+p thing1 = Thing.create(
+  name: "thing_one",
+  status: "activated",
+  pac: "io46eui4oe6uioe1ui6o4",
+  company_id: "12",
+  latitude: 4,
+  longitude: 75,
+  valve_transition: ValveTransition.create,
+  units: { liter: 200 }
+  )
 
 p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 
 p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 
 p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
+
+p "****************"
+p "                "
+p "CREATING PRICE"
+p "                "
+p "****************"
+
+p Price.create(currency: 'COP', date: Date.today, unit: 'liter', value: 3000)
 
 p "****************"
 p "                "
