@@ -10,7 +10,7 @@ class ThingSerializer < ActiveModel::Serializer
               :created_at,
               :updated_at,
 
-              :new_alarms?,
+              :new_alarms,
               :valve_transition,
               :last_uplink,
               :last_messages
@@ -22,13 +22,14 @@ class ThingSerializer < ActiveModel::Serializer
     object.last_uplinks
   end
 
-  def new_alarms?(thing)
-    alarm_state = object.alarm.viewed
+  def new_alarms
+  puts "+" * 100
+  p object.has_new_alarms?
+  end
 
-    alarm_state = {
-      true => -> {"Don't have new alarms"}
-      false => -> {"Have new alarms"}
-    }
+  def battery_level
+    battery_value = last_messages[:batteryLevel][:value].to_i
+    BatteryLevel::LEVEL_LABELS[battery_value]
   end
 
   def last_messages

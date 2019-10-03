@@ -37,6 +37,12 @@ class Thing
     self.last_uplinks(quantity).map(&:accumulator)
   end
 
+  def has_new_alarms?
+  puts "estmos en el modelooooooooo"
+  puts self.uplinks.alarm.inspect
+  p self.uplinks.alarm.map(&:viewed).any?(true)
+  end
+
   private
 
   #TODO: Fix this in the next version.
