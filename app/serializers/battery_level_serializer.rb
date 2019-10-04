@@ -1,7 +1,7 @@
 class BatteryLevelSerializer < UplinkBaseSerializer
-  attributes :name
+  attributes :level_label
 
-  def name
+  def level_label
     battery_value = object.value.to_i
     BatteryLevel::LEVEL_LABELS[battery_value]
   end

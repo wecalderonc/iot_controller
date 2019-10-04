@@ -99,7 +99,7 @@ Rspec.describe ThingSerializer do
           "batteryLevel"=>{
             "created_at" =>JSON.parse(batteryLevel.created_at.to_json),
             "id" =>batteryLevel.id,
-            "name" =>BatteryLevelSerializer.new(batteryLevel).name.to_s,
+            "level_label" =>BatteryLevelSerializer.new(batteryLevel).level_label.to_s,
             "updated_at" =>JSON.parse(batteryLevel.updated_at.to_json),
             "value" =>batteryLevel.value,
           },

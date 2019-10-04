@@ -13,7 +13,7 @@ Rspec.describe BatteryLevelSerializer do
         "id"=>nil,
         "created_at"=>nil,
         "id"=>nil,
-        "name" =>"low",
+        "level_label" =>"low",
         "updated_at"=>nil,
         "value"=>base_obj.value
       }
