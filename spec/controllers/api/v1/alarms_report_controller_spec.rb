@@ -19,9 +19,9 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
 
     context "results found" do
       let!(:alarm1) { create(:alarm) }
-      let!(:alarm2) { create(:alarm) }
+      let!(:alarm5) { create(:alarm) }
       let!(:uplink_1) { alarm1.uplink }
-      let!(:uplink_2) { alarm2.uplink }
+      let!(:uplink_2) { alarm5.uplink }
 
       context "csv response" do
         it "generate a CSV" do
@@ -52,7 +52,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
             "alarms" => [
               {
                   "date" => date2,
-                  "value" => alarm2.value
+                  "value" => alarm5.value
               }
             ]
           }

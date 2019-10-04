@@ -10,6 +10,7 @@ class ThingSerializer < ActiveModel::Serializer
               :created_at,
               :updated_at,
 
+              :new_alarms,
               :valve_transition,
               :last_uplink,
               :last_messages
@@ -19,6 +20,10 @@ class ThingSerializer < ActiveModel::Serializer
 
   def last_uplink
     object.last_uplinks
+  end
+
+  def new_alarms
+    object.has_new_alarms?
   end
 
   def last_messages

@@ -51,9 +51,9 @@ RSpec.describe "Alarms API", :type => :request do
       response '404', 'The alarm does not exist' do
         let(:user)          { create(:user) }
         let(:thing)         { uplink.thing }
-        let(:thing_name)    { alarm.uplink.thing.name  }
+        let(:thing_name)    { alarm10.uplink.thing.name  }
         let(:uplink)        { create(:uplink) }
-        let(:alarm)         { create(:alarm) }
+        let(:alarm10)       { create(:alarm) }
         let!(:owner)        { Owner.create(from_node: user, to_node: thing) }
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 

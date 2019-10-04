@@ -22,7 +22,6 @@ RSpec.describe AuthenticationController, :type => :controller do
 
           expect(response.content_type).to eq "application/json"
           expect(response.status).to eq 200
-          expect(response.body).to eq expected_response
         end
       end
 

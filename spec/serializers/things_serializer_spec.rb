@@ -13,6 +13,7 @@ Rspec.describe ThingSerializer do
         "id"=>nil,
         "name"=>thing.name,
         "status"=>"activated",
+        "new_alarms"=>false,
         "pac"=>thing.pac,
         "company_id"=>thing.company_id,
         "latitude"=>thing.latitude,
