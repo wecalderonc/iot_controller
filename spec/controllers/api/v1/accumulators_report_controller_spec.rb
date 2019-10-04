@@ -140,18 +140,30 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       let(:params)         { { date: { start_date: start_date, end_date: end_date } } }
       let(:body)           { CSV.parse(response.body) }
 
-      it "generate a CSV" do
-        thing.update(name: '90480')
-        thing2.update(name: '31249')
+      context "csv response" do
+        it "generate a CSV" do
+          header["Content-Type"] = "text/csv"
+       
+          get '/api/v1/accumulators_report', headers: header, params: params
+       
+          expect(response.headers["Content-Type"]).to eq("text/csv")
+          expect(response.status).to eq(200)
+        end
+      end
 
-        header["Content-Type"] = "text/csv"
+      context "json response" do
+        it "generate a JSON response" do
+          get "/api/v1/accumulators_report", headers: header, params: params
 
-        get '/api/v1/accumulators_report', headers: header, params: params
+          body = JSON.parse(response.body)
 
-        expect(response.headers["Content-Type"]).to eq("text/csv")
-        expect(response.status).to eq(200)
-        expect(body[2]).to include('90480')
-        expect(body.last).not_to include('31249')
+          expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+          expect(response.status).to eq(200)
+          expect(body.count).to eq(1)
+          expect(body[0]["thing_id"]).to eq(thing.id)
+          expect(body[0]["thing_name"]).to eq(thing.name)
+          expect(body[0]["accumulators"].count).to eq(1)
+        end
       end
     end
   end
