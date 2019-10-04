@@ -166,7 +166,7 @@ p "                "
 p "CREATING LOCATIONS WITH REPORTS"
 p "                "
 p "****************"
-p billing = ScheduleBilling.create(stratum: 3, billing_period: 4, start_date: Date.today, basic_charge: 13841, basic_price: 2000, extra_price: 1000)
+p billing = ScheduleBilling.create(stratum: 3, billing_period: 4, start_date: Date.today, basic_charge_price: 13841, basic_price: 2000, extra_price: 1000)
 p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", frequency_interval: 2, start_date: Date.today)
 
 p Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4, longitude: 74, thing: thing1, schedule_billing: billing, schedule_report: report, city: city)
