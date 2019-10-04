@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :thing do
-    name { Faker::Lorem.word }
+    name { Faker::Alphanumeric.alphanumeric(number: 7) }
     status { "activated" }
     pac { Faker::Alphanumeric.alphanumeric(number: 7) }
     company_id { Faker::Number.decimal_part(digits: 5) }

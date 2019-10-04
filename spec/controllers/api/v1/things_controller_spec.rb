@@ -127,6 +127,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
           {
             "id"=>thing.id,
             "name"=>thing.name,
+            "new_alarms"=>false,
             "status"=>thing.status,
             "pac"=>thing.pac,
             "company_id"=>thing.company_id,
@@ -191,6 +192,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
           latitude: 4.5,
           longitude: 74.6,
           name: "new_name",
+          new_alarms: "false",
           status: "deactivated"
         }
 
@@ -204,6 +206,7 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
         expected_response = {
           "id"=>thing.id,
           "name"=>"new_name",
+          "new_alarms"=> false,
           "status"=>"deactivated",
           "pac"=>"123456",
           "company_id"=>"987654",

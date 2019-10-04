@@ -38,9 +38,7 @@ class Thing
   end
 
   def has_new_alarms?
-  puts "estmos en el modelooooooooo"
-  puts self.uplinks.alarm.inspect
-  p self.uplinks.alarm.map(&:viewed).any?(true)
+    self.uplinks.alarm.map(&:viewed).any?(true)
   end
 
   private

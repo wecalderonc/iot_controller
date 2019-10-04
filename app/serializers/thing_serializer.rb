@@ -23,13 +23,7 @@ class ThingSerializer < ActiveModel::Serializer
   end
 
   def new_alarms
-  puts "+" * 100
-  p object.has_new_alarms?
-  end
-
-  def battery_level
-    battery_value = last_messages[:batteryLevel][:value].to_i
-    BatteryLevel::LEVEL_LABELS[battery_value]
+    object.has_new_alarms?
   end
 
   def last_messages
