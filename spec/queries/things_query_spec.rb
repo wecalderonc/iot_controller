@@ -102,6 +102,7 @@ describe ThingsQuery do
 
       context "there are uplinks with that date" do
         let!(:alarm)     { create(:alarm, uplink: uplink) }
+
         it "should return objects filtered by date" do
           expect(response.count).to eq(1)
           expect(response.values.count).to eq(1)

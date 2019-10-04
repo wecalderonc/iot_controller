@@ -8,11 +8,18 @@ RSpec.describe "Accumulators Report API", :type => :request do
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: "date[start_date]", :in => :query, :type => :string
+      parameter name: "date[end_date]", :in => :query, :type => :string
 
       response '200', 'accumulators founded' do
-        let(:user)       { create(:user) }
-        let!(:accumulator1) { create(:accumulator) }
-        let!(:accumulator2) { create(:accumulator) }
+        let(:start_date)         { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:end_date)           { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:'date[start_date]') { start_date }
+        let(:'date[end_date]')   { end_date }
+        let(:uplink)             { create(:uplink, time: end_date) }
+        let(:user)               { create(:user) }
+        let!(:accumulator1)      { create(:accumulator, uplink: uplink) }
+        let!(:accumulator2)      { create(:accumulator) }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -42,8 +49,10 @@ RSpec.describe "Accumulators Report API", :type => :request do
       end
 
       response '404', 'Results not found' do
-        let(:user) { create(:user) }
-        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+        let(:'date[start_date]') { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:'date[end_date]')   { Time.now.to_time.to_i.to_s }
+        let(:user)               { create(:user) }
+        let(:Authorization)      { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
@@ -64,11 +73,18 @@ RSpec.describe "Accumulators Report API", :type => :request do
       produces 'application/json'
       parameter name: :thing_name, :in => :path, :type => :string
       parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: "date[start_date]", :in => :query, :type => :string
+      parameter name: "date[end_date]", :in => :query, :type => :string
 
       response '200', 'accumulators founded' do
-        let(:user)         { create(:user) }
-        let(:accumulator1) { create(:accumulator) }
-        let(:thing_name)   { accumulator1.uplink.thing.name }
+        let(:start_date)         { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:end_date)           { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:'date[start_date]') { start_date }
+        let(:'date[end_date]')   { end_date }
+        let(:uplink)             { create(:uplink, time: end_date) }
+        let(:user)               { create(:user) }
+        let(:accumulator1)       { create(:accumulator, uplink: uplink) }
+        let(:thing_name)         { accumulator1.uplink.thing.name }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -98,9 +114,11 @@ RSpec.describe "Accumulators Report API", :type => :request do
       end
 
       response '404', 'The thing thing_name does not exist' do
-        let(:user)         { create(:user) }
-        let(:thing_name)   { 'invalid_name' }
-        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+        let(:'date[start_date]') { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:'date[end_date]')   { Time.now.to_time.to_i.to_s }
+        let(:user)               { create(:user) }
+        let(:thing_name)         { 'invalid_name' }
+        let(:Authorization)      { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
           properties: {
