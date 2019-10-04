@@ -182,14 +182,52 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
        
           body = JSON.parse(response.body)[0]
 
-          date1 = uplink_1.created_at.strftime('%a %d %b %Y')
-          date2 = uplink_2.created_at.strftime('%a %d %b %Y')
-
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)
           expect(body["thing_id"]).to eq(thing.id)
           expect(body["thing_name"]).to eq(thing.name)
           expect(body["accumulators"].count).to eq(2)
+        end
+      end
+    end
+
+    context "date filter in params" do
+      let(:start_date)     { (Time.now - 2.days).to_time.to_i.to_s }
+      let(:end_date)       { Time.now.to_time.to_i.to_s }
+      let(:thing)          { create(:thing) }
+      let(:uplink)         { create(:uplink, time: end_date, thing: thing) }
+      let(:uplink2)        { create(:uplink, thing: thing) }
+      let!(:accumulator)   { create(:accumulator, uplink: uplink) }
+      let!(:accumulator2)  { create(:accumulator, uplink: uplink2) }
+      let(:params)         { { date: { start_date: start_date, end_date: end_date } } }
+      let(:body)           { CSV.parse(response.body) }
+
+      context "csv response" do
+        it "generate a CSV" do
+          header["Content-Type"] = "text/csv"
+       
+          get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
+       
+          headers = ["BD ID", "ID Dispositivo", "Fecha/Hora", "Valor Acumulador", "Delta Consumo", "Delta Acumulado"]
+       
+          expect(response.headers["Content-Type"]).to eq("text/csv")
+          expect(response.status).to eq(200)
+          expect(body[0]).to match_array(headers)
+          expect(body[1]).to match_array(["Device name: #{thing.name}"])
+        end
+      end
+
+      context "json response" do
+        it "generate a JSON response" do
+          get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
+       
+          body = JSON.parse(response.body)[0]
+
+          expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+          expect(response.status).to eq(200)
+          expect(body["thing_id"]).to eq(thing.id)
+          expect(body["thing_name"]).to eq(thing.name)
+          expect(body["accumulators"].count).to eq(1)
         end
       end
     end
@@ -203,32 +241,6 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
         expect(body["errors"]).to eq("The thing invalid_name does not exist")
-      end
-    end
-
-    context "date filter in params" do
-      let(:start_date)     { (Time.now - 2.days).to_time.to_i.to_s }
-      let(:end_date)       { Time.now.to_time.to_i.to_s }
-      let(:uplink)         { create(:uplink, time: end_date) }
-      let(:thing)          { accumulator.uplink.thing }
-      let!(:accumulator)   { create(:accumulator, uplink: uplink) }
-      let!(:accumulator2)  { create(:accumulator) }
-      let(:thing2)         { accumulator2.uplink.thing }
-      let(:params)         { { date: { start_date: start_date, end_date: end_date } } }
-      let(:body)           { CSV.parse(response.body) }
-
-      it "generate a CSV" do
-        thing2.update(name: '20489')
-        thing.update(name: '64029')
-
-        header["Content-Type"] = "text/csv"
-
-        get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
-
-        expect(response.headers["Content-Type"]).to eq("text/csv")
-        expect(response.status).to eq(200)
-        expect(body[2]).to include('64029')
-        expect(body.last).not_to include('20489')
       end
     end
   end

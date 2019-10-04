@@ -24,7 +24,12 @@ module Api
       private
 
       def show_params
-        params.permit(:thing_name).to_h.symbolize_keys
+        params.permit(
+          :thing_name,
+          date: (
+            [:start_date, :end_date]
+          )
+        ).to_h.deep_symbolize_keys
       end
     end
   end
