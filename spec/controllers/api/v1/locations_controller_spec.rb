@@ -61,8 +61,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "address" => 'Carrera 7 # 71 - 21',
           "latitude" => 84.606880,
           "longitude" => -94.071840,
-          "country" => city.state.country.code_iso,
-          "state" => city.state.code_iso,
+          "country_iso" => city.state.country.code_iso,
+          "state_iso" => city.state.code_iso,
           "city" => {
             "name" => city.name,
           },
@@ -216,8 +216,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "address" => 'Carrera 7 # 71 - 21',
           "latitude" => 84.606880,
           "longitude" => -94.071840,
-          "country" => city.state.country.code_iso,
-          "state" => city.state.code_iso,
+          "country_iso" => city.state.country.code_iso,
+          "state_iso" => city.state.code_iso,
           "city" => {
             "name" => city.name,
           },
@@ -332,8 +332,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "latitude" => location.latitude,
           "longitude" => location.longitude,
           "name" => location.name,
-          "country" => city.state.country.code_iso,
-          "state" => city.state.code_iso,
+          "country_iso" => city.state.country.code_iso,
+          "state_iso" => city.state.code_iso,
           "city" => {
             "name" => city.name,
           },

@@ -7,14 +7,14 @@ class LocationSerializer < ActiveModel::Serializer
               :address,
               :latitude,
               :longitude,
-              :state,
-              :country
+              :state_iso,
+              :country_iso
 
-  def state
+  def state_iso
     object.city.state.code_iso
   end
 
-  def country
+  def country_iso
     object.city.state.country.code_iso
   end
 end
