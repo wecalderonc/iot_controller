@@ -152,23 +152,14 @@ p BatteryLevel.create(value: "0003", uplink: uplink3)
 
 p "****************"
 p "                "
-p "CREATING COUNTRY-STATE-CITY"
-p "                "
-p "****************"
-p Country.create(name: 'Estados Unidos', code_iso: 'USA')
-p Country.create(name: 'Mexico', code_iso: 'MX')
-p country = Country.create(name: 'Colombia', code_iso: 'CO')
-p state = State.create(name: 'Bogota DC', code_iso: 'CO-DC', country: country)
-p city = City.create(name: 'Bogota', state: state)
-
-p "****************"
-p "                "
 p "CREATING LOCATIONS WITH REPORTS"
 p "                "
 p "****************"
-p billing = ScheduleBilling.create(stratum: 3, billing_period: 4, start_date: Date.today, basic_charge_price: 13841, basic_price: 2000, extra_price: 1000)
+p billing = ScheduleBilling.create(stratum: 3, billing_period: 'month', start_date: Date.today, basic_charge_price: 13.841, basic_price: 2.100, extra_price: 1.100)
 p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", frequency_interval: 2, start_date: Date.today)
 
-p Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4, longitude: 74, thing: thing1, schedule_billing: billing, schedule_report: report, city: city)
-p Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5, longitude: 75, thing: thing2)
-p Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6, longitude: 76, thing: thing3)
+p city = City.find_by(name: 'Bogota')
+
+p Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4.1, longitude: 74.1, thing: thing1, schedule_billing: billing, schedule_report: report, city: city)
+p Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5.1, longitude: 75.1, thing: thing2)
+p Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing3)
