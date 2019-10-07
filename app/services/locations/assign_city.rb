@@ -11,7 +11,7 @@ class Locations::AssignCity
     city = FindCity.(input[:country_state_city])
 
     if city.present?
-      input[:location].update(city: city)
+      input[:thing].locates.update(city: city)
 
       Success input
     else
