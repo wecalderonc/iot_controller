@@ -8,7 +8,7 @@ class Locations::Create::CreateLocation
 
     if location.save
       input[:location] = location
-      create_relationship(input)
+      create_relationships(input)
 
       Success input
     else
@@ -18,7 +18,8 @@ class Locations::Create::CreateLocation
 
   private
 
-  def create_relationship(input)
+  def create_relationships(input)
     ThingLocation.create(from_node: input[:thing], to_node: input[:location])
+    UserLocation.create(from_node: input[:user], to_node: input[:location])
   end
 end
