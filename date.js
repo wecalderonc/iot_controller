@@ -1,6 +1,6 @@
 
 
-const period = 1
+const period = 10
 let start_date = new Date(2019,0,1)
 let end_date = new Date(2019,09,3)
 

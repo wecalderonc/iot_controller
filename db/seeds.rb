@@ -119,6 +119,14 @@ uplink4 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi:
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1569989028", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
+uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: "1570316848", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+
+uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: "1570403248", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+
 
 p "****************"
 p "                "
@@ -129,6 +137,8 @@ p accumulator1 = Accumulator.create(value: "0001", uplink: uplink1)
 p accumulator2 = Accumulator.create(value: "0002", uplink: uplink2)
 p accumulator3 = Accumulator.create(value: "0003", uplink: uplink3)
 p accumulator4 = Accumulator.create(value: "0004", uplink: uplink4)
+p accumulator5 = Accumulator.create(value: "0005", uplink: uplink5)
+p accumulator6 = Accumulator.create(value: "0006", uplink: uplink6)
 
 p "****************"
 p "                "
