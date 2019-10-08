@@ -13,6 +13,7 @@ RSpec.describe Locations::Create::Execute do
 
       let(:input) {
         { thing_name: thing.name,
+          email: user.email,
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -95,6 +96,17 @@ RSpec.describe Locations::Create::Execute do
           input[:thing_name] = "invalid_name"
 
           expected_response = "The thing invalid_name does not exist"
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'get' operation fails" do
+        it "Should return a Failure response" do
+          input[:email] = "invalid_email"
+
+          expected_response = {:email => ["is in invalid format"]}
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)

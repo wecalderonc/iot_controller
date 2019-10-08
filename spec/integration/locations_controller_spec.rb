@@ -110,6 +110,7 @@ RSpec.describe "Locations API", :type => :request do
 
         let(:input) {{
           thing_name: thing.name,
+          email: user.email,
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -166,6 +167,7 @@ RSpec.describe "Locations API", :type => :request do
 
         let(:input) {{
           thing_name: 'invalid_name',
+          email: user.email,
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -215,7 +217,7 @@ RSpec.describe "Locations API", :type => :request do
       parameter name: :input, in: :body, schema: {
         type: :object,
         properties: {
-          new_thing_name: { type: :stirng },
+          new_thing_name: { type: :string },
           location: {
             type: :object,
             properties: {
@@ -320,6 +322,7 @@ RSpec.describe "Locations API", :type => :request do
 
         let(:input) {{
           new_thing_name: thing2.name,
+          email: user.email,
           location: {
             name: 'Other house',
             address: 'Carrera 7 # 71 - 21',

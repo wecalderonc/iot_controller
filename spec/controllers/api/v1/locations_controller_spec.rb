@@ -15,6 +15,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         body = {
           thing_name: thing.name,
+          email: user.email,
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -94,6 +95,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         body = {
           thing_name: thing.name,
+          email: user.email,
           location: {
             name: 123,
             address: 'Carrera 7 # 71 - 21',
@@ -169,6 +171,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         body = {
           thing_name: thing.name,
+          email: user.email,
           new_thing_name: 'new_name',
           location: {
             name: 'My house',
@@ -249,6 +252,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         body = {
           thing_name: thing.name,
+          email: user.email,
           location: {
             name: 123,
             address: 'Carrera 7 # 71 - 21',

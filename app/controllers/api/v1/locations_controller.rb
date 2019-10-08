@@ -50,6 +50,7 @@ module Api
       def create_params
         params.permit(
           :thing_name,
+          :email,
           location: (
             Location::REQUIRED_FIELDS << [:latitude, :longitude]
           ),

@@ -11,6 +11,7 @@ RSpec.describe Validators::Locations do
 
     let(:input) {
       { thing_name: thing.name,
+        email: user.email,
         location: {
           name: 'My house',
           address: 'Carrera 7 # 71 - 21',
@@ -51,6 +52,19 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :thing_name => ["must be String"]
+        }
+
+        expect(response.failure?).to be_truthy
+        expect(response.errors).to eq(expected_response)
+      end
+    end
+
+    context "When the 'validation' operation fails" do
+      it "Should return a Failure response" do
+        input[:email] = 12345
+
+        expected_response = {
+          :email => ["must be String"]
         }
 
         expect(response.failure?).to be_truthy
@@ -423,7 +437,7 @@ RSpec.describe Validators::Locations do
 
     context "When the 'validation' operation fails" do
       it "Should return a Failure response" do
-        input[:schedule_billing][:start_day] = 40  
+        input[:schedule_billing][:start_day] = 40
 
         expected_response = {
           :schedule_billing => {
