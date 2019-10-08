@@ -5,11 +5,13 @@ module Reports::Show
   end
 
   _, BaseTx = Common::TxMasterBuilder.new do
-    step :validation,   with: Common::Operations::Validator.(:get, :accumulators_report)
-    map  :parse_input,  with: ParseInput
-    step :get_thing,    with: Things::Get.new
-    step :get_objects,  with: Reports::GetObjects.new
-    map  :build_report, with: Reports::Accumulators::CsvReport.new
+    step :validation,       with: Common::Operations::Validator.(:get, :accumulators_report)
+    map  :parse_input,      with: ParseInput
+    step :get_thing,        with: Things::Get.new
+    step :get_location,     with: Locations::GetLocation.new
+    step :dates_calculator, with: Reports::DatesCalculator.new
+    step :get_objects,      with: Reports::GetObjects.new
+    map  :build_report,     with: Reports::Accumulators::CsvReport.new
   end.Do
 
   Options = {

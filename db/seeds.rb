@@ -106,6 +106,7 @@ p "****************"
 uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              # Wednesday, January 23, 2019 9:09:58 PM
 
 uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
@@ -118,6 +119,7 @@ uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi:
 uplink4 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1569989028", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              # Wednesday, October 2, 2019 4:03:48 AM
 
 uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
@@ -125,8 +127,8 @@ uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi:
 
 uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1570403248", sec_uplinks: "006", sec_downlinks: "0", thing: thing5)
-
+              time: "1570225966", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              # Friday, October 4, 2019 9:52:46 PM
 
 p "****************"
 p "                "

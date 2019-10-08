@@ -4,13 +4,19 @@ RSpec.describe Reports::Show::Execute do
   describe '#call' do
     let(:response) { subject.(input) }
     let(:thing)    { create(:thing) }
-    let(:uplink2)  { create(:uplink, thing: thing) }
-    let(:uplink)   { create(:uplink, thing: thing) }
+    let(:uplink)   { create(:uplink, thing: thing, time: (Time.now - 1.month).to_i) }
+    let(:uplink2)  { create(:uplink, thing: thing, time: (Time.now - 2.months).to_i) }
+    let(:uplink3)  { create(:uplink, thing: thing, time: (Time.now - 3.months).to_i) }
+    let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - (Time.now -  + 2.days).to_i) }
+    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (4.months - 8.days)) }
+    let(:location) { create(:location, thing: thing) }
     let(:input)    { { params: { thing_name: thing.name }, model: :accumulator, thing: Thing, option: :csv_format } }
 
     context "There are things with objects related" do
-      let!(:accumulator1) { create(:accumulator, value: "00006fff", uplink: uplink) }
-      let!(:accumulator2) { create(:accumulator, value: "00008fff", uplink: uplink2) }
+      let!(:accumulator1) { create(:accumulator, value: "10", uplink: uplink) }
+      let!(:accumulator2) { create(:accumulator, value: "20", uplink: uplink2) }
+      let!(:accumulator3) { create(:accumulator, value: "10", uplink: uplink3) }
+      let!(:accumulator4) { create(:accumulator, value: "30", uplink: uplink4) }
 
       context "CSV format" do
         it "Should return a Success response" do
@@ -25,22 +31,63 @@ RSpec.describe Reports::Show::Execute do
         it "Should return a Success response" do
           input[:option] = :json_format
 
-          date1 = uplink.created_at.strftime('%a %d %b %Y')
-          date2 = uplink2.created_at.strftime('%a %d %b %Y')
-
           result = response.success[0]
 
           expect(response).to be_success
           expect(result[:thing_id]).to eq(thing.id)
           expect(result[:thing_name]).to eq(thing.name)
-          expect(result[:accumulators].count).to eq(2)
+          expect(result[:accumulators].count).to eq(4)
+        end
+      end
+
+      context "historical consumption" do
+        context "two months" do
+
+          expected_response = {
+            thing_name: thing.name,
+            consumption_by_period: [
+              {
+                '1': {
+                  delta_accumulated: 0,
+                  days_quantity: 30,
+                  months: [ (Time.now - 4.months).month ]
+                },
+                '2': {
+                  delta_accumulated: 16,
+                  days_quantity: 30,
+                  months: [ (Time.now - 3.months).month ]
+                },
+                '3': {
+                  delta_accumulated: 32,
+                  days_quantity: 30,
+                  months: [ (Time.now - 2.months).month ]
+                },
+                '4': {
+                  delta_accumulated: 32,
+                  days_quantity: 22,
+                  months: [ [(Time.now - 1.month).month, Time.now.month] ]
+                }
+              }
+            ]
+          }
+          result = response.success[0]
+
+          expect(response).to be_success
+          expect(result[:thing_id]).to eq(thing.id)
+          expect(result[:thing_name]).to eq(thing.name)
+          expect(result[:accumulators].count).to eq(4)
+          expect(result[:consumption_by_period].keys.count).to eq(4)
+          expect(result[:consumption_by_period]).to eq(expected_response)
+        end
+
+        context "one month" do
         end
       end
     end
 
     context "thing_name is missing" do
       it "should return a Failure response" do
-        input[:params].delete(:thing_name)
+       input[:params].delete(:thing_name)
 
         response = subject.(input)
         expected_response = {
