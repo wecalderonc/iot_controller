@@ -8,6 +8,7 @@ module Validators::Locations
     configure { config.messages_file = "config/locales/en.yml" }
 
     required(:thing_name).filled(type?: String)
+    required(:email).filled(type?: String, format?: User::VALID_EMAIL)
     optional(:new_thing_name).value(type?: String)
     required(:location).schema do
       required(:name).filled(type?: String, max_size?: 30)

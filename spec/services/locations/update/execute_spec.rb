@@ -16,6 +16,7 @@ RSpec.describe Locations::Update::Execute do
 
       let(:input) {
         { thing_name: thing.name,
+          email: user.email,
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -55,7 +56,7 @@ RSpec.describe Locations::Update::Execute do
         context"Thing name doesn't change" do
           it "Should return a Success response" do
             expect(response).to be_success
-         
+
             expect(response.success).to match(location)
             expect(thing.name).to eq(thing.name)
             expect(location.city.name).to eq('Bogota')
@@ -70,7 +71,7 @@ RSpec.describe Locations::Update::Execute do
             input[:new_thing_name] = 'new_name'
 
             expect(response).to be_success
-         
+
             expect(response.success).to match(location)
             expect(location.thing.name).to eq('new_name')
             expect(location.city.name).to eq('Bogota')
@@ -84,7 +85,7 @@ RSpec.describe Locations::Update::Execute do
             input[:new_thing_name] = ''
 
             expect(response).to be_success
-         
+
             expect(response.success).to match(location)
             expect(location.thing).to be_nil
             expect(location.city.name).to eq('Bogota')
@@ -126,6 +127,17 @@ RSpec.describe Locations::Update::Execute do
           input[:thing_name] = "invalid_name"
 
           expected_response = "The thing invalid_name does not exist"
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'get' operation fails" do
+        it "Should return a Failure response" do
+          input[:email] = "invalid_name"
+
+          expected_response = {:email=>["is in invalid format"]}
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)
