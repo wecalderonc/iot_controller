@@ -17,9 +17,9 @@ RSpec.describe "Accumulators Report API", :type => :request do
         let(:'date[start_date]') { start_date }
         let(:'date[end_date]')   { end_date }
         let(:uplink)             { create(:uplink, time: end_date) }
-        let(:user)               { create(:user) }
         let!(:accumulator1)      { create(:accumulator, uplink: uplink) }
         let!(:accumulator2)      { create(:accumulator) }
+        let(:user)               { create(:user) }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -29,7 +29,7 @@ RSpec.describe "Accumulators Report API", :type => :request do
           properties: {
             thing_id: { type: :string },
             thing_name: { type: :string },
-            accumulators: { 
+            accumulators: {
               type: :array,
               items: {
                 type: :object,
@@ -94,7 +94,7 @@ RSpec.describe "Accumulators Report API", :type => :request do
           properties: {
             thing_id: { type: :string },
             thing_name: { type: :string },
-            accumulators: { 
+            accumulators: {
               type: :array,
               items: {
                 type: :object,
