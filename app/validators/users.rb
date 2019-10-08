@@ -79,4 +79,8 @@ module Validators::Users
     required(:email).filled?(type?: String)
     required(:password).filled(type?: String, format?: User::VALID_PASSWORD)
   end
+
+  GetLocationsSchema = Dry::Validation.Schema do
+    required(:email).filled(type?: String, format?: User::VALID_EMAIL)
+  end
 end

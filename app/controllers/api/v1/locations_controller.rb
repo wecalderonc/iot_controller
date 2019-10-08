@@ -5,6 +5,17 @@ module Api
       START_DATE = [:start_day, :start_month, :start_year]
       COUNTRY_STATE_CITY = [:country, :state, :city]
 
+      def index
+        locations = Users::Locations::Index::Execute.new.(index_params)
+
+        if locations.success?
+          # authorized_accumulators = authorize(thing_accumulators)
+          render json: locations, status: :ok#, each_serializer: AccumulatorSerializer
+        else
+          json_response(locations.failure, :not_found)
+        end
+      end
+
       def show
         show_response = Locations::Execute.new.(show_params)
         if show_response.success?
