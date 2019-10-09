@@ -9,8 +9,7 @@ module Api
         locations = Users::Locations::Index::Execute.new.(index_params)
 
         if locations.success?
-          # authorized_accumulators = authorize(thing_accumulators)
-          render json: locations, status: :ok#, each_serializer: AccumulatorSerializer
+          render json: locations, status: :ok, each_serializer: LocationDashboardSerializer
         else
           json_response(locations.failure, :not_found)
         end
@@ -46,6 +45,11 @@ module Api
       end
 
       private
+
+      def index_params
+        email = params.permit(:user_email).to_h.symbolize_keys
+        { email: email[:user_email] }
+      end
 
       def show_params
         #TODO: Change this when thing_name -> aws_id·
