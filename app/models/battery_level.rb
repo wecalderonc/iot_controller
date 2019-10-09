@@ -13,4 +13,6 @@ class BatteryLevel
     4 => :high,
     5 => :no_available
   }
+
+  LEVEL_LABELS.default = :no_available
 end
