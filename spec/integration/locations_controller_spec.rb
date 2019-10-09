@@ -522,4 +522,85 @@ RSpec.describe "Locations API", :type => :request do
       end
     end
   end
+
+  path "/api/v1/users/{email}/locations" do
+    get 'get index locations' do
+      tags 'Locations'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: 'Authorization', :in => :header, :type => :string
+
+      response '200', 'location founded' do
+        let(:user)            { create(:user) }
+        let(:email)           { user.email }
+        let(:location)        { create(:location, city: city) }
+        let(:thing)           { create(:thing, locates: location) }
+        let(:city)            { create(:city) }
+        let!(:user_location)  { UserLocation.create(from_node: user, to_node: location) }
+        let!(:thing_location) { ThingLocation.create(from_node: thing, to_node: location) }
+
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :array,
+        items: {
+          type: :object,
+          required: [ 'name', 'thing' ],
+          properties: {
+            name: { type: :string },
+            thing: {
+              type: :object,
+              properties: {
+                id: { type: :string },
+                name: { type: :string },
+                new_alarms: { type: :boolean },
+                last_battery_level: {
+                  type: :object,
+                  properties: {
+                    id: { type: :string },
+                    value: { type: :string },
+                    created_at: { type: :string },
+                    updated_at: { type: :string },
+                    level_label: { type: :string }
+                  }
+                },
+                valve_transition: {
+                  type: :object,
+                  properties: {
+                    real_state: { type: :string },
+                    showed_state: { type: :string }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        run_test!
+      end
+
+      response '401', 'Token is missing' do
+        let(:user)            { create(:user) }
+        let(:email)           { user.email }
+        let(:location)        { create(:location, city: city) }
+        let(:thing)           { create(:thing, locates: location) }
+        let(:thing_name)      { thing.name }
+        let(:city)            { create(:city) }
+        let!(:user_location)  { UserLocation.create(from_node: user, to_node: location) }
+
+        let(:'Authorization') { "Access denied!" }
+
+        run_test!
+      end
+
+      response '404', 'locations not found' do
+        let(:user)       { create(:user) }
+        let(:email)      { user.email }
+
+        let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
+
+        run_test!
+      end
+    end
+  end
 end
