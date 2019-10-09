@@ -9,7 +9,7 @@ module Api
         locations = Users::Locations::Index::Execute.new.(index_params)
 
         if locations.success?
-          render json: locations, status: :ok, each_serializer: LocationDashboardSerializer
+          render json: locations.success, status: :ok, each_serializer: LocationDashboardSerializer
         else
           json_response(locations.failure, :not_found)
         end

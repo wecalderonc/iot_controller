@@ -58,7 +58,7 @@ RSpec.describe Users::Locations::Index::Execute do
         end
       end
 
-      context "When the 'get thing' operation fails" do
+      context "When the 'get user' operation fails" do
 
         it "Should return a Failure response" do
           input[:email] = "wrong@email.com"
