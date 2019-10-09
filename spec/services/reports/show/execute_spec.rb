@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe Reports::Show::Execute do
   describe '#call' do
     let(:response) { subject.(input) }
-    let(:thing)    { create(:thing) }
+    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (4.months - 8.days)) }
+    let(:location) { create(:location, schedule_billing: billing) }
+    let(:thing)    { create(:thing, locates: location) }
     let(:uplink)   { create(:uplink, thing: thing, time: (Time.now - 1.month).to_i) }
     let(:uplink2)  { create(:uplink, thing: thing, time: (Time.now - 2.months).to_i) }
     let(:uplink3)  { create(:uplink, thing: thing, time: (Time.now - 3.months).to_i) }
-    let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - (Time.now -  + 2.days).to_i) }
-    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (4.months - 8.days)) }
-    let(:location) { create(:location, thing: thing) }
+    let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - (Time.now -  + 2.days).to_i)) }
     let(:input)    { { params: { thing_name: thing.name }, model: :accumulator, thing: Thing, option: :csv_format } }
 
     context "There are things with objects related" do
@@ -42,42 +42,49 @@ RSpec.describe Reports::Show::Execute do
 
       context "historical consumption" do
         context "two months" do
+          it "Should return a hash with billing periods" do
+            input[:option] = :json_format
 
-          expected_response = {
-            thing_name: thing.name,
-            consumption_by_period: [
-              {
-                '1': {
-                  delta_accumulated: 0,
-                  days_quantity: 30,
-                  months: [ (Time.now - 4.months).month ]
-                },
-                '2': {
-                  delta_accumulated: 16,
-                  days_quantity: 30,
-                  months: [ (Time.now - 3.months).month ]
-                },
-                '3': {
-                  delta_accumulated: 32,
-                  days_quantity: 30,
-                  months: [ (Time.now - 2.months).month ]
-                },
-                '4': {
-                  delta_accumulated: 32,
-                  days_quantity: 22,
-                  months: [ [(Time.now - 1.month).month, Time.now.month] ]
+            expected_response = {
+              thing_name: thing.name,
+              consumption_by_period: [
+                {
+                  '1': {
+                    delta_accumulated: 0,
+                    days_quantity: 30,
+                    months: [ (Time.now - 4.months).month ]
+                  },
+                  '2': {
+                    delta_accumulated: 16,
+                    days_quantity: 30,
+                    months: [ (Time.now - 3.months).month ]
+                  },
+                  '3': {
+                    delta_accumulated: 32,
+                    days_quantity: 30,
+                    months: [ (Time.now - 2.months).month ]
+                  },
+                  '4': {
+                    delta_accumulated: 32,
+                    days_quantity: 22,
+                    months: [ [(Time.now - 1.month).month, Time.now.month] ]
+                  }
                 }
-              }
-            ]
-          }
-          result = response.success[0]
+              ]
+            }
 
-          expect(response).to be_success
-          expect(result[:thing_id]).to eq(thing.id)
-          expect(result[:thing_name]).to eq(thing.name)
-          expect(result[:accumulators].count).to eq(4)
-          expect(result[:consumption_by_period].keys.count).to eq(4)
-          expect(result[:consumption_by_period]).to eq(expected_response)
+            result = response.success[0]
+            puts "*" * 100
+            p response.success
+            puts "*" * 100
+           
+            expect(response).to be_success
+            expect(result[:thing_id]).to eq(thing.id)
+            expect(result[:thing_name]).to eq(thing.name)
+            expect(result[:accumulators].count).to eq(4)
+            expect(result[:consumption_by_period].keys.count).to eq(4)
+            expect(result[:consumption_by_period]).to eq(expected_response)
+          end
         end
 
         context "one month" do

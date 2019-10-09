@@ -1,42 +1,38 @@
+# This service get the initial date of current period
 require 'dry/transaction/operation'
 
 class Reports::DatesCalculator
   include Dry::Transaction::Operation
-=begin
-
- getStartDate (start_date, end_date, period) {
-   *const end_date_converted = new Date(end_date)
-   *const start_date_converted = new Date(start_date)
-   *let transform_date = new Date(start_date_converted)
-   let new_date = 0
-   let result = this.extract_new_date(transform_date, end_date_converted, period, new_date)
-
-   return result
- },
-
- extract_new_date (transform_date, end_date, period, new_date) {
-   if (transform_date > end_date) {
-     return new_date;
-   } else {
-     new_date = new Date(transform_date)
-     transform_date = new Date(transform_date.setMonth(transform_date.getMonth() + parseInt(period)))
-     return this.extract_new_date(transform_date, end_date, period, new_date);
-   }
- },
-=end
-
 
   def call(input)
-    location = input[:thing].location
-    frequency = location.schedule_billing.billing_frequency
-    new_date = 0
-    result = extract_new_date(location.start_date, Time.now, frequency)
+    variables = get_location_variables(input[:thing].locates)
+    result = extract_new_date(variables)
+
+    Success input.merge(new_billing_start_date: result)
 
   end
 
   private
 
-  def get_start_date(location)
+  def extract_new_date(start_date:, end_date:, frequency:, new_date:)
+    if start_date > end_date
+      new_date
+    else
+      new_date = start_date
+      new_start_date = start_date + (frequency.months)
+
+      extract_new_date(start_date: new_start_date, end_date: end_date, frequency: frequency, new_date: new_date)
+    end
   end
 
+  def get_location_variables(location)
+    schedule_billing = location.schedule_billing
+
+    { 
+      start_date: schedule_billing.start_date,
+      end_date: Time.now,
+      frequency: schedule_billing.billing_frequency,
+      new_date: 0
+    }
+  end
 end

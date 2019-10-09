@@ -8,8 +8,6 @@ module Reports::Show
     step :validation,       with: Common::Operations::Validator.(:get, :accumulators_report)
     map  :parse_input,      with: ParseInput
     step :get_thing,        with: Things::Get.new
-    step :get_location,     with: Locations::GetLocation.new
-    step :dates_calculator, with: Reports::DatesCalculator.new
     step :get_objects,      with: Reports::GetObjects.new
     map  :build_report,     with: Reports::Accumulators::CsvReport.new
   end.Do
@@ -23,7 +21,10 @@ module Reports::Show
     },
     json_format: {
       accumulator: BaseTx.new(
-        build_report: Reports::BaseJsonReport.new
+        build_report: Reports::BaseJsonReport.new,
+        get_location: Locations::GetLocation.new,
+        dates_calculator: Reports::DatesCalculator.new, # fecha de inicio de periodo actual
+        periods_calculator: Reports::PeriodsCalculator.new
       ),
       alarm: BaseTx.new(
         build_report: Reports::BaseJsonReport.new

@@ -14,7 +14,7 @@ class AccumulatorDeltaBuilder
       last_value = GetConsumption.(accumulators[index-1])
 
       if index == 0
-        delta = GetConsumpiton.(accumulator)
+        delta = GetConsumption.(accumulator)
       elsif current_value < last_value
         delta = CONSUMPTION_LIMIT - last_value + current_value
       else

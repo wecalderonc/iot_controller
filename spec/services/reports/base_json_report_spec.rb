@@ -21,8 +21,8 @@ RSpec.describe Reports::BaseJsonReport do
             :accumulators => [{
               :date => date,
               :value => accumulator.value,
-              :consumption_delta => 0,
-              :accumulated_delta => 0
+              :consumption_delta => accumulator.value.to_i(16),
+              :accumulated_delta => accumulator.value.to_i(16)
             }]
           }
         ]

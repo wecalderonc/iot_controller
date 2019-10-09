@@ -8,7 +8,7 @@ class Locations::GetLocation
     location = thing.locates
 
     if location.present?
-      Success location
+      Success input.merge(location: location)
     else
       Failure Errors.general_error("The thing #{input[:thing_name]} does not have location", self.class)
     end

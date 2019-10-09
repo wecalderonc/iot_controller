@@ -35,8 +35,8 @@ RSpec.describe Reports::Index::Execute do
             :accumulators => [{
               :date => date1,
               :value => accumulator1.value,
-              :consumption_delta => 0,
-              :accumulated_delta => 0
+              :consumption_delta => accumulator1.value.to_i(16),
+              :accumulated_delta => accumulator1.value.to_i(16)
             }]
           }
 
@@ -46,8 +46,8 @@ RSpec.describe Reports::Index::Execute do
             :accumulators => [{
               :date => date2,
               :value => accumulator2.value,
-              :consumption_delta => 0,
-              :accumulated_delta => 0
+              :consumption_delta => accumulator2.value.to_i(16),
+              :accumulated_delta => accumulator2.value.to_i(16)
             }]
           }
 
