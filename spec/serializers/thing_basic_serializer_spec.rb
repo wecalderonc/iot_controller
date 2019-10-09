@@ -22,26 +22,4 @@ Rspec.describe ThingBasicSerializer do
       expect(subject).to eq(expected_response)
     end
   end
-
-  context "The thing is ok" do
-    let(:alarm)   { create(:alarm, viewed: true) }
-    let(:thing)   { alarm.uplink.thing }
-    let(:uplink)  { alarm.uplink }
-    let!(:batteryLevel) { create(:battery_level, uplink: uplink) }
-
-    it "Should return a hash whit true value in new_alarms " do
-
-      expected_response = {
-        "id"=>thing.id,
-        "name"=>thing.name,
-        "new_alarms" => true,
-        "valve_transition"=>{
-          "real_state"=>thing.valve_transition.real_state,
-          "showed_state"=>thing.valve_transition.showed_state,
-        }
-      }
-
-      expect(subject).to eq(expected_response)
-    end
-  end
 end

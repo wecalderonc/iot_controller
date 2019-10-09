@@ -7,7 +7,7 @@ Rspec.describe ThingDashboardSerializer do
 
   let(:subject) { JSON.parse(serialization.to_json) }
 
-  context "The thing is ok" do
+  context "The thing is ok, without battery level" do
     it "Should return a hash" do
       expected_response = {
         "id"=>nil,
@@ -24,7 +24,7 @@ Rspec.describe ThingDashboardSerializer do
     end
   end
 
-  context "The thing is ok" do
+  context "The thing is ok with battery level" do
     let(:alarm)   { create(:alarm, viewed: true) }
     let(:thing)   { alarm.uplink.thing }
     let(:uplink)  { alarm.uplink }
