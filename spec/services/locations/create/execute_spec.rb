@@ -59,6 +59,8 @@ RSpec.describe Locations::Create::Execute do
 
           expect(response.success).to match(location)
           expect(location.city.name).to eq('Bogota')
+          expect(location.users.include?(user)).to match(true)
+          expect(location.thing).to match(thing)
           expect(schedule_billing.stratum).to eq(5)
           expect(schedule_report.email).to eq('unacosita@gmail.com')
         end

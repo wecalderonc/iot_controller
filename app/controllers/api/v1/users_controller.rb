@@ -7,7 +7,7 @@ module Api
       skip_before_action :authorize_request, only: METHODS_WITHOUT_AUTH
 
       def show
-        response = Users::Show.find_user(show_params)
+        response = Users::Get.new.(show_params)
 
         default_show_response(response)
       end

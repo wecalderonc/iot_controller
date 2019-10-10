@@ -1,4 +1,4 @@
-class ThingSerializer < ActiveModel::Serializer
+class ThingSerializer < ThingBasicSerializer
   attributes  :id,
               :name,
               :status,
@@ -22,10 +22,6 @@ class ThingSerializer < ActiveModel::Serializer
     object.last_uplinks
   end
 
-  def new_alarms
-    object.has_new_alarms?
-  end
-
   def last_messages
     MESSAGES.each_with_object({}) do |message_name, last_messages|
       #TODO: add base model to add get last object
@@ -36,12 +32,5 @@ class ThingSerializer < ActiveModel::Serializer
         false => -> { {} }
       }[last_message.present?].()
     end
-  end
-
-  def valve_transition
-    {
-      real_state: object.valve_transition.real_state,
-      showed_state: object.valve_transition.showed_state
-    }
   end
 end

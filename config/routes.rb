@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users,                         except: [:destroy], param: :email
+      resources :users,                         except: [:destroy], param: :email, constraints: { email: /.*/ } do
+        resources :locations,                     only: :index
+      end
       resources :aqueducts,                     only: [:index]
       resources :things,                        only: [:show, :index, :update], param: :thing_name do
         resources :battery_levels,              only: [:index]

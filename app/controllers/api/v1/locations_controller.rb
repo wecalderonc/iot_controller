@@ -5,6 +5,16 @@ module Api
       START_DATE = [:start_day, :start_month, :start_year]
       COUNTRY_STATE_CITY = [:country, :state, :city]
 
+      def index
+        locations = Users::Locations::Index::Execute.new.(index_params)
+
+        if locations.success?
+          render json: locations.success, status: :ok, each_serializer: LocationDashboardSerializer
+        else
+          json_response(locations.failure, :not_found)
+        end
+      end
+
       def show
         show_response = Locations::Execute.new.(show_params)
         if show_response.success?
@@ -35,6 +45,11 @@ module Api
       end
 
       private
+
+      def index_params
+        email = params.permit(:user_email).to_h.symbolize_keys
+        { email: email[:user_email] }
+      end
 
       def show_params
         #TODO: Change this when thing_name -> aws_id·

@@ -16,7 +16,7 @@ module Response
 
   def default_show_response(response)
     if response.success?
-      render json: response.success, status: :ok, serializer: UsersSerializer
+      render json: response.success[:user], status: :ok, serializer: UsersSerializer
     else
       json_response({ message: response.failure[:message] }, :not_found)
     end

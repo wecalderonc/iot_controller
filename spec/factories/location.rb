@@ -12,5 +12,9 @@ FactoryBot.define do
     trait :with_thing do
       association :thing, factory: :thing
     end
+
+    trait :with_user do
+      association :user, factory: :user
+    end
   end
 end
