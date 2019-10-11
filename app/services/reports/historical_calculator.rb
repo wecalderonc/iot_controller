@@ -35,7 +35,7 @@ class Reports::HistoricalCalculator
   def build_response(start_date, end_date, input)
     thing = input[:thing]
 
-    { 
+    {
       date: {
         start_date: start_date,
         end_date: end_date
