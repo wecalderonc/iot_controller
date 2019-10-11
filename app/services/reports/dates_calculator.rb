@@ -8,20 +8,20 @@ class Reports::DatesCalculator
     variables = get_location_variables(input[:thing].locates)
     result = extract_new_date(variables)
 
-    Success input.merge(new_billing_start_date: result)
-
+    input.merge(new_billing_start_date: result)
   end
 
   private
 
-  def extract_new_date(start_date:, end_date:, frequency:, new_date:)
+  def extract_new_date(start_date:, frequency:, new_date:)
+    end_date = Time.now
+
     if start_date > end_date
       new_date
     else
-      new_date = start_date
       new_start_date = start_date + (frequency.months)
 
-      extract_new_date(start_date: new_start_date, end_date: end_date, frequency: frequency, new_date: new_date)
+      extract_new_date(start_date: new_start_date, frequency: frequency, new_date: start_date)
     end
   end
 
@@ -30,7 +30,6 @@ class Reports::DatesCalculator
 
     { 
       start_date: schedule_billing.start_date,
-      end_date: Time.now,
       frequency: schedule_billing.billing_frequency,
       new_date: 0
     }

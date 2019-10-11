@@ -5,10 +5,6 @@ RSpec.describe Reports::DatesCalculator do
     let(:response) { subject.(input) }
     let(:location) { create(:location, schedule_billing: billing) }
     let(:thing)    { create(:thing, locates: location) }
-    let(:uplink)   { create(:uplink, thing: thing, time: (Time.now - 1.month).to_i) }
-    let(:uplink2)  { create(:uplink, thing: thing, time: (Time.now - 2.months).to_i) }
-    let(:uplink3)  { create(:uplink, thing: thing, time: (Time.now - 3.months).to_i) }
-    let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - (Time.now - 2.days).to_i) ) }
     let(:input)    { { thing: thing } }
 
     context "consumption days higher than billing period days" do
@@ -20,8 +16,7 @@ RSpec.describe Reports::DatesCalculator do
           new_billing_start_date: Date.today - 22.days
         }
 
-        expect(response).to be_success
-        expect(response.success).to eq(expected_response)
+        expect(response).to eq(expected_response)
       end
     end
 
@@ -34,8 +29,7 @@ RSpec.describe Reports::DatesCalculator do
           new_billing_start_date: billing.start_date
         }
 
-        expect(response).to be_success
-        expect(response.success).to eq(expected_response)
+        expect(response).to eq(expected_response)
       end
     end
   end

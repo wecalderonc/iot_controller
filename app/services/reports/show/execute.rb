@@ -24,7 +24,7 @@ module Reports::Show
         build_report: Reports::BaseJsonReport.new,
         get_location: Locations::GetLocation.new,
         dates_calculator: Reports::DatesCalculator.new, # fecha de inicio de periodo actual
-        periods_calculator: Reports::PeriodsCalculator.new
+        periods_calculator: Reports::HistoricalCalculator.new
       ),
       alarm: BaseTx.new(
         build_report: Reports::BaseJsonReport.new
