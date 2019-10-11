@@ -8,7 +8,7 @@ class Reports::HistoricalCalculator
   def call(input)
     periods = calculate_dates(input)
     historical = get_historical(periods)
-    input.merge(consumptions_by_month: historical)
+    input.merge!(consumptions_by_month: historical)
   end
 
   private
@@ -33,7 +33,7 @@ class Reports::HistoricalCalculator
   end
 
   def build_response(start_date, end_date, input)
-    thing, unit = input.values_at(:thing, :unit)
+    thing = input[:thing]
 
     { 
       date: {
@@ -42,7 +42,7 @@ class Reports::HistoricalCalculator
       },
       thing: thing,
       accumulator: thing.uplinks.accumulator.last,
-      unit: unit
+      unit: :liter
     }
   end
 end

@@ -212,41 +212,53 @@
           "200": {
             "description": "accumulators founded",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "thing_id": {
-                    "type": "string"
-                  },
-                  "thing_name": {
-                    "type": "string"
-                  },
-                  "accumulators": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "date": {
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "consumption_delta": {
-                          "type": "integer"
-                        },
-                        "accumulated_delta": {
-                          "type": "integer"
-                        }
+              "type": "object",
+              "properties": {
+                "thing_id": {
+                  "type": "string"
+                },
+                "thing_name": {
+                  "type": "string"
+                },
+                "accumulators": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "consumption_delta": {
+                        "type": "integer"
+                      },
+                      "accumulated_delta": {
+                        "type": "integer"
                       }
+                    }
+                  }
+                },
+                "consumptions_by_month": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "days_count": {
+                      "type": "integer"
+                    },
+                    "months": {
+                      "type": "array"
                     }
                   }
                 },
                 "required": [
                   "thing_id",
                   "thing_name",
-                  "accumulators"
+                  "accumulators",
+                  "consumptions_by_month"
                 ]
               }
             }
@@ -1299,7 +1311,7 @@
               "type": "object",
               "properties": {
                 "new_thing_name": {
-                  "type": "stirng"
+                  "type": "string"
                 },
                 "location": {
                   "type": "object",
@@ -1632,6 +1644,104 @@
           },
           "404": {
             "description": "location not found"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{email}/locations": {
+      "get": {
+        "summary": "get index locations",
+        "tags": [
+          "Locations"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "location founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "thing"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "thing": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "new_alarms": {
+                        "type": "boolean"
+                      },
+                      "last_battery_level": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "updated_at": {
+                            "type": "string"
+                          },
+                          "level_label": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "valve_transition": {
+                        "type": "object",
+                        "properties": {
+                          "real_state": {
+                            "type": "string"
+                          },
+                          "showed_state": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "404": {
+            "description": "locations not found"
           }
         }
       }
