@@ -105,8 +105,7 @@ p "****************"
 
 uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
-              # Wednesday, January 23, 2019 9:09:58 PM
+              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
 uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
@@ -118,8 +117,7 @@ uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi:
 
 uplink4 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: "1569989028", sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
-              # Wednesday, October 2, 2019 4:03:48 AM
+              time: (Date.today - 1.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
 uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
@@ -127,20 +125,19 @@ uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi:
 
 uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 4.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
-              # Friday, October 4, 2019 9:52:46 PM
+              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
 p "****************"
 p "                "
 p "CREATING ACCUMULATORS"
 p "                "
 p "****************"
-p accumulator1 = Accumulator.create(value: "0001", uplink: uplink1)
+p accumulator1 = Accumulator.create(value: "0000f", uplink: uplink1)
 p accumulator2 = Accumulator.create(value: "0002", uplink: uplink2)
 p accumulator3 = Accumulator.create(value: "0003", uplink: uplink3)
-p accumulator4 = Accumulator.create(value: "0004", uplink: uplink4)
+p accumulator4 = Accumulator.create(value: "000ff", uplink: uplink4)
 p accumulator5 = Accumulator.create(value: "0005", uplink: uplink5)
-p accumulator6 = Accumulator.create(value: "0006", uplink: uplink6)
+p accumulator6 = Accumulator.create(value: "00aff", uplink: uplink6)
 
 p "****************"
 p "                "
@@ -170,7 +167,7 @@ p "                "
 p "CREATING LOCATIONS WITH REPORTS"
 p "                "
 p "****************"
-p billing = ScheduleBilling.create(stratum: 3, billing_period: 'month', start_date: Date.today - 3.months, basic_charge_price: 13.841, basic_price: 2.100, extra_price: 1.100)
+p billing = ScheduleBilling.create(stratum: 3, billing_period: 'month', start_date: Date.today - (3.months + 8.days), basic_charge_price: 13.841, basic_price: 2.100, extra_price: 1.100)
 p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", frequency_interval: 2, start_date: Date.today)
 
 p city = City.find_by(name: 'Bogota')
