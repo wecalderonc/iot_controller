@@ -7,6 +7,6 @@ class Reports::Accumulators::JsonReport
     historical = input.slice(:consumptions_by_month)
     report = Reports::BaseJsonReport.new.(input)[0]
 
-    report.merge!(historical)
+    report.merge(historical)
   end
 end
