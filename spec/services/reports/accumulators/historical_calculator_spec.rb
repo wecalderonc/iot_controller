@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Reports::HistoricalCalculator do
+RSpec.describe Reports::Accumulators::HistoricalCalculator do
   describe '#call' do
     let(:response) { subject.(input) }
     let(:location) { create(:location, schedule_billing: billing) }

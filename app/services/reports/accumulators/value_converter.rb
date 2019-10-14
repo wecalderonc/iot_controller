@@ -1,6 +1,6 @@
 require 'dry/transaction/operation'
 
-class Reports::ValueConverter
+class Reports::Accumulators::ValueConverter
   include Dry::Transaction::Operation
 
   def call(period)

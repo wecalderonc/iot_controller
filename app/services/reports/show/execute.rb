@@ -26,7 +26,7 @@ module Reports::Show
       accumulator: BaseTx.new(
         get_location: Locations::GetLocation.new,
         dates_calculator: Reports::DatesCalculator.new,
-        periods_calculator: Reports::HistoricalCalculator.new,
+        periods_calculator: Reports::Accumulators::HistoricalCalculator.new,
         build_report: Reports::Accumulators::JsonReport.new
       ),
       alarm: BaseTx.new(

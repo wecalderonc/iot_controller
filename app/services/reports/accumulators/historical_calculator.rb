@@ -1,6 +1,6 @@
 require 'dry/transaction/operation'
 
-class Reports::HistoricalCalculator
+class Reports::Accumulators::HistoricalCalculator
   include Dry::Transaction::Operation
 
   LAST_PERIODS = [ '3', '2', '1' ]
@@ -28,7 +28,7 @@ class Reports::HistoricalCalculator
 
   def get_historical(periods)
     periods.each do |number, period|
-      periods[number] = Reports::PeriodsCalculator.new.(period).success
+      periods[number] = Reports::Accumulators::PeriodsCalculator.new.(period).success
     end
   end
 
