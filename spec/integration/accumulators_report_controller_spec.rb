@@ -16,7 +16,7 @@ RSpec.describe "Accumulators Report API", :type => :request do
         let(:end_date)           { (Time.now - 2.days).to_time.to_i.to_s }
         let(:'date[start_date]') { start_date }
         let(:'date[end_date]')   { end_date }
-        let(:uplink)             { create(:uplink, time: end_date) }
+        let!(:uplink)            { create(:uplink, time: end_date) }
         let!(:accumulator1)      { create(:accumulator, uplink: uplink) }
         let!(:accumulator2)      { create(:accumulator) }
         let(:user)               { create(:user) }
@@ -78,19 +78,19 @@ RSpec.describe "Accumulators Report API", :type => :request do
 
       response '200', 'accumulators founded' do
         let(:start_date)         { (Time.now - 2.days).to_time.to_i.to_s }
-        let(:end_date)           { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:end_date)           { Time.now.to_time.to_i.to_s }
         let(:'date[start_date]') { start_date }
         let(:'date[end_date]')   { end_date }
-        let(:uplink)             { create(:uplink, time: end_date) }
+        let(:location)           { create(:location) }
+        let(:thing)              { create(:thing, units: { liter: 200 }, locates: location) }
+        let(:uplink)             { create(:uplink, time: end_date, thing: thing) }
         let(:user)               { create(:user) }
-        let(:accumulator1)       { create(:accumulator, uplink: uplink) }
-        let(:thing_name)         { accumulator1.uplink.thing.name }
+        let!(:accumulator1)      { create(:accumulator, uplink: uplink) }
+        let(:thing_name)         { thing.name }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
-        schema type: :array,
-        items: {
-          type: :object,
+        schema type: :object,
           properties: {
             thing_id: { type: :string },
             thing_name: { type: :string },
@@ -105,10 +105,17 @@ RSpec.describe "Accumulators Report API", :type => :request do
                   accumulated_delta: { type: :integer }
                 }
               }
-            }
-          },
-          required: ['thing_id', 'thing_name', 'accumulators']
-        }
+            },
+            consumptions_by_month: {
+              type: :object,
+              properties: {
+                value: { type: :string },
+                days_count: { type: :integer },
+                months: { type: :array }
+              }
+            },
+            required: ['thing_id', 'thing_name', 'accumulators', 'consumptions_by_month']
+          }
 
         run_test!
       end

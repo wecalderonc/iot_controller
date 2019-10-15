@@ -104,8 +104,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
               {
                   "date" => date2,
                   "value" => accumulator2.value,
-                  "consumption_delta" => 0,
-                  "accumulated_delta" => 0
+                  "consumption_delta" => accumulator2.value.to_i(16),
+                  "accumulated_delta" => accumulator2.value.to_i(16)
               }
             ]
           }
@@ -117,8 +117,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
               {
                   "date" => date1,
                   "value" => accumulator1.value,
-                  "consumption_delta" => 0,
-                  "accumulated_delta" => 0
+                  "consumption_delta" => accumulator1.value.to_i(16),
+                  "accumulated_delta" => accumulator1.value.to_i(16)
               }
             ]
           }
@@ -169,11 +169,18 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
   end
 
   describe "GET/show generate CSV" do
-    let(:thing)    { create(:thing) }
-    let(:uplink_1) { create(:uplink, thing: thing) }
-    let(:uplink_2) { create(:uplink, thing: thing) }
-    let!(:accumulator1) { create(:accumulator, uplink: uplink_1) }
-    let!(:accumulator2) { create(:accumulator, uplink: uplink_2) }
+    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months - 8.days)) }
+    let(:location) { create(:location, schedule_billing: billing) }
+    let(:thing)    { create(:thing, units: { liter: 200 }, locates: location) }
+    let(:uplink)   { create(:uplink, thing: thing, time: (Time.now - 1.month).to_i) }
+    let(:uplink2)  { create(:uplink, thing: thing, time: (Time.now - 2.months).to_i) }
+    let(:uplink3)  { create(:uplink, thing: thing, time: (Time.now - 3.months).to_i) }
+    let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - 2.days).to_i ) }
+    let!(:price)   { create(:price) }
+    let!(:accumulator1) { create(:accumulator, value: "100", uplink: uplink4) }
+    let!(:accumulator2) { create(:accumulator, value: "110", uplink: uplink3) }
+    let!(:accumulator3) { create(:accumulator, value: "120", uplink: uplink2) }
+    let!(:accumulator4) { create(:accumulator, value: "130", uplink: uplink) }
     let(:thing_name) { thing.name }
 
     context "result found" do
@@ -192,13 +199,39 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         it "generate a JSON response" do
           get "/api/v1/accumulators_report/#{thing_name}", headers: header
        
-          body = JSON.parse(response.body)[0]
+          body = JSON.parse(response.body)
+          start_date = Date.today - 22.days
+          end_date = Date.today
+
+          historical_response = {
+            '1' => {
+              "value" => 54400.0,
+              "days_count" => ((start_date - 2.months - 1.day) - (start_date - 3.months)).to_i,
+              "months" => ((start_date - 3.months)..(start_date - 2.months)).map(&:month).uniq
+            },
+            '2'=> {
+              "value" => 57600.0,
+              "days_count" => ((start_date - 1.month - 1.day) - (start_date - 2.months)).to_i,
+              "months" => ((start_date - 2.months)..(start_date - 1.months)).map(&:month).uniq
+            },
+            '3' => {
+              "value" => 60800.0,
+              "days_count" => ((start_date - 1.day) - (start_date - 1.month)).to_i,
+              "months" => ((start_date - 1.months)..start_date).map(&:month).uniq
+            },
+            '4' => {
+              "value" => 51200.0,
+              "days_count" => 22,
+              "months" => (start_date..end_date).map(&:month).uniq
+            }
+          }
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)
           expect(body["thing_id"]).to eq(thing.id)
           expect(body["thing_name"]).to eq(thing.name)
-          expect(body["accumulators"].count).to eq(2)
+          expect(body["accumulators"].count).to eq(4)
+          expect(body["consumptions_by_month"]).to match(historical_response)
         end
       end
     end
@@ -206,11 +239,12 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     context "date filter in params" do
       let(:start_date)     { (Time.now - 2.days).to_time.to_i.to_s }
       let(:end_date)       { Time.now.to_time.to_i.to_s }
-      let(:thing)          { create(:thing) }
-      let(:uplink)         { create(:uplink, time: end_date, thing: thing) }
-      let(:uplink2)        { create(:uplink, thing: thing) }
-      let!(:accumulator)   { create(:accumulator, uplink: uplink) }
-      let!(:accumulator2)  { create(:accumulator, uplink: uplink2) }
+      let(:location)       { create(:location) }
+      let(:thing_1)        { create(:thing, locates: location) }
+      let(:uplink_1)       { create(:uplink, time: end_date, thing: thing_1) }
+      let(:uplink_2)       { create(:uplink, thing: thing_1) }
+      let!(:accumulator)   { create(:accumulator, uplink: uplink_1) }
+      let!(:accumulator2)  { create(:accumulator, uplink: uplink_2) }
       let(:params)         { { date: { start_date: start_date, end_date: end_date } } }
       let(:body)           { CSV.parse(response.body) }
 
@@ -233,7 +267,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
         it "generate a JSON response" do
           get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
        
-          body = JSON.parse(response.body)[0]
+          body = JSON.parse(response.body)
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)

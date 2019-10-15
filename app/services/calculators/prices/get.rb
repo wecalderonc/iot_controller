@@ -10,7 +10,7 @@ class Calculators::Prices::Get
     if price.present?
       counters_per_unit = input[:accumulator].my_units[unit].to_f
       final_price = Base::Maths::RuleOfThree.(price.value, input[:accumulator].int_value, counters_per_unit)
-      units_count = input[:accumulator].int_value * counters_per_unit
+      units_count = input[:value] * counters_per_unit
 
       Success.new({ units_count: units_count, final_price: final_price })
     else
