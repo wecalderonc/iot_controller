@@ -4,13 +4,16 @@ require 'dry/transaction/operation'
 class Reports::Accumulators::ProjectedConsumption
   include Dry::Transaction::Operation
 
+  HOURS = 24
+  MINUTES = 60
+
   DaysToMin = -> days do
-    days * 24 * 60
+    days * HOURS * MINUTES
   end
 
-  GetProjectedDays = -> input do
-    freq = input.locates.schedule_billing.billing_frequency
-    freq.months / 1.days
+  GetProjectedDays = -> thing do
+    frequency = thing.locates.schedule_billing.billing_frequency
+    frequency.months / 1.days
   end
 
   def call(input)
@@ -27,19 +30,16 @@ class Reports::Accumulators::ProjectedConsumption
 
   private
 
-  # This method returns m
   def average_consumption(value, days)
-    value/DaysToMin.(days).to_f
+    value / DaysToMin.(days).to_f
   end
 
-  # This method returns b
   def cut_point_y(value, average, days)
     value - average * DaysToMin.(days)
   end
 
-  # This method returns y
   def calculate_projected(cut_point:, average:, days:, input:)
-    projected_days = GetProjectedDays.(input[:thing]) # period days
+    projected_days = GetProjectedDays.(input[:thing])
     minutes = DaysToMin.(projected_days)
 
     proyected = average * minutes + cut_point
