@@ -4,9 +4,9 @@ class Reports::Accumulators::JsonReport
   include Dry::Transaction::Operation
 
   def call(input)
-    historical = input.slice(:consumptions_by_month)
+    data = input.slice(:consumptions_by_month, :projected_consumption)
     report = Reports::BaseJsonReport.new.(input)[0]
 
-    report.merge(historical)
+    report.merge(data)
   end
 end
