@@ -254,11 +254,23 @@
                     }
                   }
                 },
+                "projected_consumption": {
+                  "type": "object",
+                  "properties": {
+                    "days_count": {
+                      "type": "integer"
+                    },
+                    "value": {
+                      "type": "float"
+                    }
+                  }
+                },
                 "required": [
                   "thing_id",
                   "thing_name",
                   "accumulators",
-                  "consumptions_by_month"
+                  "consumptions_by_month",
+                  "projected_consumption"
                 ]
               }
             }
@@ -278,78 +290,6 @@
               "required": [
                 "errors",
                 "code"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/accumulators_report/": {
-      "get": {
-        "summary": "Retrieves last accumulators of a thing",
-        "tags": [
-          "Things"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "thing_name",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "last accumulators for thing found",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "string"
-                  },
-                  "created_at": {
-                    "type": "string"
-                  },
-                  "updated_at": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "created_at",
-                  "updated_at",
-                  "value"
-                ]
-              }
-            }
-          },
-          "404": {
-            "description": "thing not found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "errors": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "errors"
               ]
             }
           }

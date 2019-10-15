@@ -226,12 +226,18 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
             }
           }
 
+          projected_response = {
+            "value" => 69818.18181818182,
+            "days_count" => 8
+          }
+
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
           expect(response.status).to eq(200)
           expect(body["thing_id"]).to eq(thing.id)
           expect(body["thing_name"]).to eq(thing.name)
           expect(body["accumulators"].count).to eq(4)
           expect(body["consumptions_by_month"]).to match(historical_response)
+          expect(body["projected_consumption"]).to match(projected_response)
         end
       end
     end
