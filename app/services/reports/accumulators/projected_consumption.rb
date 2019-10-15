@@ -6,6 +6,7 @@ class Reports::Accumulators::ProjectedConsumption
 
   HOURS = 24
   MINUTES = 60
+  CURRENT_PERIOD = "4"
 
   DaysToMin = -> days do
     days * HOURS * MINUTES
@@ -17,7 +18,7 @@ class Reports::Accumulators::ProjectedConsumption
   end
 
   def call(input)
-    consumption, days = input[:consumptions_by_month]["4"].values_at(:value, :days_count)
+    consumption, days = input[:consumptions_by_month][CURRENT_PERIOD].values_at(:value, :days_count)
     average = average_consumption(consumption, days)
 
     calculate_projected({
