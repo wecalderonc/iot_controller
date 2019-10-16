@@ -39,13 +39,13 @@ RSpec.describe Reports::Show::Execute do
         end
       end
 
-      context "historical consumption" do
-        it "Should return a hash with billing periods" do
+      context "historical and projected consumption" do
+        it "Should return a hash with billing periods and projected consumption" do
           input[:option] = :json_format
           start_date = Date.today - 22.days
           end_date = Date.today
 
-          expected_response = {
+          historical_response = {
             '1' => {
               value: 54400.0,
               days_count: ((start_date - 2.months - 1.day) - (start_date - 3.months)).to_i,
@@ -68,13 +68,19 @@ RSpec.describe Reports::Show::Execute do
             }
           }
 
+          projected_response = {
+            value: 69818.18181818182,
+            days_count: 8
+          }
 
           expect(response).to be_success
+          expect(response.success.keys.count).to eq(5)
           expect(response.success[:thing_id]).to eq(thing.id)
           expect(response.success[:thing_name]).to eq(thing.name)
           expect(response.success[:accumulators].count).to eq(4)
           expect(response.success[:consumptions_by_month].keys.count).to eq(4)
-          expect(response.success[:consumptions_by_month]).to match(expected_response)
+          expect(response.success[:consumptions_by_month]).to match(historical_response)
+          expect(response.success[:projected_consumption]).to match(projected_response)
         end
       end
     end

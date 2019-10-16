@@ -27,6 +27,7 @@ A step by step series of examples that tell you how to get a development env run
   1. Set the environment variables with Figaro gem. Complete the variables preloaded in `config/application.yml`
   2. Run `sudo docker-compose run web rake neo4j:migrate` to add migrations to the database.
   3. Run `sudo docker-compose run web rails db:seed` to initialize the database.
+  4. Run `sudo docker-compose run web rails r` before each script located in scripts folder.
 
 If you want to migrate test database, you should add `RAILS_ENV=test` before each command
 

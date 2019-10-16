@@ -114,7 +114,14 @@ RSpec.describe "Accumulators Report API", :type => :request do
                 months: { type: :array }
               }
             },
-            required: ['thing_id', 'thing_name', 'accumulators', 'consumptions_by_month']
+            projected_consumption: {
+              type: :object,
+              properties: {
+                days_count: {type: :integer},
+                value: {type: :float}
+              }
+            },            
+            required: ['thing_id', 'thing_name', 'accumulators', 'consumptions_by_month', 'projected_consumption']
           }
 
         run_test!
