@@ -36,18 +36,12 @@ RSpec.describe "Users API", :type => :request do
   end
 
   path "/confirm_email" do
-    post 'Retrieves a confirmation to the confirm email process' do
+    get 'Retrieves a confirmation to the confirm email process' do
       tags 'Users'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :input, in: :body, schema: {
-        type: :object,
-        properties: {
-          email: { type: :string },
-          token: { type: :string }
-        },
-        required: [ 'email', 'token' ]
-      }
+      parameter name: "verification_code", :in => :query, :type => :string
+      parameter name: "email", :in => :query, :type => :string
 
       response '200', 'user found with verification_code' do
         let(:user) { create(:user) }
@@ -59,11 +53,6 @@ RSpec.describe "Users API", :type => :request do
             message: { type: :string },
           },
           required: [ 'message' ]
-
-        let(:input) {{
-          email: email,
-          verificationCode: verification_code
-        }}
 
         run_test!
       end
@@ -78,11 +67,6 @@ RSpec.describe "Users API", :type => :request do
             errors: { type: :string }
           },
           required: [ 'errors' ]
-
-        let(:input) {{
-          email: email,
-          token: verification_code
-        }}
 
         run_test!
       end

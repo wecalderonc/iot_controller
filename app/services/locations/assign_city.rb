@@ -4,7 +4,7 @@ class Locations::AssignCity
   include Dry::Transaction
 
   FindCity = -> input do
-    City.find_by(name: input[:city], state: input[:state])
+    City.find_by(name: input[:city])
   end
 
   def call(input)

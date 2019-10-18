@@ -75,7 +75,10 @@ p thing1 = Thing.create(
 p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
 p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
-p thing5 = Thing.create(name: "thing_five", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
+p thing5 = Thing.create(name: "thing_five", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :open))
+p thing6 = Thing.create(name: "thing_six", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :opening))
+p thing7 = Thing.create(name: "thing_seven", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closing))
+p thing8 = Thing.create(name: "thing_eight", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closed))
 
 p "****************"
 p "                "
@@ -127,6 +130,10 @@ uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi:
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
+uplink7 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing5)
+
 p "****************"
 p "                "
 p "CREATING ACCUMULATORS"
@@ -138,6 +145,7 @@ p accumulator3 = Accumulator.create(value: "0003", uplink: uplink3)
 p accumulator4 = Accumulator.create(value: "000ff", uplink: uplink4)
 p accumulator5 = Accumulator.create(value: "0005", uplink: uplink5)
 p accumulator6 = Accumulator.create(value: "00aff", uplink: uplink6)
+p accumulator7 = Accumulator.create(value: "0000aff0", uplink: uplink7)
 
 p "****************"
 p "                "
@@ -148,6 +156,7 @@ p "****************"
 p alarm1 = Alarm.create(value: "0001", viewed: false, uplink: uplink1)
 p alarm2 = Alarm.create(value: "0002", viewed: false, uplink: uplink2)
 p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink3)
+p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink7)
 
 p "****************"
 p "                "
@@ -161,6 +170,7 @@ p BatteryLevel.create(value: "0003", uplink: uplink3)
 p BatteryLevel.create(value: "0004", uplink: uplink4)
 p BatteryLevel.create(value: "0005", uplink: uplink5)
 p BatteryLevel.create(value: "000f", uplink: uplink6)
+p BatteryLevel.create(value: "0004", uplink: uplink7)
 
 p "****************"
 p "                "
@@ -177,6 +187,8 @@ p location2 = Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", la
 p location3 = Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing3)
 p location4 = Location.create(name: 'negocio2', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing4)
 p location5 = Location.create(name: 'negocio3', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing5)
+p location6 = Location.create(name: 'negocio4', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing6)
+p location7 = Location.create(name: 'negocio5', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing7)
 
 
 p "****************"
@@ -190,3 +202,5 @@ p UserLocation.create(from_node:user2, to_node: location2)
 p UserLocation.create(from_node:user3, to_node: location3)
 p UserLocation.create(from_node:user1, to_node: location4)
 p UserLocation.create(from_node:user1, to_node: location5)
+p UserLocation.create(from_node:user1, to_node: location6)
+p UserLocation.create(from_node:user1, to_node: location7)
