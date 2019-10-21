@@ -71,10 +71,13 @@ end
         expected_response = {
           "id" => alarm.id,
           "value" => alarm.value,
-          "created_at" => JSON.parse(alarm.created_at.to_json),
-          "updated_at" => JSON.parse(alarm.updated_at.to_json),
+          "created_at" => alarm.created_at.iso8601(3),
+          "updated_at" => alarm.updated_at.iso8601(3),
           "viewed" => alarm.viewed,
-          "viewed_date" => JSON.parse(alarm.viewed_date.to_json)
+          "viewed_date" => alarm.viewed_date.strftime("%F"),
+          "name"=> alarm.alarm_type.name,
+          "type"=> alarm.alarm_type.type,
+          "time"=> Time.at(alarm.uplink.time.to_i).iso8601(3)
         }
 
         expect(body).to eq([expected_response])
