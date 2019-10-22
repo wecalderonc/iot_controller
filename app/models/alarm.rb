@@ -10,7 +10,7 @@ class Alarm
   has_one :out, :uplink, type: :BELONGS_TO
   has_one :out, :alarm_type, type: :TYPE
 
-  after_save :create_alarm_type
+  # after_save :create_alarm_type
 
   def classify(last_digit)
     if AlarmType::HARDWARE_ALARMS.include?(last_digit)
@@ -24,10 +24,10 @@ class Alarm
     self.value[-1].to_i
   end
 
-  private
+  # private
 
-  def create_alarm_type
-    name = classify(self.last_digit)
-    AlarmType.create(name: name, value: last_digit, type: "hardware", alarm: self)
-  end
+  # def create_alarm_type
+  #   name = classify(self.last_digit)
+  #   AlarmType.create(name: name, value: last_digit, type: "hardware", alarm: self)
+  # end
 end

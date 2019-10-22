@@ -158,6 +158,13 @@ p "                "
 p "****************"
 
 p alarm1 = Alarm.create(value: "0001", viewed: true, uplink: uplink1)
+p alarm12 = Alarm.create(value: "0002", viewed: false, uplink: uplink1)
+p alarm13 = Alarm.create(value: "0003", viewed: false, uplink: uplink1)
+p alarm14 = Alarm.create(value: "0001", viewed: false, uplink: uplink1)
+p alarm_type1 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm1)
+p alarm_type12 = AlarmType.create(name: "induced_site_alarm", value: 1, type: "hardware", alarm: alarm12)
+p alarm_type13 = AlarmType.create(name: "sos", value: 1, type: "hardware", alarm: alarm13)
+p alarm_type14 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm14)
 p alarm2 = Alarm.create(value: "0002", viewed: false, uplink: uplink2)
 p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink3)
 p alarm4 = Alarm.create(value: "0004", viewed: true, uplink: uplink4)
