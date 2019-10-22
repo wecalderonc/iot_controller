@@ -16,7 +16,10 @@ Rspec.describe AlarmSerializer do
         "updated_at"=>nil,
         "value"=>base_obj.value,
         "viewed"=>base_obj.viewed,
-        "viewed_date"=>"2019-08-12"
+        "viewed_date"=>"2019-08-12",
+        "name"=>base_obj.alarm_type.name,
+        "type"=>base_obj.alarm_type.type,
+        "time"=>Time.at(base_obj.uplink.time.to_i).iso8601(3)
       }
 
       expect(subject).to eq(expected_response)
