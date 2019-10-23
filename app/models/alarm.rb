@@ -12,13 +12,13 @@ class Alarm
 
   # after_save :create_alarm_type
 
-  def classify(last_digit)
-    if AlarmType::HARDWARE_ALARMS.include?(last_digit)
-      AlarmType::HARDWARE_ALARMS[last_digit]
-    else
-      :does_not_apply
-    end
-  end
+  # def classify(last_digit)
+  #   if AlarmType::HARDWARE_ALARMS.include?(last_digit)
+  #     AlarmType::HARDWARE_ALARMS[last_digit]
+  #   else
+  #     :does_not_apply
+  #   end
+  # end
 
   def last_digit
     self.value[-1].to_i
