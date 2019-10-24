@@ -1,42 +1,45 @@
 require 'dry/transaction/operation'
+require 'dry/monads'
 
 class Things::BatteryLevels::Graphic::Compare
+  include Dry::Monads[:maybe]
   include Dry::Transaction::Operation
 
+
   def call(input)
-    if input[:last_power_connection_alarm].present? && input[:upward_transition].present?
-      battery_level_date = input[:upward_transition].created_at
-      alarm_date = input[:last_power_connection_alarm].created_at
+    alarm = input[:last_power_connection_alarm]
+    battery_level = input[:upward_transition]
 
-      result = nearest_date(battery_level_date, alarm_date)
+    nearest_date = -> input {
+      battery_level_date = battery_level.created_at
+      alarm_date = alarm.created_at
 
-      input.merge(start_date: result)
-    elsif input[:last_power_connection_alarm].present?
-      input.merge(start_date: input[:last_power_connection_alarm].created_at)
-    elsif input[:upward_transition].present?
-      input.merge(start_date: input[:upward_transition].created_at)
-    else
-      input.merge(start_date: {})
-    end
+      result = date_comparison(battery_level_date, alarm_date)
 
-
-    options = {
-      true:
-      false: {
-        true: {},
-        false: {}
-      }
+      Maybe(result)
     }
 
-    options.default =
+    alarm_date = -> input {
+      Maybe(alarm.created_at)
+    }
 
-    define = input[:last_power_connection_alarm].present? && input[:upward_transition].present?
-    options[define]
+    battery_level_date = -> input {
+      Maybe(battery_level.created_at)
+    }
+
+    start_date = Maybe(alarm).and(Maybe(battery_level))
+      .bind(nearest_date)
+      .or(Maybe(alarm).bind(alarm_date))
+      .or(Maybe(battery_level).bind(battery_level_date))
+      .value_or { {} }
+
+    input.merge(start_date: start_date)
+
   end
 
   private
 
-  def nearest_date(battery_level_date, alarm_date)
+  def date_comparison(battery_level_date, alarm_date)
     battery_level_date < alarm_date ? alarm_date : battery_level_date
   end
 end

@@ -12,7 +12,7 @@ class Things::BatteryLevels::Graphic::PowerConnectionAlarm
     if result.present?
       input.merge(last_power_connection_alarm: result)
     else
-      input.merge(last_power_connection_alarm: {})
+      input.merge(last_power_connection_alarm: nil)
     end
   end
 

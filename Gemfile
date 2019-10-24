@@ -18,6 +18,7 @@ gem 'neo4j'
 gem 'dry-auto_inject'
 gem 'dry-validation'
 gem 'dry-transaction'
+gem 'dry-monads'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

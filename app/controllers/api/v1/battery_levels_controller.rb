@@ -5,17 +5,13 @@ module Api
     load_and_authorize_resource class: "BatteryLevel"
 
       def index
-        response = Things::BatteryLevels::Execute.new.(index_params)
+        options = {
+          graphic: -> { Things::BatteryLevels::Graphic::Execute.new.(index_params) }
+        }
 
-        if response.success?
-          json_response(response.success, :ok)
-        else
-          json_response({ errors: response.failure[:message] }, :not_found)
-        end
-      end
+        options.default = -> { Things::BatteryLevels::Execute.new.(index_params) }
 
-      def otro_index
-        response = Things::BatteryLevels::Graphic::Execute.new.(otro_index_params)
+        response = options[index_params[:subaction]&.to_sym].()
 
         if response.success?
           json_response(response.success, :ok)
@@ -28,8 +24,8 @@ module Api
 
       def index_params
         #TODO: Change this when thing_name -> aws_id
-        aws_id = params.permit(:thing_thing_name).to_h.symbolize_keys
-        { thing_name: aws_id[:thing_thing_name] }
+        aws_id = params.permit(:thing_thing_name, :subaction).to_h.symbolize_keys
+        { thing_name: aws_id[:thing_thing_name], subaction: aws_id[:subaction] }
       end
     end
   end

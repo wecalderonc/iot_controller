@@ -15,6 +15,6 @@ class Things::BatteryLevels::Graphic::UpwardTransition
 
   def search_upward_transition(battery_levels)
     result = battery_levels.each_cons(2).detect { |pair| pair[0].value < pair[1].value }
-    result.present? ? result[1] : {}
+    result.present? ? result[1] : nil
   end
 end

@@ -444,6 +444,7 @@ DEPENDENCIES
   city-state
   database_cleaner
   dry-auto_inject
+  dry-monads
   dry-transaction
   dry-validation
   factory_bot_rails

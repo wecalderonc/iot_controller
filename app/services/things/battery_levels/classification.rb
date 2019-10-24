@@ -4,6 +4,7 @@ class Things::BatteryLevels::Classification
   include Dry::Transaction::Operation
 
   def call(input)
+    p "clasifffaslñfjañlsdkjf"
     battery_levels = input[:batteries]
 
     result = add_level_label(battery_levels)
