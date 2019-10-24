@@ -14,6 +14,16 @@ module Api
         end
       end
 
+      def otro_index
+        response = Things::BatteryLevels::Graphic::Execute.new.(otro_index_params)
+
+        if response.success?
+          json_response(response.success, :ok)
+        else
+          json_response({ errors: response.failure[:message] }, :not_found)
+        end
+      end
+
       private
 
       def index_params

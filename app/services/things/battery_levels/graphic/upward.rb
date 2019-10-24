@@ -8,16 +8,13 @@ class Things::BatteryLevels::Graphic::Upward
     battery_levels = input[:batteries].order(:created_at)
     result = search_upward_transition(battery_levels)
 
-    if result.present?
-      Success input.merge(upward_transition: result[1])
-    else
-      Failure Errors.general_error("The thing #{input[:thing].name} does not have an upward transitions between battery levels", self.class)
-    end
+    input.merge(upward_transition: result)
   end
 
   private
 
   def search_upward_transition(battery_levels)
-    battery_levels.each_cons(2).detect { |pair| pair[0].value < pair[1].value }
+    pair = battery_levels.each_cons(2).detect { |pair| pair[0].value < pair[1].value }
+    pair.present? ? pair[1] : {}
   end
 end

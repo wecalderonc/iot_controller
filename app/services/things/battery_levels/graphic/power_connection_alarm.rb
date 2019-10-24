@@ -4,13 +4,15 @@ class Things::BatteryLevels::Graphic::PowerConnectionAlarm
   include Dry::Transaction::Operation
 
   def call(input)
-    alarms = input[:alarms]
+    thing = input[:thing]
+    alarms = thing.uplinks.alarm
+
     last_power_connection_alarm = last_power_connection_alarm(alarms)
 
     if last_power_connection_alarm.present?
-      Success input.merge(last_power_connection_alarm: last_power_connection_alarm)
+      input.merge(last_power_connection_alarm: last_power_connection_alarm)
     else
-      Failure Errors.general_error("The thing #{input[:thing_name]} does not have a power_connection alarm", self.class)
+      input.merge(last_power_connection_alarm: {})
     end
   end
 

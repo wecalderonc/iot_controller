@@ -15,10 +15,15 @@ RSpec.describe Things::BatteryLevels::Graphic::Upward do
         let!(:battery_level5) { create(:battery_level, value: "0005", uplink: uplink, created_at: DateTime.new(2019,1,5)) }
         let!(:battery_level6) { create(:battery_level, value: "0004", uplink: uplink, created_at: DateTime.new(2019,1,6)) }
 
-        let!(:input) { { thing: thing } }
+        let!(:input) {
+          {
+            thing: thing,
+            batteries: thing.uplinks.batteryLevel
+          }
+        }
 
         it 'should return array with battery levels' do
-          expect(response.success[:upward_transition]).to match(battery_level5)
+          expect(response[:upward_transition]).to match(battery_level5)
         end
       end
 
@@ -32,21 +37,15 @@ RSpec.describe Things::BatteryLevels::Graphic::Upward do
         let!(:battery_level5) { create(:battery_level, value: "0005", uplink: uplink, created_at: DateTime.new(2019,1,5)) }
         let!(:battery_level6) { create(:battery_level, value: "0004", uplink: uplink, created_at: DateTime.new(2019,1,6)) }
 
-        let!(:input) { { thing: thing } }
+        let!(:input) {
+          {
+            thing: thing,
+            batteries: thing.uplinks.batteryLevel
+          }
+        }
 
         it 'should return array with battery levels' do
-          expect(response.failure[:message]).to match("The thing #{thing.name} does not have an upward transitions between battery levels")
-        end
-      end
-
-      context 'thing doesnt have battery levels' do
-        let(:thing) { create(:thing) }
-        let(:uplink) { create(:uplink, thing: thing )}
-
-        let!(:input) { { thing: thing } }
-
-        it 'should return array with battery levels' do
-          expect(response.failure[:message]).to match("The thing #{thing.name} does not have an upward transitions between battery levels")
+          expect(response[:upward_transition]).to match({})
         end
       end
     end
