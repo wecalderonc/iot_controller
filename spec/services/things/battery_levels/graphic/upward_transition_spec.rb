@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Things::BatteryLevels::Graphic::Upward do
+RSpec.describe Things::BatteryLevels::Graphic::UpwardTransition do
   describe '#call' do
     let(:response) { subject.(input) }
 
@@ -45,7 +45,7 @@ RSpec.describe Things::BatteryLevels::Graphic::Upward do
         }
 
         it 'should return array with battery levels' do
-          expect(response[:upward_transition]).to match({})
+          expect(response[:upward_transition]).to match(nil)
         end
       end
     end

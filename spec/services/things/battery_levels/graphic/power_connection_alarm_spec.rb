@@ -36,7 +36,7 @@ RSpec.describe Things::BatteryLevels::Graphic::PowerConnectionAlarm do
         }
 
         it 'should return array with battery levels' do
-          expect(response[:last_power_connection_alarm]).to match({})
+          expect(response[:last_power_connection_alarm]).to match(nil)
         end
       end
 
@@ -51,7 +51,7 @@ RSpec.describe Things::BatteryLevels::Graphic::PowerConnectionAlarm do
         }
 
         it 'should return array with battery levels' do
-          expect(response[:last_power_connection_alarm]).to match({})
+          expect(response[:last_power_connection_alarm]).to match(nil)
         end
       end
     end
