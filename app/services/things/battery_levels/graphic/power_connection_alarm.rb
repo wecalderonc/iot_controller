@@ -7,10 +7,10 @@ class Things::BatteryLevels::Graphic::PowerConnectionAlarm
     thing = input[:thing]
     alarms = thing.uplinks.alarm
 
-    last_power_connection_alarm = last_power_connection_alarm(alarms)
+    result = last_power_connection_alarm(alarms)
 
-    if last_power_connection_alarm.present?
-      input.merge(last_power_connection_alarm: last_power_connection_alarm)
+    if result.present?
+      input.merge(last_power_connection_alarm: result)
     else
       input.merge(last_power_connection_alarm: {})
     end

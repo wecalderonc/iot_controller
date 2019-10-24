@@ -7,7 +7,8 @@ class Things::BatteryLevels::Graphic::Compare
     if input[:last_power_connection_alarm].present? && input[:upward_transition].present?
       battery_level_date = input[:upward_transition].created_at
       alarm_date = input[:last_power_connection_alarm].created_at
-      result = closer(battery_level_date, alarm_date)
+
+      result = nearest_date(battery_level_date, alarm_date)
 
       input.merge(start_date: result)
     elsif input[:last_power_connection_alarm].present?
@@ -18,11 +19,24 @@ class Things::BatteryLevels::Graphic::Compare
       input.merge(start_date: {})
     end
 
+
+    options = {
+      true:
+      false: {
+        true: {},
+        false: {}
+      }
+    }
+
+    options.default =
+
+    define = input[:last_power_connection_alarm].present? && input[:upward_transition].present?
+    options[define]
   end
 
   private
 
-  def closer(battery_level_date, alarm_date)
+  def nearest_date(battery_level_date, alarm_date)
     battery_level_date < alarm_date ? alarm_date : battery_level_date
   end
 end

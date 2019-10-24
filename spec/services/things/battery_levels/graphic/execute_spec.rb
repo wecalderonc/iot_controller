@@ -135,22 +135,7 @@ RSpec.describe Things::BatteryLevels::Graphic::Execute do
         }
       }
 
-      it "Should return a Success response" do
-        response = subject.(input)
-
-        expect(response).to be_failure
-        expect(response.failure[:message]).to eq("The thing #{thing.name} does not have battery level history")
-      end
-    end
-
-    context "When the thing does not have battery levels" do
-      let(:input) {
-        {
-          thing_name: thing.name
-        }
-      }
-
-      it "Should return a Success response" do
+      it "Should return a Failure response" do
         response = subject.(input)
 
         expect(response).to be_failure
