@@ -42,10 +42,11 @@ class Thing
   end
 
   def battery_level_query(start_date)
-    self.uplinks.batteryLevel(:n)
+    battery_levels = self.uplinks.batteryLevel(:n)
         .where("n.created_at > {date}")
         .params(date: start_date.to_i)
-        .order(:created_at)
+
+    BatteryLevel.sort_battery_levels(battery_levels)
   end
 
   private
