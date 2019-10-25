@@ -186,4 +186,37 @@ RSpec.describe Thing, :type => :model do
       end
     end
   end
+
+  describe "#battery_level_query" do
+    let(:thing) { create(:thing) }
+    let(:uplink) { create(:uplink, thing: thing )}
+
+    context "When there are battery_levels" do
+      it "Should return battery levels" do
+        battery_level  = create(:battery_level, value: "0009", uplink: uplink, created_at: DateTime.new(2019,1,1))
+        battery_level2 = create(:battery_level, value: "0009", uplink: uplink, created_at: DateTime.new(2019,1,2))
+        battery_level3 = create(:battery_level, value: "0006", uplink: uplink, created_at: DateTime.new(2019,1,3))
+        battery_level4 = create(:battery_level, value: "0003", uplink: uplink, created_at: DateTime.new(2019,1,4))
+        battery_level5 = create(:battery_level, value: "0005", uplink: uplink, created_at: DateTime.new(2019,1,5))
+        battery_level6 = create(:battery_level, value: "0004", uplink: uplink, created_at: DateTime.new(2019,1,6))
+        start_date = battery_level2.created_at
+
+        response = thing.battery_level_query(start_date)
+
+        expect(response[0]).to eq(battery_level3)
+        expect(response[1]).to eq(battery_level4)
+        expect(response[2]).to eq(battery_level5)
+        expect(response[3]).to eq(battery_level6)
+      end
+    end
+
+    context "When there are not battery levels" do
+      it "Should return the nil" do
+        start_date = thing.created_at
+        response = thing.battery_level_query(start_date)
+
+        expect(response).to be_empty
+      end
+    end
+  end
 end

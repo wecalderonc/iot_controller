@@ -143,9 +143,9 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       context "csv response" do
         it "generate a CSV" do
           header["Content-Type"] = "text/csv"
-       
+
           get '/api/v1/accumulators_report', headers: header, params: params
-       
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
         end
@@ -169,7 +169,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
   end
 
   describe "GET/show generate CSV" do
-    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months - 8.days)) }
+    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months + 22.days)) }
     let(:location) { create(:location, schedule_billing: billing) }
     let(:thing)    { create(:thing, units: { liter: 200 }, locates: location) }
     let(:uplink)   { create(:uplink, thing: thing, time: (Time.now - 1.month).to_i) }
@@ -198,7 +198,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       context "json response" do
         it "generate a JSON response" do
           get "/api/v1/accumulators_report/#{thing_name}", headers: header
-       
+
           body = JSON.parse(response.body)
           start_date = Date.today - 22.days
           end_date = Date.today
@@ -257,11 +257,11 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       context "csv response" do
         it "generate a CSV" do
           header["Content-Type"] = "text/csv"
-       
+
           get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
-       
+
           headers = ["BD ID", "ID Dispositivo", "Fecha/Hora", "Valor Acumulador", "Delta Consumo", "Delta Acumulado"]
-       
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
           expect(body[0]).to match_array(headers)
@@ -272,7 +272,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
       context "json response" do
         it "generate a JSON response" do
           get "/api/v1/accumulators_report/#{thing.name}", headers: header, params: params
-       
+
           body = JSON.parse(response.body)
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")

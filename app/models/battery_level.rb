@@ -15,4 +15,8 @@ class BatteryLevel
   }
 
   LEVEL_LABELS.default = :no_available
+
+  def self.sort_battery_levels(battery_levels)
+    battery_levels.order(:created_at)
+  end
 end

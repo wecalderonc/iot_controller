@@ -110,6 +110,18 @@ uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi:
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
 
+uplink12 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+
+uplink13 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+
+uplink14 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+              long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
+              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+
 uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing2)
@@ -158,6 +170,13 @@ p "                "
 p "****************"
 
 p alarm1 = Alarm.create(value: "0001", viewed: true, uplink: uplink1)
+p alarm12 = Alarm.create(value: "0002", viewed: false, uplink: uplink12)
+p alarm13 = Alarm.create(value: "0003", viewed: false, uplink: uplink13)
+p alarm14 = Alarm.create(value: "0001", viewed: false, uplink: uplink14)
+p alarm_type1 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm1)
+p alarm_type12 = AlarmType.create(name: "induced_site_alarm", value: 1, type: "hardware", alarm: alarm12)
+p alarm_type13 = AlarmType.create(name: "sos", value: 1, type: "hardware", alarm: alarm13)
+p alarm_type14 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm14)
 p alarm2 = Alarm.create(value: "0002", viewed: false, uplink: uplink2)
 p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink3)
 p alarm4 = Alarm.create(value: "0004", viewed: true, uplink: uplink4)

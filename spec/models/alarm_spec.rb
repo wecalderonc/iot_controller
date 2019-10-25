@@ -20,26 +20,6 @@ RSpec.describe Alarm, type: :model do
     end
   end
 
-  describe "#classify" do
-    let(:alarm) { create(:alarm, value: "0002") }
-
-    it "return name of alarm_type 2" do
-      expect(alarm.classify(2)).to eq(:induced_site_alarm)
-    end
-
-    it "return name of alarm_type 1" do
-      expect(alarm.classify(1)).to eq(:power_connection)
-    end
-
-    it "return name of alarm_type 3" do
-      expect(alarm.classify(3)).to eq(:sos)
-    end
-
-    it "return name of wrong alarm_type" do
-      expect(alarm.classify(999)).to eq(:does_not_apply)
-    end
-  end
-
   describe "#last_digit" do
     let(:alarm) { create(:alarm, value: "0002") }
 
@@ -48,11 +28,43 @@ RSpec.describe Alarm, type: :model do
     end
   end
 
-  describe "after_save" do
-    let(:alarm) { build(:alarm, value: "0002") }
+  describe "#last_power_connection_alarm" do
+    let(:thing) { create(:thing) }
+    let(:uplink) { create(:uplink, thing: thing )}
+    let(:uplink2) { create(:uplink, thing: thing )}
+    let(:uplink3) { create(:uplink, thing: thing )}
 
-    it 'creates AlarmType and the relation with the Alarm' do
-      expect { alarm.save }.to change { alarm.alarm_type.id }.from(nil).to be_truthy
+    context "thing has alarms with 0001 value" do
+      it "return alarms with 0001 value" do
+        alarm = create(:alarm, value: "0001", created_at: DateTime.new(2019,10,1), uplink: uplink)
+        alarm2 = create(:alarm, value: "0002", created_at: DateTime.new(2019,10,2), uplink: uplink2)
+        alarm3 = create(:alarm, value: "0001", created_at: DateTime.new(2019,10,3), uplink: uplink3)
+        alarms = thing.uplinks.alarm
+        response = Alarm.last_power_connection_alarm(alarms)
+
+        expect(response).to eq(alarm3)
+      end
+    end
+
+    context "thing does not have alarms" do
+      it "return nil" do
+        alarms = thing.uplinks.alarm
+        response = Alarm.last_power_connection_alarm(alarms)
+
+        expect(response).to eq(nil)
+      end
+    end
+
+    context "thing does not have alarms with 0001 value" do
+      it "return nil" do
+        alarm = create(:alarm, value: "0003", created_at: DateTime.new(2019,10,1), uplink: uplink)
+        alarm2 = create(:alarm, value: "0002", created_at: DateTime.new(2019,10,2), uplink: uplink2)
+        alarm3 = create(:alarm, value: "0002", created_at: DateTime.new(2019,10,3), uplink: uplink3)
+        alarms = thing.uplinks.alarm
+        response = Alarm.last_power_connection_alarm(alarms)
+
+        expect(response).to eq(nil)
+      end
     end
   end
 end
