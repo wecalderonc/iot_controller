@@ -9,7 +9,7 @@ class Things::BatteryLevels::Graphic::BuildResponse
     if start_date.present?
       input[:thing].uplinks.batteryLevel(:n)
         .where("n.created_at > {date}")
-        .params(date:start_date.to_i)
+        .params(date: start_date.to_i)
         .order(:created_at)
     else
       input[:thing].uplinks.batteryLevel.order(:created_at)

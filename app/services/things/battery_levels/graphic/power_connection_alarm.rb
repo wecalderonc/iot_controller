@@ -3,6 +3,8 @@ require 'dry/transaction/operation'
 class Things::BatteryLevels::Graphic::PowerConnectionAlarm
   include Dry::Transaction::Operation
 
+  POWER_CONNECTION_VALUE: "0001"
+
   def call(input)
     thing = input[:thing]
     alarms = thing.uplinks.alarm
@@ -19,6 +21,6 @@ class Things::BatteryLevels::Graphic::PowerConnectionAlarm
   private
 
   def last_power_connection_alarm(alarms)
-    alarms.where(value:"0001").order(:created_at).last
+    alarms.where(value: POWER_CONNECTION_VALUE).order(:created_at).last
   end
 end
