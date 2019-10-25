@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Users::Authenticate::Execute do
   describe "#call" do
     let(:response) { subject.(params) }
-    let(:user) { create(:user) }
+    let(:user) { create(:user, password: "Usuario123*") }
     let(:params) {
       {
         email: user.email,

@@ -243,11 +243,11 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     end
 
     context "date filter in params" do
-      let(:start_date)     { (Time.now - 2.days).to_time.to_i.to_s }
-      let(:end_date)       { Time.now.to_time.to_i.to_s }
+      let(:start_date)     { (Time.now - 4.days).to_i.to_s }
+      let(:end_date)       { Time.now.to_i.to_s }
       let(:location)       { create(:location) }
       let(:thing_1)        { create(:thing, locates: location) }
-      let(:uplink_1)       { create(:uplink, time: end_date, thing: thing_1) }
+      let(:uplink_1)       { create(:uplink, time: (Time.now - 2.days).to_i.to_s, thing: thing_1) }
       let(:uplink_2)       { create(:uplink, thing: thing_1) }
       let!(:accumulator)   { create(:accumulator, uplink: uplink_1) }
       let!(:accumulator2)  { create(:accumulator, uplink: uplink_2) }

@@ -12,11 +12,11 @@ RSpec.describe "Accumulators Report API", :type => :request do
       parameter name: "date[end_date]", :in => :query, :type => :string
 
       response '200', 'accumulators founded' do
-        let(:start_date)         { (Time.now - 2.days).to_time.to_i.to_s }
-        let(:end_date)           { (Time.now - 2.days).to_time.to_i.to_s }
+        let(:start_date)         { (Time.now - 4.days).to_i.to_s }
+        let(:end_date)           { (Time.now - 2.days).to_i.to_s }
         let(:'date[start_date]') { start_date }
         let(:'date[end_date]')   { end_date }
-        let!(:uplink)            { create(:uplink, time: end_date) }
+        let!(:uplink)            { create(:uplink, time: (Time.now - 2.days).to_i.to_s) }
         let!(:accumulator1)      { create(:accumulator, uplink: uplink) }
         let!(:accumulator2)      { create(:accumulator) }
         let(:user)               { create(:user, password: "Usuar123*") }

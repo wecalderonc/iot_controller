@@ -75,7 +75,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
     end
 
     context "date filter in params" do
-      let(:start_date)  { (Time.now - 2.days).to_i.to_s }
+      let(:start_date)  { (Time.now - 4.days).to_i.to_s }
       let(:end_date)    { Time.now.to_i.to_s }
       let(:uplink)      { create(:uplink, time: (Time.now - 2.days).to_i.to_s) }
       let!(:alarm)      { create(:alarm, uplink: uplink) }
