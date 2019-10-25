@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, password: "Usuario123*") }
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
   describe "GET/index index last accumulators from a thing" do

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AuthenticationController, :type => :controller do
 
   describe "POST authenticate_user" do
-    let (:user) { create(:user) }
+    let (:user) { create(:user, password: "Usuario123*") }
 
     context "The User is authenticating" do
       context "The data is valid" do

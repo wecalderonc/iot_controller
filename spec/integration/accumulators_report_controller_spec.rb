@@ -19,7 +19,7 @@ RSpec.describe "Accumulators Report API", :type => :request do
         let!(:uplink)            { create(:uplink, time: end_date) }
         let!(:accumulator1)      { create(:accumulator, uplink: uplink) }
         let!(:accumulator2)      { create(:accumulator) }
-        let(:user)               { create(:user) }
+        let(:user)               { create(:user, password: "Usuar123*") }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -120,7 +120,7 @@ RSpec.describe "Accumulators Report API", :type => :request do
                 days_count: {type: :integer},
                 value: {type: :float}
               }
-            },            
+            },
             required: ['thing_id', 'thing_name', 'accumulators', 'consumptions_by_month', 'projected_consumption']
           }
 

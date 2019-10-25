@@ -4,7 +4,7 @@ RSpec.describe Things::BatteryLevels::Graphic::Execute do
   describe "#call" do
     let(:thing)           { create(:thing) }
     let(:uplink)          { create(:uplink, thing: thing) }
-    let(:uplink1)          { create(:uplink, thing: thing) }
+    let(:uplink1)         { create(:uplink, thing: thing) }
     let(:uplink2)         { create(:uplink, thing: thing) }
     let(:uplink3)         { create(:uplink, thing: thing) }
     let(:uplink4)         { create(:uplink, thing: thing) }
@@ -30,9 +30,10 @@ RSpec.describe Things::BatteryLevels::Graphic::Execute do
           response = subject.(input)
 
           expect(response).to be_success
-          expect(response.success[0]).to eq(battery_level4)
-          expect(response.success[1]).to eq(battery_level5)
-          expect(response.success[2]).to eq(battery_level6)
+          expect(response.success[0]).to eq(battery_level3)
+          expect(response.success[1]).to eq(battery_level4)
+          expect(response.success[2]).to eq(battery_level5)
+          expect(response.success[3]).to eq(battery_level6)
         end
       end
 
