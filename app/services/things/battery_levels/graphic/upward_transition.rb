@@ -5,7 +5,7 @@ class Things::BatteryLevels::Graphic::UpwardTransition
 
   def call(input)
     thing = input[:thing]
-    battery_levels = input[:batteries].order(:created_at)
+    battery_levels = BatteryLevel.sort_battery_levels(input[:batteries])
     upward_transition = search_upward_transition(battery_levels)
 
     input.merge(upward_transition: upward_transition)

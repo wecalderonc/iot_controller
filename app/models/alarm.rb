@@ -10,7 +10,13 @@ class Alarm
   has_one :out, :uplink, type: :BELONGS_TO
   has_one :out, :alarm_type, type: :TYPE
 
+  POWER_CONNECTION_VALUE = "0001"
+
   def last_digit
     self.value[-1].to_i
+  end
+
+  def self.last_power_connection_alarm(alarms)
+    alarms.where(value: POWER_CONNECTION_VALUE).order(:created_at).last
   end
 end

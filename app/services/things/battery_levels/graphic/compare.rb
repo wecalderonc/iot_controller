@@ -25,11 +25,11 @@ class Things::BatteryLevels::Graphic::Compare
   end
 
   def alarm_date(alarm)
-    Maybe(alarm.created_at)
+    Some(alarm.created_at)
   end
 
   def battery_level_date(battery_level)
-    Maybe(battery_level.created_at)
+    Some(battery_level.created_at)
   end
 
   def nearest_date(alarm, battery_level)
@@ -38,6 +38,6 @@ class Things::BatteryLevels::Graphic::Compare
 
     result = date_comparison(battery_level_date, alarm_date)
 
-    Maybe(result)
+    Some(result)
   end
 end
