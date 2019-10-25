@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Reports::Show::Execute do
   describe '#call' do
     let(:response) { subject.(input) }
-    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months - 8.days)) }
+    let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months + 22.days)) }
     let(:location) { create(:location, schedule_billing: billing) }
     let(:thing)    { create(:thing, units: { liter: 200 }, locates: location) }
     let(:uplink)   { create(:uplink, thing: thing, time: (Time.now - 1.month).to_i) }
