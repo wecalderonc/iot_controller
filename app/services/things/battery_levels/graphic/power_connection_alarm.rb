@@ -3,7 +3,7 @@ require 'dry/transaction/operation'
 class Things::BatteryLevels::Graphic::PowerConnectionAlarm
   include Dry::Transaction::Operation
 
-  POWER_CONNECTION_VALUE: "0001"
+  POWER_CONNECTION_VALUE = "0001"
 
   def call(input)
     thing = input[:thing]

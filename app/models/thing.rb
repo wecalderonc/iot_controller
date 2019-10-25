@@ -41,6 +41,13 @@ class Thing
     self.uplinks.alarm.map(&:viewed).any?(true)
   end
 
+  def battery_level_query(start_date)
+    self.uplinks.batteryLevel(:n)
+        .where("n.created_at > {date}")
+        .params(date: start_date.to_i)
+        .order(:created_at)
+  end
+
   private
 
   #TODO: Fix this in the next version.
