@@ -5,11 +5,12 @@ class Things::BatteryLevels::Graphic::BuildResponse
 
   def call(input)
     start_date = input[:start_date]
+    battery_levels = input[:batteries]
 
     if start_date.present?
       input[:thing].battery_level_query(start_date)
     else
-      input[:thing].uplinks.batteryLevel.order(:created_at)
+      BatteryLevel.sort_battery_levels(battery_levels)
     end
   end
 end
