@@ -10,7 +10,7 @@ class Things::BatteryLevels::Graphic::BuildResponse
     if start_date.present?
       input[:thing].battery_level_query(start_date)
     else
-      BatteryLevel.sort_battery_levels(battery_levels)
+      BatteryLevel.sort_battery_levels(battery_levels, :asc)
     end
   end
 end

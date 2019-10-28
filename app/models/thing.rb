@@ -46,7 +46,7 @@ class Thing
         .where("n.created_at > {date}")
         .params(date: start_date.to_i)
 
-    BatteryLevel.sort_battery_levels(battery_levels)
+    BatteryLevel.sort_battery_levels(battery_levels, :asc)
   end
 
   private

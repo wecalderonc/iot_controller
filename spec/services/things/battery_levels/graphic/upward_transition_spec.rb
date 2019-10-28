@@ -23,7 +23,7 @@ RSpec.describe Things::BatteryLevels::Graphic::UpwardTransition do
         }
 
         it 'should return array with battery levels' do
-          expect(response[:upward_transition]).to match(battery_level5)
+          expect(response[:upward_transition]).to match(battery_level4)
         end
       end
 

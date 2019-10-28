@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AlarmsReportController, :type => :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, password: "Usuario123*") }
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
   describe "GET/index generate CSV" do
@@ -28,7 +28,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
           header["Content-Type"] = "text/csv"
 
           get '/api/v1/alarms_report', headers: header
-       
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
         end
@@ -75,9 +75,9 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
     end
 
     context "date filter in params" do
-      let(:start_date)  { (Time.now - 2.days).to_time.to_i.to_s }
-      let(:end_date)    { Time.now.to_time.to_i.to_s }
-      let(:uplink)      { create(:uplink, time: end_date) }
+      let(:start_date)  { (Time.now - 4.days).to_i.to_s }
+      let(:end_date)    { Time.now.to_i.to_s }
+      let(:uplink)      { create(:uplink, time: (Time.now - 2.days).to_i.to_s) }
       let!(:alarm)      { create(:alarm, uplink: uplink) }
       let!(:alarm2)     { create(:alarm) }
       let(:thing)       { uplink.thing }
@@ -88,9 +88,9 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       context "csv response" do
         it "generate a CSV" do
           header["Content-Type"] = "text/csv"
-       
+
           get '/api/v1/alarms_report', headers: header, params: params
-       
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
         end
@@ -127,7 +127,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
           header["Content-Type"] = "text/csv"
 
           get "/api/v1/alarms_report/#{thing_name}", headers: header
-       
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
         end
@@ -136,7 +136,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       context "json response" do
         it "generate a JSON response" do
           get "/api/v1/alarms_report/#{thing_name}", headers: header
-       
+
           body = JSON.parse(response.body)[0]
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
@@ -162,11 +162,11 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       context "csv response" do
         it "generate a CSV" do
           header["Content-Type"] = "text/csv"
-       
+
           get "/api/v1/alarms_report/#{thing.name}", headers: header, params: params
-       
+
           headers = ["BD ID", "ID Dispositivo", "Fecha/Hora", "Valor Alarma"]
-       
+
           expect(response.headers["Content-Type"]).to eq("text/csv")
           expect(response.status).to eq(200)
           expect(body[0]).to match_array(headers)
@@ -177,7 +177,7 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
       context "json response" do
         it "generate a JSON response" do
           get "/api/v1/alarms_report/#{thing.name}", headers: header, params: params
-       
+
           body = JSON.parse(response.body)[0]
 
           expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
