@@ -72,13 +72,13 @@ p thing1 = Thing.create(
   units: { liter: 200 }
   )
 
-p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
-p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
-p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create)
-p thing5 = Thing.create(name: "thing_five", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :open))
-p thing6 = Thing.create(name: "thing_six", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :opening))
-p thing7 = Thing.create(name: "thing_seven", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closing))
-p thing8 = Thing.create(name: "thing_eight", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closed))
+p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 })
+p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 })
+p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 })
+p thing5 = Thing.create(name: "thing_five", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :open), units: { liter: 200 })
+p thing6 = Thing.create(name: "thing_six", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :opening), units: { liter: 200 })
+p thing7 = Thing.create(name: "thing_seven", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closing), units: { liter: 200 })
+p thing8 = Thing.create(name: "thing_eight", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closed), units: { liter: 200 })
 
 p "****************"
 p "                "
@@ -175,13 +175,14 @@ p alarm13 = Alarm.create(value: "0003", viewed: false, uplink: uplink13)
 p alarm14 = Alarm.create(value: "0001", viewed: false, uplink: uplink14)
 p alarm_type1 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm1)
 p alarm_type12 = AlarmType.create(name: "induced_site_alarm", value: 1, type: "hardware", alarm: alarm12)
-p alarm_type13 = AlarmType.create(name: "sos", value: 1, type: "hardware", alarm: alarm13)
+p alarm_type13 = AlarmType.create(name: "sos", value: 3, type: "hardware", alarm: alarm13)
 p alarm_type14 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm14)
 p alarm2 = Alarm.create(value: "0002", viewed: false, uplink: uplink2)
 p alarm3 = Alarm.create(value: "0003", viewed: false, uplink: uplink3)
 p alarm4 = Alarm.create(value: "0004", viewed: true, uplink: uplink4)
 p alarm6 = Alarm.create(value: "0006", viewed: false, uplink: uplink6)
-p alarm7 = Alarm.create(value: "0007", viewed: false, uplink: uplink7)
+p alarm7 = Alarm.create(value: "0003", viewed: false, uplink: uplink7)
+p alarm_type71 = AlarmType.create(name: "sos", value: 3, type: "hardware", alarm: alarm7)
 p alarm8 = Alarm.create(value: "0007", viewed: false, uplink: uplink8)
 
 p "****************"
@@ -218,12 +219,13 @@ p billing = ScheduleBilling.create(stratum: 3, billing_period: 'month', start_da
 p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", frequency_interval: 2, start_date: Date.today)
 
 p city = City.find_by(name: 'Bogota')
+p city.state
 
 p location1 = Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4.1, longitude: 74.1, thing: thing1, schedule_billing: billing, schedule_report: report, city: city)
 p location2 = Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5.1, longitude: 75.1, thing: thing2)
 p location3 = Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing3)
 p location4 = Location.create(name: 'negocio2', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing4)
-p location5 = Location.create(name: 'negocio3', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing5)
+p location5 = Location.create(name: 'negocio3', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing5, schedule_billing: billing, schedule_report: report, city: city)
 p location6 = Location.create(name: 'negocio4', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing6)
 p location7 = Location.create(name: 'negocio5', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing7)
 
