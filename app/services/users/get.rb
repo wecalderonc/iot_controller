@@ -16,11 +16,6 @@ class Users::Get
   private
 
   def find_user(input)
-    options = {
-      true => User.find_by(email: "#{input[:email]}.#{input[:format]}"),
-      false => User.find_by(email: input[:email])
-    }
-
-    options[input[:format].present?]
+      User.find_by(email: input[:email])
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe Users::Get do
 
     context 'user exists (email format separated)' do
       let!(:user) { create(:user, email: 'unusuario@gmail.com') }
-      let(:input) { { email: 'unusuario@gmail', format: 'com' } }
+      let(:input) { { email: 'unusuario@gmail.com'} }
 
       it 'should return success response' do
         expect(response).to be_success
