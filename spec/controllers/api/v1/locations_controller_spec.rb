@@ -46,7 +46,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
             frequency_interval: 'week',
             start_day: 10,
             start_month: 10,
-            start_year: 2019
+            start_year: 2018
           }
         }.to_json
 
@@ -62,8 +62,14 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "address" => 'Carrera 7 # 71 - 21',
           "latitude" => 84.606880,
           "longitude" => -94.071840,
-          "country_iso" => city.state.country.code_iso,
-          "state_iso" => city.state.code_iso,
+          "country" => {
+            "code_iso" => city.state.country.code_iso,
+            "name" => city.state.country.name,
+          },
+          "state" => {
+            "code_iso" => city.state.code_iso,
+            "name" => city.state.name,
+          },
           "city" => {
             "name" => city.name,
           },
@@ -219,8 +225,14 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "address" => 'Carrera 7 # 71 - 21',
           "latitude" => 84.606880,
           "longitude" => -94.071840,
-          "country_iso" => city.state.country.code_iso,
-          "state_iso" => city.state.code_iso,
+          "country" => {
+            "code_iso" => city.state.country.code_iso,
+            "name" => city.state.country.name,
+          },
+          "state" => {
+            "code_iso" => city.state.code_iso,
+            "name" => city.state.name,
+          },
           "city" => {
             "name" => city.name,
           },
@@ -336,8 +348,14 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           "latitude" => location.latitude,
           "longitude" => location.longitude,
           "name" => location.name,
-          "country_iso" => city.state.country.code_iso,
-          "state_iso" => city.state.code_iso,
+          "country" => {
+            "code_iso" => city.state.country.code_iso,
+            "name" => city.state.country.name,
+          },
+          "state" => {
+            "code_iso" => city.state.code_iso,
+            "name" => city.state.name,
+          },
           "city" => {
             "name" => city.name,
           },
