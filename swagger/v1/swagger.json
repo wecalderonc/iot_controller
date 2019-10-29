@@ -804,6 +804,77 @@
         }
       }
     },
+    "/api/v1/things/{thing_name}/battery_levels?subaction=graphic": {
+      "get": {
+        "summary": "Retrieves all battery levels from a thing with subaction graphic",
+        "tags": [
+          "Battery Levels"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "thing_name",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "battery levels founded",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "level_label": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "created_at",
+                  "updated_at",
+                  "value",
+                  "level_label",
+                  "id"
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Token is missing"
+          },
+          "403": {
+            "description": "not authorized to access"
+          },
+          "404": {
+            "description": "battery levels not found"
+          }
+        }
+      }
+    },
     "/api/v1/cities": {
       "get": {
         "summary": "Retrieves all cities related with a specific state",
@@ -2508,7 +2579,7 @@
       }
     },
     "/confirm_email": {
-      "post": {
+      "get": {
         "summary": "Retrieves a confirmation to the confirm email process",
         "tags": [
           "Users"
@@ -2521,23 +2592,14 @@
         ],
         "parameters": [
           {
-            "name": "input",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "email",
-                "token"
-              ]
-            }
+            "name": "verification_code",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

@@ -46,7 +46,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
             frequency_interval: 'week',
             start_day: 10,
             start_month: 10,
-            start_year: 2018
+            start_year: 2019
           }
         }.to_json
 
