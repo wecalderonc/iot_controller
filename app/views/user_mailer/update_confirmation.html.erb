@@ -7,10 +7,11 @@
   <body>
     <h1>Hi, <%= @user.first_name %>!</h1>
     <p>
-      You have successfully updated your account
-      To confirm your update click the URL below.
 
-      <%= api_v1_user_url(@user.email) + "?subaction=confirm_email" + "&token=" + @user.verification_code %>
+      To successfully updated your account,
+      Input the next verification code::
+
+       <%= @user.verification_code %>
     </p>
     <p>Thanks, and have a great day!</p>
   </body>
