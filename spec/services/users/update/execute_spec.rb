@@ -162,13 +162,13 @@ RSpec.describe Users::Update::Execute do
 
       context "When the 'validation' operation fails" do
         it "Should return a Failure response" do
-          input[:password_confirmation] = "12345"
-          input.delete(:password)
+          input[:password] = "12345"
+          input.delete(:password_confirmation)
 
           response = subject.(input)
 
           expected_response = {
-            :new_password => ["Missing new password"]
+            :wrong_password_confirmation => ["Missing password confirmation"]
           }
 
           expect(response).to be_failure
