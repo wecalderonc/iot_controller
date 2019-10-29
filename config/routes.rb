@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post '/authentication',             to: 'authentication#authenticate_user'
   post '/request_password_recovery',  to: 'api/v1/users#request_password_recovery'
   put  '/change_forgotten_password',  to: 'api/v1/users#change_forgotten_password'
-  get '/confirm_email',               to: 'api/v1/users#confirm_email'
+  post '/confirm_email',              to: 'api/v1/users#confirm_email'
 
   namespace :api do
     namespace :v1 do

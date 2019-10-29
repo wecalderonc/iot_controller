@@ -2,9 +2,9 @@
 Hi, <%= @user.first_name %>!
 ===============================================
 
-You have successfully updated your account,
-To confirm email please click:
+To successfully updated your account,
+Input the next verification code::
 
- <%= api_v1_user_url(@user.email) + "?subaction=confirm_email" + "&token=" + @user.verification_code %>
+ <%= @user.verification_code %>
 
 Thanks, and have a great day!

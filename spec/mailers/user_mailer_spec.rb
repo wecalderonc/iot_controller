@@ -34,9 +34,7 @@ RSpec.describe UserMailer, type: :mailer do
 
     it "renders the body" do
       expect(mail.body.encoded).to match("Hi, #{user.first_name}!")
-      expect(mail.body.encoded).to match("To confirm your update click the URL below")
       expect(mail.body.encoded).to match(user.verification_code)
-      expect(mail.body.encoded).to match(user.email)
     end
   end
 
