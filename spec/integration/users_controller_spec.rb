@@ -86,6 +86,23 @@ RSpec.describe "Users API", :type => :request do
 
         run_test!
       end
+
+      response '404', 'without verification code' do
+        let(:user) { create(:user, email: 'holaamigo@mail.com') }
+        let(:email) { user.email }
+
+        schema type: :object,
+          properties: {
+            errors: { type: :string }
+          },
+          required: [ 'errors' ]
+
+        let(:input) {{
+          email: email
+        }}
+
+        run_test!
+      end
     end
   end
 

@@ -110,6 +110,29 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         expect(response_body).to eq(expected_response)
       end
     end
+
+    context "A user is finishing the confirmation email without token" do
+      it "Should return json with success message" do
+
+        params = {
+          email: user.email
+        }
+
+        post "/confirm_email", params: params
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "errors"=>"Token expired or incorrect - User not found"
+          }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
   end
 
   describe "POST/request_password_recovery " do
