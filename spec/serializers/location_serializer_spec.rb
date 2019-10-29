@@ -19,8 +19,14 @@ Rspec.describe LocationSerializer do
         "address"=>location.address,
         "latitude"=>location.latitude,
         "longitude"=>location.longitude,
-        "country_iso" => location.city.state.country.code_iso,
-        "state_iso" => location.city.state.code_iso,
+        "country"=> {
+          "code_iso"=>location.city.state.country.code_iso,
+          "name"=>location.city.state.country.name,
+        },
+        "state"=> {
+          "code_iso"=>location.city.state.code_iso,
+          "name"=>location.city.state.name,
+        },
         "city"=> {
           "name"=>location.city.name,
         },
