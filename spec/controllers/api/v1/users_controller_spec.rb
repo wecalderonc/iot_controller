@@ -74,10 +74,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-          {
-            "message" => "Email Confirmed! Thanks!"
-          }
+        expected_response = {
+          "message" => "Email Confirmed! Thanks!"
+        }
 
         user.reload
 
@@ -102,10 +101,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-          {
-            "errors"=>"Token expired or incorrect - User not found"
-          }
+        expected_response = {
+          "errors"=>"Token expired or incorrect - User not found"
+        }
 
         expect(response_body).to eq(expected_response)
       end
@@ -125,10 +123,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-          {
-            "errors"=>"Token expired or incorrect - User not found"
-          }
+        expected_response = {
+          "errors"=>"Token expired or incorrect - User not found"
+        }
 
         expect(response_body).to eq(expected_response)
       end
@@ -152,10 +149,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-          {
-            "message"=>'Recovery Password Email Sended! Go to your inbox!'
-          }
+        expected_response = {
+          "message"=>'Recovery Password Email Sended! Go to your inbox!'
+        }
 
         expect(response_body).to eq(expected_response)
       end
@@ -188,21 +184,20 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Sign Up process success" do
       it "Should return json with new User created" do
 
-        body =
-          {
-            "first_name"=> "new_user",
-            "last_name" => "new_last",
-            "email"=> "new_user@gmail.com",
-            "country_code"=> country.code_iso,
-            "password"=> "validpass",
-            "phone"=> "3013632461",
-            "gender"=> "male",
-            "id_number"=> "123456",
-            "id_type"=> "cc",
-            "code_number"=>  "123456789",
-            "admin"=> "false",
-            "user_type"=> "administrator"
-          }
+        body = {
+          "first_name"=> "new_user",
+          "last_name" => "new_last",
+          "email"=> "new_user@gmail.com",
+          "country_code"=> country.code_iso,
+          "password"=> "validpass",
+          "phone"=> "3013632461",
+          "gender"=> "male",
+          "id_number"=> "123456",
+          "id_type"=> "cc",
+          "code_number"=>  "123456789",
+          "admin"=> "false",
+          "user_type"=> "administrator"
+        }
 
         expect_any_instance_of(UserMailer).to receive(:confirmation_email).once
 
@@ -213,9 +208,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-
-        {
+        expected_response = {
           "first_name"=> "new_user",
           "last_name" => "new_last",
           "email"=> "new_user@gmail.com"
@@ -228,21 +221,20 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Sign Up process failure" do
       it "Should return error message" do
 
-        body =
-          {
-            "first_name"=> "new_user",
-            "last_name" => "new_last",
-            "email"=> user.email,
-            "country_code"=> country.code_iso,
-            "password"=> "validpass",
-            "phone"=> "3013632461",
-            "gender"=> "male",
-            "id_number"=> "123456",
-            "id_type"=> "cc",
-            "code_number"=> user.code_number,
-            "user_type"=> "administrator",
-            "admin"=> "true"
-          }
+        body = {
+          "first_name"=> "new_user",
+          "last_name" => "new_last",
+          "email"=> user.email,
+          "country_code"=> country.code_iso,
+          "password"=> "validpass",
+          "phone"=> "3013632461",
+          "gender"=> "male",
+          "id_number"=> "123456",
+          "id_type"=> "cc",
+          "code_number"=> user.code_number,
+          "user_type"=> "administrator",
+          "admin"=> "true"
+        }
 
         post '/api/v1/users', headers: header, params: body
 
@@ -251,9 +243,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-
-        {
+        expected_response = {
           "errors" => {
             "uniq_email"=>["Email already exist"]
           }
@@ -266,21 +256,20 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Sign Up process failure with wrong email, gender and id_type" do
       it "Should return error message" do
 
-        body =
-          {
-            "first_name"=> "name",
-            "last_name" => "last_name",
-            "email"=> 123456,
-            "country_code"=> country.code_iso,
-            "password"=> "123456",
-            "phone"=> "12345689",
-            "gender"=> 123456,
-            "id_number"=> "123456",
-            "id_type"=> 123456,
-            "code_number"=> "123456",
-            "user_type"=> "administrator",
-            "admin"=> "true"
-          }
+        body = {
+          "first_name"=> "name",
+          "last_name" => "last_name",
+          "email"=> 123456,
+          "country_code"=> country.code_iso,
+          "password"=> "123456",
+          "phone"=> "12345689",
+          "gender"=> 123456,
+          "id_number"=> "123456",
+          "id_type"=> 123456,
+          "code_number"=> "123456",
+          "user_type"=> "administrator",
+          "admin"=> "true"
+        }
 
         post '/api/v1/users', headers: header, params: body
 
@@ -289,14 +278,13 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-          {
-            "errors" => {
-              "email"=>["is in invalid format"],
-              "invalid_gender"=>["must be one of: male, female"],
-              "invalid_id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
-            }
+        expected_response = {
+          "errors" => {
+            "email"=>["is in invalid format"],
+            "invalid_gender"=>["must be one of: male, female"],
+            "invalid_id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
           }
+        }
 
         expect(response_body).to eq(expected_response)
       end
@@ -311,16 +299,15 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
       it "should update attributes of a user" do
 
-        body =
-          {
-            first_name: "Daniela",
-            last_name: "Patiño",
-            new_email: "unacosita123@gmail.com",
-            country_code: country.code_iso,
-            current_password: 'validpassword',
-            password: "nuevopassword",
-            password_confirmation: "nuevopassword"
-          }
+        body = {
+          first_name: "Daniela",
+          last_name: "Patiño",
+          new_email: "unacosita123@gmail.com",
+          country_code: country.code_iso,
+          current_password: 'validpassword',
+          password: "nuevopassword",
+          password_confirmation: "nuevopassword"
+        }
 
         expect_any_instance_of(UserMailer).to receive(:update_confirmation).once
 
@@ -336,7 +323,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "last_name" => "Patiño",
           "email" => "unacosita123@gmail.com"
         }
-
 
         expect(response_body).to include(expected_response)
         expect(user.country.code_iso).to eq('CO')
@@ -361,13 +347,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Recover Password process success" do
       it "Should return json with success response" do
 
-        body =
-          {
-            "email"=> user.email,
-            "current_password"=> user.password,
-            "password" => "new_pass",
-            "password_confirmation"=> "new_pass"
-          }
+        body = {
+          "email"=> user.email,
+          "current_password"=> user.password,
+          "password" => "new_pass",
+          "password_confirmation"=> "new_pass"
+        }
 
         put "/change_forgotten_password", params: body
 
@@ -376,13 +361,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-
-        {
+        expected_response = {
           "first_name"=> user.first_name,
           "last_name" => user.last_name,
           "email"=> user.email,
         }
+
         user.reload
 
         expect(user.password).to eq("new_pass")
@@ -393,13 +377,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Recover password process failure with wrong user and password not related" do
       it "Should return error message" do
 
-        body =
-          {
-            "email"=> user.email,
-            "current_password"=> "wrong_current_password",
-            "password" => "new_pass",
-            "password_confirmation"=> "new_pass"
-          }
+        body = {
+          "email"=> user.email,
+          "current_password"=> "wrong_current_password",
+          "password" => "new_pass",
+          "password_confirmation"=> "new_pass"
+        }
 
         put "/change_forgotten_password", params: body
 
@@ -408,9 +391,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-
-        {
+        expected_response = {
           "errors" => "Current Password is incorrect"
         }
 
@@ -421,13 +402,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Recover password process failure with new_password and new_password_confirmation mismatched" do
       it "Should return error message" do
 
-        body =
-          {
-            "email"=> user.email,
-            "current_password"=> user.password,
-            "password" => "new_pass",
-            "password_confirmation"=> "new_pass_wrong"
-          }
+        body = {
+          "email"=> user.email,
+          "current_password"=> user.password,
+          "password" => "new_pass",
+          "password_confirmation"=> "new_pass_wrong"
+        }
 
         put "/change_forgotten_password", params: body
 
@@ -436,10 +416,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response =
-          {
-            "errors" => {"same_password"=>["The new password doesn't match with the confirmation"]}
-          }
+        expected_response = {
+          "errors" => {"same_password"=>["The new password doesn't match with the confirmation"]}
+        }
 
         expect(response_body).to eq(expected_response)
       end

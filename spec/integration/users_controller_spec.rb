@@ -97,9 +97,7 @@ RSpec.describe "Users API", :type => :request do
           },
           required: [ 'errors' ]
 
-        let(:input) {{
-          email: email
-        }}
+        let(:input) {{ email: email }}
 
         run_test!
       end
