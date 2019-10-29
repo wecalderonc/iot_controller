@@ -62,8 +62,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   describe "GET/confirm_email " do
     context "The user is finishing the confirmation email process" do
       it "Should return json with success message" do
+        params = {
+          email: user.email,
+          verification_code: user.verification_code
+        }
 
-        get "/confirm_email?verification_code=#{user.verification_code}&email=#{user.email}"
+        post "/confirm_email", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
@@ -86,8 +90,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       it "Should return json with success message" do
 
         bad_token = "fffffff"
+        params = {
+          email: user.email,
+          verification_code: bad_token
+        }
 
-        get "/confirm_email?verification_code=#{bad_token}&email=#{user.email}"
+        post "/confirm_email", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(404)
