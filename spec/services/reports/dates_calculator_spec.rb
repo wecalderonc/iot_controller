@@ -8,7 +8,7 @@ RSpec.describe Reports::DatesCalculator do
     let(:input)    { { thing: thing } }
 
     context "consumption days higher than billing period days" do
-      let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (4.months - 8.days)) }
+      let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months + 22.days)) }
 
       it "should return a new billing start date" do
         expected_response = {
