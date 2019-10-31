@@ -229,13 +229,10 @@ p "CREATING GENERAL BATTERYLEVELS"
 p "                "
 p "****************"
 
-# p BatteryLevel.create(value: "0001", uplink: uplink1)
-# p BatteryLevel.create(value: "0002", uplink: uplink2)
-# p BatteryLevel.create(value: "0003", uplink: uplink3)
-# p BatteryLevel.create(value: "0004", uplink: uplink4)
-# p BatteryLevel.create(value: "0005", uplink: uplink5)
-# p BatteryLevel.create(value: "000f", uplink: uplink6)
-# p BatteryLevel.create(value: "0004", uplink: uplink7)
+p BatteryLevel.create(value: "0002", uplink: uplink2)
+p BatteryLevel.create(value: "0003", uplink: uplink3)
+p BatteryLevel.create(value: "0005", uplink: uplink5)
+p BatteryLevel.create(value: "0004", uplink: uplink7)
 
 p "****************"
 p "                "
