@@ -169,10 +169,10 @@ p "CREATING ALARMS"
 p "                "
 p "****************"
 
-p alarm1 = Alarm.create(value: "0001", viewed: true, uplink: uplink1)
-p alarm12 = Alarm.create(value: "0002", viewed: false, uplink: uplink12)
-p alarm13 = Alarm.create(value: "0003", viewed: false, uplink: uplink13)
-p alarm14 = Alarm.create(value: "0001", viewed: false, uplink: uplink14)
+p alarm1 = Alarm.create(value: "0001", viewed: true, uplink: uplink1, created_at: DateTime.new(2019,01,01))
+p alarm12 = Alarm.create(value: "0002", viewed: false, uplink: uplink12, created_at: DateTime.new(2019,01,01))
+p alarm13 = Alarm.create(value: "0003", viewed: false, uplink: uplink13, created_at: DateTime.new(2019,01,01))
+p alarm14 = Alarm.create(value: "0001", viewed: false, uplink: uplink14, created_at: DateTime.new(2019,01,01))
 p alarm_type1 = AlarmType.create(name: "power_connection", value: 1, type: "hardware", alarm: alarm1)
 p alarm_type12 = AlarmType.create(name: "induced_site_alarm", value: 1, type: "hardware", alarm: alarm12)
 p alarm_type13 = AlarmType.create(name: "sos", value: 3, type: "hardware", alarm: alarm13)
@@ -229,12 +229,9 @@ p "CREATING GENERAL BATTERYLEVELS"
 p "                "
 p "****************"
 
-p BatteryLevel.create(value: "0001", uplink: uplink1)
 p BatteryLevel.create(value: "0002", uplink: uplink2)
 p BatteryLevel.create(value: "0003", uplink: uplink3)
-p BatteryLevel.create(value: "0004", uplink: uplink4)
 p BatteryLevel.create(value: "0005", uplink: uplink5)
-p BatteryLevel.create(value: "000f", uplink: uplink6)
 p BatteryLevel.create(value: "0004", uplink: uplink7)
 
 p "****************"
