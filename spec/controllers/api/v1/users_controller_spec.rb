@@ -331,7 +331,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
     context "wrong params" do
       it "should return an update error" do
-        put "/api/v1/users/invalid_id", headers: header
+        put "/api/v1/users/invalid_id@proci.com", headers: header
 
         body = JSON.parse(response.body)
 

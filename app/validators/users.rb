@@ -38,6 +38,7 @@ module Validators::Users
 
     optional(:first_name).filled(type?: String)
     optional(:last_name).filled(type?: String)
+    optional(:email).filled(type?: String, format?: User::VALID_EMAIL)
     optional(:new_email).filled(type?: String, format?: User::VALID_EMAIL)
     optional(:country_code).value(type?: String)
     optional(:current_password).value(type?: String)
@@ -45,7 +46,7 @@ module Validators::Users
     optional(:password_confirmation).value(type?: String)
 
     validate(new_password: %i[current_password password]) do |current_password, password|
-      current_password.present? ? password.present? : true
+      password.present? ? current_password.present? : true
     end
 
     validate(wrong_password_confirmation: %i[password password_confirmation]) do |password, password_confirmation|
@@ -57,6 +58,14 @@ module Validators::Users
         password.eql?(password_confirmation)
       else
         true
+      end
+    end
+
+    validate(uniq_email: %i[new_email email]) do |new_email, email|
+      if email.eql?(new_email)
+        true
+      else
+        User.find_by(email: new_email).nil?
       end
     end
   end
