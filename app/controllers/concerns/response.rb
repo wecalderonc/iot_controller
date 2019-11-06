@@ -3,7 +3,6 @@ module Response
   include ActionController::MimeResponds
 
   def json_response(object, status = :ok, serializer = nil)
-    p object
     render json: object, status: status, serializer: serializer
   end
 
