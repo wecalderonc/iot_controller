@@ -4,4 +4,6 @@ class ThingLocation
   from_class :Thing
   to_class   :Location
   type :thing_location
+
+  creates_unique
 end

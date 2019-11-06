@@ -240,7 +240,7 @@ p "CREATING LOCATIONS WITH REPORTS"
 p "                "
 p "****************"
 p billing = ScheduleBilling.create(stratum: 3, billing_period: 'month', start_date: Date.today - (3.months + 8.days), basic_charge_price: 13.841, basic_price: 2.100, extra_price: 1.100)
-p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", frequency_interval: 2, start_date: Date.today)
+p report = ScheduleReport.create(email: "ivillamor@procibernetica.com", start_date: Date.today)
 
 p city = City.find_by(name: 'Bogota')
 p city.state
