@@ -12,7 +12,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
     context "Right params" do
       it "Should create a new location with his relationships" do
-
+        Owner.create(from_node: user, to_node: thing)
         body = {
           thing_name: thing.name,
           email: user.email,
@@ -52,10 +52,10 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         post '/api/v1/locations', headers: header, params: body
 
+        p response_body = JSON.parse(response.body)
+
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
-
-        response_body = JSON.parse(response.body)
 
         expected_response = {
           "name" => 'My house',
@@ -96,9 +96,61 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
       end
     end
 
+    context "Right params" do
+      it "Should return access faiure without relations with the thing and the user" do
+        body = {
+          thing_name: thing.name,
+          email: user.email,
+          location: {
+            name: 'My house',
+            address: 'Carrera 7 # 71 - 21',
+            latitude: 84.606880,
+            longitude: -94.071840
+          },
+          country_state_city: {
+            country: country.code_iso,
+            state: state.code_iso,
+            city: city.name
+          },
+          schedule_billing: {
+            stratum: 5,
+            basic_charge_price: 13.841,
+            top_limit: 40.0,
+            basic_price: 2000.0,
+            extra_price: 2500.0,
+            billing_frequency: 2,
+            billing_period: 'month',
+            cut_day: 10,
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          },
+          schedule_report: {
+            email: 'unacosita@gmail.com',
+            frequency_day: 1,
+            frequency_interval: 'week',
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          }
+        }.to_json
+
+        post '/api/v1/locations', headers: header, params: body
+
+        response_body = JSON.parse(response.body)
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(401)
+
+        expected_response = {"errors"=>"Access denied. You didn't own the thing #{thing.name}"}
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
     context "Create Location process failure with wrong params" do
       it "Should return error message" do
-
+        Owner.create(from_node: user, to_node: thing)
         body = {
           thing_name: thing.name,
           email: user.email,
@@ -174,6 +226,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
     context "Right params" do
       it "Should update a location with his relationships" do
         create(:thing, name: 'new_name')
+        UserLocation.create(from_node: user, to_node: location)
 
         body = {
           thing_name: thing.name,
@@ -215,10 +268,10 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         put "/api/v1/locations/#{thing.name}", headers: header, params: body
 
+        response_body = JSON.parse(response.body)
+
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
-
-        response_body = JSON.parse(response.body)
 
         expected_response = {
           "name" => 'My house',
@@ -323,6 +376,62 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         expect(response_body).to eq(expected_response)
       end
     end
+
+    context "Right params but not authorized" do
+      it "Should update a location with his relationships" do
+        create(:thing, name: 'new_name')
+        # UserLocation.create(from_node: user, to_node: location)
+
+        body = {
+          thing_name: thing.name,
+          email: user.email,
+          new_thing_name: 'new_name',
+          location: {
+            name: 'My house',
+            address: 'Carrera 7 # 71 - 21',
+            latitude: 84.606880,
+            longitude: -94.071840
+          },
+          country_state_city: {
+            country: country.code_iso,
+            state: state.code_iso,
+            city: city.name
+          },
+          schedule_billing: {
+            stratum: 5,
+            basic_charge_price: 13.841,
+            top_limit: 40.0,
+            basic_price: 2000.0,
+            extra_price: 2500.0,
+            billing_frequency: 2,
+            billing_period: 'month',
+            cut_day: 10,
+            start_day: 11,
+            start_month: 9,
+            start_year: 2019
+          },
+          schedule_report: {
+            email: 'unacosita@gmail.com',
+            frequency_day: 1,
+            frequency_interval: 'week',
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          }
+        }.to_json
+
+        put "/api/v1/locations/#{thing.name}", headers: header, params: body
+
+        p response_body = JSON.parse(response.body)
+
+        # expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(403)
+
+        expected_response = "Access Denied: You are not authorized to access this page."
+
+        expect(response_body["message"]).to eq(expected_response)
+      end
+    end
   end
 
   describe "GET/show location" do
@@ -413,6 +522,21 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         expect(response.status).to eq(404)
       end
     end
+
+    # context "Thing has no associated user" do
+    #   it "Should return a message of location not found" do
+    #     # Owner.create(from_node: user, to_node: thing)
+    #     thing = create(:thing)
+
+    #     get "/api/v1/locations/#{thing.name}", headers: header
+
+    #     p parsed_response = JSON.parse(response.body)
+
+    #     expected_response = "The thing #{thing.name} does not have location"
+    #     expect(parsed_response["errors"]).to eq(expected_response)
+    #     expect(response.status).to eq(404)
+    #   end
+    # end
   end
 
   describe "GET/index location" do
@@ -544,7 +668,19 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
     context "User has no associated locations" do
       it "Should return a message of locations not found" do
+        Owner.create(from_node: user, to_node: thing)
+        get "/api/v1/users/#{user.email}/locations", headers: header
 
+        parsed_response = JSON.parse(response.body)
+
+        expected_response = "The user #{user.email} does not have locations"
+        expect(parsed_response["message"]).to eq(expected_response)
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context "User does not have things or locations" do
+      it "Should return a denied access message" do
         get "/api/v1/users/#{user.email}/locations", headers: header
 
         parsed_response = JSON.parse(response.body)
