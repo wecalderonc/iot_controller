@@ -493,7 +493,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         put "/api/v1/locations/#{thing.name}", headers: header, params: body
 
-        p response_body = JSON.parse(response.body)
+        response_body = JSON.parse(response.body)
 
         expect(response.status).to eq(401)
 
