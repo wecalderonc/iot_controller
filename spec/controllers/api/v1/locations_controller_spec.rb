@@ -293,8 +293,10 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
     context "Right params and authorized - User has a relation with the location to update" do
       it "Should update a location with his relationships" do
-        create(:thing, name: 'new_name')
+        thing2 = create(:thing, name: 'new_name')
         UserLocation.create(from_node: user, to_node: location)
+        Owner.create(from_node: user, to_node: thing)
+        Owner.create(from_node: user, to_node: thing2)
 
         body = {
           thing_name: thing.name,
@@ -383,6 +385,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
     context "Update Location process failure with wrong params" do
       it "Should return error message" do
         UserLocation.create(from_node: user, to_node: location)
+        Owner.create(from_node: user, to_node: thing)
 
         body = {
           thing_name: thing.name,
@@ -490,13 +493,13 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         put "/api/v1/locations/#{thing.name}", headers: header, params: body
 
-        response_body = JSON.parse(response.body)
+        p response_body = JSON.parse(response.body)
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(401)
 
-        expected_response = "Access Denied: You are not authorized to access this page."
+        expected_response = "Access denied. You didn't own the thing #{thing.name}"
 
-        expect(response_body["message"]).to eq(expected_response)
+        expect(response_body["errors"]).to eq(expected_response)
       end
     end
   end
