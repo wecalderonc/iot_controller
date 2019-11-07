@@ -18,6 +18,7 @@ class Ability
   end
 
   def locates_abilities(user)
+    can :manage, Location, users: { id: user.id }
     can :manage, Location, thing: { owner: { id: user.id } }
   end
 
@@ -26,7 +27,9 @@ class Ability
     can :manage, BatteryLevel, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Alarm, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Accumulator, uplink: { thing: { owner: { id: user.id } } }
-    can :manage, Location
+    can :create, Location
+    can :update, Location, thing: { owner: { id: user.id } }
+    can :read, Location, thing: { owner: { id: user.id } }
   end
 
   def sees_abilities(user)
@@ -42,7 +45,7 @@ class Ability
   end
 
   def new_user_abilites(user)
-    can :read, Location, users: { id: user.id }
+    can :read, Location
     can :create, Location
   end
 end

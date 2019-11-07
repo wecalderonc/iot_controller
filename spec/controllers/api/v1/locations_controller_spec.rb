@@ -592,26 +592,12 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         expect(response.status).to eq(404)
       end
     end
-
-    # context "Thing has no associated user" do
-    #   it "Should return a message of location not found" do
-    #     # Owner.create(from_node: user, to_node: thing)
-    #     thing = create(:thing)
-
-    #     get "/api/v1/locations/#{thing.name}", headers: header
-
-    #     p parsed_response = JSON.parse(response.body)
-
-    #     expected_response = "The thing #{thing.name} does not have location"
-    #     expect(parsed_response["errors"]).to eq(expected_response)
-    #     expect(response.status).to eq(404)
-    #   end
-    # end
   end
 
   describe "GET/index location" do
     let(:user)     { create(:user) }
     let(:location) { create(:location, city: city) }
+    let(:location2) { create(:location, city: city) }
     let(:thing)    { create(:thing, locates: location) }
     let(:city)     { create(:city) }
     let(:uplink) { create(:uplink, thing: thing) }
@@ -656,6 +642,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
     context "There is two locations associated to user" do
       let(:location2) { create(:location, city: city2) }
+      let(:location3) { create(:location, city: city2) }
+      let(:location4) { create(:location, city: city2) }
       let(:thing2)    { create(:thing, locates: location2) }
       let(:city2)     { create(:city) }
       let(:uplink2) { create(:uplink, thing: thing2) }
@@ -736,8 +724,9 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
       end
     end
 
-    context "User has no associated locations" do
+    context "User has no associated locations but have a thing" do
       it "Should return a message of locations not found" do
+        create(:location, city: city)
         Owner.create(from_node: user, to_node: thing)
         get "/api/v1/users/#{user.email}/locations", headers: header
 
