@@ -43,13 +43,11 @@ module Api
       end
 
       def update
-        p "inside update"
-        p update_response = Locations::Update::Execute.new.(update_params)
+        update_response = Locations::Update::Execute.new.(update_params)
 
         if update_response.success?
-          json_response(authorize! :update, update_response.success, :ok)
+          json_response(update_response.success, :ok)
         else
-          p "inside else"
           json_response({ errors: update_response.failure[:message] }, :not_found)
         end
       end
