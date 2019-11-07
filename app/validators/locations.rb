@@ -4,7 +4,6 @@ module Validators::Locations
   end
 
   CreateSchema = Dry::Validation.Schema do
-
     configure { config.messages_file = "config/locales/en.yml" }
 
     required(:thing_name).filled(type?: String)
@@ -13,8 +12,8 @@ module Validators::Locations
     required(:location).schema do
       required(:name).filled(type?: String, max_size?: 30)
       required(:address).filled(type?: String)
-      optional(:latitude).value(type?: Float)
-      optional(:longitude).value(type?: Float)
+      optional(:latitude) { float? | int? }
+      optional(:longitude) { float? | int? }
 
       validate(invalid_latitude: :latitude) do |latitude|
         latitude.present? ? (latitude <= 90 && latitude >= -90) : true
@@ -33,10 +32,10 @@ module Validators::Locations
 
     required(:schedule_billing).schema do
       optional(:stratum).filled(type?: Integer)
-      required(:basic_charge_price).filled(type?: Float)
-      required(:top_limit).filled(type?: Float)
-      required(:basic_price).filled(type?: Float)
-      required(:extra_price).filled(type?: Float)
+      required(:basic_charge_price) { float? | int? }
+      required(:top_limit) { float? | int? }
+      required(:basic_price) { float? | int? }
+      required(:extra_price) { float? | int? }
       required(:billing_frequency).filled(type?: Integer)
       required(:billing_period).filled(type?: String)
       required(:cut_day).filled(type?: Integer, lteq?: 30)

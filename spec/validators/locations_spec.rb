@@ -108,7 +108,7 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :location => {
-            :latitude => ["must be Float"]
+            :latitude => ["must be a float or must be an integer"]
           }
         }
 
@@ -145,11 +145,11 @@ RSpec.describe Validators::Locations do
 
     context "When the 'validation' operation fails" do
       it "Should return a Failure response" do
-        input[:location][:longitude] = 12345
+        input[:location][:longitude] = '12345'
 
         expected_response = {
           :location => {
-            :longitude => ["must be Float"]
+            :longitude => ["must be a float or must be an integer"]
           }
         }
 
@@ -280,7 +280,7 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :schedule_billing => {
-            :basic_charge_price => ["must be Float"]
+            :basic_charge_price => ["must be a float or must be an integer"]
           }
         }
 
@@ -308,7 +308,7 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :schedule_billing => {
-            :top_limit => ["must be Float"]
+            :top_limit => ["must be a float or must be an integer"]
           }
         }
 
@@ -323,7 +323,7 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :schedule_billing => {
-            :basic_price => ["must be Float"]
+            :basic_price => ["must be a float or must be an integer"]
           }
         }
 
@@ -338,7 +338,7 @@ RSpec.describe Validators::Locations do
 
         expected_response = {
           :schedule_billing => {
-            :extra_price => ["must be Float"]
+            :extra_price => ["must be a float or must be an integer"]
           }
         }
 

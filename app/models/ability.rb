@@ -10,10 +10,6 @@ class Ability
       user.send(relation).present?
     end
 
-    puts "." * 100
-    p available_relations
-    puts "." * 100
-
     available_relations.each {|relation| send("#{relation}_abilities", user) }
   end
 

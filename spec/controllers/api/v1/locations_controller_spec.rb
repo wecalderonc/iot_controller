@@ -105,7 +105,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           location: {
             name: 123,
             address: 'Carrera 7 # 71 - 21',
-            latitude: 2,
+            latitude: '2',
             longitude: -94.071840
           },
           country_state_city: {
@@ -148,7 +148,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           {
             "errors" => {
               "location"=>{
-                "latitude"=>["must be Float"],
+                "latitude"=>["must be a float or must be an integer"],
                 "name"=>["must be String"]
               },
               "schedule_billing"=>{
@@ -268,7 +268,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           location: {
             name: 123,
             address: 'Carrera 7 # 71 - 21',
-            latitude: 2,
+            latitude: '2',
             longitude: -94.071840
           },
           country_state_city: {
@@ -311,7 +311,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
           {
             "errors" => {
               "location"=>{
-                "latitude"=>["must be Float"],
+                "latitude"=>["must be a float or must be an integer"],
                 "name"=>["must be String"]
               },
               "schedule_billing"=>{
