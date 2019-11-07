@@ -7,11 +7,7 @@ RSpec.describe Users::VerificationCode::Execute do
 
     context "When the user obtain a new verification code" do
 
-      let(:input) {
-        {
-          email: user.email
-        }
-      }
+      let(:input) { { email: user.email } }
 
       context "When all the operations are successful" do
         it "Should return a Success response" do
@@ -19,10 +15,12 @@ RSpec.describe Users::VerificationCode::Execute do
           user.verification_code = nil
 
           response = subject.(input)
+
           user.reload
+
           expect(response).to be_success
           expect(response.success).to eq(user)
-          expect(user.verification_code).not_to be(nil)
+          expect(user.verification_code).to eq(user.verification_code)
         end
       end
 
@@ -32,6 +30,7 @@ RSpec.describe Users::VerificationCode::Execute do
 
           response = subject.(input)
           expected_response = "User not found"
+
           expect(response).to be_failure
           expect(response.failure[:message]).to eq(expected_response)
         end
