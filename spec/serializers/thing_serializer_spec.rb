@@ -55,7 +55,7 @@ Rspec.describe ThingSerializer do
       expected_response = {
         "id"=>thing.id,
         "name"=>thing.name,
-        "new_alarms" => true,
+        "new_alarms" => false,
         "status"=>"activated",
         "pac"=>thing.pac,
         "company_id"=>thing.company_id,
