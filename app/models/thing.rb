@@ -38,7 +38,7 @@ class Thing
   end
 
   def has_new_alarms?
-    self.uplinks.alarm.map(&:viewed).any?(true)
+    self.uplinks.alarm.map(&:viewed).any?(false)
   end
 
   def battery_level_query(start_date)

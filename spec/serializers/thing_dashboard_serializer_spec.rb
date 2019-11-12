@@ -35,7 +35,7 @@ Rspec.describe ThingDashboardSerializer do
       expected_response = {
         "id"=>thing.id,
         "name"=>thing.name,
-        "new_alarms" => true,
+        "new_alarms" => false,
         "valve_transition"=>{
           "real_state"=>thing.valve_transition.real_state,
           "showed_state"=>thing.valve_transition.showed_state,
