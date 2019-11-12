@@ -225,7 +225,7 @@ RSpec.describe "Users API", :type => :request do
           first_name: "new_user",
           last_name: "new_last",
           email: "new_user@gmail.com",
-          password: "validpass",
+          password: "Waico123*",
           phone: "3013632461",
           country_code: "CO",
           gender: :male,

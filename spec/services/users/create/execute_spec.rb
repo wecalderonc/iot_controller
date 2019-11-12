@@ -10,7 +10,7 @@ RSpec.describe Users::Create::Execute do
           last_name: "user_last_test",
           email: "test@gmail.com",
           country_code: country.code_iso,
-          password: "validpass",
+          password: "Waico123*",
           phone: "3013632461",
           gender: "male",
           id_number: "123456",

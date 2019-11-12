@@ -5,7 +5,7 @@ module Validators::Users
 
     required(:first_name).filled(type?: String)
     required(:last_name).filled(type?: String)
-    required(:password).value(type?: String)
+    required(:password).value(type?: String, format?: User::VALID_PASSWORD)
     required(:email).filled(type?: String, format?: User::VALID_EMAIL)
     required(:country_code).value(type?: String)
     optional(:phone).value(type?: String)
