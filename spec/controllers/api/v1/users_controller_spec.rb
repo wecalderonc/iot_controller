@@ -189,7 +189,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "last_name" => "new_last",
           "email"=> "new_user@gmail.com",
           "country_code"=> country.code_iso,
-          "password"=> "validpass",
+          "password"=> "Waico123*",
           "phone"=> "3013632461",
           "gender"=> "male",
           "id_number"=> "123456",
@@ -245,6 +245,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         expected_response = {
           "errors" => {
+            "password" => ["is in invalid format"],
             "uniq_email"=>["Email already exist"]
           }
         }
@@ -282,7 +283,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "errors" => {
             "email"=>["is in invalid format"],
             "invalid_gender"=>["must be one of: male, female"],
-            "invalid_id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"]
+            "invalid_id_type"=>["must be one of: cc, ce, natural_nit, bussines_nit, foreign_nit, passport, civil_register"],
+            "password"=>["is in invalid format"]
           }
         }
 

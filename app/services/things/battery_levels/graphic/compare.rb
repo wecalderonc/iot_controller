@@ -6,9 +6,6 @@ class Things::BatteryLevels::Graphic::Compare
   include Dry::Transaction::Operation
 
   def call(input)
-        p "*" * 100
-    p input
-    p "*" * 100
     alarm = input[:last_power_connection_alarm]
     battery_level = input[:upward_transition]
 
