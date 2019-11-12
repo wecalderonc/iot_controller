@@ -5,12 +5,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to IOT.com, <%= @user.first_name %></h1>
+    <h1>Welcome to waico.com.co, <%= @user.first_name %></h1>
     <p>
-      You have successfully signed up to IOT.com,
-      To confirm your registration click the URL below.
+      You have successfully signed up to waico.com.co,
+      To confirm your registration use the following verification code.
 
-      <%= confirm_email_url+ "?verification_code=" + @user.verification_code + "&email=" + @user.email %>
+      <b><%= @user.verification_code %></b>
     </p>
     <p>Thanks for joining and have a great day!</p>
   </body>
