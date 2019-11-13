@@ -14,8 +14,8 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("Welcome to IOT.com")
-      expect(mail.body.encoded).to match("To confirm your registration click the URL below")
+      expect(mail.body.encoded).to match("Welcome to waico.com.co")
+      expect(mail.body.encoded).to match("To confirm your registration use the following verification code")
       expect(mail.body.encoded).to match(user.verification_code)
       expect(mail.body.encoded).to match(user.email)
     end
