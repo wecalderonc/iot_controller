@@ -81,6 +81,7 @@ RSpec.describe "Alarms Report API", :type => :request do
         let(:user)               { create(:user) }
         let(:alarm1)             { create(:alarm, uplink: uplink) }
         let(:thing_name)         { alarm1.uplink.thing.name }
+        let!(:owner)             { Owner.create(from_node: user, to_node: alarm1.uplink.thing)}
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 
