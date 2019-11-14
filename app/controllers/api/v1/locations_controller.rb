@@ -1,6 +1,10 @@
 module Api
   module V1
     class LocationsController < ApplicationController
+      include Permissions::Customized
+
+      before_action :check_thing_permission, :only => [:create, :update]
+      load_and_authorize_resource param_method: :location_properties
 
       START_DATE = [:start_day, :start_month, :start_year]
       COUNTRY_STATE_CITY = [:country, :state, :city]
@@ -9,7 +13,8 @@ module Api
         locations = Users::Locations::Index::Execute.new.(index_params)
 
         if locations.success?
-          render json: locations.success, status: :ok, each_serializer: LocationDashboardSerializer
+          authorized_locations = authorize(locations)
+          render json: authorized_locations, status: :ok, each_serializer: LocationDashboardSerializer
         else
           json_response(locations.failure, :not_found)
         end
@@ -17,8 +22,11 @@ module Api
 
       def show
         show_response = Locations::Execute.new.(show_params)
+
         if show_response.success?
-          json_response(show_response.success)
+          @location = show_response.success
+          authorize! :read, @location
+          json_response(@location)
         else
           json_response({ errors: show_response.failure[:message] }, :not_found)
         end
@@ -38,7 +46,7 @@ module Api
         update_response = Locations::Update::Execute.new.(update_params)
 
         if update_response.success?
-          json_response(update_response.success)
+          json_response(update_response.success, :ok)
         else
           json_response({ errors: update_response.failure[:message] }, :not_found)
         end
@@ -79,6 +87,10 @@ module Api
             ScheduleReport::REQUIRED_FIELDS << START_DATE
           )
         ).to_h.deep_symbolize_keys
+      end
+
+      def location_properties
+        params.permit(:thing, :country_state_city, :schedule_report, :schedule_billing)
       end
     end
   end

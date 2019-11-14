@@ -24,7 +24,6 @@ module Api
         update_response = Things::Update::Execute.new.(create_params)
 
         if update_response.success?
-
           json_response(authorize! :update, update_response.success, :ok)
         else
           json_response({ errors: update_response.failure[:message] }, :not_found)

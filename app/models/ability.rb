@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  RELATIONS = [:owns, :operates, :sees]
+  RELATIONS = [:owns, :operates, :sees, :locates]
 
   def initialize(user)
     user = user.success
@@ -10,7 +10,16 @@ class Ability
       user.send(relation).present?
     end
 
-    available_relations.each {|relation| send("#{relation}_abilities", user) }
+    if available_relations.any?
+      available_relations.each {|relation| send("#{relation}_abilities", user) }
+    else
+      new_user_abilites(user)
+    end
+  end
+
+  def locates_abilities(user)
+    can :manage, Location, users: { id: user.id }
+    can :manage, Location, thing: { owner: { id: user.id } }
   end
 
   def owns_abilities(user)
@@ -18,15 +27,25 @@ class Ability
     can :manage, BatteryLevel, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Alarm, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Accumulator, uplink: { thing: { owner: { id: user.id } } }
+    can :create, Location
+    can :update, Location, thing: { owner: { id: user.id } }
+    can :read, Location, thing: { owner: { id: user.id } }
   end
 
   def sees_abilities(user)
     can :read, Thing, viewer: { id: user.id }
     can :read, BatteryLevel, uplink: { thing: { viewer: { id: user.id } } }
     can :read, Alarm, uplink: { thing: { owner: { id: user.id } } }
+    can :read, Location, thing: { owner: { id: user.id } }
   end
 
   def operates_abilities(user)
     can :read, Thing, operator: { id: user.id }
+    can :read, Location, thing: { owner: { id: user.id } }
+  end
+
+  def new_user_abilites(user)
+    can :read, Location
+    can :create, Location
   end
 end

@@ -65,6 +65,7 @@ RSpec.describe "Locations API", :type => :request do
         let(:state)    { create(:state, code_iso: 'CO-DC', country: country) }
         let(:city)     { create(:city, name: 'Bogota', state: state) }
         let(:thing)    { create(:thing) }
+        let!(:owner)   { Owner.create(from_node: user, to_node: thing) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
         schema type: :object,
@@ -276,6 +277,8 @@ RSpec.describe "Locations API", :type => :request do
         let(:thing)    { create(:thing, locates: location) }
         let(:thing2)   { create(:thing, name: 'new_name') }
         let(:thing_name) { thing.name }
+        let!(:owner)   { Owner.create(from_node: user, to_node: thing2) }
+        let!(:owner2)   { Owner.create(from_node: user, to_node: thing) }
 
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -539,6 +542,7 @@ RSpec.describe "Locations API", :type => :request do
         let(:city)            { create(:city) }
         let!(:user_location)  { UserLocation.create(from_node: user, to_node: location) }
         let!(:thing_location) { ThingLocation.create(from_node: thing, to_node: location) }
+        let!(:owner)          { Owner.create(from_node: user, to_node: thing) }
 
         let(:Authorization) { JsonWebToken.encode({ user_id: user.id }) }
 

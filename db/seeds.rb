@@ -246,12 +246,12 @@ p city = City.find_by(name: 'Bogota')
 p city.state
 
 p location1 = Location.create(name: "apartamento", address: "Carrera 7 # 71 -21", latitude: 4.1, longitude: 74.1, thing: thing1, schedule_billing: billing, schedule_report: report, city: city)
-p location2 = Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5.1, longitude: 75.1, thing: thing2)
-p location3 = Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing3)
-p location4 = Location.create(name: 'negocio2', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing4)
+p location2 = Location.create(name: 'casa', address: "Carrera 68D # 39 - 46", latitude:  5.1, longitude: 75.1, thing: thing2, schedule_billing: billing, schedule_report: report, city: city)
+p location3 = Location.create(name: 'negocio', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing3, schedule_billing: billing, schedule_report: report, city: city)
+p location4 = Location.create(name: 'negocio2', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing4, schedule_billing: billing, schedule_report: report, city: city)
 p location5 = Location.create(name: 'negocio3', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing5, schedule_billing: billing, schedule_report: report, city: city)
-p location6 = Location.create(name: 'negocio4', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing6)
-p location7 = Location.create(name: 'negocio5', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing7)
+p location6 = Location.create(name: 'negocio4', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing6, schedule_billing: billing, schedule_report: report, city: city)
+p location7 = Location.create(name: 'negocio5', address: "Carrera 15 # 27 - 19 sur", latitude: 6.1, longitude: 76.1, thing: thing7, schedule_billing: billing, schedule_report: report, city: city)
 
 
 p "****************"
@@ -265,5 +265,5 @@ p UserLocation.create(from_node:user2, to_node: location2)
 p UserLocation.create(from_node:user3, to_node: location3)
 p UserLocation.create(from_node:user1, to_node: location4)
 p UserLocation.create(from_node:user1, to_node: location5)
-p UserLocation.create(from_node:user1, to_node: location6)
-p UserLocation.create(from_node:user1, to_node: location7)
+# p UserLocation.create(from_node:user1, to_node: location6)
+# p UserLocation.create(from_node:user1, to_node: location7)
