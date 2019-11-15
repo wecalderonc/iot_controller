@@ -34,7 +34,7 @@ module Api
 
         options.default = -> { Users::Update::Execute.new.(update_params) }
 
-        update_response = options[update_params[:subaction]&.to_sym].()
+        update_response = options[params[:subaction]&.to_sym].()
 
         if update_response.success?
           json_response(update_response.success, :ok, UsersSerializer)
