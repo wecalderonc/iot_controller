@@ -426,4 +426,58 @@ RSpec.describe Api::V1::UsersController, :type => :request do
       end
     end
   end
+
+  describe "PUT/update verification code" do
+
+    context "Assign new verification code" do
+      it "Should return json with success response" do
+        expect_any_instance_of(UserMailer).to receive(:update_confirmation).once
+        user.verification_code = nil
+
+        params = {
+          "subaction"=> "assign_code"
+        }
+
+        put "/api/v1/users/#{user.email}", headers: header, params: params
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response = {
+          "first_name"=> user.first_name,
+          "last_name" => user.last_name,
+          "email"=> user.email,
+        }
+
+        user.reload
+
+        expect(user.verification_code).not_to be(nil)
+        expect(response_body).to eq(expected_response)
+      end
+    end
+
+    context "Wrong user email" do
+      it "Should return error message" do
+
+        params = {
+          "subaction"=> "assign_code"
+        }
+
+        put "/api/v1/users/fulanito@guayando.com", headers: header, params: params
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response = {
+          "errors" => "User not found"
+        }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
+  end
 end

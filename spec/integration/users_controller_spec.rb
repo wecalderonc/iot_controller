@@ -365,4 +365,51 @@ RSpec.describe "Users API", :type => :request do
       end
     end
   end
+
+  path "/api/v1/users/{email}" do
+    put 'Assign Verification Code' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: 'Authorization', :in => :header, :type => :string
+      parameter name: :email, :in => :path, :type => :string
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          subaction: { type: :string }
+        },
+        required: [ 'subaction' ]
+      }
+
+      response '200', 'user assign new verification_code' do
+        let(:user) { create(:user, email: "jconnor@mail.com") }
+        let(:email) { user.email }
+        let!(:country) { create(:country, code_iso: 'CO') }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          required: [ 'first_name', 'last_name', 'email'],
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            email: { type: :string }
+          }
+
+        let(:input) {{ subaction: "assign_code" }}
+
+        run_test!
+      end
+
+      response '404', 'user not found' do
+        let(:user) { create(:user) }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        let(:email) { "invalid_email" }
+
+        let(:input) {{ subaction: "assign_code" }}
+
+        run_test!
+      end
+    end
+  end
 end
