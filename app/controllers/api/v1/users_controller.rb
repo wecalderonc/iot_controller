@@ -28,7 +28,13 @@ module Api
       end
 
       def update
-        update_response = Users::Update::Execute.new.(update_params)
+        options = {
+          assign_code: -> { Users::VerificationCode::Execute.new.(params) }
+        }
+
+        options.default = -> { Users::Update::Execute.new.(update_params) }
+
+        update_response = options[update_params[:subaction]&.to_sym].()
 
         if update_response.success?
           json_response(update_response.success, :ok, UsersSerializer)
