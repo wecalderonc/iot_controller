@@ -6,6 +6,9 @@ class Reports::DatesCalculator
 
   def call(input)
     variables = get_location_variables(input[:thing].locates)
+    p "VARIABLESSSSSSSSSSSSSSSSSSSSS"
+    p variables
+    p "VARIABLESSSSSSSSSSSSSSSSSSSSS"
     result = extract_new_date(variables)
 
     input.merge(new_billing_start_date: result)

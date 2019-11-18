@@ -33,9 +33,12 @@ module ReportsManager
   end
 
   def report_response(input)
-    action = Utils.camelize_symbol(input[:action])
+    p action = Utils.camelize_symbol(input[:action])
 
-    data = "Reports::#{action}::Execute".constantize.(input)
+    p "*" *100
+    p data = "Reports::#{action}::Execute".constantize.(input)
+    p "*" *100
+    p action
 
     if data.success?
       success_report_response(data.success, input[:option], input[:model])
