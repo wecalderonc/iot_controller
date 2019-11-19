@@ -109,12 +109,12 @@ p "****************"
 
 p uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006",
+              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006",
               sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,2))
 
 p uplink12 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006",
+              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006",
               sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,3))
 
 p uplink13 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
