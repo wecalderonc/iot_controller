@@ -15,7 +15,7 @@ class Reports::BaseJsonReport
         hash = add_basic_object_info(object)
 
         if model.eql?(:accumulator)
-          add_deltas(deltas, index, hash)
+          add_deltas(deltas[index], object, hash)
         end
 
         processed_objects << hash
@@ -37,10 +37,10 @@ class Reports::BaseJsonReport
     { :date => date, :value => object.value }
   end
 
-  def add_deltas(deltas, index, hash)
+  def add_deltas(delta, object, hash)
     hash.merge!({
-      :consumption_delta => deltas[index][:delta],
-      :accumulated_delta => deltas[index][:accumulated]
+      :consumption_delta => parse_value(delta[:delta], object),
+      :accumulated_delta => parse_value(delta[:accumulated], object)
     })
   end
 
@@ -48,5 +48,12 @@ class Reports::BaseJsonReport
     key_objects = "#{model.to_s}s".to_sym # This key can be alarms or accumulators
 
     { :thing_id => device.id, :thing_name => device.name, key_objects => processed_objects }
+  end
+
+  def parse_value(value, object)
+    unit = object.my_units.keys[0].to_sym
+
+    response = Reports::Accumulators::ValueConverter.new.({accumulator: object, unit: unit, value: value})
+    response[:value]
   end
 end
