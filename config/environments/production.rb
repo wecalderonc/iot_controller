@@ -95,7 +95,7 @@ Rails.application.configure do
 
   ActionMailer::Base.smtp_settings = {
     user_name: ENV['SENGRID_USERNAME'],
-    password: ENV['SENGRID_PASSWORD']
+    password: ENV['SENGRID_PASSWORD'],
     address: 'smtp.sendgrid.net',
     domain: 'ec2-34-239-60-25.compute-1.amazonaws.com',
     port: 2525,
