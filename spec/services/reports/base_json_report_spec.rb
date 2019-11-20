@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Reports::BaseJsonReport do
   describe "#call" do
     let(:response) { subject.(input) }
+    let!(:price)   { create(:price) }
 
     context "accumulator_model" do
       let(:input)    { { objects: ThingsQuery.new.sort_accumulators, model: :accumulator } }
@@ -13,6 +14,8 @@ RSpec.describe Reports::BaseJsonReport do
         uplink = accumulator.uplink
         thing = uplink.thing
         date = uplink.created_at.strftime('%a %d %b %Y')
+
+        thing.update(units: { liter: 300 })
      
         expected_response = [
           {
@@ -21,8 +24,8 @@ RSpec.describe Reports::BaseJsonReport do
             :accumulators => [{
               :date => date,
               :value => accumulator.value,
-              :consumption_delta => accumulator.value.to_i(16),
-              :accumulated_delta => accumulator.value.to_i(16)
+              :consumption_delta => accumulator.value.to_i(16) * 300,
+              :accumulated_delta => accumulator.value.to_i(16) * 300
             }]
           }
         ]

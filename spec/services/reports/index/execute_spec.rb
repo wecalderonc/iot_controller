@@ -8,6 +8,7 @@ RSpec.describe Reports::Index::Execute do
     let(:thing)    { uplink.thing }
     let(:thing2)   { uplink2.thing }
     let(:input)    { { params: {}, model: :accumulator, thing: Thing, option: :csv_format } }
+    let!(:price)   { create(:price) }
 
     context "There are things with accumulators related" do
       let!(:accumulator1) { create(:accumulator, value: "00006fff", uplink: uplink) }
@@ -29,14 +30,17 @@ RSpec.describe Reports::Index::Execute do
           date1 = uplink.created_at.strftime('%a %d %b %Y')
           date2 = uplink2.created_at.strftime('%a %d %b %Y')
 
+          units1 = uplink.thing.units["liter"]
+          units2 = uplink2.thing.units["liter"]
+
           accumulator1_response = {
             :thing_id => thing.id,
             :thing_name =>thing.name,
             :accumulators => [{
               :date => date1,
               :value => accumulator1.value,
-              :consumption_delta => accumulator1.value.to_i(16),
-              :accumulated_delta => accumulator1.value.to_i(16)
+              :consumption_delta => accumulator1.value.to_i(16) * units1,
+              :accumulated_delta => accumulator1.value.to_i(16) * units1
             }]
           }
 
@@ -46,8 +50,8 @@ RSpec.describe Reports::Index::Execute do
             :accumulators => [{
               :date => date2,
               :value => accumulator2.value,
-              :consumption_delta => accumulator2.value.to_i(16),
-              :accumulated_delta => accumulator2.value.to_i(16)
+              :consumption_delta => accumulator2.value.to_i(16) * units2,
+              :accumulated_delta => accumulator2.value.to_i(16) * units2
             }]
           }
 

@@ -27,7 +27,7 @@ class ThingsQuery
 
   def sort_collection(collection)
     collection
-      .sort_by{ |accumulator| accumulator.created_at }
+      .sort_by{ |accumulator| accumulator.uplink.time }
       .group_by{ |accumulator| accumulator.uplink.thing }
   end
 end

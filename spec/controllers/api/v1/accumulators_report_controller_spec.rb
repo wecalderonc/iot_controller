@@ -71,6 +71,7 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
     context "results found" do
       let!(:accumulator1) { create(:accumulator) }
       let!(:accumulator2) { create(:accumulator) }
+      let!(:price)        { create(:price) }
       let!(:uplink_1) { accumulator1.uplink }
       let!(:uplink_2) { accumulator2.uplink }
 
@@ -97,6 +98,9 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
           date1 = uplink_1.created_at.strftime('%a %d %b %Y')
           date2 = uplink_2.created_at.strftime('%a %d %b %Y')
 
+          units1 = uplink_1.thing.units["liter"]
+          units2 = uplink_2.thing.units["liter"]
+
           accumulator2_response = {
             "thing_id" => uplink_2.thing.id,
             "thing_name" => uplink_2.thing.name,
@@ -104,8 +108,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
               {
                   "date" => date2,
                   "value" => accumulator2.value,
-                  "consumption_delta" => accumulator2.value.to_i(16),
-                  "accumulated_delta" => accumulator2.value.to_i(16)
+                  "consumption_delta" => accumulator2.value.to_i(16) * units2,
+                  "accumulated_delta" => accumulator2.value.to_i(16) * units2
               }
             ]
           }
@@ -117,8 +121,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
               {
                   "date" => date1,
                   "value" => accumulator1.value,
-                  "consumption_delta" => accumulator1.value.to_i(16),
-                  "accumulated_delta" => accumulator1.value.to_i(16)
+                  "consumption_delta" => accumulator1.value.to_i(16) * units1,
+                  "accumulated_delta" => accumulator1.value.to_i(16) * units1
               }
             ]
           }
