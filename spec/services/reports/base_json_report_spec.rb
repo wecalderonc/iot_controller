@@ -10,13 +10,15 @@ RSpec.describe Reports::BaseJsonReport do
 
       it "should return a csv file with thing's accumulators data"do
         accumulator = create :accumulator
-     
+
         uplink = accumulator.uplink
         thing = uplink.thing
         date = uplink.created_at.strftime('%a %d %b %Y')
 
         thing.update(units: { liter: 300 })
-     
+
+        units = thing.units[:liter]
+
         expected_response = [
           {
             :thing_id => thing.id,
@@ -24,12 +26,12 @@ RSpec.describe Reports::BaseJsonReport do
             :accumulators => [{
               :date => date,
               :value => accumulator.value,
-              :consumption_delta => accumulator.value.to_i(16) * 300,
-              :accumulated_delta => accumulator.value.to_i(16) * 300
+              :consumption_delta => accumulator.value.to_i(16) * units,
+              :accumulated_delta => accumulator.value.to_i(16) * units
             }]
           }
         ]
-     
+
         expect(response).to match(expected_response)
       end
     end
@@ -42,7 +44,7 @@ RSpec.describe Reports::BaseJsonReport do
         uplink = alarm.uplink
         thing = uplink.thing
         date = uplink.created_at.strftime('%a %d %b %Y')
-     
+
         expected_response = [
           {
             :thing_id => thing.id,
@@ -53,7 +55,7 @@ RSpec.describe Reports::BaseJsonReport do
             }]
           }
         ]
-     
+
         expect(response).to match(expected_response)
       end
     end
