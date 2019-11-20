@@ -86,20 +86,20 @@ Rails.application.configure do
   config.neo4j.session_type = NEO4J_CONFIG['NEO4J_TYPE']
   config.neo4j.session_path = NEO4J_CONFIG['NEO4J_URL']
 
-  #config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: 'ec2-34-239-60-25.compute-1.amazonaws.com' }
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_caching = false
-  config.action_mailer.asset_host = "http://ec2-34-239-60-25.compute-1.amazonaws.com"
 
-  ActionMailer::Base.smtp_settings = {
-    user_name: ENV['SENGRID_USERNAME'],
-    password: ENV['SENGRID_PASSWORD'],
-    address: 'smtp.sendgrid.net',
-    domain: 'ec2-34-239-60-25.compute-1.amazonaws.com',
-    port: 2525,
-    authentication: :plain,
-    enbale_starttls_auto: true
+  config.action_mailer.default_url_options = { host: 'ec2-34-239-60-25.compute-1.amazonaws.com' }
+  config.action_mailer.asset_host = "http://ec2-34-239-60-25.compute-1.amazonaws.com"
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    enable_starttls_auto: true,
+    domain:               'ec2-34-239-60-25.compute-1.amazonaws.com',
+    port:                 '2525',
+    address:              'smtp.sendgrid.net',
+    authentication:       :plain,
+    user_name:            ENV['SENDGRID_USERNAME'],
+    password:             ENV['SENDGRID_PASSWORD']
   }
+
 end
