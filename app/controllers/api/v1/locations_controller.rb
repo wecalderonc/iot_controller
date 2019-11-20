@@ -3,7 +3,7 @@ module Api
     class LocationsController < ApplicationController
       include Permissions::Customized
 
-      before_action :check_thing_permission, :only => [:create, :update]
+      before_action :check_thing_permission, :only => [:update]
       load_and_authorize_resource param_method: :location_properties
 
       START_DATE = [:start_day, :start_month, :start_year]
@@ -33,6 +33,7 @@ module Api
       end
 
       def create
+        puts "INSIDE CREATE"
         create_response = Locations::Create::Execute.new.(create_params)
 
         if create_response.success?

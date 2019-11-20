@@ -1,5 +1,7 @@
 module Permissions::Customized
   def check_thing_permission
+
+    puts "INSIDE CHECK THING PERMISSION"
     @thing = Thing.find_by(name: params.permit(:thing_name)[:thing_name])
 
     options = {

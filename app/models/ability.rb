@@ -4,6 +4,7 @@ class Ability
   RELATIONS = [:owns, :operates, :sees, :locates]
 
   def initialize(user)
+    puts "INITIALIZE ABILITY"
     user = user.success
 
     available_relations = RELATIONS.select do |relation|
@@ -45,7 +46,9 @@ class Ability
   end
 
   def new_user_abilites(user)
+    puts "INSIDE NEW USER ABILITES"
     can :read, Location
     can :create, Location
+    can :read, Thing
   end
 end
