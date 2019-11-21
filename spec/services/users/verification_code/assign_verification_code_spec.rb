@@ -9,6 +9,8 @@ Rspec.describe Users::VerificationCode::AssignVerificationCode do
     context ' verification code' do
       it 'it return a success response' do
         expect(response).to be(user)
+
+        expect(user.save).to be(true)
       end
     end
 

@@ -21,6 +21,7 @@ RSpec.describe Users::VerificationCode::Execute do
           expect(response).to be_success
           expect(response.success).to eq(user)
           expect(user.verification_code).to eq(user.verification_code)
+          expect(user.save).to be(true)
         end
       end
 
