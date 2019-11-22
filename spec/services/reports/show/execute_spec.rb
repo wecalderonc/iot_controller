@@ -13,6 +13,14 @@ RSpec.describe Reports::Show::Execute do
     let!(:price)   { create(:price) }
     let(:input)    { { params: { thing_name: thing.name }, model: :accumulator, thing: Thing, option: :csv_format } }
 
+    before do
+      Timecop.freeze(Time.local(2019, 2, 1, 12, 0, 0))
+    end
+ 
+    after do
+      Timecop.return
+    end
+
     context "There are things with objects related" do
       let!(:accumulator1) { create(:accumulator, value: "100", uplink: uplink4) }
       let!(:accumulator2) { create(:accumulator, value: "110", uplink: uplink3) }

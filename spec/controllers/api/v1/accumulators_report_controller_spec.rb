@@ -4,6 +4,14 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
   let(:user) { create(:user, password: "Usuario123*") }
   let(:header) { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }) } }
 
+  before do
+    Timecop.freeze(Time.local(2019, 2, 1, 12, 0, 0))
+  end
+
+  after do
+    Timecop.return
+  end
+
   describe "GET/index index last accumulators from a thing" do
     let(:accumulator)    { create(:accumulator) }
     let(:uplink)         { create(:uplink, thing: accumulator.uplink.thing) }

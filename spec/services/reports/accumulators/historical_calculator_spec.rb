@@ -8,7 +8,15 @@ RSpec.describe Reports::Accumulators::HistoricalCalculator do
     let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - 2.days).to_i ) }
     let(:input)    { { thing: thing, new_billing_start_date: Date.today - 22.days } }
     let!(:price)   { create(:price) }
+
     
+    before do
+      Timecop.freeze(Time.local(2019, 2, 1, 12, 0, 0))
+    end
+
+    after do
+      Timecop.return
+    end
 
     context "there are accumulators from lower than one periods ago" do
       let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: Date.today - (3.months - 8.days)) }
