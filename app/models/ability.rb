@@ -4,7 +4,6 @@ class Ability
   RELATIONS = [:owns, :operates, :sees, :locates]
 
   def initialize(user)
-    puts "INITIALIZE ABILITY"
     user = user.success
 
     available_relations = RELATIONS.select do |relation|
@@ -29,8 +28,7 @@ class Ability
     can :manage, Alarm, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Accumulator, uplink: { thing: { owner: { id: user.id } } }
     can :create, Location
-    can :update, Location, thing: { owner: { id: user.id } }
-    can :read, Location, thing: { owner: { id: user.id } }
+    can :manage, Location, thing: { owner: { id: user.id } }
   end
 
   def sees_abilities(user)
@@ -46,7 +44,6 @@ class Ability
   end
 
   def new_user_abilites(user)
-    puts "INSIDE NEW USER ABILITES"
     can :read, Location
     can :create, Location
     can :read, Thing
