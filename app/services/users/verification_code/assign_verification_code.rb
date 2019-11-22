@@ -8,8 +8,6 @@ class Users::VerificationCode::AssignVerificationCode
 
     user.assign_verification_code
 
-    user.save
-
     user
   end
 end
