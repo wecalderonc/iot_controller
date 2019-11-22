@@ -7,6 +7,14 @@ RSpec.describe Reports::DatesCalculator do
     let(:thing)    { create(:thing, locates: location) }
     let(:input)    { { thing: thing } }
 
+    before do
+      Timecop.freeze(Time.local(2019, 2, 1, 12, 0, 0))
+    end
+ 
+    after do
+      Timecop.return
+    end
+
     context "consumption days higher than billing period days" do
       let(:billing)  { create(:schedule_billing, billing_frequency: 1, start_date: DateTime.now - (3.months + 22.days)) }
 
