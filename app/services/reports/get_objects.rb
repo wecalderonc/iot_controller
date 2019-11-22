@@ -6,10 +6,6 @@ class Reports::GetObjects
   def call(input)
     params, model, thing = input.values_at(:params, :model, :thing)
 
-    p "!" * 100
-    p params
-    p "!" * 100
-
     if params[:date].present?
       objects = ThingsQuery.new(thing)
       .date_uplinks_filter(params[:date], model)

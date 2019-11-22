@@ -13,9 +13,6 @@ class ThingsQuery
   end
 
   def date_uplinks_filter(date, model)
-    p "*" * 100
-    p date
-    p "*" * 100
     start_date, end_date = date.values_at(:start_date, :end_date)
 
     sort_collection(

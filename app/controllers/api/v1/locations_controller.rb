@@ -33,7 +33,6 @@ module Api
       end
 
       def create
-        puts "INSIDE CREATE"
         create_response = Locations::Create::Execute.new.(create_params)
 
         if create_response.success?

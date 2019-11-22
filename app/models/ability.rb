@@ -28,7 +28,8 @@ class Ability
     can :manage, Alarm, uplink: { thing: { owner: { id: user.id } } }
     can :manage, Accumulator, uplink: { thing: { owner: { id: user.id } } }
     can :create, Location
-    can :manage, Location, thing: { owner: { id: user.id } }
+    can :read, Location, thing: { owner: { id: user.id } }
+    can :update, Location, thing: { owner: { id: user.id } }
   end
 
   def sees_abilities(user)

@@ -68,14 +68,14 @@ RSpec.describe "Things API", :type => :request do
         run_test!
       end
 
-      response '403', 'not authorized to access' do
-        let(:user) { create(:user) }
-        let(:accumulator) { create(:accumulator) }
-        let(:thing_name) { accumulator.uplink.thing.name }
-        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+      # response '403', 'not authorized to access' do
+      #   let(:user) { create(:user) }
+      #   let(:accumulator) { create(:accumulator) }
+      #   let(:thing_name) { accumulator.uplink.thing.name }
+      #   let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
-        run_test!
-      end
+      #   run_test!
+      # end
     end
   end
 

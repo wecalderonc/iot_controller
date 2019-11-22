@@ -204,7 +204,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         post '/api/v1/locations', headers: header, params: body
 
-        p response_body = JSON.parse(response.body)
+        response_body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
         expect(response.status).to eq(200)
