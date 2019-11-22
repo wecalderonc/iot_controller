@@ -147,19 +147,6 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
       end
     end
 
-    # context "Access to a thing" do
-    #   it "User doesn't have relation with the thing" do
-    #     thing  = create(:thing)
-
-    #     get "/api/v1/things/#{thing.name}", headers: header
-
-    #     p body = JSON.parse(response.body)
-
-    #     expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-    #     expect(response.status).to eq(403)
-    #   end
-    # end
-
     context "Access to a thing" do
       it "User doesn't have relation with the thing but has a owner relation with other thing" do
         thing2 = create(:thing)
