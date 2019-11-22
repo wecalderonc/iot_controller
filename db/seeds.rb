@@ -107,62 +107,74 @@ p "CREATING UPLINKS FOR EVERY THING"
 p "                "
 p "****************"
 
-uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink1 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,2).to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,2))
 
-uplink12 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink12 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,5).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,5))
 
-uplink13 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink13 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,6).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,6))
 
-uplink14 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink14 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,12).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,12))
 
-uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
+p uplink2 = Uplink.create(data: "026774300806702ffff10040", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing2)
 
-uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink3 = Uplink.create(data: "035647200806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1548277798", sec_uplinks: "006", sec_downlinks: "0", thing: thing3)
 
-uplink4 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink4 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 1.months - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,16).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,16))
 
-uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
               time: "1570316848", sec_uplinks: "006", sec_downlinks: "0", thing: thing4)
 
-uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,17).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,17))
 
-uplink7 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink7 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing5)
+              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing5)
 
-uplink8 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
+p uplink8 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: (Date.today - 2.days).to_time.to_i.to_s, sec_uplinks: "006", sec_downlinks: "0", thing: thing1)
+              time: DateTime.new(2019,11,18).to_time.to_i.to_s, sec_uplinks: "006",
+              sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,18))
 
 p "****************"
 p "                "
 p "CREATING ACCUMULATORS"
 p "                "
 p "****************"
-p accumulator1 = Accumulator.create(value: "0000f", uplink: uplink1)
+p accumulator1 = Accumulator.create(value: "00000001", uplink: uplink1, created_at: DateTime.new(2019,11,2))
+p accumulator12 = Accumulator.create(value: "00000010", uplink: uplink12, created_at: DateTime.new(2019,11,3))
+p accumulator13 = Accumulator.create(value: "00000020", uplink: uplink13, created_at: DateTime.new(2019,11,4))
+p accumulator14 = Accumulator.create(value: "00000030", uplink: uplink14, created_at: DateTime.new(2019,11,5))
 p accumulator2 = Accumulator.create(value: "0002", uplink: uplink2)
 p accumulator3 = Accumulator.create(value: "0003", uplink: uplink3)
-p accumulator4 = Accumulator.create(value: "000ff", uplink: uplink4)
+p accumulator4 = Accumulator.create(value: "00000040", uplink: uplink4, created_at: DateTime.new(2019,11,6))
 p accumulator5 = Accumulator.create(value: "0005", uplink: uplink5)
-p accumulator6 = Accumulator.create(value: "00aff", uplink: uplink6)
+p accumulator6 = Accumulator.create(value: "00000050", uplink: uplink6, created_at: DateTime.new(2019,11,7))
 p accumulator7 = Accumulator.create(value: "0000aff0", uplink: uplink7)
+p accumulator8 = Accumulator.create(value: "00000060", uplink: uplink8, created_at: DateTime.new(2019,11,8))
 
 p "****************"
 p "                "

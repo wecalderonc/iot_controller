@@ -7,16 +7,16 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
   describe "GET/index things" do
 
     context "User doesn't have related things" do
-      it "Should return unauthorized_message" do
+      it "Should return empty array" do
         get '/api/v1/things', headers: header
-
-        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(403)
 
         body = JSON.parse(response.body)
 
-        expected_response = "Access Denied: You are not authorized to access this page."
-        expect(body["message"]).to eq(expected_response)
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(200)
+
+        expected_response = []
+        expect(body).to eq(expected_response)
       end
     end
 
@@ -144,19 +144,6 @@ RSpec.describe Api::V1::ThingsController, :type => :request do
 
         expect(body).to eq(expected_response)
 
-      end
-    end
-
-    context "Access to a thing" do
-      it "User doesn't have relation with the thing" do
-        thing  = create(:thing)
-
-        get "/api/v1/things/#{thing.name}", headers: header
-
-        body = JSON.parse(response.body)
-
-        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(403)
       end
     end
 

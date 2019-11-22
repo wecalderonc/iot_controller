@@ -163,8 +163,8 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
       end
     end
 
-    context "User doesnt own the thing and its creating a new location" do
-      it "Should return access faiure without relations with the thing and the user" do
+    context "User is new and doesnt own the thing and its creating a new location" do
+      it "Should return access success" do
         body = {
           thing_name: thing.name,
           email: user.email,
@@ -207,9 +207,42 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         response_body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(200)
 
-        expected_response = {"errors"=>"Access denied. You didn't own the thing #{thing.name}"}
+        expected_response = {
+          "name" => 'My house',
+          "address" => 'Carrera 7 # 71 - 21',
+          "latitude" => 84.606880,
+          "longitude" => -94.071840,
+          "country" => {
+            "code_iso" => city.state.country.code_iso,
+            "name" => city.state.country.name,
+          },
+          "state" => {
+            "code_iso" => city.state.code_iso,
+            "name" => city.state.name,
+          },
+          "city" => {
+            "name" => city.name,
+          },
+          "schedule_billing" => {
+            "stratum" => 5,
+            "basic_charge_price" => 13.841,
+            "top_limit" => 40.0,
+            "basic_price" => 2000.0,
+            "extra_price" => 2500.0,
+            "billing_frequency" => 2,
+            "billing_period" => 'month',
+            "cut_day" => 10,
+            "start_date" => "2019-10-10"
+          },
+          "schedule_report" => {
+            "email" => 'unacosita@gmail.com',
+            "frequency_day" => 1,
+            "frequency_interval" => 'week',
+            "start_date" => "2019-10-10T00:00:00+00:00"
+          }
+        }
 
         expect(response_body).to eq(expected_response)
       end
@@ -494,11 +527,11 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
 
-        expected_response = "Access denied. You didn't own the thing #{thing.name}"
+        expected_response = "Access Denied: You are not authorized to access this page."
 
-        expect(response_body["errors"]).to eq(expected_response)
+        expect(response_body["message"]).to eq(expected_response)
       end
     end
   end

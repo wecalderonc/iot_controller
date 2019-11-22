@@ -34,7 +34,6 @@ module ReportsManager
 
   def report_response(input)
     action = Utils.camelize_symbol(input[:action])
-
     data = "Reports::#{action}::Execute".constantize.(input)
 
     if data.success?

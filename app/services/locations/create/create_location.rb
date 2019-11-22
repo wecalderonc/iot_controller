@@ -19,6 +19,7 @@ class Locations::Create::CreateLocation
   private
 
   def create_relationships(input)
+    Owner.create(from_node: input[:user], to_node: input[:thing])
     ThingLocation.create(from_node: input[:thing], to_node: input[:location])
     UserLocation.create(from_node: input[:user], to_node: input[:location])
   end
