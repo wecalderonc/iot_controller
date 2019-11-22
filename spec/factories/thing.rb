@@ -7,6 +7,7 @@ FactoryBot.define do
     units { { liter: Faker::Number.number(digits: 5) } }
     longitude { Faker::Address.longitude }
     latitude { Faker::Address.latitude }
+    flow_per_minute { Faker::Number.number(digits: 2) }
 
     trait :activated do
       status { "activated" }

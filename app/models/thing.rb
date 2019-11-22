@@ -6,6 +6,7 @@ class Thing
   property :company_id, type: String
   property :latitude, type: Float
   property :longitude, type: Float
+  property :flow_per_minute, type: Integer
   property :units
 
   serialize :units

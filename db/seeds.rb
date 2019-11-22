@@ -69,16 +69,17 @@ p thing1 = Thing.create(
   latitude: 4,
   longitude: 75,
   valve_transition: ValveTransition.create,
-  units: { liter: 200 }
+  units: { liter: 200 },
+  flow_per_minute: 50
   )
 
-p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 })
-p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 })
-p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 })
-p thing5 = Thing.create(name: "thing_five", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :open), units: { liter: 200 })
-p thing6 = Thing.create(name: "thing_six", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :opening), units: { liter: 200 })
-p thing7 = Thing.create(name: "thing_seven", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closing), units: { liter: 200 })
-p thing8 = Thing.create(name: "thing_eight", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closed), units: { liter: 200 })
+p thing2 = Thing.create(name: "thing_two", status: "desactivated", pac: "enrau45eo69u4aoe32u1a", company_id: "20", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 }, flow_per_minute: 50 )
+p thing3 = Thing.create(name: "thing_three", status: "desactivated", pac: "fdsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 }, flow_per_minute: 50 )
+p thing4 = Thing.create(name: "thing_four", status: "desactivated", pac: "gcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create, units: { liter: 200 }, flow_per_minute: 50 )
+p thing5 = Thing.create(name: "thing_five", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :open), units: { liter: 200 }, flow_per_minute: 50 )
+p thing6 = Thing.create(name: "thing_six", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :opening), units: { liter: 200 }, flow_per_minute: 50 )
+p thing7 = Thing.create(name: "thing_seven", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closing), units: { liter: 200 }, flow_per_minute: 50 )
+p thing8 = Thing.create(name: "thing_eight", status: "desactivated", pac: "hcsau45eo69u4aoe32u1a", company_id: "54", latitude: 4, longitude: 75, valve_transition: ValveTransition.create(showed_state: :closed), units: { liter: 200 }, flow_per_minute: 50 )
 
 p "****************"
 p "                "
