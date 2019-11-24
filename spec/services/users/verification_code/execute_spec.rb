@@ -16,12 +16,10 @@ RSpec.describe Users::VerificationCode::Execute do
 
           response = subject.(input)
 
-          user.reload
-
+          expected_response = user
           expect(response).to be_success
-          expect(response.success).to eq(user)
-          expect(user.verification_code).to eq(user.verification_code)
-          expect(user.save).to be(true)
+          expect(response.success).to eq(expected_response)
+          expect(response.success.verification_code).not_to eq(nil)
         end
       end
 
