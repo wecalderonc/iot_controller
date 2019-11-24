@@ -12,7 +12,5 @@ FactoryBot.define do
     id_number { Faker::Alphanumeric.alphanumeric(number: 7) }
     id_type { :cc }
     user_type { :aqueduct }
-#   verification_code { Faker::Alphanumeric.alphanumeric(number: 6) }
-    verification_code { SecureRandom.hex(6) }
   end
 end

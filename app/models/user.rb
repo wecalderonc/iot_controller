@@ -1,7 +1,7 @@
 class User
   include Neo4j::ActiveNode
 
-  before_create :assign_verification_code
+  after_create :assign_verification_code
 
   property :first_name, type: String
   property :last_name, type: String
