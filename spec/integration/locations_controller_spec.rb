@@ -148,6 +148,7 @@ RSpec.describe "Locations API", :type => :request do
 
         run_test!
       end
+
       response '404', 'thing not found' do
         let(:user)     { create(:user) }
         let(:header)   { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }), 'Content-Type' => "application/json" } }
@@ -168,6 +169,65 @@ RSpec.describe "Locations API", :type => :request do
 
         let(:input) {{
           thing_name: 'invalid_name',
+          email: user.email,
+          location: {
+            name: 'My house',
+            address: 'Carrera 7 # 71 - 21',
+            latitude: 84.606880,
+            longitude: -94.071840
+          },
+          country_state_city: {
+            country: country.code_iso,
+            state: state.code_iso,
+            city: city.name
+          },
+          schedule_billing: {
+            stratum: 5,
+            basic_charge_price: 13.841,
+            top_limit: 40.0,
+            basic_price: 2000.0,
+            extra_price: 2500.0,
+            billing_frequency: 2,
+            billing_period: 'month',
+            cut_day: 10,
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          },
+          schedule_report: {
+            email: 'unacosita@gmail.com',
+            frequency_day: 1,
+            frequency_interval: 'week',
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          }
+        }}
+
+        run_test!
+      end
+
+      response '404', 'thing not found' do
+        let(:user)     { create(:user) }
+        let(:header)   { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }), 'Content-Type' => "application/json" } }
+        let(:country)  { create(:country, code_iso: 'CO') }
+        let(:state)    { create(:state, code_iso: 'CO-DC', country: country) }
+        let(:city)     { create(:city, name: 'Bogota', state: state) }
+        let(:location) { create(:location, :with_thing) }
+        let(:thing)    { location.thing }
+        let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
+
+        schema type: :object,
+          required: [ 'errors' ],
+          properties: {
+            type: :object,
+            properties: {
+              errors: { type: :string },
+            }
+          }
+
+        let(:input) {{
+          thing_name: thing.name,
           email: user.email,
           location: {
             name: 'My house',

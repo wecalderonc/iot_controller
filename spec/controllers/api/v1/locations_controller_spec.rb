@@ -312,6 +312,67 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         expect(response_body).to eq(expected_response)
       end
     end
+
+    context "Create Location process failure because thing already has a location" do
+      it "Should return error message" do
+        location2 = create(:location, :with_thing)
+        thing2 = location2.thing
+        Owner.create(from_node: user, to_node: thing2)
+        Owner.create(from_node: user, to_node: thing)
+
+        body = {
+          thing_name: thing2.name,
+          email: user.email,
+          location: {
+            name: "apartamento",
+            address: 'Carrera 7 # 71 - 21',
+            latitude: 84.606880,
+            longitude: -94.071840
+          },
+          country_state_city: {
+            country: country.code_iso,
+            state: state.code_iso,
+            city: city.name
+          },
+          schedule_billing: {
+            stratum: 5,
+            basic_charge_price: 13.841,
+            top_limit: 40.0,
+            basic_price: 2000.0,
+            extra_price: 2500.0,
+            billing_frequency: 2,
+            billing_period: 'month',
+            cut_day: 1,
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          },
+          schedule_report: {
+            email: 'unacosita@gmail.com',
+            frequency_day: 1,
+            frequency_interval: 'week',
+            start_day: 10,
+            start_month: 10,
+            start_year: 2019
+          }
+        }.to_json
+
+
+        post '/api/v1/locations', headers: header, params: body
+
+        expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
+        expect(response.status).to eq(404)
+
+        response_body = JSON.parse(response.body)
+
+        expected_response =
+          {
+            "errors" => "The thing #{thing2.name} is already located in another place"
+          }
+
+        expect(response_body).to eq(expected_response)
+      end
+    end
   end
 
   describe "PUT/update location" do

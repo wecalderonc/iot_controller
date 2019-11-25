@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Locations::Create::Execute do
-  describe "#call" do
+RSpec.describe Things::ValidateLocation do
+  describe '#call' do
     let(:response) { subject.(input) }
 
-    context "When the user is creating a new location" do
+    context "When the thing doesnt have a location already" do
       let(:user)    { create(:user, email: "user@gmail.com") }
       let(:thing)   { create(:thing) }
       let(:country) { create(:country, code_iso: 'CO') }
@@ -45,74 +45,15 @@ RSpec.describe Locations::Create::Execute do
             start_day: 10,
             start_month: 10,
             start_year: 2019
-          }
+          },
+          thing: thing
         }
       }
 
-      context "When all the operations are successful" do
-        let(:location) { thing.locates }
-        let(:schedule_billing) { location.schedule_billing }
-        let(:schedule_report) { location.schedule_report }
+      it "Should return a success response" do
+        expect(response).to be_success
+        expect(response.success).to eq(input)
 
-        it "Should return a Success response" do
-          expect(response).to be_success
-
-          expect(response.success).to match(location)
-          expect(location.city.name).to eq('Bogota')
-          expect(location.users.include?(user)).to match(true)
-          expect(location.thing).to match(thing)
-          expect(schedule_billing.stratum).to eq(5)
-          expect(schedule_report.email).to eq('unacosita@gmail.com')
-        end
-      end
-
-      context "When country is wrong" do
-        it "Should return a Failure response" do
-          input[:country_state_city][:country] = "invalid_code"
-
-          expect(response).to be_failure
-          expect(response.failure[:message]).to eq("Country not found")
-        end
-      end
-
-      context "When state is wrong" do
-        it "Should return a Failure response" do
-          input[:country_state_city][:state] = "invalid_code"
-
-          expect(response).to be_failure
-          expect(response.failure[:message]).to eq("State not found")
-        end
-      end
-
-      context "When city is wrong" do
-        it "Should return a Failure response" do
-          input[:country_state_city][:city] = "invalid_name"
-
-          expect(response).to be_failure
-          expect(response.failure[:message]).to eq("City not found")
-        end
-      end
-
-      context "When the 'get' operation fails" do
-        it "Should return a Failure response" do
-          input[:thing_name] = "invalid_name"
-
-          expected_response = "The thing invalid_name does not exist"
-
-          expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
-        end
-      end
-
-      context "When the 'get' operation fails" do
-        it "Should return a Failure response" do
-          input[:email] = "invalid_email"
-
-          expected_response = {:email => ["is in invalid format"]}
-
-          expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
-        end
       end
     end
 
@@ -158,7 +99,8 @@ RSpec.describe Locations::Create::Execute do
             start_day: 10,
             start_month: 10,
             start_year: 2019
-          }
+          },
+          thing: thing2
         }
       }
       it "Should return a Failure response and a message" do

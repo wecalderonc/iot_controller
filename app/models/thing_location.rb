@@ -5,5 +5,5 @@ class ThingLocation
   to_class   :Location
   type :thing_location
 
-  creates_unique
+  # creates_unique
 end
