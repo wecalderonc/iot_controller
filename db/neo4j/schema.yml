@@ -36,6 +36,7 @@
 - CONSTRAINT ON ( uplink:Uplink ) ASSERT uplink.uuid IS UNIQUE
 - CONSTRAINT ON ( uplinkbdownlink:UplinkBDownlink ) ASSERT uplinkbdownlink.uuid IS
   UNIQUE
+- CONSTRAINT ON ( user:User ) ASSERT user.code_number IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.email IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 - CONSTRAINT ON ( valveposition:ValvePosition ) ASSERT valveposition.uuid IS UNIQUE
@@ -69,4 +70,3 @@
 - '20190730204141'
 - '20190730215106'
 - '20190916200027'
-- '20191122195850'

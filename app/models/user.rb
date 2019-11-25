@@ -48,7 +48,7 @@ class User
 
   def assign_verification_code
     if self.verification_code.blank?
-      self.update_attribute(:verification_code, SecureRandom.hex(6))
+      self.update(verification_code: SecureRandom.hex(6))
     end
   end
 
