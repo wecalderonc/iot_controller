@@ -7,7 +7,7 @@ class Things::ValidateLocation
     thing = input[:thing]
 
     if input[:thing].locates.present?
-      Failure Errors.service_error("The thing #{input[:thing_name]} is already located in another place", 10104, self.class)
+      Failure Errors.general_error("The thing #{input[:thing_name]} is already located in another place", self.class)
     else
       Success input
     end
