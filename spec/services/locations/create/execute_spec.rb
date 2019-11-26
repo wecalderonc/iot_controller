@@ -66,6 +66,15 @@ RSpec.describe Locations::Create::Execute do
         end
       end
 
+      context "When thing is already taken" do
+        it "Should return a Failure response" do
+          input[:country_state_city][:country] = "invalid_code"
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq("Country not found")
+        end
+      end
+
       context "When country is wrong" do
         it "Should return a Failure response" do
           input[:country_state_city][:country] = "invalid_code"
