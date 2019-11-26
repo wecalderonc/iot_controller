@@ -6,16 +6,20 @@ Rspec.describe Users::VerificationCode::AssignVerificationCode do
     let(:user)     { create(:user) }
     let(:input)    { { user: user } }
 
-    context 'Assigned verification code' do
-      it 'it return a user with a verification code' do
+    context 'The user can get a verification code' do
+      it 'Should return a success response' do
+
+        allow(SecureRandom).to receive(:hex).with(6).and_return('abcd1234')
+
         user.update(verification_code: nil)
 
-        expect(user.verification_code).to be(nil)
+        expect(user.verification_code).to be_nil
+
+        subject.(input)
 
         user.reload
 
-        expect(response).to be(user)
-        expect(user.verification_code).to be(user.verification_code)
+        expect(user.verification_code).to eq('abcd1234')
       end
     end
   end
