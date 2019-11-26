@@ -5,15 +5,15 @@ RSpec.describe Locations::Create::Execute do
     let(:response) { subject.(input) }
 
     context "When the user is creating a new location" do
-      let(:user)    { create(:user, email: "user@gmail.com") }
       let(:thing)   { create(:thing) }
+      let!(:user)   { create(:user, email: "user@gmail.com") }
       let(:country) { create(:country, code_iso: 'CO') }
       let(:state)   { create(:state, code_iso: 'CO-DC', country: country) }
       let(:city)    { create(:city, name: 'Bogota', state: state) }
 
       let(:input) {
         { thing_name: thing.name,
-          email: user.email,
+          email: "user@gmail.com",
           location: {
             name: 'My house',
             address: 'Carrera 7 # 71 - 21',
@@ -68,10 +68,10 @@ RSpec.describe Locations::Create::Execute do
 
       context "When thing is already taken" do
         it "Should return a Failure response" do
-          input[:country_state_city][:country] = "invalid_code"
+          thing.update(owner: user)
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq("Country not found")
+          expect(response.failure[:message]).to eq("Thing already taken by another user")
         end
       end
 
