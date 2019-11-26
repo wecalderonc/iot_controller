@@ -207,7 +207,7 @@ RSpec.describe "Locations API", :type => :request do
         run_test!
       end
 
-      response '404', 'thing not found' do
+      response '404', 'thing has a location already' do
         let(:user)     { create(:user) }
         let(:header)   { { 'Authorization' => JsonWebToken.encode({ user_id: user.id }), 'Content-Type' => "application/json" } }
         let(:country)  { create(:country, code_iso: 'CO') }
