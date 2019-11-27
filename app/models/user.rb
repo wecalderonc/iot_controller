@@ -1,7 +1,7 @@
 class User
   include Neo4j::ActiveNode
 
-  before_create :assign_verification_code
+  after_create :assign_verification_code
 
   property :first_name, type: String
   property :last_name, type: String
@@ -48,7 +48,7 @@ class User
 
   def assign_verification_code
     if self.verification_code.blank?
-      self.verification_code = SecureRandom.hex(6)
+      self.update(verification_code: SecureRandom.hex(6))
     end
   end
 
