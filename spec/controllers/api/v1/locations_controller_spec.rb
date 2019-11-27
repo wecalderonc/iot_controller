@@ -12,8 +12,6 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
     context "User owns the thing and its creating a new location" do
       context "Right params" do
         it "Should create a new location with his relationships" do
-          Owner.create(from_node: user, to_node: thing)
-
           body = {
             thing_name: thing.name,
             email: user.email,
