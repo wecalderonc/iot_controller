@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: 'notifications@example.com'
+  default from: 'notifications@waico.com'
 
   def confirmation_email
     base_email('Registration Confirmation')
