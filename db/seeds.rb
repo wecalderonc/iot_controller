@@ -146,7 +146,7 @@ p uplink5 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rss
 
 p uplink6 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: DateTime.new(2019,11,17).to_time.to_i.to_s, sec_uplinks: "006",
+              time: DateTime.new(2019,11,25).to_time.to_i.to_s, sec_uplinks: "006",
               sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,17))
 
 p uplink7 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
@@ -156,7 +156,7 @@ p uplink7 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rss
 
 p uplink8 = Uplink.create(data: "016774300806702ffff10000", avgsnr: "18.47", rssi: "-530.00",
               long: "-74.0", lat: "5.0", snr: "16.32", station: "146A", seqnumber: "77",
-              time: DateTime.new(2019,11,18).to_time.to_i.to_s, sec_uplinks: "006",
+              time: DateTime.new(2019,11,28).to_time.to_i.to_s, sec_uplinks: "006",
               sec_downlinks: "0", thing: thing1, created_at: DateTime.new(2019,11,18))
 
 p "****************"
@@ -164,17 +164,17 @@ p "                "
 p "CREATING ACCUMULATORS"
 p "                "
 p "****************"
-p accumulator1 = Accumulator.create(value: "00000001", uplink: uplink1, created_at: DateTime.new(2019,11,2))
-p accumulator12 = Accumulator.create(value: "00000010", uplink: uplink12, created_at: DateTime.new(2019,11,3))
-p accumulator13 = Accumulator.create(value: "00000020", uplink: uplink13, created_at: DateTime.new(2019,11,4))
-p accumulator14 = Accumulator.create(value: "00000030", uplink: uplink14, created_at: DateTime.new(2019,11,5))
-p accumulator2 = Accumulator.create(value: "0002", uplink: uplink2)
-p accumulator3 = Accumulator.create(value: "0003", uplink: uplink3)
-p accumulator4 = Accumulator.create(value: "00000040", uplink: uplink4, created_at: DateTime.new(2019,11,6))
-p accumulator5 = Accumulator.create(value: "0005", uplink: uplink5)
-p accumulator6 = Accumulator.create(value: "00000050", uplink: uplink6, created_at: DateTime.new(2019,11,7))
-p accumulator7 = Accumulator.create(value: "0000aff0", uplink: uplink7)
-p accumulator8 = Accumulator.create(value: "00000060", uplink: uplink8, created_at: DateTime.new(2019,11,8))
+p accumulator1 = Accumulator.create(value: "00001111", uplink: uplink1, created_at: DateTime.new(2019,11,2))
+p accumulator12 = Accumulator.create(value: "00001120", uplink: uplink12, created_at: DateTime.new(2019,11,3))
+p accumulator13 = Accumulator.create(value: "00002125", uplink: uplink13, created_at: DateTime.new(2019,11,4))
+p accumulator14 = Accumulator.create(value: "00002430", uplink: uplink14, created_at: DateTime.new(2019,11,5))
+p accumulator2 = Accumulator.create(value: "00002940", uplink: uplink2)
+p accumulator3 = Accumulator.create(value: "00003140", uplink: uplink3)
+p accumulator4 = Accumulator.create(value: "00003250", uplink: uplink4, created_at: DateTime.new(2019,11,6))
+p accumulator5 = Accumulator.create(value: "00003360", uplink: uplink5)
+p accumulator6 = Accumulator.create(value: "00003670", uplink: uplink6, created_at: DateTime.new(2019,11,7))
+p accumulator7 = Accumulator.create(value: "00003780", uplink: uplink7)
+p accumulator8 = Accumulator.create(value: "00003890", uplink: uplink8, created_at: DateTime.new(2019,11,8))
 
 p "****************"
 p "                "

@@ -24,7 +24,7 @@ Rspec.describe AccumulatorSerializer do
         "updated_at"=>nil,
         "value"=>base_obj.value,
         "final_price"=>4000.0,
-        "units_count"=>80000.0
+        "units_count"=>2.0
       }
 
       expect(subject).to eq(expected_response)

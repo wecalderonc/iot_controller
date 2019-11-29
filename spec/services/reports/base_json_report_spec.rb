@@ -18,6 +18,8 @@ RSpec.describe Reports::BaseJsonReport do
         thing.update(units: { liter: 300 })
 
         units = thing.units[:liter]
+        
+        value = (accumulator.value.to_i(16).to_f / units).round(2),
 
         expected_response = [
           {
@@ -26,8 +28,8 @@ RSpec.describe Reports::BaseJsonReport do
             :accumulators => [{
               :date => date,
               :value => accumulator.value,
-              :consumption_delta => accumulator.value.to_i(16) * units,
-              :accumulated_delta => accumulator.value.to_i(16) * units
+              :consumption_delta => (accumulator.value.to_i(16).to_f / units).round(2),
+              :accumulated_delta => (accumulator.value.to_i(16).to_f / units).round(2)
             }]
           }
         ]

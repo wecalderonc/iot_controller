@@ -24,14 +24,14 @@ RSpec.describe Api::V1::AccumulatorsController, :type => :request do
           {
             "id" => accumulator.id,
             "value" => accumulator.value,
-            "units_count" => 34000.0,
+            "units_count" => 0.85,
             "final_price" => 850.0,
             "created_at" => JSON.parse(accumulator.created_at.to_json),
             "updated_at" => JSON.parse(accumulator.updated_at.to_json)
           }, {
             "id" => accumulator2.id,
             "value" => accumulator2.value,
-            "units_count" => 37400.0,
+            "units_count" => 0.94,
             "final_price" => 935.0,
             "created_at" => JSON.parse(accumulator2.created_at.to_json),
             "updated_at" => JSON.parse(accumulator2.updated_at.to_json)

@@ -46,7 +46,7 @@ RSpec.describe Reports::Accumulators::HistoricalCalculator do
               months: ((start_date - 1.months)..start_date).map(&:month).uniq
             },
             '4' => {
-              value: 51200.0,
+              value: 1.28,
               days_count: 22,
               months: (start_date..end_date).map(&:month).uniq
             }
@@ -76,22 +76,22 @@ RSpec.describe Reports::Accumulators::HistoricalCalculator do
           new_billing_start_date:  start_date,
           consumptions_by_month: {
             '1' => {
-              value: 54400.0,
+              value: 1.36,
               days_count: ((start_date - 2.months - 1.day) - (start_date - 3.months)).to_i,
               months: ((start_date - 3.months)..(start_date - 2.months)).map(&:month).uniq
             },
             '2'=> {
-              value: 57600.0,
+              value: 1.44,
               days_count: ((start_date - 1.month - 1.day) - (start_date - 2.months)).to_i,
               months: ((start_date - 2.months)..(start_date - 1.months)).map(&:month).uniq
             },
             '3' => {
-              value: 60800.0,
+              value: 1.52,
               days_count: ((start_date - 1.day) - (start_date - 1.month)).to_i,
               months: ((start_date - 1.months)..start_date).map(&:month).uniq
             },
             '4' => {
-              value: 51200.0,
+              value: 1.28,
               days_count: 22,
               months: (start_date..end_date).map(&:month).uniq
             }

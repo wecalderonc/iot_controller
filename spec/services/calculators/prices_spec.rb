@@ -21,7 +21,7 @@ RSpec.describe Calculators::Prices::Execute do
 
         expect(result).to be_success
 
-        expected_response = { units_count: 80000, final_price: 4000 }
+        expected_response = { units_count: 2.0, final_price: 4000 }
 
         expect(result.success).to eq(expected_response)
       end
