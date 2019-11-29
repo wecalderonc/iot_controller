@@ -109,6 +109,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
           units1 = uplink_1.thing.units["liter"]
           units2 = uplink_2.thing.units["liter"]
 
+          value2 = (accumulator2.value.to_i(16).to_f / units2).round(2),
+
           accumulator2_response = {
             "thing_id" => uplink_2.thing.id,
             "thing_name" => uplink_2.thing.name,
@@ -116,8 +118,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
               {
                   "date" => date2,
                   "value" => accumulator2.value,
-                  "consumption_delta" => accumulator2.value.to_i(16) * units2,
-                  "accumulated_delta" => accumulator2.value.to_i(16) * units2
+                  "consumption_delta" => (accumulator2.value.to_i(16).to_f / units2).round(2),
+                  "accumulated_delta" => (accumulator2.value.to_i(16).to_f / units2).round(2)
               }
             ]
           }
@@ -129,8 +131,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
               {
                   "date" => date1,
                   "value" => accumulator1.value,
-                  "consumption_delta" => accumulator1.value.to_i(16) * units1,
-                  "accumulated_delta" => accumulator1.value.to_i(16) * units1
+                  "consumption_delta" => (accumulator1.value.to_i(16).to_f / units1).round(2),
+                  "accumulated_delta" => (accumulator1.value.to_i(16).to_f / units1).round(2)
               }
             ]
           }
@@ -217,29 +219,29 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
           historical_response = {
             '1' => {
-              "value" => 2400.0,
+              "value" => 0.06,
               "days_count" => ((start_date - 2.months - 1.day) - (start_date - 3.months)).to_i,
               "months" => ((start_date - 3.months)..(start_date - 2.months)).map(&:month).uniq
             },
             '2'=> {
-              "value" => 2600.0,
+              "value" => 0.07,
               "days_count" => ((start_date - 1.month - 1.day) - (start_date - 2.months)).to_i,
               "months" => ((start_date - 2.months)..(start_date - 1.months)).map(&:month).uniq
             },
             '3' => {
-              "value" => 2800.0,
+              "value" => 0.07,
               "days_count" => ((start_date - 1.day) - (start_date - 1.month)).to_i,
               "months" => ((start_date - 1.months)..start_date).map(&:month).uniq
             },
             '4' => {
-              "value" => 3000.0,
+              "value" => 0.08,
               "days_count" => 22,
               "months" => (start_date..end_date).map(&:month).uniq
             }
           }
 
           projected_response = {
-            "value" => 4090.909090909091,
+            "value" => 0.1090909090909091,
             "days_count" => 8
           }
 

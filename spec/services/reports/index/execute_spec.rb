@@ -33,14 +33,17 @@ RSpec.describe Reports::Index::Execute do
           units1 = uplink.thing.units["liter"]
           units2 = uplink2.thing.units["liter"]
 
+          value1 = (accumulator1.value.to_i(16).to_f / units1).round(2)
+          value2 = (accumulator2.value.to_i(16).to_f / units2).round(2)
+
           accumulator1_response = {
             :thing_id => thing.id,
             :thing_name =>thing.name,
             :accumulators => [{
               :date => date1,
               :value => accumulator1.value,
-              :consumption_delta => accumulator1.value.to_i(16) * units1,
-              :accumulated_delta => accumulator1.value.to_i(16) * units1
+              :consumption_delta => value1,
+              :accumulated_delta => value1
             }]
           }
 
@@ -50,8 +53,8 @@ RSpec.describe Reports::Index::Execute do
             :accumulators => [{
               :date => date2,
               :value => accumulator2.value,
-              :consumption_delta => accumulator2.value.to_i(16) * units2,
-              :accumulated_delta => accumulator2.value.to_i(16) * units2
+              :consumption_delta => value2,
+              :accumulated_delta => value2
             }]
           }
 

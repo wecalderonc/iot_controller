@@ -31,7 +31,7 @@ class Reports::DatesCalculator
     {
       start_date: schedule_billing.start_date,
       frequency: schedule_billing.billing_frequency,
-      new_date: 0
+      new_date: schedule_billing.start_date
     }
   end
 end
