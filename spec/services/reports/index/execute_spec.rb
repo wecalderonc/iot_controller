@@ -27,8 +27,8 @@ RSpec.describe Reports::Index::Execute do
         it "Should return a Success response" do
           input[:option] = :json_format
 
-          date1 = uplink.created_at.strftime('%a %d %b %Y')
-          date2 = uplink2.created_at.strftime('%a %d %b %Y')
+          date1 = Time.at(uplink.time.to_i)
+          date2 = Time.at(uplink2.time.to_i)
 
           units1 = uplink.thing.units["liter"]
           units2 = uplink2.thing.units["liter"]

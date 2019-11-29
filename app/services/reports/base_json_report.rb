@@ -32,7 +32,7 @@ class Reports::BaseJsonReport
   end
 
   def add_basic_object_info(object)
-    date = Utils.parse_date(object.uplink.created_at)
+    date = Time.at(object.uplink.time.to_i)
 
     { :date => date, :value => object.value }
   end
