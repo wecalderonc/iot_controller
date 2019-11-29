@@ -103,8 +103,8 @@ RSpec.describe Api::V1::AccumulatorsReportController, :type => :request do
 
           body = JSON.parse(response.body)
 
-          date1 = uplink_1.created_at.strftime('%a %d %b %Y')
-          date2 = uplink_2.created_at.strftime('%a %d %b %Y')
+          date1 = Time.at(uplink_1.time.to_i)
+          date2 = Time.at(uplink_2.time.to_i)
 
           units1 = uplink_1.thing.units["liter"]
           units2 = uplink_2.thing.units["liter"]

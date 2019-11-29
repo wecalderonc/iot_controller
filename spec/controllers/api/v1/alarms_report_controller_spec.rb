@@ -43,8 +43,8 @@ RSpec.describe Api::V1::AlarmsReportController, :type => :request do
 
           body = JSON.parse(response.body)
 
-          date1 = uplink_1.created_at.strftime('%a %d %b %Y')
-          date2 = uplink_2.created_at.strftime('%a %d %b %Y')
+          date1 = Time.at(uplink_1.time.to_i)
+          date2 = Time.at(uplink_2.time.to_i)
 
           alarm2_response = {
             "thing_id" => uplink_2.thing.id,

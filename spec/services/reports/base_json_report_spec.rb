@@ -13,7 +13,7 @@ RSpec.describe Reports::BaseJsonReport do
 
         uplink = accumulator.uplink
         thing = uplink.thing
-        date = uplink.created_at.strftime('%a %d %b %Y')
+        date = Time.at(uplink.time.to_i)
 
         thing.update(units: { liter: 300 })
 
@@ -45,7 +45,7 @@ RSpec.describe Reports::BaseJsonReport do
         alarm = create :alarm
         uplink = alarm.uplink
         thing = uplink.thing
-        date = uplink.created_at.strftime('%a %d %b %Y')
+        date = Time.at(uplink.time.to_i)
 
         expected_response = [
           {
