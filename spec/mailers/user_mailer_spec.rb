@@ -10,7 +10,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Registration Confirmation")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["notifications@example.com"])
+      expect(mail.from).to eq(["notifications@waico.com"])
     end
 
     it "renders the body" do
@@ -29,7 +29,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Update Confirmation")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["notifications@example.com"])
+      expect(mail.from).to eq(["notifications@waico.com"])
     end
 
     it "renders the body" do
@@ -46,7 +46,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Password Recovery")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["notifications@example.com"])
+      expect(mail.from).to eq(["notifications@waico.com"])
     end
 
     it "renders the body" do
