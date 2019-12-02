@@ -18,4 +18,8 @@ module Utils
   def self.camelize_symbol(object)
     object.to_s.camelize
   end
+
+  def self.last_digit(object)
+    object[-1]
+  end
 end

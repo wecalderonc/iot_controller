@@ -66,4 +66,13 @@ RSpec.describe Utils do
       expect(response).to eq(expected_response)
     end
   end
+
+  describe "#last_digit" do
+    it "Should return last digit of string" do
+      value = "998"
+      response = subject.last_digit(value)
+      expected_response = "8"
+      expect(response).to eq(expected_response)
+    end
+  end
 end
