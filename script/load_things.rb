@@ -32,7 +32,7 @@ def create_alarm(data, uplink)
   if alarm.valid?
     alarm.save
     p 'alarm created'
-  
+
     ala_attrs = {
       name: name,
       created_at: DateTime.parse(data[0]),
@@ -40,7 +40,7 @@ def create_alarm(data, uplink)
       type: a.present? ? :hardware : :software,
       alarm: alarm
     }
-    
+
     at = AlarmType.new(ala_attrs)
 
     if at.valid?
@@ -63,7 +63,7 @@ def create_battery(data, uplink)
     value: BATTERY_CONV[data[1]],
     uplink: uplink
   }
-  
+
   p BatteryLevel.create(bat_attrs)
 end
 
@@ -92,7 +92,7 @@ p "Creating Thing #{file_number}"
       p thing.errors
     end
   end
-  
+
   BATTERY_CONV = {
     'Optimo' => '0004',
     'Medio-Alto' => '0003',
@@ -141,7 +141,7 @@ grouped.each do |date, line|
     sec_downlinks: "0",
     thing: thing
   )
-  
+
   if uplink.valid?
     uplink.save
     p 'uplink created'
