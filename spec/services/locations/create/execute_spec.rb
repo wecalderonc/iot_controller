@@ -68,7 +68,8 @@ RSpec.describe Locations::Create::Execute do
 
       context "When thing is already taken" do
         it "Should return a Failure response" do
-          thing.update(owner: user)
+          user2 = create(:user)
+          thing.update(owner: user2)
 
           expect(response).to be_failure
           expect(response.failure[:message]).to eq("Thing already taken by another user")

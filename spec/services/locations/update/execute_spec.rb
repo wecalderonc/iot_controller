@@ -10,7 +10,7 @@ RSpec.describe Locations::Update::Execute do
       let(:state)    { create(:state, code_iso: 'CO-DC', country: country) }
       let(:city)     { create(:city, name: 'Bogota', state: state) }
       let(:location) { create(:location, city: city) }
-      let(:thing)    { create(:thing, locates: location) }
+      let(:thing)    { create(:thing, locates: location, owner: user) }
       let(:schedule_billing) { location.schedule_billing }
       let(:schedule_report) { location.schedule_report }
 
@@ -66,17 +66,34 @@ RSpec.describe Locations::Update::Execute do
         end
 
         context"Thing name have been changed" do
-          it "Should return a Success response" do
-            create(:thing, name: 'new_name')
-            input[:new_thing_name] = 'new_name'
+          context "Thing doesn't have relations" do
+            it "Should return a Success response" do
+              thing2 = create(:thing, name: 'new_name')
+              input[:new_thing_name] = 'new_name'
 
-            expect(response).to be_success
+              expect(response).to be_success
 
-            expect(response.success).to match(location)
-            expect(location.thing.name).to eq('new_name')
-            expect(location.city.name).to eq('Bogota')
-            expect(schedule_billing.stratum).to eq(5)
-            expect(schedule_report.email).to eq('unacosita@gmail.com')
+              expect(response.success).to match(location)
+              expect(location.thing.name).to eq('new_name')
+              expect(location.city.name).to eq('Bogota')
+              expect(schedule_billing.stratum).to eq(5)
+              expect(schedule_report.email).to eq('unacosita@gmail.com')
+              expect(thing.locates).to eq(location)
+              expect(thing.owner).to include(user)
+            end
+          end
+
+          context "Thing have already another relations" do
+            it "Should return a Success response" do
+              user2 = create(:user)
+              thing2 = create(:thing, name: 'new_name', owner: user2)
+              input[:new_thing_name] = 'new_name'
+
+              expected_response = "Thing already taken by another user"
+
+              expect(response).to be_failure
+              expect(response.failure[:message]).to eq(expected_response)
+            end
           end
         end
 
@@ -88,6 +105,8 @@ RSpec.describe Locations::Update::Execute do
 
             expect(response.success).to match(location)
             expect(location.thing).to be_nil
+            expect(thing.owner).to be_empty
+            expect(thing.locates).to be_nil
             expect(location.city.name).to eq('Bogota')
             expect(schedule_billing.stratum).to eq(5)
             expect(schedule_report.email).to eq('unacosita@gmail.com')
