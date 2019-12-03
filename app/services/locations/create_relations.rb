@@ -6,8 +6,11 @@ class Locations::CreateRelations
   def call(input)
     thing = input[:thing]
 
+    #byebug
     Owner.create(from_node: input[:user], to_node: thing)
-    thing.update(locates: input[:location])
+    ThingLocation.create(from_node: thing, to_node: input[:location])
+#   thing.update(locates: input[:location])
+#   location.update(thing: thing)
 
     validate_user_location(input)
   end

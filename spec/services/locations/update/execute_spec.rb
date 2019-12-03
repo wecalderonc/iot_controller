@@ -112,6 +112,15 @@ RSpec.describe Locations::Update::Execute do
             expect(schedule_report.email).to eq('unacosita@gmail.com')
           end
         end
+
+        context "new_thing_name isn't present" do
+          it "Should return original input" do
+            expect(response).to be_success
+       
+            expect(location.thing).to eq(thing)
+            expect(location.city.name).to eq('Bogota')
+          end
+        end
       end
 
       context "When country is wrong" do

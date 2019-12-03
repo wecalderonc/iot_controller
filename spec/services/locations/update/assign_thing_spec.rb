@@ -44,16 +44,28 @@ RSpec.describe Locations::Update::AssignThing do
           start_month: 10,
           start_year: 2019
         },
-        thing: thing
+        thing: thing,
+        user: user
       }
     }
 
     context "new_thing_name is present" do
       it "Should update the thing of location" do
-        create(:thing, name: 'new_name')
+        location.update(thing: nil)
+        thing2 = create(:thing, name: 'new_name')
         input[:new_thing_name] = 'new_name'
 
+        puts "*" * 100
+        p location.thing
+        p thing2.locates
+
         expect(response).to be_success
+        location.reload
+
+        puts "*" * 100
+        p location.thing
+        p thing2.locates
+
         expect(location.thing.name).to eq('new_name')
         expect(location.city.name).to eq('Bogota')
       end
@@ -67,26 +79,6 @@ RSpec.describe Locations::Update::AssignThing do
 
         expect(response).to be_failure
         expect(response.failure[:message]).to eq(expected_response)
-        expect(location.city.name).to eq('Bogota')
-      end
-    end
-
-    context "new_thing_name is empty" do
-      it "Should delete relationship between thing and location" do
-        input[:new_thing_name] = ''
-
-        expect(response).to be_success
-
-        expect(location.thing).to be_nil
-        expect(location.city.name).to eq('Bogota')
-      end
-    end
-
-    context "new_thing_name isn't present" do
-      it "Should return original input" do
-        expect(response).to be_success
-
-        expect(location.thing).to eq(thing)
         expect(location.city.name).to eq('Bogota')
       end
     end
