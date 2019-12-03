@@ -13,13 +13,13 @@ class Locations::Update::UpdateLocation
   private
 
   def assign_thing(input)
-    if new_name?(input)
-      Success input
-    else
+    if new_thing_name?(input)
       options = {
         true => -> input { remove_relations(input) },
         false => -> input { Locations::Update::AssignThing.new.(input) },
       }[input[:new_thing_name].empty?].(input)
+    else
+      Success input
     end
   end
 
@@ -29,7 +29,7 @@ class Locations::Update::UpdateLocation
     Success input
   end
 
-  def new_name?(input)
-    !input.has_key?(:new_thing_name) || input[:new_thing_name].eql?(input[:thing_name])
+  def new_thing_name?(input)
+    input.has_key?(:new_thing_name) && input[:new_thing_name] != input[:thing_name]
   end
 end
