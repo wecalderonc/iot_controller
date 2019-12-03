@@ -4,20 +4,18 @@ class Locations::CreateRelations
   include Dry::Transaction
 
   def call(input)
-    thing = input[:thing]
+    thing, location, user = input.values_at(:thing, :location, :user)
 
-    #byebug
-    Owner.create(from_node: input[:user], to_node: thing)
-    ThingLocation.create(from_node: thing, to_node: input[:location])
-#   thing.update(locates: input[:location])
-#   location.update(thing: thing)
+    Owner.create(from_node: user, to_node: thing)
+    location.thing = nil
+    ThingLocation.create(from_node: thing, to_node: location)
 
-    validate_user_location(input)
+    validate_user_location(thing, location, user)
   end
 
-  def validate_user_location(input)
-    if input[:user].locates.exclude?(input[:location])
-      UserLocation.create(from_node: input[:user], to_node: input[:location])
+  def validate_user_location(thing, location, user)
+    if user.locates.exclude?(user)
+      UserLocation.create(from_node: user, to_node: location)
     end
   end
 end

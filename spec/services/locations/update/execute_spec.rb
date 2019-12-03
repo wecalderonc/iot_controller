@@ -78,8 +78,8 @@ RSpec.describe Locations::Update::Execute do
               expect(location.city.name).to eq('Bogota')
               expect(schedule_billing.stratum).to eq(5)
               expect(schedule_report.email).to eq('unacosita@gmail.com')
-              expect(thing.locates).to eq(location)
-              expect(thing.owner).to include(user)
+              expect(thing2.locates).to eq(location)
+              expect(thing2.owner).to include(user)
             end
           end
 

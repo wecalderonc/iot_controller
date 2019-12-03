@@ -51,21 +51,10 @@ RSpec.describe Locations::Update::AssignThing do
 
     context "new_thing_name is present" do
       it "Should update the thing of location" do
-        location.update(thing: nil)
         thing2 = create(:thing, name: 'new_name')
         input[:new_thing_name] = 'new_name'
 
-        puts "*" * 100
-        p location.thing
-        p thing2.locates
-
         expect(response).to be_success
-        location.reload
-
-        puts "*" * 100
-        p location.thing
-        p thing2.locates
-
         expect(location.thing.name).to eq('new_name')
         expect(location.city.name).to eq('Bogota')
       end
