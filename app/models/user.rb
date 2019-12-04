@@ -16,11 +16,11 @@ class User
   property :user_type, type: String
   property :verificated, type: Boolean, default: false
   property :verification_code, type: String
-  #TODO
-  #CHANGE UNIQUE FROM CODE_NUMBER TO ID_NUMBER
 
   MANDATORY_FIELDS = [:first_name, :last_name, :email, :password]
+
   validates *MANDATORY_FIELDS, presence: true
+  validates_uniqueness_of :id_number
 
   PERMITTED_PARAMS = [:first_name, :last_name, :password, :email,
                       :phone, :gender, :id_number, :id_type, :admin,

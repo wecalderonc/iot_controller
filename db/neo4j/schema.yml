@@ -38,13 +38,20 @@
   UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.code_number IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.email IS UNIQUE
+- CONSTRAINT ON ( user:User ) ASSERT user.id_number IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 - CONSTRAINT ON ( valveposition:ValvePosition ) ASSERT valveposition.uuid IS UNIQUE
 - CONSTRAINT ON ( valvetransition:ValveTransition ) ASSERT valvetransition.uuid IS
   UNIQUE
 :indexes: []
 :versions:
+- '20190605225357'
+- '20190607203749'
+- '20190607203837'
+- '20190607204133'
+- '20190607204149'
 - '20190616195656'
+- '20190616195818'
 - '20190616195850'
 - '20190616195904'
 - '20190616195926'
@@ -69,3 +76,4 @@
 - '20190730204141'
 - '20190730215106'
 - '20190916200027'
+- '20191204164729'
