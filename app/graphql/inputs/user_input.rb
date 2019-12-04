@@ -10,7 +10,6 @@ module Inputs
     argument :phone,       types.String
     argument :gender,      types.String
     argument :id_number,   types.String
-    argument :code_number, types.String
     argument :user_type,   types.String
   end
 end

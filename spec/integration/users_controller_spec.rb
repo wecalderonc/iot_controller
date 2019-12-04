@@ -202,10 +202,9 @@ RSpec.describe "Users API", :type => :request do
           phone: { type: :string  },
           gender: { type: :string },
           id_number: { type: :string },
-          id_type: { type: :string },
-          code_number: { type: :string }
+          id_type: { type: :string }
         },
-        required: [ 'first_name', 'last_name', 'email', 'password', 'phone', 'gender', 'id_number', 'id_type', 'code_number']
+        required: [ 'first_name', 'last_name', 'email', 'password', 'phone', 'gender', 'id_number', 'id_type']
       }
 
       response '200', 'user created' do
@@ -231,7 +230,6 @@ RSpec.describe "Users API", :type => :request do
           gender: :male,
           id_number: "123456",
           id_type: "cc",
-          code_number: "123456789",
           admin: "true",
           user_type: "administrator"
         }}

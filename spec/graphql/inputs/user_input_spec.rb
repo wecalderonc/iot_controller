@@ -9,7 +9,6 @@ RSpec.describe Inputs::UserInput do
     expect(subject.arguments).to include("email")
     expect(subject.arguments).to include("phone")
     expect(subject.arguments).to include("id_number")
-    expect(subject.arguments).to include("code_number")
     expect(subject.arguments).to include("user_type")
   end
 end
