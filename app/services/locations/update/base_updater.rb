@@ -5,6 +5,8 @@ class Locations::Update::BaseUpdater
 
   def call(input, object, key)
     if object.update(input[key])
+      input[key] = object
+
       Success input
     else
       Failure Errors.general_error(object.errors.messages, self.class)
