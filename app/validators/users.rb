@@ -12,7 +12,6 @@ module Validators::Users
     optional(:gender).value(type?: String)
     optional(:id_number).value(type?: String)
     optional(:id_type).value(type?: String)
-    optional(:code_number).maybe(type?: String)
     optional(:admin).value(:bool?)
     optional(:user_type).value(type?: String)
 

@@ -10,7 +10,6 @@ module Types
     field :phone, String, null: false
     field :gender, String, null: false
     field :id_number, String, null: false
-    field :code_number, String, null: false
     field :user_type, String, null: false
     field :things, [Types::ThingType], null: false
 

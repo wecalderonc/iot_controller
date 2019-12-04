@@ -13,7 +13,6 @@ class User
   property :gender, type: String
   property :id_number, type: String
   property :id_type, type: String
-  property :code_number, type: String
   property :user_type, type: String
   property :verificated, type: Boolean, default: false
   property :verification_code, type: String
@@ -25,7 +24,7 @@ class User
 
   PERMITTED_PARAMS = [:first_name, :last_name, :password, :email,
                       :phone, :gender, :id_number, :id_type, :admin,
-                      :code_number, :user_type, :password_confirmation]
+                      :user_type, :password_confirmation]
 
   has_many :out, :owns,      rel_class: :Owner,    model_class: :Thing
   has_many :out, :operates,  rel_class: :Operator, model_class: :Thing

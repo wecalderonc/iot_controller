@@ -194,7 +194,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "gender"=> "male",
           "id_number"=> "123456",
           "id_type"=> "cc",
-          "code_number"=>  "123456789",
           "admin"=> "false",
           "user_type"=> "administrator"
         }
@@ -231,7 +230,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "gender"=> "male",
           "id_number"=> "123456",
           "id_type"=> "cc",
-          "code_number"=> user.code_number,
           "user_type"=> "administrator",
           "admin"=> "true"
         }
@@ -267,7 +265,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           "gender"=> 123456,
           "id_number"=> "123456",
           "id_type"=> 123456,
-          "code_number"=> "123456",
           "user_type"=> "administrator",
           "admin"=> "true"
         }

@@ -15,7 +15,6 @@ RSpec.describe Users::Create::Execute do
           gender: "male",
           id_number: "123456",
           id_type: "cc",
-          code_number: "1032428363",
           admin: true,
           user_type: "administrator"
         }
@@ -35,7 +34,6 @@ RSpec.describe Users::Create::Execute do
           expect(response.success.gender).to match("male")
           expect(response.success.id_number).to match("123456")
           expect(response.success.id_type).to match("cc")
-          expect(response.success.code_number).to match("1032428363")
         end
       end
 

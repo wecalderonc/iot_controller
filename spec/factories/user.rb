@@ -11,7 +11,6 @@ FactoryBot.define do
     gender { :female }
     id_number { Faker::Alphanumeric.alphanumeric(number: 7) }
     id_type { :cc }
-    code_number { Faker::Alphanumeric.alphanumeric(number: 7) }
     user_type { :aqueduct }
     verificated { false }
     verification_code { nil }
