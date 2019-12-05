@@ -148,7 +148,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         response_body = JSON.parse(response.body)
 
         expected_response = {
-          "message"=>'Recovery Password Email Sended! Go to your inbox!'
+          "message"=>'Recovery Password Email Sent! Go to your inbox!'
         }
 
         expect(response_body).to eq(expected_response)
@@ -158,20 +158,18 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "A user without account is requesting the password recovery process" do
       it "Should return json with failure message" do
 
-        params = {
-          email: "bad_email@gmail.com"
-        }
+        params = { email: "bad_email@gmail.com" }
 
         post "/request_password_recovery", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(10104)
 
         response_body = JSON.parse(response.body)
 
         expected_response = 'User not found'
 
-        expect(response_body["message"]).to eq(expected_response)
+        expect(response_body["error"]).to eq(expected_response)
       end
     end
   end

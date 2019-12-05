@@ -51,7 +51,8 @@ module Api
         if response.success?
           json_response(response.success, :ok)
         else
-          json_response(response.failure, :not_found)
+          error = response.failure
+          render json: error, status: error[:code]
         end
       end
 

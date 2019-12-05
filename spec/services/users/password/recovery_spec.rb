@@ -13,7 +13,7 @@ RSpec.describe Users::Password::Recovery do
       }
 
       it "should return success and send email" do
-        expected_response = { message: "Recovery Password Email Sended! Go to your inbox!" }
+        expected_response = { message: "Recovery Password Email Sent! Go to your inbox!" }
 
         expect(response).to be_success
         expect(response.success).to eq(expected_response)
@@ -21,17 +21,13 @@ RSpec.describe Users::Password::Recovery do
     end
 
     context "Search a invalid email" do
-      let(:params) {
-        {
-          email: "test2@gmail.com"
-        }
-      }
-      it "that doesn't exist in db" do
+      let(:params) { { email: "test2@gmail.com" } }
 
+      it "that doesn't exist in db" do
         expected_response = "User not found"
 
         expect(response).to be_failure
-        expect(response.failure[:message]).to eq(expected_response)
+        expect(response.failure[:error]).to eq(expected_response)
       end
     end
   end
