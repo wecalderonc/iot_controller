@@ -27,7 +27,6 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
     context "There are many users" do
       it "Should return an array with all users" do
-
         user2 = create(:user)
         user3 = create(:user)
 
@@ -81,13 +80,12 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         user.reload
 
         expect(response_body).to eq(expected_response)
-        expect(user.verification_code).to eq(nil)
+        expect(user.verification_code).to be_nil
       end
     end
 
     context "A user is finishing the confirmation email process with bad token" do
       it "Should return json with success message" do
-
         bad_token = "fffffff"
         params = {
           email: user.email,
