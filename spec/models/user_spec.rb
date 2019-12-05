@@ -24,6 +24,22 @@ RSpec.describe User, :type => :model do
     end
   end
 
+  describe "The id number already exists" do
+    it "Should return an error" do
+      create(:user, id_number: "123456")
+
+      user = build(:user, id_number: "123456")
+
+      expect(user).to_not be_valid
+
+      expected_errors = {
+        :id_number=>["has already been taken"],
+      }
+
+      expect(user.errors.messages).to eq(expected_errors)
+    end
+  end
+
   describe "#valid_password?" do
     context "the input password is valid" do
       it "should return true" do
