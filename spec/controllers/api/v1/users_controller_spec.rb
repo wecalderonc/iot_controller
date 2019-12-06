@@ -61,10 +61,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   describe "GET/confirm_email " do
     context "The user is finishing the confirmation email process" do
       it "Should return json with success message" do
-        params = {
-          email: user.email,
-          verification_code: user.verification_code
-        }
+        params = { verification_code: user.verification_code }
 
         post "/confirm_email", params: params
 
@@ -86,46 +83,35 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
     context "A user is finishing the confirmation email process with bad token" do
       it "Should return json with success message" do
-        bad_token = "fffffff"
-        params = {
-          email: user.email,
-          verification_code: bad_token
-        }
+        params = { verification_code: "not_exist" }
 
         post "/confirm_email", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(10104)
 
         response_body = JSON.parse(response.body)
 
-        expected_response = {
-          "errors"=>"Token expired or incorrect - User not found"
-        }
+        expected_response = "Token expired or incorrect - User not found"
 
-        expect(response_body).to eq(expected_response)
+        expect(response_body["error"]).to eq(expected_response)
       end
     end
 
     context "A user is finishing the confirmation email without token" do
       it "Should return json with success message" do
-
-        params = {
-          email: user.email
-        }
+        params = {}
 
         post "/confirm_email", params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(10104)
 
         response_body = JSON.parse(response.body)
 
-        expected_response = {
-          "errors"=>"Token expired or incorrect - User not found"
-        }
+        expected_response = "Token expired or incorrect - User not found"
 
-        expect(response_body).to eq(expected_response)
+        expect(response_body["error"]).to eq(expected_response)
       end
     end
   end

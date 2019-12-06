@@ -6,14 +6,6 @@ module Response
     render json: object, status: status, serializer: serializer
   end
 
-  def build_confirm_email_response(response)
-    if response.success?
-      json_response({ message: response.success }, :ok)
-    else
-      json_response({ errors: response.failure[:message] }, :not_found)
-    end
-  end
-
   def default_show_response(response)
     if response.success?
       render json: response.success[:user], status: :ok, serializer: UsersSerializer
