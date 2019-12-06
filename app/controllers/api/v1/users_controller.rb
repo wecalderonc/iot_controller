@@ -57,18 +57,24 @@ module Api
       end
 
       def change_forgotten_password
-        update_password_response = Users::Password::Execute.new.(password_params)
+        response = Users::Password::Execute.new.(password_params)
 
-        if update_password_response.success?
-          json_response(update_password_response.success, :ok, UsersSerializer)
+        if response.success?
+          json_response(response.success, :ok, UsersSerializer)
         else
-          json_response({ errors: update_password_response.failure[:message] }, :not_found)
+          json_response({ errors: response.failure[:message] }, :not_found)
         end
       end
 
       def confirm_email
-        response = Users::Confirmation.verification_code(params)
-        build_confirm_email_response(response)
+        response = Users::Confirm.new.(params[:verification_code])
+
+        if response.success?
+          json_response(response.success, :ok)
+        else
+          error = response.failure
+          render json: error, status: error[:code]
+        end
       end
 
       private

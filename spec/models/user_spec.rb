@@ -71,21 +71,23 @@ RSpec.describe User, :type => :model do
     context "User created is already verified and verification_code is nil" do
       it "should return false" do
         user = create(:user, email: "danielapatino@gmail.com", password: "dani123")
-        user.email_activate
+
+        user.activate
 
         expect(user.verification_code).to be_falsey
       end
     end
   end
 
-  describe "#email-activate" do
+  describe "#activate" do
     context "User created is been verified" do
       it "should return true to verificated and nil verification_code" do
         user = create(:user, email: "danielapatino@gmail.com", password: "dani123")
+
         expect(user.verification_code).to be_truthy
         expect(user.verificated).to be false
 
-        user.email_activate
+        user.activate
 
         expect(user.verification_code).to be_falsey
         expect(user.verificated).to be true

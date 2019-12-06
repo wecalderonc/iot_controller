@@ -51,7 +51,7 @@ class User
     end
   end
 
-  def email_activate
+  def activate
     self.update(verificated: true, verification_code: nil)
   end
 end

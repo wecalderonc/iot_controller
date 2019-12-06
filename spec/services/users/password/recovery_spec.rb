@@ -6,11 +6,7 @@ RSpec.describe Users::Password::Recovery do
     let(:response) { subject.(params) }
 
     context "Search a user email" do
-      let(:params) {
-        {
-          email: 'test@gmail.com',
-        }
-      }
+      let(:params) { { email: 'test@gmail.com' } }
 
       it "should return success and send email" do
         expected_response = { message: "Recovery Password Email Sent! Go to your inbox!" }

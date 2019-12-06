@@ -68,36 +68,33 @@ RSpec.describe "Users API", :type => :request do
         run_test!
       end
 
-      response '404', 'user not found or verification_code expired or fake' do
+      response '10104', 'user not found or verification_code expired or fake' do
         let(:user) { create(:user, email: 'holaamigo@mail.com') }
-        let(:email) { user.email }
-        let!(:verification_code) { "fffffff" }
+        let(:verification_code) { "fffffff" }
 
         schema type: :object,
           properties: {
-            errors: { type: :string }
+            error: { type: :string }
           },
-          required: [ 'errors' ]
+          required: [ 'error' ]
 
         let(:input) {{
-          email: email,
           verification_code: verification_code
         }}
 
         run_test!
       end
 
-      response '404', 'without verification code' do
+      response '10104', 'without verification code' do
         let(:user) { create(:user, email: 'holaamigo@mail.com') }
-        let(:email) { user.email }
 
         schema type: :object,
           properties: {
-            errors: { type: :string }
+            error: { type: :string }
           },
-          required: [ 'errors' ]
+          required: [ 'error' ]
 
-        let(:input) {{ email: email }}
+        let(:input) { {} }
 
         run_test!
       end
