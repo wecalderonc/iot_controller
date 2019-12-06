@@ -12,6 +12,6 @@ class Users::Confirm
         user.activate
         Success  message: "Email Confirmed! Thanks!"
       end
-      .or { Failure Errors.build("Token expired or incorrect - User not found", self.class, :not_found) }
+      .or { Failure Errors.build("The user does not exist", self.class, :not_found) }
   end
 end

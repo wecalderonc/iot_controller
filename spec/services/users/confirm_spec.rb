@@ -22,7 +22,7 @@ RSpec.describe Users::Confirm do
 
         expect(response).to be_failure
 
-        expected_response = "Token expired or incorrect - User not found"
+        expected_response = "The user does not exist"
 
         expect(response.failure[:error]).to eq(expected_response)
         expect(response.failure[:code]).to eq("10104")

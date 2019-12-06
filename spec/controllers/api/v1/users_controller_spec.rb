@@ -92,7 +92,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response = "Token expired or incorrect - User not found"
+        expected_response = "The user does not exist"
 
         expect(response_body["error"]).to eq(expected_response)
       end
@@ -109,7 +109,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
 
         response_body = JSON.parse(response.body)
 
-        expected_response = "Token expired or incorrect - User not found"
+        expected_response = "The user does not exist"
 
         expect(response_body["error"]).to eq(expected_response)
       end
