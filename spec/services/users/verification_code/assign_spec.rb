@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-Rspec.describe Users::VerificationCode::AssignVerificationCode do
+Rspec.describe Users::VerificationCode::Assign do
   describe '#call' do
     let(:response) { subject.(input) }
     let(:user)     { create(:user) }

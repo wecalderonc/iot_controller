@@ -209,7 +209,7 @@ RSpec.describe Users::Update::Execute do
           expected_response = "User not found"
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:error]).to eq(expected_response)
         end
       end
     end

@@ -286,7 +286,7 @@ RSpec.describe "Users API", :type => :request do
         run_test!
       end
 
-      response '404', 'user not found' do
+      response '10104', 'user not found' do
         let(:user) { create(:user) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 
@@ -395,7 +395,7 @@ RSpec.describe "Users API", :type => :request do
         run_test!
       end
 
-      response '404', 'user not found' do
+      response '10104', 'user not found' do
         let(:user) { create(:user) }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
 

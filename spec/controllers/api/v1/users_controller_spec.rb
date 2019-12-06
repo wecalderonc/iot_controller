@@ -315,8 +315,8 @@ RSpec.describe Api::V1::UsersController, :type => :request do
         body = JSON.parse(response.body)
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(404)
-        expect(body["errors"]).to eq("User not found")
+        expect(response.status).to eq(10104)
+        expect(body["error"]).to eq("User not found")
       end
     end
   end
@@ -438,22 +438,18 @@ RSpec.describe Api::V1::UsersController, :type => :request do
     context "Wrong user email" do
       it "Should return error message" do
 
-        params = {
-          "subaction"=> "assign_code"
-        }
+        params = { "subaction"=> "assign_code" }
 
         put "/api/v1/users/fulanito@guayando.com", headers: header, params: params
 
         expect(response.headers["Content-Type"]).to eq("application/json; charset=utf-8")
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(10104)
 
         response_body = JSON.parse(response.body)
 
-        expected_response = {
-          "errors" => "User not found"
-        }
+        expected_response = "User not found"
 
-        expect(response_body).to eq(expected_response)
+        expect(response_body["error"]).to eq(expected_response)
       end
     end
   end

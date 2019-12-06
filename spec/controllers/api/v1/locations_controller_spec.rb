@@ -810,7 +810,7 @@ RSpec.describe Api::V1::LocationsController, :type => :request do
         parsed_response = JSON.parse(response.body)
 
         expected_response = "User not found"
-        expect(parsed_response["message"]).to eq(expected_response)
+        expect(parsed_response["error"]).to eq(expected_response)
         expect(response.status).to eq(404)
       end
     end
