@@ -1,5 +1,9 @@
 module Errors
 
+  CODE_ERRORS = {
+    not_found: '10104'
+  }
+
   MergeErrorType = -> format, type do
     format.tap do |error|
       Custom::Logger.error(error.merge(type: type))
@@ -24,5 +28,11 @@ module Errors
   def self.service_error(error, code, location)
     format = { message: error, code: code, location: location }
     MergeErrorType.(format, :service)
+  end
+
+  def self.build(error, location, code)
+    format = { error: error, code: CODE_ERRORS[code], location: location }
+
+    MergeErrorType.(format, :general)
   end
 end

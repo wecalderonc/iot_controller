@@ -134,15 +134,15 @@ RSpec.describe "Users API", :type => :request do
         run_test!
       end
 
-      response '404', 'user not found' do
+      response '10104', 'user not found' do
         let(:user) { create(:user) }
         let(:email) { "bad_email@gmail.com" }
 
         schema type: :object,
           properties: {
-            message: { type: :string }
+            error: { type: :string }
           },
-          required: [ 'message' ]
+          required: [ 'error' ]
 
         let(:input) {{
           email: email
