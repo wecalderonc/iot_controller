@@ -72,6 +72,16 @@ This repository use [Capistrano](https://capistranorb.com/) gem for deployment. 
 * [Sidekiq](https://github.com/mperham/sidekiq) - Enqueue jobs
 * [Neo4J](https://github.com/neo4jrb/neo4j) - Database
 
+## DB Cypher delete Nodes
+
+Delete all nodes of specific label
+`MATCH (n:City)
+DETACH DELETE n`
+
+Delete EVERYTHING IN DB (CAREFUL)
+`MATCH (n)
+DETACH DELETE n`
+
 ## Contributing
 
 This is a private repository.
