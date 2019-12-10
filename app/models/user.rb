@@ -34,7 +34,14 @@ class User
   has_one :out, :country, type: :ORIGIN_COUNTRY
 
   VALID_EMAIL = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-  VALID_PASSWORD = /(?-i)(?=^.{8,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))((?=(.*\d){1,})|(?=(.*\W){1,}))^.*$/i
+  VALID_PASSWORD = /\A
+    (?=.{7,})
+    (?=.*\d)
+    (?=.*[a-z])
+    (?=.*[A-Z])
+    (?=.*[[:^alnum:]])
+  /x
+
   GENDERS = [:male, :female]
   ID_TYPES = [:cc, :ce, :natural_nit, :bussines_nit, :foreign_nit, :passport, :civil_register]
   USER_TYPE = [:aqueduct_administrator, :administrator, :aqueduct_client, :aqueduct_operator, :citizen_admin, :citizen_viewer]
