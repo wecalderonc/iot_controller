@@ -1,8 +1,8 @@
 class UserMailer < ApplicationMailer
-  default from: 'notifications@waico.com'
+  default from: 'waico@waico.com.co'
 
   def confirmation_email
-    base_email('Registration Confirmation')
+    base_email('Confirmación de registro en WAICO')
   end
 
   def update_confirmation
