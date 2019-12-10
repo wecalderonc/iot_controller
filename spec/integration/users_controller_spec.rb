@@ -258,7 +258,7 @@ RSpec.describe "Users API", :type => :request do
       }
 
       response '200', 'user created' do
-        let(:user) { create(:user, email: 'valid@mail.com', password: 'hola') }
+        let(:user) { create(:user, email: 'valid@mail.com', password: 'Hola*') }
         let(:email) { user.email }
         let!(:country) { create(:country, code_iso: 'CO') }
         let(:'Authorization') { JsonWebToken.encode({ user_id: user.id }) }
@@ -278,8 +278,8 @@ RSpec.describe "Users API", :type => :request do
             new_email: "unacosita123@gmail.com",
             country_code: "CO",
             current_password: user.password,
-            password: "nuevopassword",
-            password_confirmation: "nuevopassword"
+            password: "Proci123*",
+            password_confirmation: "Proci123*"
           }
         }
 

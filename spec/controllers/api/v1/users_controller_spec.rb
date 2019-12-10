@@ -275,7 +275,7 @@ RSpec.describe Api::V1::UsersController, :type => :request do
   describe "PUT/update/:user" do
 
     context "right params" do
-      let!(:user) { create(:user, password: 'validpassword') }
+      let!(:user) { create(:user, password: 'Validpassword*') }
       let(:country) { create(:country, code_iso: 'CO') }
 
       it "should update attributes of a user" do
@@ -285,9 +285,9 @@ RSpec.describe Api::V1::UsersController, :type => :request do
           last_name: "Patiño",
           new_email: "unacosita123@gmail.com",
           country_code: country.code_iso,
-          current_password: 'validpassword',
-          password: "nuevopassword",
-          password_confirmation: "nuevopassword"
+          current_password: 'Validpassword*',
+          password: "Proci123*",
+          password_confirmation: "Proci123*"
         }
 
         expect_any_instance_of(UserMailer).to receive(:update_confirmation).once

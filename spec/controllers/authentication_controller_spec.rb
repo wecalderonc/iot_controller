@@ -43,7 +43,7 @@ RSpec.describe AuthenticationController, :type => :controller do
         it "Should return an error message" do
           expect(JsonWebToken).to_not receive(:encode)
 
-          post :authenticate_user, params: { email: user.email, password: "Invalidpass*" }
+          post :authenticate_user, params: { email: user.email, password: "Invalidpass1*" }
 
           expected_response = {
             errors: {

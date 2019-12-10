@@ -16,8 +16,8 @@ RSpec.describe Users::Update::Execute do
           new_email: "new_email@proci.com",
           country_code: country.code_iso,
           current_password: user.password,
-          password: "nuevopassword",
-          password_confirmation: "nuevopassword"
+          password: "Proci123*",
+          password_confirmation: "Proci123*"
         }
       }
 
@@ -31,7 +31,7 @@ RSpec.describe Users::Update::Execute do
           expect(response.success.first_name).to match("Daniela")
           expect(response.success.last_name).to match("Patiño")
           expect(response.success.email).to match("new_email@proci.com")
-          expect(response.success.password).to match("nuevopassword")
+          expect(response.success.password).to match("Proci123*")
           expect(response.success.country.code_iso).to match("CO")
         end
       end
@@ -160,9 +160,24 @@ RSpec.describe Users::Update::Execute do
         end
       end
 
-      context "When the 'validation' operation fails" do
+      context "When the 'validation' operation fails with invalid format passwords" do
         it "Should return a Failure response" do
           input[:password] = "12345"
+
+          response = subject.(input)
+
+          expected_response = {
+            :password => ["is in invalid format"]
+          }
+
+          expect(response).to be_failure
+          expect(response.failure[:message]).to eq(expected_response)
+        end
+      end
+
+      context "When the 'validation' operation fails with invalid format passwords" do
+        it "Should return a Failure response" do
+          input[:password] = "Proci123*"
           input.delete(:password_confirmation)
 
           response = subject.(input)
