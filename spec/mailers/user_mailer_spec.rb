@@ -8,16 +8,16 @@ RSpec.describe UserMailer, type: :mailer do
     let(:mail) { described_class.with(user: user).confirmation_email.deliver_now }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Registration Confirmation")
+      expect(mail.subject).to eq("Confirmación de registro en WAICO")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["notifications@waico.com"])
+      expect(mail.from).to eq(["waico@waico.com.co"])
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("Welcome to waico.com.co")
-      expect(mail.body.encoded).to match("To confirm your registration use the following verification code")
+      expect(mail.body.encoded).to match("Bienvenido a WAICO")
+      expect(mail.body.encoded).to match("Para terminar su proceso de registro, por favor utilice el siguient")
       expect(mail.body.encoded).to match(user.verification_code)
-      expect(mail.body.encoded).to match(user.email)
+      expect(mail.body.encoded).to match(user.first_name)
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Update Confirmation")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["notifications@waico.com"])
+      expect(mail.from).to eq(["waico@waico.com.co"])
     end
 
     it "renders the body" do
@@ -46,7 +46,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Password Recovery")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["notifications@waico.com"])
+      expect(mail.from).to eq(["waico@waico.com.co"])
     end
 
     it "renders the body" do

@@ -41,8 +41,8 @@ module Validators::Users
     optional(:new_email).filled(type?: String, format?: User::VALID_EMAIL)
     optional(:country_code).value(type?: String)
     optional(:current_password).value(type?: String)
-    optional(:password).value(type?: String)
-    optional(:password_confirmation).value(type?: String)
+    optional(:password).value(type?: String, format?: User::VALID_PASSWORD)
+    optional(:password_confirmation).value(type?: String, format?: User::VALID_PASSWORD)
 
     validate(new_password: %i[current_password password]) do |current_password, password|
       password.present? ? current_password.present? : true

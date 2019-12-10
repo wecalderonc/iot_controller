@@ -9,7 +9,7 @@ Rspec.describe Users::VerificationCode::AssignVerificationCode do
     context 'The user can get a verification code' do
       it 'Should return a success response' do
 
-        allow(SecureRandom).to receive(:hex).with(6).and_return('abcd1234')
+        allow(SecureRandom).to receive(:hex).with(2).and_return('abcd')
 
         user.update(verification_code: nil)
 
@@ -19,7 +19,7 @@ Rspec.describe Users::VerificationCode::AssignVerificationCode do
 
         user.reload
 
-        expect(user.verification_code).to eq('abcd1234')
+        expect(user.verification_code).to eq('abcd')
       end
     end
   end

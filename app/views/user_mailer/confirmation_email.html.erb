@@ -5,13 +5,14 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to waico.com.co, <%= @user.first_name %></h1>
+    <h1>Bienvenido a WAICO, <%= @user.first_name %></h1>
     <p>
-      You have successfully signed up to waico.com.co,
-      To confirm your registration use the following verification code.
+      Para terminar su proceso de registro, por favor utilice el siguiente código de verificación:
 
       <b><%= @user.verification_code %></b>
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p>Gracias por preferirnos!</p>
+    <%= image_tag('http://waico.com.co/img/landed_logo.dc6bbc72.png', width: "200") %>
   </body>
 </html>
+

@@ -13,7 +13,7 @@ RSpec.describe Users::VerificationCode::Execute do
         it "Should return a Success response" do
           expect_any_instance_of(UserMailer).to receive(:update_confirmation).once
 
-          allow(SecureRandom).to receive(:hex).with(6).and_return('abcd1234')
+          allow(SecureRandom).to receive(:hex).with(2).and_return('abcd')
 
           user.update(verification_code: nil)
 
@@ -24,7 +24,7 @@ RSpec.describe Users::VerificationCode::Execute do
           user.reload
 
           expect(response).to be_success
-          expect(response.success.verification_code).to eq('abcd1234')
+          expect(response.success.verification_code).to eq('abcd')
         end
       end
 
