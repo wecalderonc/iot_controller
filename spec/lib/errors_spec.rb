@@ -19,7 +19,7 @@ RSpec.describe Errors do
   describe "#general_error" do
     it "Should return a hash" do
       response = subject.general_error(status, self.location)
-      expected_response = { message: status, location: location, extra: {} }
+      expected_response = { message: status, location: location, extra: {}, code: 10101, error: status }
 
       expect(response).to eq(expected_response)
     end

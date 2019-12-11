@@ -15,8 +15,8 @@ module Errors
     MergeErrorType.(format, :request)
   end
 
-  def self.general_error(message, location, extra: {})
-    format = { message: message, location: location, extra: extra }
+  def self.general_error(message, location, extra: {}, code: 10101)
+    format = { message: message, location: location, extra: extra, code: code, error: message }
     MergeErrorType.(format, :general)
   end
 
