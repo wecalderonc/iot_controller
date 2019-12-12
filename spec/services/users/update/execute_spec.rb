@@ -23,8 +23,6 @@ RSpec.describe Users::Update::Execute do
 
       context "When all the operations are successful" do
         it "Should return a Success response" do
-          expect_any_instance_of(UserMailer).to receive(:update_confirmation).once
-
           response = subject.(input)
 
           expect(response).to be_success
