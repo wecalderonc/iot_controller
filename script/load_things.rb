@@ -94,6 +94,7 @@ p "Creating Thing #{file_number}"
   end
 
   BATTERY_CONV = {
+    'No Disponible' => '0005',
     'Optimo' => '0004',
     'Medio-Alto' => '0003',
     'Medio-Bajo' => '0002',
