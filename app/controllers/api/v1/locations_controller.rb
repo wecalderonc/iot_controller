@@ -4,6 +4,7 @@ module Api
       include Permissions::Customized
 
       before_action :check_thing_permission, :only => [:update]
+      #TODO DOCUMENTATION
       load_and_authorize_resource param_method: :location_properties
 
       START_DATE = [:start_day, :start_month, :start_year]
@@ -13,7 +14,7 @@ module Api
         locations = Users::Locations::Index::Execute.new.(index_params)
 
         if locations.success?
-          authorized_locations = authorize(locations)
+          authorized_locations = authorize(locations.success)
           render json: authorized_locations, status: :ok, each_serializer: LocationDashboardSerializer
         else
           json_response(locations.failure, :not_found)

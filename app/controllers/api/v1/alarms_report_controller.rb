@@ -3,6 +3,7 @@ module Api
     class AlarmsReportController < ApplicationController
     include ActionController::MimeResponds
 
+      #TODO CANCANCAN
       def index
         index_handler({
           params: params,

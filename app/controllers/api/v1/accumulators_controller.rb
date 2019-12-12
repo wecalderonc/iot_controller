@@ -8,7 +8,7 @@ module Api
         thing_accumulators = Things::Accumulators::Index::Execute.new.(index_params)
 
         if thing_accumulators.success?
-          authorized_accumulators = authorize(thing_accumulators)
+          authorized_accumulators = authorize(thing_accumulators.success)
           render json: authorized_accumulators, status: :ok, each_serializer: AccumulatorSerializer
         else
           json_response(thing_accumulators.failure, :not_found)
