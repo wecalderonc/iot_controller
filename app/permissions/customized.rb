@@ -10,6 +10,7 @@ module Permissions::Customized
     options[@thing.present?].(@thing)
   end
 
+  # TODO CHANGE JSON_RESPONSE to another answer
   def thing_present(thing)
     if not (can? :read, thing)
       json_response({ errors: "Access denied. You didn't own the thing #{thing.name}"}, :unauthorized)

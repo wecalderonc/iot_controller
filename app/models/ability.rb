@@ -44,6 +44,7 @@ class Ability
     can :read, Location, thing: { owner: { id: user.id } }
   end
 
+  #TODO CHECK THIS WHEN MVP IS FINISHED
   def new_user_abilites(user)
     can :read, Location
     can :create, Location

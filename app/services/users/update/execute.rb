@@ -5,6 +5,5 @@ module Users::Update
     step :validate_password,        with: Users::Update::ValidatePassword.new
     map  :parse_email,              with: Users::ParseEmail.new
     step :update,                   with: Users::Update::Update.new
-    tee  :send_update_confirmation, with: Users::Update::SendMailConfirmation.new
   end.Do
 end

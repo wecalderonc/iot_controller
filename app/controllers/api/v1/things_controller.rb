@@ -9,6 +9,7 @@ module Api
         render json: @things, status: :ok, each_serializer: ThingsSerializer
       end
 
+      #TODO CHECK THE AUTHORIZE!
       def show
         @thing = Thing.find_by(name: params[:thing_name])
 
@@ -20,6 +21,7 @@ module Api
         end
       end
 
+      #TODO ASK BEFORE UPDATE
       def update
         update_response = Things::Update::Execute.new.(create_params)
 

@@ -8,7 +8,7 @@ module Api
         thing_alarms = Things::Alarms::Index::Execute.new.(index_params)
 
         if thing_alarms.success?
-          authorized_alarms = authorize(thing_alarms)
+          authorized_alarms = authorize(thing_alarms.success)
           json_response(authorized_alarms, :ok)
         else
           json_response(thing_alarms.failure, :not_found)

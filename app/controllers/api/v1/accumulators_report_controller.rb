@@ -2,6 +2,7 @@ module Api
   module V1
     class AccumulatorsReportController < ApplicationController
 
+      #ADD CANCANCAN
       def index
         index_handler({
           params: params,
