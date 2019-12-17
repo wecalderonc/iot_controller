@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Accumulator, type: :model do
 
   it { is_expected.to define_property :value, :String }
+  it { is_expected.to define_property :is_an_overturning, :Boolean }
   it { is_expected.to have_one(:uplink).with_direction(:out) }
   it { is_expected.to have_many(:prices).with_direction(:out) }
 
