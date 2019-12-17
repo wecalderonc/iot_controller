@@ -23,7 +23,7 @@ do
   aws iot create-thing --thing-name "$thing"
 
   printf '%s\n' "Adding default shadow to thing $thing"
-  aws iot-data update-thing-shadow --thing-name "$thing" --payload '{"state":{"desired":{"data":"000000000000000000000000"}}}' /tmp/output.json
+  aws iot-data update-thing-shadow --thing-name "$thing" --payload '{"state":{"desired":{"data":"1000000000000000"}}}' /tmp/output.json
   cat /tmp/output.json
 
 done <"$file"
