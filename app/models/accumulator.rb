@@ -1,7 +1,7 @@
 class Accumulator
   include Neo4j::ActiveNode
   property :value, type: String
-  property :is_an_overturning, type: Boolean, default: false
+  property :wrong_consumption, type: Boolean, default: false
 
   validates :value, presence: true
 
