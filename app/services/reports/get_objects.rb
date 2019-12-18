@@ -2,6 +2,7 @@ require 'dry/transaction/operation'
 
 class Reports::GetObjects
   include Dry::Transaction::Operation
+  include ModelModifiers
 
   def call(input)
     params, model, thing = input.values_at(:params, :model, :thing)
@@ -11,6 +12,10 @@ class Reports::GetObjects
       .date_uplinks_filter(params[:date], model)
     else
       objects = ThingsQuery.new(thing).send(query_method(model))
+    end
+
+    if model == :accumulator
+      delete_objects_with_property!(objects, "wrong_consumption")
     end
 
     build_response(input, objects)

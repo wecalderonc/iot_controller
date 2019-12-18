@@ -41,7 +41,7 @@ class Reports::Accumulators::HistoricalCalculator
         end_date: end_date
       },
       thing: thing,
-      accumulator: thing.uplinks.accumulator.last,
+      accumulator: input[:objects] ? input[:objects].values[0].last : thing.uplinks.accumulator.last,
       unit: thing.units.keys[0].to_sym
     }
   end
