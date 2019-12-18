@@ -18,7 +18,7 @@ RSpec.describe ModelModifiers do
     let(:accumulator5)   { create(:accumulator, uplink: uplink5, wrong_consumption: true) }
     let(:accumulator6)   { create(:accumulator, uplink: uplink6, wrong_consumption: true) }
     let(:objects)        { { thing => [accumulator, accumulator2, accumulator3, accumulator4, accumulator5, accumulator6] } }
-    let(:property)       { "wrong_consumption" }
+    let(:property)       { :wrong_consumption }
 
 
     it "Should return array without the accumulators with wrong_consumption in true" do

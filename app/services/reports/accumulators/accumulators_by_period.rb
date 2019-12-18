@@ -6,7 +6,7 @@ class Reports::Accumulators::AccumulatorsByPeriod
 
   def call(period)
     accumulators = ThingsQuery.new(period[:thing]).date_uplinks_filter(period[:date], :accumulator)
-    delete_objects_with_property!(accumulators, "wrong_consumption")
+    delete_objects_with_property!(accumulators, :wrong_consumption)
 
     period.merge(accumulators: accumulators)
   end

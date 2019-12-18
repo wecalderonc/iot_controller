@@ -14,8 +14,8 @@ class Reports::GetObjects
       objects = ThingsQuery.new(thing).send(query_method(model))
     end
 
-    if model == :accumulator
-      delete_objects_with_property!(objects, "wrong_consumption")
+    if model.eql?(:accumulator)
+      delete_objects_with_property!(objects, :wrong_consumption)
     end
 
     build_response(input, objects)
