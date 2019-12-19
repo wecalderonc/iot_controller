@@ -15,7 +15,7 @@ class Reports::GetObjects
     end
 
     if model.eql?(:accumulator)
-      delete_objects_with_property!(objects, :wrong_consumption)
+      Accumulator.delete_objects_with_property!(objects, :wrong_consumption)
     end
 
     build_response(input, objects)
