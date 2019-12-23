@@ -16,7 +16,7 @@ services:
     stdin_open: true
 
   neo4j_dev:
-    image: neo4j:latest
+    image: neo4j:3.5.9
     ports:
       - 7474:7474
       - 7687:7687
@@ -26,7 +26,7 @@ services:
       - neo4j_dev_data:/data
 
   neo4j_test:
-    image: neo4j:latest
+    image: neo4j:3.5.9
     ports:
       - 3001:7474
       - 3002:3002

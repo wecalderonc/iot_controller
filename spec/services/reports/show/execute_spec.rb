@@ -10,13 +10,14 @@ RSpec.describe Reports::Show::Execute do
     let(:uplink2)  { create(:uplink, thing: thing, time: (Time.now - 2.months).to_i) }
     let(:uplink3)  { create(:uplink, thing: thing, time: (Time.now - 3.months).to_i) }
     let(:uplink4)  { create(:uplink, thing: thing, time: (Time.now - 2.days).to_i ) }
+    let(:uplink5)  { create(:uplink, thing: thing, time: (Time.now - 1.days).to_i ) }
     let!(:price)   { create(:price) }
     let(:input)    { { params: { thing_name: thing.name }, model: :accumulator, thing: Thing, option: :csv_format } }
 
     before do
       Timecop.freeze(Time.local(2019, 2, 1, 12, 0, 0))
     end
- 
+
     after do
       Timecop.return
     end
@@ -26,6 +27,7 @@ RSpec.describe Reports::Show::Execute do
       let!(:accumulator2) { create(:accumulator, value: "110", uplink: uplink3) }
       let!(:accumulator3) { create(:accumulator, value: "120", uplink: uplink2) }
       let!(:accumulator4) { create(:accumulator, value: "130", uplink: uplink) }
+      let!(:accumulator5) { create(:accumulator, value: "100000000", uplink: uplink5, wrong_consumption: true) }
 
       context "CSV format" do
         it "Should return a Success response" do

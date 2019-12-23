@@ -9,7 +9,6 @@ RSpec.describe Reports::Accumulators::HistoricalCalculator do
     let(:input)    { { thing: thing, new_billing_start_date: Date.today - 22.days } }
     let!(:price)   { create(:price) }
 
-    
     before do
       Timecop.freeze(Time.local(2019, 2, 1, 12, 0, 0))
     end

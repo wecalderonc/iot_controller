@@ -1,5 +1,7 @@
 class Accumulator
   include Neo4j::ActiveNode
+  extend ModelModifiers
+
   property :value, type: String
   property :wrong_consumption, type: Boolean, default: false
 
