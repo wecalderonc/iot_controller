@@ -31,7 +31,7 @@ module Errors
   end
 
   def self.build(error, location, code)
-    format = { error: error, code: CODE_ERRORS[code], location: location }
+    format = { error: error, code: CODE_ERRORS[code], location: location, message: error }
 
     MergeErrorType.(format, :general)
   end
