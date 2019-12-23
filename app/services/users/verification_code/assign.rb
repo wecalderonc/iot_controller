@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class Users::VerificationCode::AssignVerificationCode
+class Users::VerificationCode::Assign
   include Dry::Transaction
 
   def call(input)

@@ -15,11 +15,13 @@ RSpec.describe Users::Get do
     end
 
     context 'user does not exists (email format separated)' do
-      let(:input) { { email: 'invalid_id', format: 'com' } }
+      let(:input) { { email: 'invalid_email', format: 'com' } }
 
       it 'should return failure response' do
         expect(response).to be_failure
         expect(response.failure[:message]).to eq('User not found')
+        expect(response.failure[:error]).to eq('User not found')
+        expect(response.failure[:code]).to eq('10104')
       end
     end
 
@@ -38,7 +40,8 @@ RSpec.describe Users::Get do
 
       it 'should return failure response' do
         expect(response).to be_failure
-        expect(response.failure[:message]).to eq('User not found')
+        expect(response.failure[:error]).to eq('User not found')
+        expect(response.failure[:code]).to eq('10104')
       end
     end
   end

@@ -48,14 +48,16 @@ RSpec.describe Users::Update::Execute do
 
       context "When the new_email belongs to another registered user" do
         it "Should return a Failure response" do
-         input[:new_email] = "jvaron@proci.com"
+          input[:new_email] = "jvaron@proci.com"
 
           response = subject.(input)
           expected_response = {
             :uniq_email => ["Email already exist"]
           }
+
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:error]).to eq(expected_response)
+          expect(response.failure[:code]).to eq(10101)
         end
       end
 
@@ -69,7 +71,8 @@ RSpec.describe Users::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:error]).to eq(expected_response)
+          expect(response.failure[:code]).to eq(10101)
         end
       end
 
@@ -83,7 +86,8 @@ RSpec.describe Users::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:error]).to eq(expected_response)
+          expect(response.failure[:code]).to eq(10101)
         end
       end
 
@@ -97,7 +101,8 @@ RSpec.describe Users::Update::Execute do
           }
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:error]).to eq(expected_response)
+          expect(response.failure[:code]).to eq(10101)
         end
       end
 
@@ -209,7 +214,7 @@ RSpec.describe Users::Update::Execute do
           expected_response = "User not found"
 
           expect(response).to be_failure
-          expect(response.failure[:message]).to eq(expected_response)
+          expect(response.failure[:error]).to eq(expected_response)
         end
       end
     end

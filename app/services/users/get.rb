@@ -9,7 +9,7 @@ class Users::Get
     if user.present?
       Success input.merge(user: user)
     else
-      Failure Errors.general_error("User not found", self.class)
+      Failure Errors.build("User not found", self.class, :not_found)
     end
   end
 

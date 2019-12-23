@@ -35,12 +35,13 @@ module Api
 
         options.default = -> { Users::Update::Execute.new.(update_params) }
 
-        update_response = options[params[:subaction]&.to_sym].()
+        response = options[params[:subaction]&.to_sym].()
 
-        if update_response.success?
-          json_response(update_response.success, :ok, UsersSerializer)
+        if response.success?
+          json_response(response.success, :ok, UsersSerializer)
         else
-          json_response({ errors: update_response.failure[:message] }, :not_found)
+          error = response.failure
+          render json: error, status: error[:code]
         end
       end
 

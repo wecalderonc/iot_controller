@@ -64,7 +64,7 @@ RSpec.describe AuthenticationController, :type => :controller do
 
           post :authenticate_user, params: { }
 
-          expected_response = { errors: { password: ["is missing"] }, code: nil }.to_json
+          expected_response = { errors: { password: ["is missing"] }, code: 10101 }.to_json
 
           expect(response.content_type).to eq "application/json"
           expect(response.status).to eq 401
